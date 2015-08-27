@@ -59,7 +59,7 @@
 /obj/structure/mineral_door/resin
 	icon_state = "resin"
 	mineralType = "resin"
-	hardness = 120
+	hardness = 200
 	close_delay = 100
 
 	openSound = 'sound/effects/attackblob.ogg'
