@@ -12,6 +12,9 @@
 	var/CHARGEDISTANCE = 4
 	var/ATTACKTIME = 1.3 // in seconds
 	var/nextattack = 0
+	tacklemin = 4
+	tacklemax = 7
+	tackle_chance = 90 //Should not be above 100%
 	psychiccost = 32
 	ventcrawler = 0
 	mob_size = MOB_SIZE_LARGE

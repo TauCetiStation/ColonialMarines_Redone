@@ -1,6 +1,6 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
-	icon_state = "alien_s"
+	icon_state = "Sentinal Walking"
 	pass_flags = PASSTABLE
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -11,6 +11,10 @@
 	var/pounce_cooldown_time = 30
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
+
+	var/tacklemin = 3
+	var/tacklemax = 5
+	var/tackle_chance = 100 //Should not be above 100%
 
 	var/SPITCOOLDOWN = 10
 	var/usedspit = 0

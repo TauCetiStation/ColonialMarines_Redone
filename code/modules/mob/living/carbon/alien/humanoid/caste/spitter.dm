@@ -8,6 +8,9 @@
 	var/progress = 0
 	var/hasJelly = 1
 	var/progressmax = 900
+	tacklemin = 2
+	tacklemax = 3
+	tackle_chance = 75 //Should not be above 100% old was 65
 	psychiccost = 25
 	//class = 2
 

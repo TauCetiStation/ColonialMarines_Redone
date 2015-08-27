@@ -8,6 +8,9 @@
 	var/hasJelly = 0
 	var/jellyProgress = 0
 	var/jellyProgressMax = 1000
+	tacklemin = 2
+	tacklemax = 3 //old max 5
+	tackle_chance = 40 //Should not be above 100% old chance 50
 	psychiccost = 30
 
 	Stat()

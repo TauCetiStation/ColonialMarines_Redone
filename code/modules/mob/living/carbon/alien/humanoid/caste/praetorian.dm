@@ -8,6 +8,9 @@
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	var/progress = 0
 	var/progressmax = 500
+	tacklemin = 3
+	tacklemax = 5
+	tackle_chance = 70 //Should not be above 100%
 	psychiccost = 16
 	ventcrawler = 0
 	mob_size = MOB_SIZE_LARGE

@@ -5,6 +5,9 @@
 	health = 320
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Hivelord Walking"
+	tacklemin = 2
+	tacklemax = 4
+	tackle_chance = 70 //Should not be above 100%
 	psychiccost = 32
 	ventcrawler = 0
 	mob_size = MOB_SIZE_LARGE

@@ -38,7 +38,7 @@
 						if(stat != DEAD)
 							score_slashes_made++
 						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-						Weaken(5)
+						Weaken(rand(M.tacklemin,M.tacklemax))
 						add_logs(M, src, "tackled")
 						visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 							"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -47,13 +47,18 @@
 						visible_message("<span class='danger'>[M] has tried to tackle [src], but they're already down!</span>", \
 							"<span class='userdanger'>[M] has tried to tackle [src], but they're already down!</span>")
 				else
-					if(stat != DEAD)
-						score_slashes_made++
-					playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-					Weaken(5)
-					add_logs(M, src, "tackled")
-					visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-						"<span class='userdanger'>[M] has tackled down [src]!</span>")
+					if(prob(M.tackle_chance)) //Tackle_chance is now a special var for each caste.
+						if(stat != DEAD)
+							score_slashes_made++
+						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+						Weaken(rand(M.tacklemin,M.tacklemax))
+						add_logs(M, src, "tackled")
+						visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+							"<span class='userdanger'>[M] has tackled down [src]!</span>")
+					else
+						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+						visible_message("<span class='danger'>[M] tried to tackle [src]!</span>", \
+							"<span class='userdanger'>[M] tried to tackle [src]!</span>")
 			else
 				if (randn <= 99)
 					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)

@@ -5,6 +5,9 @@
 	maxHealth = 100
 	health = 100
 	icon_state = "Runner Walking"
+	tacklemin = 1
+	tacklemax = 3
+	tackle_chance = 70 //Should not be above 100%
 	psychiccost = 25
 	var/usedpounce = 0
 	//class = 1

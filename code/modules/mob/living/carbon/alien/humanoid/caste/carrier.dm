@@ -7,6 +7,9 @@
 	var/facehuggers = 0
 	var/usedthrow = 0
 	var/THROWSPEED = 2
+	tacklemin = 1
+	tacklemax = 3
+	tackle_chance = 60 //Should not be above 100%
 	psychiccost = 32
 	ventcrawler = 0
 	//class = 2
