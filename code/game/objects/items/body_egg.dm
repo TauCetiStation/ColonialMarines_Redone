@@ -17,6 +17,7 @@
 
 /obj/item/organ/internal/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
+	score_hosts_infected++
 	owner.status_flags |= XENO_HOST
 	SSobj.processing |= src
 	owner.med_hud_set_status()
@@ -30,8 +31,8 @@
 		owner.med_hud_set_status()
 		spawn(0)
 			RemoveInfectionImages(owner)
-	if(special)
-		score_larvas_extracted++
+		if(special)
+			score_larvas_extracted++
 	..()
 
 /obj/item/organ/internal/body_egg/process()

@@ -61,7 +61,6 @@
 		if(User)
 			playsound(src, empty_sound, 70, 1)
 			User << "This machine gun is out of ammo!"
-
 		return
 	if(T && User && User.stat == CONSCIOUS && !User.stunned && !User.weakened)
 		var/row = 0
@@ -81,7 +80,6 @@
 				if(3)
 					shootfrom = get_step(src, turn(dir, 270))
 			if(shootfrom)
-
 				var/turf/curloc = get_turf(src)
 				var/turf/targloc
 				switch(row)
@@ -94,8 +92,6 @@
 				if (!istype(targloc) || !istype(curloc))
 					return
 				playsound(src, fire_sound, 80, 1, -1)
-				//var/obj/item/ammo_casing/a50/A = new ammo_type(shootfrom)
-
 				var/obj/item/projectile/bullet/A = new /obj/item/projectile/bullet(shootfrom)
 				A.original = targloc
 				A.current = curloc
@@ -103,22 +99,8 @@
 				A.yo = targloc.y - curloc.y
 				A.xo = targloc.x - curloc.x
 				A.fire()
-
-				//bullet.firer = User
-				//bullet.def_zone = User.zone_sel.selecting
-				//bullet.original = T
-				//bullet.loc = get_turf(shootfrom)
-				//bullet.starting = get_turf(shootfrom)
-				//bullet.shot_from = src
-				//bullet.silenced = 0
-				//bullet.current = curloc
-				//bullet.yo = targloc.y - curloc.y
-				//bullet.xo = targloc.x - curloc.x
 				ammo = ammo - 1
-				//score_rounds_fired++
-				//spawn()
-				//	if(bullet)
-				//		bullet.process()
+				score_rounds_fired++
 				nextshot = world.time + FIRETIME
 
 

@@ -26,16 +26,34 @@
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
 				add_logs(M, src, "attacked")
+			if (src.stat != DEAD)
+				score_slashes_made++
 			updatehealth()
 
 		if(M.a_intent == "disarm")
 			var/randn = rand(1, 100)
 			if (randn <= 80)
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(5)
-				add_logs(M, src, "tackled")
-				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-					"<span class='userdanger'>[M] has tackled down [src]!</span>")
+				if(weakened)
+					if(prob(20))
+						if(stat != DEAD)
+							score_slashes_made++
+						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+						Weaken(5)
+						add_logs(M, src, "tackled")
+						visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+							"<span class='userdanger'>[M] has tackled down [src]!</span>")
+					else
+						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+						visible_message("<span class='danger'>[M] has tried to tackle [src], but they're already down!</span>", \
+							"<span class='userdanger'>[M] has tried to tackle [src], but they're already down!</span>")
+				else
+					if(stat != DEAD)
+						score_slashes_made++
+					playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+					Weaken(5)
+					add_logs(M, src, "tackled")
+					visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+						"<span class='userdanger'>[M] has tackled down [src]!</span>")
 			else
 				if (randn <= 99)
 					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)

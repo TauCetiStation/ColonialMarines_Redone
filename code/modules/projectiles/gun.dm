@@ -167,6 +167,7 @@
 						shoot_live_shot(user, 1, target, message)
 					else
 						shoot_live_shot(user, 0, target, message)
+					score_rounds_fired++
 			else
 				shoot_with_empty_chamber(user)
 				break
@@ -183,6 +184,7 @@
 					shoot_live_shot(user, 1, target, message)
 				else
 					shoot_live_shot(user, 0, target, message)
+				score_rounds_fired++
 		else
 			shoot_with_empty_chamber(user)
 			return

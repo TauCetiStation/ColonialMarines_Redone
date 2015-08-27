@@ -62,6 +62,8 @@
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
 								"<span class='italics'>You hear something crack.</span>")
+			if(isalien(M))
+				score_aliens_clamped++
 			add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)

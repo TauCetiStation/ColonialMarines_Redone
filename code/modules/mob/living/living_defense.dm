@@ -32,6 +32,7 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
+		score_rounds_hit++
 	return P.on_hit(src, armor, def_zone)
 
 /proc/vol_by_throwforce_and_or_w_class(obj/item/I)

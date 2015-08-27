@@ -70,6 +70,7 @@
 		user << "There's already royal jelly or egg here."
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	score_eggs_made++
 	new /obj/structure/alien/egg(user.loc)
 	return 1
 
