@@ -184,6 +184,7 @@
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
+	score_marines_cloned++
 
 	hardset_dna(H, ui, se, null, null, mrace, features)
 	H.faction |= factions

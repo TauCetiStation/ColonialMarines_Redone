@@ -91,6 +91,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 		new_xeno.key = C.key
 		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
+
+		if(ishuman(owner))
+			score_marines_chestbursted++
+
 		if(gib_on_success)
 			owner.stomach_contents += new_xeno
 			owner.gib()

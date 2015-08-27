@@ -30,6 +30,8 @@
 		owner.med_hud_set_status()
 		spawn(0)
 			RemoveInfectionImages(owner)
+	if(special)
+		score_larvas_extracted++
 	..()
 
 /obj/item/organ/internal/body_egg/process()
