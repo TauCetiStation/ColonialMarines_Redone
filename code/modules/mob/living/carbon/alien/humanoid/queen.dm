@@ -10,6 +10,9 @@
 	unique_name = 0
 	custom_pixel_x_offset = -16
 	mob_size = MOB_SIZE_LARGE
+	tacklemin = 3
+	tacklemax = 7
+	tackle_chance = 90 //Should not be above 100%
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
