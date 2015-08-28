@@ -8,3 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 zve = Game Master
+Molesto411 = Game Master
+Smalltasty = Game Master
+amb1ent = Game Admin
+Leshiy = Game Admin
