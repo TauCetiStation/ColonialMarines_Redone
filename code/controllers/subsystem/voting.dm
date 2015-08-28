@@ -110,7 +110,7 @@ var/datum/subsystem/vote/SSvote
 					restart = 1
 			if("gamemode")
 				if(master_mode != .)
-					world.save_mode(.)
+					//world.save_mode(.)
 					if(ticker && ticker.mode)
 						restart = 1
 					else
