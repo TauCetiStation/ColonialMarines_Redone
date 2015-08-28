@@ -13,7 +13,13 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\colonial marines.dm"
+#include "_maps\cmr-z1.dmm"
+#include "_maps\cmr-z2.dmm"
+#include "_maps\cmr-z3.dmm"
+#include "_maps\cmr-z4.dmm"
+#include "_maps\cmr-z5.dmm"
+#include "_maps\cmr-z6.dmm"
+#include "_maps\cmr-z7.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
