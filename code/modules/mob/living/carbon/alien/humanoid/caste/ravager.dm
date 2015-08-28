@@ -12,6 +12,8 @@
 	var/CHARGEDISTANCE = 4
 	var/ATTACKTIME = 1.3 // in seconds
 	var/nextattack = 0
+	damagemin = 50
+	damagemax = 75
 	tacklemin = 4
 	tacklemax = 7
 	tackle_chance = 90 //Should not be above 100%

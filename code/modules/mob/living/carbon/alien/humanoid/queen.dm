@@ -10,6 +10,8 @@
 	unique_name = 0
 	custom_pixel_x_offset = -16
 	mob_size = MOB_SIZE_LARGE
+	damagemin = 30
+	damagemax = 35
 	tacklemin = 3
 	tacklemax = 7
 	tackle_chance = 90 //Should not be above 100%

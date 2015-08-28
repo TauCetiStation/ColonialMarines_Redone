@@ -5,6 +5,8 @@
 	maxHealth = 100
 	health = 100
 	icon_state = "Runner Walking"
+	damagemin = 23
+	damagemax = 28
 	tacklemin = 1
 	tacklemax = 3
 	tackle_chance = 70 //Should not be above 100%

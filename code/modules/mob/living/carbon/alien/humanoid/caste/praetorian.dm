@@ -8,6 +8,8 @@
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	var/progress = 0
 	var/progressmax = 500
+	damagemin = 40
+	damagemax = 45
 	tacklemin = 3
 	tacklemax = 5
 	tackle_chance = 70 //Should not be above 100%

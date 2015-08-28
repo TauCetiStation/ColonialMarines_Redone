@@ -5,6 +5,8 @@
 	health = 320
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Hivelord Walking"
+	damagemin = 10
+	damagemax = 15
 	tacklemin = 2
 	tacklemax = 4
 	tackle_chance = 70 //Should not be above 100%

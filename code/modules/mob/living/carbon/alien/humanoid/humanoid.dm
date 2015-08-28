@@ -12,6 +12,9 @@
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
 
+	var/damagemin = 10
+	var/damagemax = 19
+
 	var/tacklemin = 3
 	var/tacklemax = 5
 	var/tackle_chance = 100 //Should not be above 100%

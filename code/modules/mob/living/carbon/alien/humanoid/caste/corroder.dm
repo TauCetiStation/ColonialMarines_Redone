@@ -5,6 +5,8 @@
 	health = 100
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	icon_state = "Corroder Walking"
+	damagemin = 10
+	damagemax = 15
 	tacklemin = 3
 	tacklemax = 6
 	tackle_chance = 60 //Should not be above 100%

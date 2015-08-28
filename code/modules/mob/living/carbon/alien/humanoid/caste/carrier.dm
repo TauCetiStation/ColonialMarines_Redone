@@ -7,6 +7,8 @@
 	var/facehuggers = 0
 	var/usedthrow = 0
 	var/THROWSPEED = 2
+	damagemin = 20
+	damagemax = 30
 	tacklemin = 1
 	tacklemax = 3
 	tackle_chance = 60 //Should not be above 100%
