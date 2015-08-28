@@ -1252,7 +1252,7 @@
 "yd" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor/plasteel/darkpurple/corner{dir = 1},/area/sulaco/medbay)
 "ye" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plasteel/darkpurple/corner{dir = 1},/area/sulaco/medbay)
 "yf" = (/obj/structure/stool/bed/chair/office/light{dir = 4},/turf/simulated/floor/plasteel/darkpurple/side{dir = 4},/area/sulaco/medbay)
-"yg" = (/obj/structure/table/reinforced,/obj/machinery/door/window{name = "Chemistry Desk"; req_access_txt = "502"},/obj/machinery/door/poddoor/preopen{id = "sulfore"; name = "Fore Blast Door"},/turf/simulated/floor/plating,/area/sulaco/medbay)
+"yg" = (/obj/structure/table/reinforced,/obj/machinery/door/poddoor/preopen{id = "sulfore"; name = "Fore Blast Door"},/obj/machinery/door/window/brigdoor/westleft{name = "Chemistry Desk"; req_access_txt = "501"},/turf/simulated/floor/plating,/area/sulaco/medbay)
 "yh" = (/turf/simulated/floor/plasteel{dir = 8; icon_state = "whitegreen"},/area/sulaco/medbay)
 "yi" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plasteel{dir = 4; icon_state = "whitegreencorner"},/area/sulaco/medbay)
 "yj" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel{dir = 1; icon_state = "whitegreencorner"},/area/sulaco/medbay)
