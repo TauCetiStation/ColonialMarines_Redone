@@ -2,6 +2,8 @@
 	if(dna)
 		. += dna.species.movement_delay(src)
 
+	if(locate(/obj/structure/alien/weeds) in loc)
+		. += 2
 	. += ..()
 	. += config.human_delay
 
