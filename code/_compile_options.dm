@@ -64,4 +64,4 @@ var/list/del_counter = list()
 #error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
 #endif
 
-//#define USE_BYGEX
+#define USE_BYGEX
