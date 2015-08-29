@@ -174,9 +174,11 @@ var/next_external_rsc = 0
 			src.changes()
 		else
 			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
-
+			
+	#ifdef LIBREGEX_LIBRARY
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
+	#endif
 
 	//////////////
 	//DISCONNECT//

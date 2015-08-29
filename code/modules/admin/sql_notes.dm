@@ -168,6 +168,7 @@
 		output += ruler
 	usr << browse(output, "window=show_notes;size=900x500")
 
+#ifdef LIBREGEX_LIBRARY
 /proc/regex_note_sql_extract(str, exp)
 	return new /datum/regex(str, exp, call(LIBREGEX_LIBRARY, "regEx_find")(str, exp))
 
@@ -217,3 +218,4 @@ this proc can take several minutes to execute fully if converting and cause DD t
 	fdel(NOTESFILE)
 	world << "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES"*/
 #undef NOTESFILE
+#endif
