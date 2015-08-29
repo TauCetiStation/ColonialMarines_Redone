@@ -109,17 +109,19 @@
 					continue	//so stealthmins aren't revealed by the hub
 				admins++
 
-		s["active_players"] = get_active_player_count()
+		//s["active_players"] = get_active_player_count()
 		s["players"] = clients.len
+		s["stationtime"] = worldtime2text()
 		//s["revision"] = revdata.revision
 		//s["revision_date"] = revdata.date
 		s["admins"] = admins
-		s["gamestate"] = 1
-		if(ticker)
-			s["gamestate"] = ticker.current_state
-		s["map_name"] = map_name ? map_name : "Unknown"
+		//s["gamestate"] = 1
+		//if(ticker)
+		//	s["gamestate"] = ticker.current_state
+		//s["map_name"] = map_name ? map_name : "Unknown"
 
 		return list2params(s)
+
 	else if (copytext(T,1,9) == "announce")
 		var/input[] = params2list(T)
 		if(global.comms_allowed)
