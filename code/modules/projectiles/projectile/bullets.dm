@@ -22,6 +22,9 @@
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
 
+/obj/item/projectile/bullet/a762
+	damage = 20
+
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 15
