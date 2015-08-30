@@ -45,17 +45,17 @@
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
-				if(250 to INFINITY)
+				if(700 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(200 to 250)
+				if(560 to 700)
 					src.healths.icon_state = "health1"
-				if(150 to 200)
+				if(420 to 560)
 					src.healths.icon_state = "health2"
-				if(100 to 150)
+				if(280 to 420)
 					src.healths.icon_state = "health3"
-				if(50 to 100)
+				if(140 to 280)
 					src.healths.icon_state = "health4"
-				if(0 to 50)
+				if(0 to 140)
 					src.healths.icon_state = "health5"
 				else
 					src.healths.icon_state = "health6"
