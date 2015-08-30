@@ -79,6 +79,13 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	return 1
 
+/obj/effect/proc_holder/alien/proc/build_lay_fail(mob/living/carbon/user)
+	if((locate(/obj/structure/alien/egg) in get_turf(user)) || (locate(/obj/royaljelly) in get_turf(user)) || (locate(/obj/structure/mineral_door/resin) in get_turf(user)) || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)))
+		user << "<span class='danger'>There is already a resin structure there.</span>"
+		return 1
+	else
+		return 0
+
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
 	desc = "Plants some alien weeds"
@@ -382,8 +389,7 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_resin"
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
-	if(locate(/obj/structure/alien/resin) in user.loc)
-		user << "<span class='danger'>There is already a resin structure there.</span>"
+	if(build_lay_fail(user))
 		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
 	if(!choice) return 0

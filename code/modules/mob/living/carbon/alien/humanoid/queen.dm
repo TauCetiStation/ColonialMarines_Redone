@@ -71,8 +71,7 @@
 	action_icon_state = "alien_egg"
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
-	if(locate(/obj/royaljelly) in get_turf(user) || locate(/obj/structure/alien/egg) in get_turf(user))
-		user << "There's already royal jelly or egg here."
+	if(build_lay_fail(user))
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
 	score_eggs_made++
@@ -107,8 +106,7 @@
 	action_icon_state = "alien_egg"
 
 /obj/effect/proc_holder/alien/lay_jelly/fire(mob/living/carbon/user)
-	if(locate(/obj/royaljelly) in get_turf(user) || locate(/obj/structure/alien/egg) in get_turf(user))
-		user << "There's already royal jelly or egg here."
+	if(build_lay_fail(user))
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has shaped a sac and filled it with a greenish fluid!</span>")
 	new /obj/royaljelly(user.loc)
