@@ -257,6 +257,9 @@ update_flag
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/canister/attack_paw(mob/user)
+	if(isalien(user))
+		user << "\red You can't understand how it works."
+		return
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/canister/attack_tk(mob/user)
