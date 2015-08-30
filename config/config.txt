@@ -111,19 +111,19 @@ GUEST_BAN
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+FORUMURL http://tauceti.ru/forums/index.php?topic=3561.0
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+WIKIURL http://tauceti.ru/wiki/Colonial_Marines
 
 ##Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+RULESURL http://tauceti.ru/wiki/CM:_Rules
 
 ##Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+GITHUBURL https://github.com/TauCetiStation/ColonialMarines_Redone
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+BANAPPEALS http://tauceti.ru/forums/index.php?board=29.0
 
 ## In-game features
 ##Toggle for having jobs load up from the .txt

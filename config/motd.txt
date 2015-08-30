@@ -6,3 +6,5 @@
 	<strong>Х <a href="http://tauceti.ru/wiki/Colonial_Marines">¬ики</a></strong>
 	<strong>Х <a href="http://tauceti.ru/wiki/CM:_Rules">ѕравила сервера</a></strong>
 	<strong>Х <a href="http://twitter.com/TauCetiDaily">ѕоследние новости на @TauCetiDaily</a></strong>
+
+<strong>Wiki, Forum, Rules, Changelog, Github, Report Issue кнопки теперь подключены.<br>
