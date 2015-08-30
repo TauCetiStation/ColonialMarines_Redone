@@ -16,7 +16,7 @@ var/const/MAX_ACTIVE_TIME = 200
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKINTERNALS
-	throw_range = 5
+	throw_range = 1
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 

@@ -226,6 +226,9 @@
 
 	if(!item || (item.flags & NODROP)) return
 
+	if(isalien(src) && istype(item, /obj/item/clothing/mask/facehugger))
+		if(!istype(src, /mob/living/carbon/alien/humanoid/carrier))
+			return
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.get_mob_if_throwable() //throw the person instead of the grab
