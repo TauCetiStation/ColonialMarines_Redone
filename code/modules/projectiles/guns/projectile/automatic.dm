@@ -123,6 +123,7 @@
 	can_suppress = 0
 	burst_size = 5
 	fire_delay = 3
+	two_handed = 1
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open

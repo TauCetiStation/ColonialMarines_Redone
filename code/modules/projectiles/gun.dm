@@ -33,6 +33,7 @@
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
+	var/two_handed = 0
 
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
@@ -128,6 +129,10 @@
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+
+	if(two_handed && user.get_inactive_hand())
+		user << "<span class='warning'>You can't shoot this weapon while holding something in other hand.</span>"
 		return 0
 
 	if(trigger_guard)

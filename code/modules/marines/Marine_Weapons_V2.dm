@@ -112,7 +112,6 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
-
 	fire_sound = 'sound/weapons/servicepistol.ogg'
 
 /*
@@ -127,7 +126,6 @@
 	name = "\improper 44 Magnum"
 	desc = "A bulky 44 Magnum revolver, occasionally carried by assault troops and officers in the Colonial Marines. Uses 44 Magnum rounds"
 	icon_state = "mateba"
-
 	mag_type = /obj/item/ammo_box/magazine/m44m
 
 ///***SMGS***///
@@ -137,12 +135,12 @@
 	desc = " Armat Battlefield Systems M39 SMG. Occasionally carried by light-infantry, scouts or non-combat personnel. Uses 9mm rounds."
 	icon_state = "smg"
 	item_state = "c20r"
-
 	can_suppress = 0
 	mag_type = /obj/item/ammo_box/magazine/m39
 	fire_sound = 'sound/weapons/Gunshot_m39.ogg'
 	fire_delay = 2
 	burst_size = 2
+	two_handed = 1
 
 /obj/item/weapon/gun/projectile/automatic/Assault/m39/update_icon()
 	..()
@@ -174,13 +172,13 @@
 	desc = "M41A Pulse Rifle. The standard issue rifle of the Colonial Marines. Commonly carried by most combat personnel. Uses 10mm special ammunition."
 	icon_state = "m41a"
 	item_state = "m41a"
-
 	mag_type = /obj/item/ammo_box/magazine/m41
 	fire_sound = 'sound/weapons/Gunshot_m41.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
+	two_handed = 1
 
 /obj/item/weapon/gun/projectile/automatic/Assault/m41/New()
 	..()
@@ -243,13 +241,13 @@
 	name = "\improper M37 Pump Shotgun"
 	desc = "Colonial Marine M37 Pump Shotgun"
 	icon_state = "cshotgun"
-
 	item_state = "shotgun"
 	w_class = 4.0
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/m37
+	two_handed = 1
 
 ///***MELEE/THROWABLES***///
 
