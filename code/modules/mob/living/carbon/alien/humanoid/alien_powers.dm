@@ -323,23 +323,8 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_neurotoxin"
 
 /obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)
+	user << "<span class='notice'>Используйте ШИФТ+ЛКМ по земле. Летит туда, где был курсор в момент нажатия.</span>"
 	return 0
-/*	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
-
-	var/turf/T = user.loc
-	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(U) || !isturf(T))
-		return 0
-
-	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
-	A.original = U
-	A.current = U
-	A.starting = T
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
-	A.fire()
-
-	return 1*/
 
 /obj/effect/proc_holder/alien/neurotoxin_weak
 	name = "Weak Neurotoxin"
@@ -348,23 +333,8 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_neurotoxin"
 
 /obj/effect/proc_holder/alien/neurotoxin_weak/fire(mob/living/carbon/alien/user)
+	user << "<span class='notice'>Используйте ШИФТ+ЛКМ по земле. Летит туда, где был курсор в момент нажатия.</span>"
 	return 0
-/*	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
-
-	var/turf/T = user.loc
-	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(U) || !isturf(T))
-		return 0
-
-	var/obj/item/projectile/bullet/neurotoxin_weak/A = new /obj/item/projectile/bullet/neurotoxin_weak(user.loc)
-	A.original = U
-	A.current = U
-	A.starting = T
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
-	A.fire()
-
-	return 1*/
 
 /obj/effect/proc_holder/alien/acid_launcher
 	name = "Acid Launcher"
@@ -373,6 +343,7 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_neurotoxin"
 
 /obj/effect/proc_holder/alien/acid_launcher/fire(mob/living/carbon/alien/user)
+	user << "<span class='notice'>Используйте ШИФТ+ЛКМ по земле. Летит туда, где был курсор в момент нажатия.</span>"
 	return 0
 
 /obj/effect/proc_holder/alien/resin
