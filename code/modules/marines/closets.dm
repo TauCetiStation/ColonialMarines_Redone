@@ -83,7 +83,7 @@
 	new /obj/item/device/radio/headset/mmpo(src)
 	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/baton/loaded(src)
 	return
 
 
@@ -107,7 +107,7 @@
 	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
 	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/shield/riot(src)
-	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
