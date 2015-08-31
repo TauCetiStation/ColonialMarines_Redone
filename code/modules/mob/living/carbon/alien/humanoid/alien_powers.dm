@@ -429,7 +429,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	usedscreech = 1
 	for(var/mob/O in view())
-		playsound(user.loc, 'sound/effects/screech.ogg', 25, 1, -1)
+		playsound(user.loc, 'sound/effects/screech2.ogg', 25, 1, -1)
 		O << "\red [user] emits a paralyzing screech!"
 
 	for (var/mob/living/carbon/human/M in oview())
