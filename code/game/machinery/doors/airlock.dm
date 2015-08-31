@@ -664,9 +664,9 @@ About the new airlock wires panel:
 		else
 			user << "\red You force your claws between the doors and begin to pry them open..."
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
-			if (do_after(user,40))
+			if (do_after(user, 40, target = src))
 				if(!src) return
-				open()
+				open(1)
 	return
 
 /obj/machinery/door/airlock/attack_paw(mob/user)

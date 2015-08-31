@@ -91,6 +91,21 @@
 		close()
 	return
 
+/obj/machinery/door/firedoor/attack_alien(mob/user)
+	if(isalienadult(user))
+		if(blocked)
+			user << "\red The door is sealed, it cannot be pried open."
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your claws between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
+			if (do_after(user, 40, target = src))
+				if(!src) return
+				open(1)
+	return
+
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
