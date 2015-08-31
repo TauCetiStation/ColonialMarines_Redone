@@ -370,17 +370,17 @@
 					modify.access = list()
 
 				else
-					var/datum/job/jobdatum
+					//var/datum/job/jobdatum
 					for(var/jobtype in typesof(/datum/job))
 						var/datum/job/J = new jobtype
 						if(ckey(J.title) == ckey(t1))
-							jobdatum = J
+							//jobdatum = J
 							break
-					if(!jobdatum)
-						usr << "<span class='error'>No log exists for this job.</span>"
-						return
+					//if(!jobdatum)
+					//	usr << "<span class='error'>No log exists for this job.</span>"
+					//	return
 
-					modify.access = jobdatum.get_access()
+				modify.access = get_marine_access(t1)
 				if (modify)
 					modify.assignment = t1
 		if ("demote")
