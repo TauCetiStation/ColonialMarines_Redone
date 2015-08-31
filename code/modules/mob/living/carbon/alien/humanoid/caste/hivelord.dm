@@ -73,25 +73,25 @@
 /obj/structure/mineral_door/resin/Dismantle(devastated = 0)
 	qdel(src)
 
+/obj/structure/mineral_door/resin/Bumped(atom/user)
+	if(!state)
+		return TryToSwitchState(user)
+
 /obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
 	if(isalien(user))
 		return ..()
 
 /obj/structure/mineral_door/resin/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(istype(W))
 		hardness -= W.force/2
-		user << "<span class='danger'>You hit the [name] with your [W.name]!</span>"
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		CheckHardness()
-	else
-		if(isalien(user))
-			attack_paw(user)
-	return
-
-/obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj)
-	hardness -= Proj.damage
-	..()
-	CheckHardness()
-	return
+		user.do_attack_animation(src)
+		if(W && !(W.flags&NOBLUDGEON))
+			visible_message("<span class='danger'>[user] has hit [src] with [W]!</span>")
+	else if(isalien(user))
+		attack_alien(user)
 
 /obj/structure/mineral_door/resin/attack_ai(mob/user)
 	if(isAI(user))
@@ -99,20 +99,32 @@
 	else if(isrobot(user))
 		return
 
-/obj/structure/mineral_door/resin/attack_paw(mob/user)
+/obj/structure/mineral_door/resin/attack_alien(mob/user)
 	if(user.a_intent == "harm")
-		if (islarva(user))//Safety check for larva. /N
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		if(islarva(user))//Safety check for larva. /N
 			return
-		user << "\green You claw at the [name]."
-		for(var/mob/O in oviewers(src))
-			O.show_message("\red [user] claws at the resin!", 1)
-		playsound(loc, 'sound/effects/attackblob.ogg', 30, 1, -4)
+		user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		hardness -= rand(40, 60)
 		if(hardness <= 0)
-			user << "\green You slice the [name] to pieces."
-			for(var/mob/O in oviewers(src))
-				O.show_message("\red [user] slices the [name] apart!", 1)
+			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")
 		CheckHardness()
-		return
 	else
 		return TryToSwitchState(user)
+
+/obj/structure/mineral_door/ex_act(severity = 1)
+	switch(severity)
+		if(1)
+			Dismantle()
+		if(2)
+			if(prob(20))
+				Dismantle()
+			else
+				hardness -= rand(100,200)
+				CheckHardness()
+		if(3)
+			hardness -= rand(50,125)
+			CheckHardness()
+	return
