@@ -19,28 +19,28 @@
 	. += */
 
 /mob/living/carbon/alien/humanoid/runner/movement_delay()
-	. = -2.3
+	. = -2
 	. += ..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	. = -1.8
+	. = -1
 	. += ..()
 /*
-/mob/living/carbon/alien/humanoid/preatorian/movement_delay()
+/mob/living/carbon/alien/humanoid/praetorian/movement_delay()
+	. = 
+	. += */
+/*
+/mob/living/carbon/alien/humanoid/ravager/movement_delay()
 	. = 
 	. += */
 
-/mob/living/carbon/alien/humanoid/ravager/movement_delay()
-	. = -1.0
-	. += ..()
-
 /mob/living/carbon/alien/humanoid/sentinel/movement_delay()
 	. = ..()
-	. += 0.5
-
+	. += 1
+/*
 /mob/living/carbon/alien/humanoid/spitter/movement_delay()
-	. = -0.5
-	. += ..()
+	. = 
+	. += */
 /*
 /mob/living/carbon/alien/humanoid/corroder/movement_delay()
 	. = 
