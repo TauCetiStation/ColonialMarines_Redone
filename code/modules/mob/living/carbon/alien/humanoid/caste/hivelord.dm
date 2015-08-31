@@ -73,12 +73,9 @@
 /obj/structure/mineral_door/resin/Dismantle(devastated = 0)
 	qdel(src)
 
-/obj/structure/mineral_door/resin/Bumped(atom/user)
-	..()
+/obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
 	if(isalien(user))
-		if(!state)
-			return TryToSwitchState(user)
-	return
+		return ..()
 
 /obj/structure/mineral_door/resin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
@@ -86,7 +83,8 @@
 		user << "<span class='danger'>You hit the [name] with your [W.name]!</span>"
 		CheckHardness()
 	else
-		attack_hand(user)
+		if(isalien(user))
+			attack_paw(user)
 	return
 
 /obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj)
@@ -95,16 +93,26 @@
 	CheckHardness()
 	return
 
-/obj/structure/mineral_door/resin/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
-	if(isAI(user)) //so the AI can't open it
+/obj/structure/mineral_door/resin/attack_ai(mob/user)
+	if(isAI(user))
 		return
-	else if(isrobot(user)) //but cyborgs can
+	else if(isrobot(user))
 		return
 
 /obj/structure/mineral_door/resin/attack_paw(mob/user)
-	if(!isalien(user)) return
-	return TryToSwitchState(user)
-
-/obj/structure/mineral_door/resin/attack_hand(mob/user)
-	if(!isalien(user)) return
-	return TryToSwitchState(user)
+	if(user.a_intent == "harm")
+		if (islarva(user))//Safety check for larva. /N
+			return
+		user << "\green You claw at the [name]."
+		for(var/mob/O in oviewers(src))
+			O.show_message("\red [user] claws at the resin!", 1)
+		playsound(loc, 'sound/effects/attackblob.ogg', 30, 1, -4)
+		hardness -= rand(40, 60)
+		if(hardness <= 0)
+			user << "\green You slice the [name] to pieces."
+			for(var/mob/O in oviewers(src))
+				O.show_message("\red [user] slices the [name] apart!", 1)
+		CheckHardness()
+		return
+	else
+		return TryToSwitchState(user)
