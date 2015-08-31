@@ -71,6 +71,10 @@
 /obj/structure/disposalholder/proc/move()
 	var/obj/structure/disposalpipe/last
 	while(active)
+		if(hasmob && prob(3))
+			for(var/mob/living/H in src)
+				H.take_overall_damage(20, 0)//horribly maim any living creature jumping down disposals.  c'est la vie
+
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
 		curr = curr.transfer(src)
