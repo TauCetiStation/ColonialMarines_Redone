@@ -29,21 +29,27 @@
 	..()
 
 /obj/item/weapon/reagent_containers/blood/APlus
+	name = "blood pack A+" //Vending machine issue, need exact names.
 	blood_type = "A+"
 
 /obj/item/weapon/reagent_containers/blood/AMinus
+	name = "blood pack A-"
 	blood_type = "A-"
 
 /obj/item/weapon/reagent_containers/blood/BPlus
+	name = "blood pack B+"
 	blood_type = "B+"
 
 /obj/item/weapon/reagent_containers/blood/BMinus
+	name = "blood pack B-"
 	blood_type = "B-"
 
 /obj/item/weapon/reagent_containers/blood/OPlus
+	name = "blood pack O+"
 	blood_type = "O+"
 
 /obj/item/weapon/reagent_containers/blood/OMinus
+	name = "blood pack O-"
 	blood_type = "O-"
 
 /obj/item/weapon/reagent_containers/blood/empty
