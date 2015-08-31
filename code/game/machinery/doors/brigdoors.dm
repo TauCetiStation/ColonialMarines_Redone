@@ -68,8 +68,8 @@
 	if(stat & (NOPOWER|BROKEN))	return
 	if(timing)
 		if(world.time > src.releasetime)
-			Radio.set_frequency(SEC_FREQ)
-			Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
+			Radio.set_frequency(MMPO_FREQ)
+			Radio.talk_into(src, "Timer has expired. Releasing prisoner.", MMPO_FREQ)
 			src.timer_end() // open doors, reset timer, clear status screen
 			timing = 0
 			timeset(0)
