@@ -111,44 +111,47 @@
 
 	return
 
-/mob/living/carbon/alien/humanoid/runner/verb/Pounce()
-	set name = "Pounce (25)"
-	set desc = "Pounce onto your prey."
-	set category = "Alien"
+/mob/living/carbon/alien/humanoid/runner/ClickOn(var/atom/A, params)
 
-	if(usedpounce >= 1)
-		src << "\red We must wait before pouncing again.."
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		pounce()
+		return
+	..()
+
+/mob/living/carbon/alien/humanoid/runner/proc/pounce()
+	if(usedpounce)
+		src << "<span class='noticealien'>We must wait before pouncing again..</span>"
 		return
 
-	if(src.getPlasma() < 25)
-		src.adjustPlasma(-25)
+	var/targets[] = list()
+	for(var/mob/living/carbon/human/M in oview())
+		if(M.stat)	continue//Doesn't target corpses or paralyzed persons.
+		targets.Add(M)
 
-		var/targets[] = list()
-		for(var/mob/living/carbon/human/M in oview())
-			if(M.stat)	continue//Doesn't target corpses or paralyzed persons.
-			targets.Add(M)
+	if(targets.len)
+		var/mob/living/carbon/human/target=pick(targets)
+		var/atom/targloc = get_turf(target)
+		if (!targloc || !istype(targloc, /turf) || get_dist(src.loc,targloc)>=3)
+			src << "<span class='noticealien'>We cannot reach our prey!</span>"
+			return
 
-		if(targets.len)
-			var/mob/living/carbon/human/target=pick(targets)
-			var/atom/targloc = get_turf(target)
-			if (!targloc || !istype(targloc, /turf) || get_dist(src.loc,targloc)>=3)
-				src << "We cannot reach our prey!"
-				return
-			if(src.weakened >= 1 || src.paralysis >= 1 || src.stunned >= 1)
-				src << "We cannot pounce if we are stunned.."
-				return
+		if(src.weakened >= 1 || src.paralysis >= 1 || src.stunned >= 1)
+			src << "<span class='noticealien'>We cannot pounce if we are stunned..</span>"
+			return
 
-			visible_message("\red <B>[src] pounces on [target]!</B>")
+		if(usePlasma(25))
+			src.usedpounce = 1
+			visible_message("<span class='userdanger'>[src] pounces on [target]!</span>")
 			if(src.m_intent == "walk")
 				src.m_intent = "run"
 				src.hud_used.move_intent.icon_state = "running"
 			src.loc = targloc
-			usedpounce = 5
-			adjustToxLoss(-50)
+
 			if(target.r_hand && istype(target.r_hand, /obj/item/weapon/shield/riot) || target.l_hand && istype(target.l_hand, /obj/item/weapon/shield/riot))
 				if (prob(35))	// If the human has riot shield in his hand
 					src.weakened = 5//Stun the fucker instead
-					visible_message("\red <B>[target] blocked [src] with his shield!</B>")
+					visible_message("<span class='userdanger'>[target] blocked [src] with his shield!</span>")
 				else
 					src.canmove = 0
 					src.frozen = 1
@@ -162,18 +165,12 @@
 
 			spawn(15)
 				src.frozen = 0
+			spawn(50)
+				src.usedpounce = 0
 		else
-			src << "\red We sense no prey.."
-
-	return
-
-
-/mob/living/carbon/alien/humanoid/runner/Life()
-	..()
-
-	if(usedpounce <= 0)
-		usedpounce = 0
-	usedpounce--
+			src << "<span class='noticealien'>We need more plasma.</span>"
+	else
+		src << "<span class='noticealien'>We sense no prey..</span>"
 
 //Stops runners from pulling APOPHIS775 03JAN2015
 /mob/living/carbon/alien/humanoid/runner/start_pulling(var/atom/movable/AM)
