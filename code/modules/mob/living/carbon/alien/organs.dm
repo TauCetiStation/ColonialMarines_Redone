@@ -253,3 +253,10 @@
 	w_class = 4
 	origin_tech = "biotech=8"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_jelly)
+
+/obj/item/organ/internal/alien/screechcord
+	name = "vocal cord"
+	zone = "mouth"
+	slot = "gland"
+	origin_tech = "biotech=5;materials=4"
+	alien_powers = list(/obj/effect/proc_holder/alien/screech)

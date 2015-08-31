@@ -416,6 +416,36 @@ Doesn't work on other aliens/AI.*/
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
 
+/obj/effect/proc_holder/alien/screech
+	name = "Screech"
+	desc = "Emit a screech that stuns prey."
+	plasma_cost = 250
+	action_icon_state = "transmit"
+	var/usedscreech = 0
+
+/obj/effect/proc_holder/alien/screech/fire(mob/living/carbon/user)
+	if(usedscreech)
+		user << "\red Our screech is not ready.."
+		return 0
+	usedscreech = 1
+	for(var/mob/O in view())
+		playsound(user.loc, 'sound/effects/screech.ogg', 25, 1, -1)
+		O << "\red [user] emits a paralyzing screech!"
+
+	for (var/mob/living/carbon/human/M in oview())
+		if(istype(M.ears, /obj/item/clothing/ears/earmuffs))
+			continue
+		if (get_dist(user.loc, M.loc) <= 4)
+			M.stunned += 3
+			M.drop_l_hand()
+			M.drop_r_hand()
+		else if(get_dist(user.loc, M.loc) >= 5)
+			M.stunned += 2
+
+	spawn(300)
+		usedscreech = 0
+	return 1
+
 /obj/effect/proc_holder/alien/nightvisiontoggle
 	name = "Toggle Night Vision"
 	desc = "Toggles Night Vision"
