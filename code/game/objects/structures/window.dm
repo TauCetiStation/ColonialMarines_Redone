@@ -456,7 +456,7 @@
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
 	dir = 5
-	maxhealth = 100
+	maxhealth = 250
 	fulltile = 1
 	smooth = 1
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -475,7 +475,7 @@
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
 	dir = 5
-	maxhealth = 100
+	maxhealth = 250
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
