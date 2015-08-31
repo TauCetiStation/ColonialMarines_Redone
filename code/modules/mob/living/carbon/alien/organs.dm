@@ -94,7 +94,7 @@
 	plasma_rate = 8
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
-/obj/item/organ/internal/alien/plasmavessel/preatorian
+/obj/item/organ/internal/alien/plasmavessel/praetorian
 	name = "plasma vessel"
 	w_class = 3
 	storedPlasma = 0

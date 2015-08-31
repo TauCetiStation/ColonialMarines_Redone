@@ -32,7 +32,7 @@
 
 
 /mob/living/carbon/alien/humanoid/praetorian/New()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/preatorian
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/praetorian
 	internal_organs += new /obj/item/organ/internal/alien/acid
 	internal_organs += new /obj/item/organ/internal/alien/acid_strong
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
@@ -56,7 +56,7 @@
 	//pixel_x = -16
 	..()
 
-/mob/living/carbon/alien/humanoid/preatorian/handle_hud_icons_health()
+/mob/living/carbon/alien/humanoid/praetorian/handle_hud_icons_health()
 	if (healths)
 		if (stat != 2)
 			switch(health)
