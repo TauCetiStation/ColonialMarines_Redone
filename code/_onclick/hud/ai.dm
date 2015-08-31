@@ -59,14 +59,6 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.ai_alerts()
 
-/obj/screen/ai/announcement
-	name = "Make Announcement"
-	icon_state = "announcement"
-
-/obj/screen/ai/announcement/Click()
-	var/mob/living/silicon/ai/AI = usr
-	AI.announcement()
-
 /obj/screen/ai/call_shuttle
 	name = "Call Emergency Shuttle"
 	icon_state = "call_shuttle"
@@ -171,11 +163,6 @@
 //Alerts
 	using = new /obj/screen/ai/alerts()
 	using.screen_loc = ui_ai_alerts
-	adding += using
-
-//Announcement
-	using = new /obj/screen/ai/announcement()
-	using.screen_loc = ui_ai_announcement
 	adding += using
 
 //Shuttle
