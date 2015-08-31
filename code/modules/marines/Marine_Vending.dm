@@ -22,7 +22,7 @@
 					/obj/item/ammo_box/magazine/m39 = 25,
 					/obj/item/ammo_box/magazine/m41 = 25,
 					/obj/item/weapon/storage/box/shotguns = 25,
-//					/obj/item/ammo_box/magazine/a762 = 10,
+					/obj/item/ammo_box/magazine/m762 = 10,
 
 
 //					/obj/item/device/motiondetector = 5,
