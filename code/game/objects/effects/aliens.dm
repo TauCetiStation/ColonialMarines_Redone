@@ -85,11 +85,11 @@
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			health -= 150
+			health -= rand(250,300)
 		if(2.0)
-			health -= 100
+			health -= rand(200,250)
 		if(3.0)
-			health -= 50
+			health -= rand(100,200)
 	healthcheck()
 
 
