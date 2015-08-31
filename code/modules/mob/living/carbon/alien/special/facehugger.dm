@@ -276,11 +276,13 @@ var/const/MAX_ACTIVE_TIME = 200
 	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
 		return 0
 
-	//var/mob/living/carbon/C = M
-	//if(ishuman(C))
-	//	var/mob/living/carbon/human/H = C
-	//	if(H.is_mouth_covered(head_only = 1))
-	//		return 0
+	var/mob/living/carbon/C = M
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(istype(H.wear_mask, /obj/item/clothing/mask/facehugger))
+			var/obj/item/clothing/mask/facehugger/fh = H.wear_mask
+			if(fh.stat != DEAD)
+				return 0
 	//	return 1
 	//return 0
 

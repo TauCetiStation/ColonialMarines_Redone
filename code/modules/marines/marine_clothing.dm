@@ -5,9 +5,10 @@
 /obj/item/clothing/head/helmet/marine
 	name = "marine standard helmet"
 	desc = "Standard marine gear. Protects the head from damage."
+	flags = BLOCKHAIR
 	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	health = 5
-	flags = FPRINT|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 
 

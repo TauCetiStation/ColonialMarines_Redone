@@ -76,12 +76,13 @@
 /obj/item/clothing/mask/gas/PMCmask
 	name = "M8 Pattern Armored balaclava"
 	desc = "An armored balaclava designed to conceal both the identity of the operator and act as an air-filter."
+	flags = BLOCKHAIR
 	icon = 'icons/marines/PMC.dmi'
 	alternate_worn_icon = 'icons/marines/PMC.dmi'
 	item_state = "pmc_mask"
 	icon_state = "pmc_mask"
-	flags = FPRINT|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/helmet/marine/PMC
 	name = "PMC tactical cap"
