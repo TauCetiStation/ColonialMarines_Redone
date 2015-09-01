@@ -17,7 +17,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
+/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1, no_casing = 0)
 //	if(in_chamber)
 //		return 1
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -30,6 +30,10 @@
 
 	if(empty_chamber)
 		chambered = null
+
+	if(no_casing)
+		qdel(AC)
+
 	chamber_round()
 	return
 

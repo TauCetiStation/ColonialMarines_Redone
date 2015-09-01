@@ -142,6 +142,9 @@
 	burst_size = 2
 	two_handed = 1
 
+/obj/item/weapon/gun/projectile/automatic/Assault/m39/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
+	..()
+
 /obj/item/weapon/gun/projectile/automatic/Assault/m39/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
@@ -185,6 +188,9 @@
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
+
+/obj/item/weapon/gun/projectile/automatic/Assault/m41/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
+	..()
 
 /obj/item/weapon/gun/projectile/automatic/Assault/m41/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
