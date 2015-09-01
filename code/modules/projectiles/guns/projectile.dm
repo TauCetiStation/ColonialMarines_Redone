@@ -6,12 +6,13 @@
 	w_class = 3.0
 	materials = list(MAT_METAL=1000)
 
+	var/no_mag = 1
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 
 /obj/item/weapon/gun/projectile/New()
 	..()
-	if (!magazine)
+	if (!magazine && !no_mag)
 		magazine = new mag_type(src)
 	chamber_round()
 	update_icon()
