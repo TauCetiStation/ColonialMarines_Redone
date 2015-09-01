@@ -138,8 +138,8 @@
 	can_suppress = 0
 	mag_type = /obj/item/ammo_box/magazine/m39
 	fire_sound = 'sound/weapons/Gunshot_m39.ogg'
-	fire_delay = 2
-	burst_size = 2
+	fire_delay = 0
+	burst_size = 1
 	two_handed = 1
 
 /obj/item/weapon/gun/projectile/automatic/Assault/m39/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
@@ -179,7 +179,7 @@
 	fire_sound = 'sound/weapons/Gunshot_m41.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
-	burst_size = 3
+	burst_size = 4
 	fire_delay = 2
 	two_handed = 1
 
