@@ -26,6 +26,7 @@
 /mob/living/carbon/alien/humanoid/New()
 	create_reagents(1000)
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
+	AddAbility(new/obj/effect/proc_holder/alien/unweld_vent(null))
 	..()
 
 

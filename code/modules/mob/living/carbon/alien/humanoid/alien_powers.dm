@@ -417,6 +417,42 @@ Doesn't work on other aliens/AI.*/
 		usedscreech = 0
 	return 1
 
+/obj/effect/proc_holder/alien/unweld_vent
+	name = "Corrode vent"
+	desc = "Corrode vent"
+	plasma_cost = 120
+	action_icon_state = "alien_acidvent"
+
+/obj/effect/proc_holder/alien/unweld_vent/fire(mob/living/carbon/user)
+	var/list/unary_objects = list()
+	for(var/obj/machinery/atmospherics/components/unary/U in oview(1, user))
+		if(U.welded)
+			if(istype(U, /obj/machinery/atmospherics/components/unary/vent_pump))
+				unary_objects += U
+			else if(istype(U, /obj/machinery/atmospherics/components/unary/vent_scrubber))
+				unary_objects += U
+
+	if(!unary_objects)
+		return 0
+
+	var/target = input("Select what to dissolve:","Dissolve",null) as obj in unary_objects
+	if(!target)
+		return 0
+
+	if(!(target in oview(1)))
+		return 0
+
+	var/obj/machinery/atmospherics/components/V = target
+	if(do_mob(user, V, 20))
+		playsound(V.loc, 'sound/items/Welder2.ogg', 50, 1)
+		V.welded = 0
+		V.update_icon()
+		user.visible_message("<span class='danger'>[user] spits acid at [V].</span>", \
+			"<span class='noticealien'>You corrode [V] with your acid.</span>", \
+			"You hear a loud hissing sound.")
+		return 1
+	return 0
+
 /obj/effect/proc_holder/alien/nightvisiontoggle
 	name = "Toggle Night Vision"
 	desc = "Toggles Night Vision"
@@ -436,8 +472,6 @@ Doesn't work on other aliens/AI.*/
 		user.hud_used.nightvisionicon.icon_state = "nightvision0"
 
 	return 1
-
-
 
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
