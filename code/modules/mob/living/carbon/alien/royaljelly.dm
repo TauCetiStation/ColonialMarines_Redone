@@ -7,44 +7,22 @@
 	var/maxgrowth = 100
 	var/health = 100
 	var/ready = 0
-	var/plasmapool = 0
+	var/list/can_drink = list(
+		/mob/living/carbon/alien/humanoid/drone,
+		/mob/living/carbon/alien/humanoid/sentinel,
+		/mob/living/carbon/alien/humanoid/spitter,
+		/mob/living/carbon/alien/humanoid/runner,
+		/mob/living/carbon/alien/humanoid/hunter
+	)
 
-/obj/royaljelly/attack_hand(user as mob)
-	var/mob/living/carbon/alien/humanoid/sentinel/sent = user
-	if(sent && !sent.hasJelly)
-		sent.hasJelly = 1
-		sent.visible_message("[sent] drinks the royal jelly.")
-		qdel(src)
-		return
-	/*var/mob/living/carbon/alien/humanoid/hunter/hunt = user
-	if(hunt && !hunt.hasJelly)
-		hunt.hasJelly = 1
-		hunt.visible_message("[hunt] drinks the royal jelly.")
-		del(src)
-		return*/
-	var/mob/living/carbon/alien/humanoid/runner/runner = user
-	if (runner && !runner.hasJelly)
-		runner.hasJelly = 1
-		runner.visible_message("[runner] drinks the royal jelly")
-		qdel(src)
-		return
-	var/mob/living/carbon/alien/humanoid/drone/drone = user
-	if(drone && !drone.hasJelly)
-		drone.hasJelly = 1
-		drone.visible_message("[drone] drinks the royal jelly.")
-		qdel(src)
-		return
-	user << "\blue You already feel the effects of the royal jelly flowing through your veins."
-
-/obj/royaljelly/attack_paw(user as mob) //can be picked up by aliens
-	if(isalien(user))
-		attack_hand(user)
-		return
-	else
-		..()
-		return
-
-
+/obj/royaljelly/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(is_type_in_list(M, can_drink))
+		if(!M:hasJelly)
+			M:hasJelly = 1
+			M.visible_message("[M] drinks the royal jelly.")
+			qdel(src)
+		else
+			M << "<span class='noticealien'>You already feel the effects of the royal jelly flowing through your veins.</span>"
 
 /obj/royaljelly/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
