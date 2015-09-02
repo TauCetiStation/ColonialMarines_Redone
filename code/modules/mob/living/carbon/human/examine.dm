@@ -227,6 +227,8 @@
 	if(fire_stacks < 0)
 		msg += "[t_He] looks a little soaked.\n"
 
+	if (src.birth)
+		msg += "[t_He] [t_has] a large hole in [t_his] chest!\n"
 
 	if(nutrition < NUTRITION_LEVEL_STARVING - 50)
 		msg += "[t_He] [t_is] severely malnourished.\n"

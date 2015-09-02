@@ -34,6 +34,7 @@
 	var/lastattacker = null
 	var/lastattacked = null
 	var/attack_log = list( )
+	var/birth = 0//Used by the aliens to tell as to whether or not they've produced larva
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/memory = ""

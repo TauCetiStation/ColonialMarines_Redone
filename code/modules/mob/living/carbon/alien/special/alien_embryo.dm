@@ -7,6 +7,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	var/stage = 0
+	var/stage_age = 0
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -15,7 +16,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	else
 		finder << "It's grown quite large, and writhes slightly as you look at it."
 		if(prob(10))
-			AttemptGrow(0)
+			AttemptGrow()
 
 /obj/item/organ/internal/body_egg/alien_embryo/prepare_eat()
 	var/obj/S = ..()
@@ -23,6 +24,13 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	return S
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life()
+	stage_age++
+	if(stage < 5 && stage_age > 60)
+		stage++
+		stage_age = 0
+		spawn(0)
+			RefreshInfectionImage()
+
 	switch(stage)
 		if(2, 3)
 			if(prob(2))
@@ -48,20 +56,17 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 					owner.adjustToxLoss(1)
 		if(5)
 			owner << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
-			owner.adjustToxLoss(10)
+			owner.adjustToxLoss(2)
+			AttemptGrow()
+			stage = 6
+			if(prob(70))
+				owner.adjustBruteLoss(5)
+		if(6)
+			stage = 4
+			stage_age = 57
+	sleep(20)
 
-/obj/item/organ/internal/body_egg/alien_embryo/egg_process()
-	if(stage < 5 && prob(3))
-		stage++
-		spawn(0)
-			RefreshInfectionImage()
-
-	if(stage == 5 && prob(50))
-		AttemptGrow()
-
-
-
-/obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
+/obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow()
 	if(!owner) return
 	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 	var/client/C = null
@@ -69,7 +74,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	// To stop clientless larva, we will check that our host has a client
 	// if we find no ghosts to become the alien. If the host has a client
 	// he will become the alien but if he doesn't then we will set the stage
-	// to 2, so we don't do a process heavy check everytime.
+	// to 4, so we don't do a process heavy check everytime.
 
 	if(candidates.len)
 		C = pick(candidates)
@@ -77,16 +82,15 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		C = owner.client
 	else
 		stage = 4 // Let's try again later.
+		stage_age = 35
 		return
 
-	if(owner.lying)
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
-	else
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_stand")
 	spawn(6)
+		owner.death()
+		owner.birth = 1
+
 		var/atom/xeno_loc = owner
-		if(!gib_on_success)
-			xeno_loc = get_turf(xeno_loc)
+		xeno_loc = get_turf(xeno_loc)
 
 		var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 		new_xeno.key = C.key
@@ -95,9 +99,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(ishuman(owner))
 			score_marines_chestbursted++
 
-		if(gib_on_success)
-			owner.stomach_contents += new_xeno
-			owner.gib()
+		owner.visible_message("<span class='userdanger'>[new_xeno] crawls out of [owner]!</span>")
+		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "bursted_lie")
+
 		qdel(src)
 
 
