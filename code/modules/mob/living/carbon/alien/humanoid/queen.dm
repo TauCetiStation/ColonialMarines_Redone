@@ -104,7 +104,7 @@
 	desc = "Produce a sac of fluid which furthers the evolution of the hive."
 	plasma_cost = 350
 	check_turf = 1
-	action_icon_state = "alien_egg"
+	action_icon_state = "jelly"
 
 /obj/effect/proc_holder/alien/lay_jelly/fire(mob/living/carbon/user)
 	if(build_lay_fail(user))
