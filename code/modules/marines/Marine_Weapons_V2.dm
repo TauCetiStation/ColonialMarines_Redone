@@ -15,7 +15,8 @@
 	damage = 30
 
 /obj/item/projectile/bullet/m37 //M37 Pump Shotgun
-	damage = 40
+	name = "pellet"
+	damage = 15
 
 ///***Ammo***///
 
@@ -45,6 +46,8 @@
 	icon_state = "gshell"
 	caliber = "12gs"
 	projectile_type = /obj/item/projectile/bullet/m37
+	pellets = 5
+	variance = 0.8
 
 ///***Ammo Boxes***///
 
@@ -85,10 +88,10 @@
 	max_ammo = 0
 	icon_state = "m309a0"
 
-
 /obj/item/ammo_box/m37 //M37 Shotgun
 	name = "M37 Shotgun shells (box)"
 	desc = "A box of standard issue high-powered 12 gauge buckshot rounds. Manufactured by Armat Systems for military and civilian use."
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "shells"
 	ammo_type = /obj/item/ammo_casing/m37
 	max_ammo = 7
@@ -96,8 +99,8 @@
 /obj/item/ammo_box/magazine/internal/m37
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	caliber = "shotgun"
+	ammo_type = /obj/item/ammo_casing/m37
+	caliber = "12gs"
 	max_ammo = 7
 	multiload = 0
 

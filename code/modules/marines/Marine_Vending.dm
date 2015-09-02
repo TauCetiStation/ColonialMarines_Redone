@@ -21,7 +21,7 @@
 					/obj/item/ammo_box/magazine/m44m =25,
 					/obj/item/ammo_box/magazine/m39 = 25,
 					/obj/item/ammo_box/magazine/m41 = 25,
-					/obj/item/weapon/storage/box/shotguns = 25,
+					/obj/item/ammo_box/m37 = 25,
 					/obj/item/ammo_box/magazine/m762 = 10,
 
 
