@@ -30,6 +30,8 @@
 	var/psychiccost = 1
 
 /mob/living/carbon/alien/New()
+	create_reagents(1000)
+
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
