@@ -228,11 +228,10 @@
 
 
 /mob/living/carbon/alien/humanoid/corroder/ClickOn(var/atom/A, params)
-
+	face_atom(A)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		spit_acid_aim(A)
-
 		return
 	..()
 

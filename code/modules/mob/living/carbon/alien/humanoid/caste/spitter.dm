@@ -117,11 +117,10 @@
 //Aimable Spit *********************************************************
 
 /mob/living/carbon/alien/humanoid/spitter/ClickOn(var/atom/A, params)
-
+	face_atom(A)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		spit_neuro_aim(A, 2)
-
 		return
 	..()
 

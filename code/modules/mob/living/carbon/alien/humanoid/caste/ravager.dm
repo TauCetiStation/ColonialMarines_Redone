@@ -86,13 +86,10 @@
 	return newdir
 
 /mob/living/carbon/alien/humanoid/ravager/ClickOn(var/atom/A, params)
-
-
-
+	face_atom(A)
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"] || modifiers["shift"])
 		charge(A)
-
 		return
 
 	// Give Ravagers 2x the reach (BUG: CAN ATTACK THROUGH WALLS)
@@ -111,20 +108,17 @@
 	set name = "Charge"
 	set desc = "Charge towards something."
 	set category = "Alien"
-
 	if(health<0)
 		src << "You can't charge while unconcious!"
 		return
 	if(stat == 2)
 		src << "You can't charge while dead!"
-
 	if(usedcharge <= world.time)
 		if(!T)
 			var/list/victims = list()
 			for(var/mob/living/carbon/human/C in oview(7))
 				victims += C
 			T = input(src, "Who should we charge towards?") as null|anything in victims
-
 		if(T)
 			usedcharge = world.time + CHARGECOOLDOWN * 10
 			src.throw_at(T, CHARGEDISTANCE, CHARGESPEED)
@@ -133,8 +127,6 @@
 			charging = CHARGESTRENGTH
 			spawn(25)
 				charging = 0
-
-
 		else
 			src << "\blue You cannot charge at nothing!"
 	else

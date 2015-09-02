@@ -70,7 +70,7 @@
 		usedthrow--
 
 /mob/living/carbon/alien/humanoid/carrier/ClickOn(var/atom/A, params)
-
+	face_atom(A)
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"] || modifiers["shift"])
 		if(facehuggers > 0)

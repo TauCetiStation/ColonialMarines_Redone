@@ -112,7 +112,6 @@
 	return
 
 /mob/living/carbon/alien/humanoid/runner/ClickOn(var/atom/A, params)
-
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		pounce()
