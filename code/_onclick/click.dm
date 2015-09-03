@@ -41,6 +41,8 @@
 		build_click(src, client.buildmode, params, A)
 		return
 
+	var/obj/item/W = get_active_hand()
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -55,7 +57,14 @@
 		AltClickOn(A)
 		return
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
+		if(W == A)
+			W.ctrl_self(src)
+			if(hand)
+				update_inv_l_hand(0)
+			else
+				update_inv_r_hand(0)
+		else
+			CtrlClickOn(A)
 		return
 
 	if(stat || paralysis || stunned || weakened)
@@ -79,7 +88,6 @@
 		throw_item(A)
 		return
 
-	var/obj/item/W = get_active_hand()
 
 
 	if(W == A)

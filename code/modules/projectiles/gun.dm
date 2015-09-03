@@ -34,6 +34,9 @@
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
 	var/two_handed = 0
+	var/wielded = 0
+	var/wieldsound = null
+	var/unwieldsound = null
 
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
@@ -131,8 +134,9 @@
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 
-	if(two_handed && user.get_inactive_hand())
-		user << "<span class='warning'>You can't shoot this weapon while holding something in other hand.</span>"
+	var/obj/item/weapon/gun/offhand/O = user.get_inactive_hand()
+	if(two_handed && !istype(O))
+		user << "<span class='warning'>You must grab the [name] with both hands in order to fire.</span>"
 		return 0
 
 	if(trigger_guard)
@@ -145,6 +149,73 @@
 				return 0
 	return 1
 
+/obj/item/weapon/gun/mob_can_equip(mob/M, slot)
+	//Cannot equip wielded items.
+	if(two_handed && wielded)
+		M << "<span class='warning'>Unwield the [name] first!</span>"
+		return 0
+	return ..()
+
+/obj/item/weapon/gun/proc/unwield(mob/living/carbon/user)
+	if(!wielded || !user) return
+	wielded = 0
+	var/sf = findtext(name," (Wielded)")
+	if(sf)
+		name = copytext(name,1,sf)
+	else //something wrong
+		name = "[initial(name)]"
+	update_icon()
+	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(unwieldsound)
+		playsound(loc, unwieldsound, 50, 1)
+	var/obj/item/weapon/gun/offhand/O = user.get_inactive_hand()
+	if(O && istype(O))
+		O.unwield()
+	return
+
+/obj/item/weapon/gun/proc/wield(mob/living/carbon/user)
+	if(wielded) return
+	if(istype(user,/mob/living/carbon/monkey) )
+		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		return
+	if(user.get_inactive_hand())
+		user << "<span class='warning'>You need your other hand to be empty!</span>"
+		return
+	wielded = 1
+	name = "[name] (Wielded)"
+	update_icon()
+	user << "<span class='notice'>You grab the [name] with both hands.</span>"
+	if (wieldsound)
+		playsound(loc, wieldsound, 50, 1)
+	var/obj/item/weapon/gun/offhand/O = new(user) ////Let's reserve his other hand~
+	O.name = "[name] - offhand"
+	O.desc = "Your second grip on the [name]"
+	user.put_in_inactive_hand(O)
+	return
+
+///////////OFFHAND///////////////
+/obj/item/weapon/gun/offhand
+	name = "offhand"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	item_state = null
+	w_class = 5.0
+	flags = ABSTRACT
+	two_handed = 1
+
+/obj/item/weapon/gun/offhand/unwield()
+	qdel(src)
+
+/obj/item/weapon/gun/offhand/wield()
+	qdel(src)
+
+/obj/item/weapon/gun/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+	var/mob/user = loc
+	if(!istype(user)) return 0
+	var/obj/item/I = user.get_active_hand()
+	if(I == src) I = user.get_inactive_hand()
+	if(!I) return 0
+	return I.IsShield()
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params)
 	add_fingerprint(user)
@@ -302,7 +373,19 @@
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	if(user && two_handed)
+		var/obj/item/weapon/gun/O = user.get_inactive_hand()
+		if(istype(O))
+			O.unwield(user)
+		return	unwield(user)
 
+/obj/item/weapon/gun/ctrl_self(mob/user)
+	if(two_handed)
+		if(wielded) //Trying to unwield it
+			unwield(user)
+		else //Trying to wield it
+			wield(user)
 
 /obj/item/weapon/gun/attack_hand(mob/user)
 	if(unique_reskin && !reskinned && loc == user)
