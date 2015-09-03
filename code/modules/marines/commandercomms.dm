@@ -6,7 +6,7 @@
 	desc = "A Nanotrasen Military issued communications console."
 	icon_screen = "comm"
 	req_access = list(access_logistics)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = "/obj/item/weapon/circuitboard/commander_communications"
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
