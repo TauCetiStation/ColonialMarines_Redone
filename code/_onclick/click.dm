@@ -203,6 +203,11 @@
 	This is overridden in ai.dm
 */
 /mob/proc/ShiftClickOn(atom/A)
+	if(isturf(A)) // Used as hotkey for pumping shotgun and makes that we can still examine mobs and objs.
+		var/obj/item/weapon/gun/projectile/shotgun/O = src.get_active_hand()
+		if(istype(O))
+			O.attack_self(src)
+			return
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
