@@ -143,7 +143,6 @@
 	fire_sound = 'sound/weapons/Gunshot_m39.ogg'
 	fire_delay = 0
 	burst_size = 1
-	two_handed = 1
 
 /obj/item/weapon/gun/projectile/automatic/Assault/m39/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
 	..()

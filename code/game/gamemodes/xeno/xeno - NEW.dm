@@ -88,7 +88,7 @@
 
 	// 1 Alien per 5 players
 	if(!possible_aliens.len)
-		world << "No alien players"
+		world << "<span class='userdanger'>No alien players.</span>"
 		return 0
 
 	for(var/C = 0, C < readyplayers, C += 5)

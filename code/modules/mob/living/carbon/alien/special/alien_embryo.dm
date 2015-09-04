@@ -64,7 +64,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(6)
 			stage = 4
 			stage_age = 57
-	sleep(20)
 
 /obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow()
 	if(!owner) return
