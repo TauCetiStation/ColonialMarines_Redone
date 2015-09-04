@@ -11,6 +11,11 @@
 		if(amount_grown < max_grown)
 			amount_grown++
 
+		if(!client)
+			larva_afk_tick++
+		else
+			larva_afk_tick = 0
+
 	//some kind of bug in canmove() isn't properly calling update_icons, so this is here as a placeholder
 	update_icons()
 

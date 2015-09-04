@@ -1,3 +1,32 @@
+/mob/dead/observer/verb/join_as_larva()
+	set name = "Join as larva"
+	set desc = "Take control of clientless larva."
+	set category = "Ghost"
+
+	var/answer = alert(src, "Search for any clientless larva?",,"Yes","No")
+
+	if(answer == "No")
+		return
+
+	var/clientless_count = 0
+	var/clientless_tick = 0
+	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+		for(var/mob/living/carbon/alien/larva/L in living_mob_list)
+			if((L.stat == DEAD) || L.client)
+				continue
+			if(L.larva_afk_tick < 120)
+				clientless_count++
+				if(clientless_tick < L.larva_afk_tick)
+					clientless_tick = L.larva_afk_tick
+				continue
+			L.key = usr.key
+			return
+		if(clientless_count)
+			usr << "<span class='notice'>There are [clientless_count] clientless larvas, and there is none that has passed 2 minutes.</span>"
+			usr << "<span class='notice'>The one with highest afk time has [120 - clientless_tick] seconds left, until your control.</span>"
+		else
+			usr << "<span class='notice'>No clientless larvas at this time.</span>"
+
 /mob/living/carbon/alien/larva
 	name = "alien larva"
 	real_name = "alien larva"
@@ -12,6 +41,7 @@
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	var/larva_afk_tick = 0
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
