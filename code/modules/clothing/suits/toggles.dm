@@ -108,6 +108,7 @@
 	if(!helmet)
 		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
 		helmet = W
+		W.suit = src
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
 	..()

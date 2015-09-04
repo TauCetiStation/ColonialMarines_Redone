@@ -7,6 +7,7 @@
 	icon_state = "hardsuit0-engineering"
 	item_state = "eng_helm"
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	var/obj/item/clothing/suit/space/hardsuit/suit
 	var/basestate = "hardsuit"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0

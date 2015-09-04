@@ -95,9 +95,17 @@ BLIND     // can't see anything
 	var/atom/this = src
 	if(health <= 0)
 		if(istype(this.loc, /mob/living/carbon/human))
+			if(istype(src, /obj/item/clothing/head/helmet/space/hardsuit))
+				this.loc << "<span class='notice'>\the [src] is damaged and auto-disengaged.</span>"
+				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+				var/obj/item/clothing/head/helmet/space/hardsuit/helmet = src
+				helmet.suit.RemoveHelmet()
+				helmet.suit.helmettype = null
+				qdel(src)
+				return
+
 			var/mob/living/carbon/human/user = this.loc
 			user.unEquip(src, 1)
-
 			slot_flags = 0
 			name = "broken " + name
 			desc = desc + " This one looks shattered and cannot be used anymore."
