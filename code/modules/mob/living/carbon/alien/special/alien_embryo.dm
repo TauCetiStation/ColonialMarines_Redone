@@ -58,12 +58,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			owner << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 			owner.adjustToxLoss(2)
 			AttemptGrow()
-			stage = 6
 			if(prob(70))
 				owner.adjustBruteLoss(5)
-		if(6)
-			stage = 4
-			stage_age = 57
 
 /obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow()
 	if(!owner) return
