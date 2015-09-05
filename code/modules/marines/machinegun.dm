@@ -98,6 +98,7 @@
 				A.starting = curloc
 				A.yo = targloc.y - curloc.y
 				A.xo = targloc.x - curloc.x
+				A.firer = User
 				A.fire()
 				ammo = ammo - 1
 				score_rounds_fired++
