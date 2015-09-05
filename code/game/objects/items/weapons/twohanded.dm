@@ -164,6 +164,8 @@
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
+		if(istype(A, /obj/structure/window/bulletproof))
+			return
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
 
