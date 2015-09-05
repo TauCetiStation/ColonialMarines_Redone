@@ -23,7 +23,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	S.reagents.add_reagent("sacid", 10)
 	return S
 
-/obj/item/organ/internal/body_egg/alien_embryo/on_life()
+/obj/item/organ/internal/body_egg/alien_embryo/egg_process()
+	if(stage < 4 && stage_age < 35 && (owner.stat == DEAD))
+		Remove(owner)
+		return
 	stage_age++
 	if(stage < 5 && stage_age > 60)
 		stage++
