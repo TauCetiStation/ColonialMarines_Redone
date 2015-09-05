@@ -65,7 +65,7 @@
 /obj/effect/proc_holder/alien/lay_egg
 	name = "Lay Egg"
 	desc = "Lay an egg to produce huggers to impregnate prey with."
-	plasma_cost = 200
+	plasma_cost = 100
 	check_turf = 1
 	action_icon_state = "alien_egg"
 
