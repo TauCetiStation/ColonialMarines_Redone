@@ -44,7 +44,7 @@ emp_act
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.firer && (P.firer.client))
 		var/client/C = P.firer.client
-		if(isnum(C.player_age) && (C.player_age <= 4))
+		if(isnum(C.player_age) && (C.player_age < ff_min_age))
 			P.damage = 1
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
