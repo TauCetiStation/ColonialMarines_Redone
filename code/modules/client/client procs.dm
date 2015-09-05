@@ -50,6 +50,8 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
+	if(world.time < last_message_time + 5)
+		return 1
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -60,6 +62,7 @@
 			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
+		last_message_time = world.time
 		last_message = message
 		src.last_message_count = 0
 		return 0
