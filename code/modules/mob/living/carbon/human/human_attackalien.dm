@@ -39,6 +39,7 @@
 							score_slashes_made++
 						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 						Weaken(rand(M.tacklemin,M.tacklemax))
+						adjustStaminaLoss(rand(M.tacklemin*10,M.tacklemax*10))
 						add_logs(M, src, "tackled")
 						visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 							"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -52,6 +53,7 @@
 							score_slashes_made++
 						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 						Weaken(rand(M.tacklemin,M.tacklemax))
+						adjustStaminaLoss(rand(M.tacklemin*10,M.tacklemax*10))
 						add_logs(M, src, "tackled")
 						visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 							"<span class='userdanger'>[M] has tackled down [src]!</span>")
