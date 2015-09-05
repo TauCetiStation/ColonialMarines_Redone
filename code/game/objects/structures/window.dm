@@ -440,6 +440,7 @@
 	fulltile = 1
 	smooth = 1
 	canSmoothWith = list(/obj/structure/window/bulletproof)
+	unacidable = 1
 
 /* Full Tile Windows (more health) */
 
