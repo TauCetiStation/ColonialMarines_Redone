@@ -67,6 +67,14 @@
 		qdel(src)
 	return
 
+/obj/machinery/sleeper/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(!occupant)
+		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+		qdel(src)
+	else
+		go_out()
+		qdel(src)
+
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
