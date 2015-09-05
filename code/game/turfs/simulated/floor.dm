@@ -25,6 +25,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
+	baseturf = /turf/simulated/floor/plating
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
