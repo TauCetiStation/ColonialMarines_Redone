@@ -8,6 +8,8 @@
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
+/obj/item/projectile/bullet/machinegun
+	damage = 60
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5

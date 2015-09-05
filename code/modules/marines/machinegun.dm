@@ -92,7 +92,7 @@
 				if (!istype(targloc) || !istype(curloc))
 					return
 				playsound(src, fire_sound, 80, 1, -1)
-				var/obj/item/projectile/bullet/A = new /obj/item/projectile/bullet(shootfrom)
+				var/obj/item/projectile/bullet/machinegun/A = new /obj/item/projectile/bullet/machinegun(shootfrom)
 				A.original = targloc
 				A.current = curloc
 				A.starting = curloc
@@ -138,7 +138,7 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
-			if(!do_after(user,40))
+			if(!do_after(user,40, target = src))
 				user.visible_message("\blue \The [user] decides not to unbolt \the [src].")
 				return
 			user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
@@ -146,7 +146,7 @@
 			return
 		else
 			user.visible_message("\blue \The [user] starts to bolt \the [src] to the plating...")
-			if(!do_after(user,40))
+			if(!do_after(user,40, target = src))
 				user.visible_message("\blue \The [user] decides not to bolt \the [src].")
 				return
 			user.visible_message("\blue \The [user] finishes fastening down \the [src]!")
