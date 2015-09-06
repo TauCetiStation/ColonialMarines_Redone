@@ -86,7 +86,7 @@
 		no_queen = 0
 
 	if(queen_died > 0 && world.timeofday <= queen_died)
-		src << "A new queen can evolve in about [round((queen_died - world.timeofday)/600,1)] minutes."
+		user << "A new queen can evolve in about [round((queen_died - world.timeofday)/600,1)] minutes."
 		return
 
 	if(no_queen)
