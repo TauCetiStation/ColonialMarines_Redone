@@ -287,7 +287,11 @@ datum/game_mode/infestation/proc/check_alien_victory()
 				if(L.mind.assigned_role == "Alien")
 					var/mob/M = L.mind.current
 					if(M)
-						text += "<br>[M.key] was [M.name] ("
+						if(M.key)
+							text += "<br>[M.key] "
+						else if(M.mind)
+							text += "<br>[M.mind.key] "
+						text += "was [M.name] ("
 						if(M.stat == DEAD)
 							text += "died"
 						else
