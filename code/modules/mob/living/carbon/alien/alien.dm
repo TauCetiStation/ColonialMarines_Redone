@@ -46,6 +46,12 @@
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return
 
+/mob/living/carbon/alien/Life()
+	if(..())
+		if(health <= 0)
+			if(istype(loc, /obj/machinery/atmospherics/components/unary))
+				adjustBruteLoss(15)
+
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
 		..(amount * 2)
