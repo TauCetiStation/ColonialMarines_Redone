@@ -520,7 +520,7 @@
 "jZ" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel/darkred/corner{dir = 1},/area/sulaco/secure_storage)
 "ka" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plasteel/darkred/corner{dir = 1},/area/sulaco/secure_storage)
 "kb" = (/obj/machinery/power/port_gen/pacman,/turf/simulated/floor/plasteel/darkred/side{dir = 1},/area/sulaco/secure_storage)
-"kc" = (/obj/structure/table/reinforced,/obj/item/clothing/head/helmet/space/hardsuit/security,/obj/item/clothing/suit/space/hardsuit/security,/obj/item/clothing/shoes/magboots,/turf/simulated/floor/plasteel/darkred/side{dir = 1},/area/sulaco/secure_storage)
+"kc" = (/obj/structure/table/reinforced,/obj/item/clothing/suit/space/hardsuit/security,/obj/item/clothing/shoes/magboots,/turf/simulated/floor/plasteel/darkred/side{dir = 1},/area/sulaco/secure_storage)
 "kd" = (/obj/structure/table/reinforced,/obj/item/weapon/c4,/obj/item/weapon/c4,/obj/item/weapon/c4,/obj/item/weapon/c4,/obj/item/weapon/c4,/obj/item/weapon/c4,/turf/simulated/floor/plasteel/darkred/side{dir = 1},/area/sulaco/secure_storage)
 "ke" = (/obj/structure/table/reinforced,/obj/item/weapon/stock_parts/cell/high,/obj/item/weapon/stock_parts/cell/high,/turf/simulated/floor/plasteel/darkred/side{dir = 1},/area/sulaco/secure_storage)
 "kf" = (/turf/space,/turf/simulated/wall/shuttle{dir = 1; icon_state = "diagonalWall3"},/area/sulaco/aft_hall)
