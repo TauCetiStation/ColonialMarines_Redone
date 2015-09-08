@@ -197,12 +197,14 @@
 		qdel(src)
 		return
 
-	var/list/random_cardinal = shuffle(cardinal)
-	for(var/dirn in random_cardinal)
+	for(var/dirn in alldirs)
 		var/turf/T = get_step(src, dirn)
 
 		if (!istype(T) || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 			continue
+
+		if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+			return
 
 		if(locate(/obj/structure/alien/resin/wall) in T)
 			continue
@@ -215,23 +217,17 @@
 				new /obj/structure/alien/weeds(T)
 			continue
 
-		
-
 		if(locate(/obj/structure/window) in T)
 			new /obj/structure/alien/resin/wall(T)
 			new /obj/structure/alien/weeds(T)
 			continue
-
 		else if(locate(/obj/machinery/door) in T)
 			new /obj/structure/mineral_door/resin(T)
 			new /obj/structure/alien/weeds(T)
 			continue
 
-		if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-			return
-
-		new /obj/structure/alien/weeds(T, linked_node)
-
+		if(!(dirn in diagonals))
+			new /obj/structure/alien/weeds(T, linked_node)
 
 /obj/structure/alien/weeds/ex_act(severity, target)
 	qdel(src)
