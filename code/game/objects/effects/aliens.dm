@@ -50,6 +50,7 @@
 	desc = "Thick resin solidified into a wall."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "wall0"	//same as resin, but consistency ho!
+	layer = 3.6
 	resintype = "wall"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -161,7 +162,7 @@
 	icon_state = "weeds"
 	anchored = 1
 	density = 0
-	layer = 2
+	layer = 2.45
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache
@@ -196,21 +197,40 @@
 		qdel(src)
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	var/list/random_cardinal = shuffle(cardinal)
+	for(var/dirn in random_cardinal)
+		var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
-				continue
+		if (!istype(T) || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			continue
 
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
+		if(locate(/obj/structure/alien/resin/wall) in T)
+			continue
+		else if(locate(/obj/structure/mineral_door/resin) in T)
+			continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
+		if(T.density)
+			if(istype(T, /turf/simulated/wall))
+				new /obj/structure/alien/resin/wall(T)
+				new /obj/structure/alien/weeds(T)
+			continue
 
-			new /obj/structure/alien/weeds(T, linked_node)
+		
+
+		if(locate(/obj/structure/window) in T)
+			new /obj/structure/alien/resin/wall(T)
+			new /obj/structure/alien/weeds(T)
+			continue
+
+		else if(locate(/obj/machinery/door) in T)
+			new /obj/structure/mineral_door/resin(T)
+			new /obj/structure/alien/weeds(T)
+			continue
+
+		if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+			return
+
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)

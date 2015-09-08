@@ -63,6 +63,7 @@
 
 /obj/structure/mineral_door/resin
 	icon_state = "resin"
+	layer = 3.2
 	mineralType = "resin"
 	hardness = 200
 	close_delay = 100
