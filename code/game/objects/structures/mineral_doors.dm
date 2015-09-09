@@ -67,7 +67,8 @@
 	if(isSwitchingStates) return
 	if(isliving(user))
 		var/mob/living/M = user
-		if(world.time - M.last_bumped <= 60) return //NOTE do we really need that?
+		if(world.time - M.last_bumped <= 10) return //NOTE do we really need that? Was 60, which is too much. ~Zve ...
+		M.last_bumped = world.time //...fixes problem when you bumped airlock recently and mineral door won't open for you.
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M

@@ -58,8 +58,7 @@
 		else
 			healths.icon_state = "health7"
 
-//hivelords use the same base as generic humanoids.
-//hivelord verbs
+//Why did i put resin doors in hivelord??? Need to move code below somewhere else later... ~Zve
 
 /obj/structure/mineral_door/resin
 	icon_state = "resin"
@@ -78,9 +77,11 @@
 	if(!state)
 		return TryToSwitchState(user)
 
-/obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
-	if(isalien(user))
-		return ..()
+/obj/structure/mineral_door/resin/TryToSwitchState(mob/living/carbon/alien/A)
+	if(isSwitchingStates) return
+	if(istype(A))
+		if(A.client)
+			SwitchState()
 
 /obj/structure/mineral_door/resin/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
