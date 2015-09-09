@@ -432,7 +432,7 @@
 
 						var/failed = null
 
-						if (H.suiciding || (NOCLONE in H.mutations))
+						if (H.suiciding || (NOCLONE in H.mutations) || H.birth)
 							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 						else if ((tplus > tlimit) || !H.getorgan(/obj/item/organ/internal/heart))
 							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"
