@@ -44,6 +44,11 @@
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
+	if(isalien(AM))
+		var/mob/living/carbon/alien/A = AM
+		var/obj/structure/mineral_door/resin/R = locate(/obj/structure/mineral_door/resin) in get_turf(src)
+		if(R && !R.state)
+			R.TryToSwitchState(A)
 	if(operating || emagged) return
 	if(isliving(AM))
 		var/mob/living/M = AM
