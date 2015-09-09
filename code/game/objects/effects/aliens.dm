@@ -217,15 +217,18 @@
 				new /obj/structure/alien/weeds(T)
 			continue
 
-		if(locate(/obj/structure/window) in T)
-			new /obj/structure/alien/resin/wall(T)
-			new /obj/structure/alien/weeds(T)
-			continue
-		else if(locate(/obj/machinery/door) in T)
-			new /obj/structure/mineral_door/resin(T)
-			new /obj/structure/alien/weeds(T)
-			continue
-
+		var/obj/structure/window/W = locate(/obj/structure/window) in T
+		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
+		if(W)
+			if(W.fulltile)
+				new /obj/structure/alien/resin/wall(T)
+				new /obj/structure/alien/weeds(T)
+				continue
+		else if(D)
+			if(!istype(D, /obj/machinery/door/window))
+				new /obj/structure/mineral_door/resin(T)
+				new /obj/structure/alien/weeds(T)
+				continue
 		if(!(dirn in diagonals))
 			new /obj/structure/alien/weeds(T, linked_node)
 
