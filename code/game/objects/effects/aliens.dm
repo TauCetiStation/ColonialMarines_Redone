@@ -29,13 +29,21 @@
 	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 350
 	var/resintype = null
+	var/our_weed = null
 	smooth = 1
 
 
 /obj/structure/alien/resin/New(location)
 	..()
+	our_weed = locate(/obj/structure/alien/weeds) in get_turf(src)
 	air_update_turf(1)
 	return
+
+/obj/structure/alien/resin/Destroy()
+	if(our_weed && loc.density) //Destroy weed under us, only if our loc is dense (mostly walls).
+		qdel(our_weed)
+	air_update_turf(1)
+	..()
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -213,21 +221,21 @@
 
 		if(T.density)
 			if(istype(T, /turf/simulated/wall))
-				new /obj/structure/alien/resin/wall(T)
 				new /obj/structure/alien/weeds(T)
+				new /obj/structure/alien/resin/wall(T)
 			continue
 
 		var/obj/structure/window/W = locate(/obj/structure/window) in T
 		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
 		if(W)
 			if(W.fulltile)
-				new /obj/structure/alien/resin/wall(T)
 				new /obj/structure/alien/weeds(T)
+				new /obj/structure/alien/resin/wall(T)
 				continue
 		else if(D)
 			if(!istype(D, /obj/machinery/door/window))
-				new /obj/structure/mineral_door/resin(T)
 				new /obj/structure/alien/weeds(T)
+				new /obj/structure/mineral_door/resin(T)
 				continue
 		if(!(dirn in diagonals))
 			new /obj/structure/alien/weeds(T, linked_node)
