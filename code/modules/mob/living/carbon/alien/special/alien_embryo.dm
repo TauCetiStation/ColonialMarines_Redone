@@ -98,7 +98,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			score_marines_chestbursted++
 
 		owner.visible_message("<span class='userdanger'>[new_xeno] crawls out of [owner]!</span>")
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "bursted_lie")
+		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "bursted_stand")
 
 		qdel(src)
 
