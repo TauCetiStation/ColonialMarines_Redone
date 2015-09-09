@@ -3,6 +3,7 @@
 
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it"
+	layer = 2.46
 
 	use_power = 1
 	idle_power_usage = 10
