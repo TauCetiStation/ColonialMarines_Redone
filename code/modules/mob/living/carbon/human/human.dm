@@ -283,6 +283,9 @@
 	return ..(shock_damage,source,siemens_coeff)
 
 /mob/living/carbon/human/Topic(href, href_list)
+	if(isalien(usr))
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 
 		if(href_list["embedded_object"])
