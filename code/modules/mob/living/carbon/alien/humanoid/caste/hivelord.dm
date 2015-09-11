@@ -67,8 +67,8 @@
 	hardness = 200
 	close_delay = 100
 
-	openSound = 'sound/effects/attackblob.ogg'
-	closeSound = 'sound/effects/attackblob.ogg'
+	openSound = null //Moar stealth ~Zve
+	closeSound = null
 
 /obj/structure/mineral_door/resin/Dismantle(devastated = 0)
 	qdel(src)

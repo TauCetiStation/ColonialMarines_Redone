@@ -87,7 +87,8 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
-	playsound(loc, openSound, 100, 1)
+	if(openSound)
+		playsound(loc, openSound, 100, 1)
 	flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
@@ -107,7 +108,8 @@
 	for(var/mob/living/L in T)
 		return
 	isSwitchingStates = 1
-	playsound(loc, closeSound, 100, 1)
+	if(closeSound)
+		playsound(loc, closeSound, 100, 1)
 	flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
