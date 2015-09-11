@@ -762,7 +762,15 @@ Sorry Giacom. Please don't be mad :(
 /atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
+	var/final_pixel_y
+	var/final_pixel_x
+	if(isalienadult(src))
+		var/mob/living/carbon/alien/humanoid/Ah = src
+		final_pixel_y = Ah.custom_pixel_y_offset
+		final_pixel_x = Ah.custom_pixel_x_offset
+	else
+		final_pixel_y = initial(pixel_y)
+		final_pixel_x = initial(pixel_x)
 	if(end_pixel_y)
 		final_pixel_y = end_pixel_y
 	var/direction = get_dir(src, A)
@@ -789,7 +797,7 @@ Sorry Giacom. Please don't be mad :(
 			pixel_y_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	animate(pixel_x = final_pixel_x, pixel_y = final_pixel_y, time = 2)
 
 
 /mob/living/do_attack_animation(atom/A)
