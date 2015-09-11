@@ -10,6 +10,7 @@
 	can_be_unanchored = 0
 	canSmoothWith = null
 	var/image/nest_overlay
+	var/breaking = 0
 
 /obj/structure/stool/bed/nest/New()
 	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
@@ -30,21 +31,27 @@
 				"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
 				"<span class='italics'>You hear squelching...</span>")
 		else
+			if(breaking)
+				return
 			M.visible_message(\
 				"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
 				"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
 				"<span class='italics'>You hear squelching...</span>")
+			breaking = 1
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
 					M << "<span class='warning'>You fail to unbuckle yourself!</span>"
+				breaking = 0
 				return
 			if(!M.buckled)
+				breaking = 0
 				return
 			M.visible_message(\
 				"<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
 				"<span class='notice'>You break free from the gelatinous resin!</span>",\
 				"<span class='italics'>You hear squelching...</span>")
 
+		breaking = 0
 		unbuckle_mob()
 		add_fingerprint(user)
 
