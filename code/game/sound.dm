@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1,freq as num)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -6,7 +6,11 @@
 		throw EXCEPTION("playsound(): source is an area")
 		return
 
-	var/frequency = get_rand_frequency() // Same frequency for everybody
+	var/frequency
+	if(freq)
+		frequency = freq
+	else
+		frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
  	// Looping through the player list has the added bonus of working for mobs inside containers

@@ -57,18 +57,33 @@ mob/var/current_detector = null
 			if((t.tracker_position != null) && (get_dist(t.tracker_position, t.loc) >= 1))
 				spawn(3) t.tracker_position = null
 				detected += t
+		for(var/obj/machinery/door/D in range(14,M))
+			if(D.operating)
+				detected += D
 
 		if(detected.len>=1)
+			var/dist = 100 // this used below, to get sound tone for pinging.
 			for(var/mob/living/t in detected)
+				if(get_dist(t, M) < dist)
+					dist = get_dist(t, M)
 				var/obj/Blip/o = PoolOrNew(/obj/Blip) // Get a blip from the blip pool
 				o.pixel_x = (t.x-M.x)*4-4 // Make the blip in the right position on the radar (multiplied by the icon dimensions)
 				o.pixel_y = (t.y-M.y)*4-4 //-4 is a slight offset south and west
 				o.screen_loc = "detector:3:[o.pixel_x],3:[o.pixel_y]" // Make it appear on the radar map
 				user.client.screen+=o // Add it to the radar
 				flick("blip", o)
+			for(var/obj/machinery/door/D in detected)
+				if(get_dist(D, M) < dist)
+					dist = get_dist(D, M)
+				var/obj/Blip/o = PoolOrNew(/obj/Blip) // Get a blip from the blip pool
+				o.pixel_x = (D.x-M.x)*4-4 // Make the blip in the right position on the radar (multiplied by the icon dimensions)
+				o.pixel_y = (D.y-M.y)*4-4 //-4 is a slight offset south and west
+				o.screen_loc = "detector:3:[o.pixel_x],3:[o.pixel_y]" // Make it appear on the radar map
+				user.client.screen+=o // Add it to the radar
+				flick("blip", o)
 			detected = null
 			if(detector_ping)
-				playsound(src.loc, 'sound/effects/detector.ogg', 150, 0, 3) //If player isn't the only blip, play ping
+				playsound(src.loc, 'sound/effects/detector.ogg', 150, 1, freq = 55000 - dist*1500) //If player isn't the only blip, play ping
 		playsound(src.loc, 'sound/effects/tick.ogg', 125)
 		flick("", detector_image)
 		sleep(4)
