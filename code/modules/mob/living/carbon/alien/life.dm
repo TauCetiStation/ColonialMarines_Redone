@@ -61,7 +61,55 @@
 	if(islarva(src) || (isalienadult(src) && !isqueen(src)))
 		queen_locator()
 
+	handle_aura_icons()
+
 	return 1
+
+var/aura_xeno = "XENO Purple Aura"
+var/aura_safe = "SAFE Green Aura"
+var/aura_caution = "CAUTION Yellow Aura"
+var/aura_danger = "DANGER Red Aura"
+
+/mob/living/carbon/alien/proc/handle_aura_icons()
+	if(client)
+		for(var/image/I in client.images)
+			if(dd_hassuffix_case(I.icon_state, "Aura"))
+				client.images.Remove(I)
+		for(var/mob/living/L in living_mob_list)
+			if((L.z == src.z) || (L.z == 0))
+				var/image/I
+				var/location = L
+				if(L.z == 0)
+					location = get_turf(L)
+				if(isalien(L))
+					if(isalienadult(L))
+						var/mob/living/carbon/alien/humanoid/A = L
+						var/pix_x = -A.custom_pixel_x_offset //Not sure why this must be inverted...
+						var/pix_y = -A.custom_pixel_y_offset
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16, pixel_x = pix_x, pixel_y = pix_y)
+					else
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
+				else if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
+					else
+						if((H.r_hand && istype(H.r_hand, /obj/item/weapon/gun)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon/gun)))
+							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_danger, layer = 16)
+						else if((H.r_hand && istype(H.r_hand, /obj/item/weapon)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon)))
+							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_caution, layer = 16)
+						else
+							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
+				else if(ismonkey(L))
+					var/mob/living/carbon/monkey/M = L
+					if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
+					else
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
+				else
+					I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
+				client.images += I
+
 
 /mob/living/carbon/alien/CheckStamina()
 	setStaminaLoss(max((staminaloss - 2), 0))
