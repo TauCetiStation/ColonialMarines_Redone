@@ -5,9 +5,9 @@ Names of z-level do not matter, but order does greatly, for instances such as ch
 
 z1 = Nostromo - which is actually just a station for now :). tgstation.2.1.3.dmm were used.
 z2 = centcomm
-z3 = derelict telecomms satellite
-z4 = derelict station
-z5 = mining
+z3 = empty space
+z4 = empty space
+z5 = empty space
 z6 = Sulaco
 z7 = empty space
 */
@@ -16,11 +16,11 @@ z7 = empty space
 
         #include "map_files\marines\nostromo.dmm"
         #include "map_files\generic\z2.dmm"
-        #include "map_files\generic\z3.dmm"
-        #include "map_files\generic\z4.dmm"
-        #include "map_files\generic\z5.dmm"
+        #include "map_files\marines\z3_blank.dmm"
+        #include "map_files\marines\z4_blank.dmm"
+        #include "map_files\marines\z5_blank.dmm"
         #include "map_files\marines\sulaco.dmm"
-        #include "map_files\generic\z7.dmm"
+        #include "map_files\marines\z7_blank.dmm"
 
         #define MAP_FILE "nostromo.dmm"
         #define MAP_NAME "TGstation 2"
