@@ -268,12 +268,6 @@
 	var/reduction = 20
 	var/health = 200
 
-/obj/item/organ/internal/alien/carapace/gigantic
-	name = "carapace"
-	zone = "chest"
-	slot = "armor"
-	reduction = 75
-
 /obj/item/organ/internal/alien/carapace/huge
 	name = "carapace"
 	zone = "chest"
