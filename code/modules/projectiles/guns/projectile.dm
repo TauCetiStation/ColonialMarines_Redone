@@ -53,6 +53,19 @@
 /obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
+		if(magazine)
+			var/obj/item/ammo_casing/AC = chambered //Find chambered round
+			if(magazine)
+				magazine.loc = get_turf(src)
+				magazine.update_icon()
+				magazine = null
+				user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
+				if(chambered)
+					AC.loc = get_turf(src)
+					AC.SpinAnimation(10, 1)
+					chambered = null
+					user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
+			//user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
@@ -63,8 +76,7 @@
 			A.update_icon()
 			update_icon()
 			return 1
-		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
@@ -108,9 +120,15 @@
 	..()
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
+	if(two_handed)
+		if(wielded) //Trying to unwield it
+			unwield(user)
+		else //Trying to wield it
+			wield(user)
+		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.loc = get_turf(src)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null

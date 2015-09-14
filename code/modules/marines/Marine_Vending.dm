@@ -11,10 +11,9 @@
 
 					/obj/item/weapon/gun/projectile/pistol/m4a3 = 5,
 					/obj/item/weapon/gun/projectile/m44m = 5,
-					/obj/item/weapon/gun/projectile/automatic/Assault/m39 = 5,
-					/obj/item/weapon/gun/projectile/automatic/Assault/m41 = 5,
+					/obj/item/weapon/gun/projectile/Assault/m39 = 5,
+					/obj/item/weapon/gun/projectile/Assault/m41 = 5,
 					/obj/item/weapon/gun/projectile/shotgun/m37 = 5,
-					/obj/item/weapon/gun/projectile/automatic/l6_saw = 2,
 
 
 					/obj/item/ammo_box/magazine/m4a3 = 25,
@@ -22,7 +21,7 @@
 					/obj/item/ammo_box/magazine/m39 = 25,
 					/obj/item/ammo_box/magazine/m41 = 25,
 					/obj/item/ammo_box/m37 = 25,
-					/obj/item/ammo_box/magazine/m762 = 10,
+					/obj/item/ammo_box/a40mm = 5,
 
 
 //					/obj/item/device/motiondetector = 5,

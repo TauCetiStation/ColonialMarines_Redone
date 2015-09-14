@@ -86,10 +86,11 @@
 		playsound(user, fire_sound, 50, 1)
 		if(!message)
 			return
-		if(pointblank)
-			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
-		else
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+		if(!fire_delay)
+			if(pointblank)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
+			else
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
@@ -342,7 +343,8 @@
 
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(F)
-		action_button_name = "Toggle Gunlight"
+		if(!istype(src, /obj/item/weapon/gun/projectile))
+			action_button_name = "Toggle Gunlight"
 		if(F.on)
 			if(loc == user)
 				user.AddLuminosity(F.brightness_on)
@@ -355,7 +357,8 @@
 				SetLuminosity(0)
 		update_icon()
 	else
-		action_button_name = null
+		if(!istype(src, /obj/item/weapon/gun/projectile))
+			action_button_name = null
 		if(loc == user)
 			user.AddLuminosity(-5)
 		else if(isturf(loc))
@@ -379,13 +382,6 @@
 		if(istype(O))
 			O.unwield(user)
 		return	unwield(user)
-
-/obj/item/weapon/gun/ctrl_self(mob/user)
-	if(two_handed)
-		if(wielded) //Trying to unwield it
-			unwield(user)
-		else //Trying to wield it
-			wield(user)
 
 /obj/item/weapon/gun/attack_hand(mob/user)
 	if(unique_reskin && !reskinned && loc == user)

@@ -9,14 +9,14 @@
 	damage = 45
 
 /obj/item/projectile/bullet/m39 // M39 SMG
-	damage = 20
+	damage = 10
 
 /obj/item/projectile/bullet/m41 //M41 Assault Rifle
-	damage = 30
+	damage = 15
 
 /obj/item/projectile/bullet/m37 //M37 Pump Shotgun
 	name = "pellet"
-	damage = 15
+	damage = 25
 
 ///***Ammo***///
 
@@ -58,6 +58,10 @@
 	ammo_type = "/obj/item/ammo_casing/m4a3"
 	max_ammo = 12
 
+/obj/item/ammo_box/magazine/m4a3/update_icon()
+	..()
+	icon_state = ".45a[ammo_count() ? "" : "0"]"
+
 /obj/item/ammo_box/magazine/m44m // 44 Magnum Peacemaker
 	name = "44 Magnum Speed Loader (.44)"
 	desc = "A 44 Magnum speed loader"
@@ -71,22 +75,22 @@
 	desc = "A 9mm special magazine"
 	icon_state = "9x19p-8"
 	ammo_type = "/obj/item/ammo_casing/m39"
-	max_ammo = 30
+	max_ammo = 48
 
-/obj/item/ammo_box/magazine/m39/empty // M39 SMG
-	icon_state = "9x19p-0"
-	max_ammo = 0
+/obj/item/ammo_box/magazine/m39/update_icon()
+	..()
+	icon_state = "9x19p[ammo_count() ? "-8" : "-0"]"
 
 /obj/item/ammo_box/magazine/m41 //M41 Assault Rifle
 	name = "M41A Magazine (10mm)"
 	desc = "A 10mm special magazine"
-	icon_state = "m309a"
+	icon_state = "10caseless"
 	ammo_type = "/obj/item/ammo_casing/m41"
-	max_ammo = 30
+	max_ammo = 99
 
-/obj/item/ammo_box/magazine/m41/empty //Assault Rifle
-	max_ammo = 0
-	icon_state = "m309a0"
+/obj/item/ammo_box/magazine/m41/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/m37 //M37 Shotgun
 	name = "M37 Shotgun shells (box)"
@@ -94,28 +98,32 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "shells"
 	ammo_type = /obj/item/ammo_casing/m37
-	max_ammo = 7
+	max_ammo = 8
 
 /obj/item/ammo_box/magazine/internal/m37
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/m37
 	caliber = "12gs"
-	max_ammo = 7
+	max_ammo = 8
 	multiload = 0
 
 ///***Pistols***///
 
 /obj/item/weapon/gun/projectile/pistol/m4a3 //45 Pistol
-	name = "\improper M4A3 Service Pistol"
+	name = "M4A3 Service Pistol"
 	desc = "M4A3 Service Pistol, the standard issue sidearm of the Colonial Marines. Uses .45 special rounds."
-	icon_state = "colt"
+	icon_state = "m4a3"
 	w_class = 2
 	mag_type = /obj/item/ammo_box/magazine/m4a3
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
 	fire_sound = 'sound/weapons/servicepistol.ogg'
+
+/obj/item/weapon/gun/projectile/pistol/m4a3/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 
 /*
 /obj/item/weapon/gun/projectile/pistol/m4a3/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
@@ -125,55 +133,40 @@
 		empty_mag = null
 	return*/
 
+
+
 /obj/item/weapon/gun/projectile/m44m //mm44 Magnum Peacemaker
-	name = "\improper 44 Magnum"
+	name = "44 Magnum"
 	desc = "A bulky 44 Magnum revolver, occasionally carried by assault troops and officers in the Colonial Marines. Uses 44 Magnum rounds"
 	icon_state = "mateba"
 	mag_type = /obj/item/ammo_box/magazine/m44m
 
 ///***SMGS***///
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m39 // M39 SMG
-	name = "\improper M39 SMG"
+/obj/item/weapon/gun/projectile/Assault/m39 // M39 SMG
+	name = "M39 SMG"
 	desc = " Armat Battlefield Systems M39 SMG. Occasionally carried by light-infantry, scouts or non-combat personnel. Uses 9mm rounds."
-	icon_state = "smg"
+	icon_state = "m39"
 	item_state = "c20r"
 	can_suppress = 0
 	mag_type = /obj/item/ammo_box/magazine/m39
-	fire_sound = 'sound/weapons/Gunshot_m39.ogg'
-	fire_delay = 0
+	fire_sound = 'sound/weapons/Gunshot2.ogg'
+	fire_delay = 1
 	burst_size = 1
+	can_flashlight = 1
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m39/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
+/obj/item/weapon/gun/projectile/Assault/m39/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m39/update_icon()
+/obj/item/weapon/gun/projectile/Assault/m39/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	return
 
-/*
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
-		..()
-		if(!loaded.len && empty_mag)
-			empty_mag.loc = get_turf(src.loc)
-			empty_mag = null
-		return
-
-	New()
-		..()
-		empty_mag = new /obj/item/ammo_magazine/m39/empty(src)
-		update_icon()
-		return
-
-	isHandgun()
-		return 0*/
-
-
 ///***RIFLES***///
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41 //M41 Assault Rifle
-	name = "\improper M41A Rifle"
+/obj/item/weapon/gun/projectile/Assault/m41 //M41 Assault Rifle
+	name = "M41A"
 	desc = "M41A Pulse Rifle. The standard issue rifle of the Colonial Marines. Commonly carried by most combat personnel. Uses 10mm special ammunition."
 	icon_state = "m41a"
 	item_state = "m41a"
@@ -181,27 +174,30 @@
 	fire_sound = 'sound/weapons/Gunshot_m41.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
-	burst_size = 4
-	fire_delay = 2
+	burst_size = 1
+	fire_delay = 1.5
 	two_handed = 1
+	var/select = 1
+	action_button_name = "Toggle Firemode"
+	can_flashlight = 1
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41/New()
+/obj/item/weapon/gun/projectile/Assault/m41/New()
 	..()
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
+/obj/item/weapon/gun/projectile/Assault/m41/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gun/projectile/Assault/m41/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
 		..()
 		return
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41/attackby(obj/item/A, mob/user, params)
+/obj/item/weapon/gun/projectile/Assault/m41/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self()
@@ -209,35 +205,25 @@
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41/update_icon()
+/obj/item/weapon/gun/projectile/Assault/m41/update_icon()
 	..()
-	overlays.Cut()
-	switch(select)
-		if(0)
-			overlays += "[initial(icon_state)]semi"
-		if(1)
-			overlays += "[initial(icon_state)]burst"
-		if(2)
-			overlays += "[initial(icon_state)]gren"
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/Assault/m41/burst_select()
+/obj/item/weapon/gun/projectile/Assault/m41/ui_action_click()
+	burst_select()
+
+/obj/item/weapon/gun/projectile/Assault/m41/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
 	switch(select)
-		if(0)
-			select = 1
-			burst_size = initial(burst_size)
-			fire_delay = initial(fire_delay)
-			user << "<span class='notice'>You switch to [burst_size]-rnd burst.</span>"
 		if(1)
 			select = 2
 			user << "<span class='notice'>You switch to grenades.</span>"
 		if(2)
-			select = 0
-			burst_size = 1
-			fire_delay = 0
-			user << "<span class='notice'>You switch to semi-auto.</span>"
+			select = 1
+			burst_size = initial(burst_size)
+			fire_delay = initial(fire_delay)
+			user << "<span class='notice'>You switch to fully-auto.</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
 	return
@@ -246,9 +232,9 @@
 ///***SHOTGUNS***///
 
 /obj/item/weapon/gun/projectile/shotgun/m37 //M37 Pump Shotgun
-	name = "\improper M37 Pump Shotgun"
+	name = "M37A2 Pump Shotgun"
 	desc = "Colonial Marine M37 Pump Shotgun"
-	icon_state = "cshotgun"
+	icon_state = "m37a2"
 	item_state = "shotgun"
 	w_class = 4.0
 	force = 10
@@ -260,7 +246,7 @@
 ///***MELEE/THROWABLES***///
 
 /obj/item/weapon/combat_knife
-	name = "\improper Marine Combat Knife"
+	name = "Marine Combat Knife"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	item_state = "knife"
