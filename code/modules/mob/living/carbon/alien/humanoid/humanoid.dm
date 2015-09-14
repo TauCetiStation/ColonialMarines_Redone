@@ -1,7 +1,6 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
 	icon_state = "Sentinal Walking"
-	pass_flags = PASSTABLE
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
