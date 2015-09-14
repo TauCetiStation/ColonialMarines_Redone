@@ -19,6 +19,7 @@
 
 /mob/living/carbon/alien/humanoid/carrier/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/carrier
+	internal_organs += new /obj/item/organ/internal/alien/carapace
 
 	//var/datum/reagents/R = new/datum/reagents(100)
 	//reagents = R

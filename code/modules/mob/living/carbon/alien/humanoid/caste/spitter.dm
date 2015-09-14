@@ -37,6 +37,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/spitter
 	internal_organs += new /obj/item/organ/internal/alien/acid
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	internal_organs += new /obj/item/organ/internal/alien/carapace/small
 	//var/datum/reagents/R = new/datum/reagents(100)
 	src.frozen = 1
 	spawn (50)

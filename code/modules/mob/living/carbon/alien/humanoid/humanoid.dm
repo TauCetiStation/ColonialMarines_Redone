@@ -27,6 +27,16 @@
 	AddAbility(new/obj/effect/proc_holder/alien/unweld_vent(null))
 	..()
 
+/mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj, def_zone)
+	var/obj/item/organ/internal/alien/carapace/armor = getorgan(/obj/item/organ/internal/alien/carapace)
+	if(armor && (armor.health > 0) && Proj.damage)
+		if(Proj.damage < 20)
+			var/armor_power = (100 - armor.reduction) * 0.01
+			Proj.damage = round(Proj.damage * armor_power)
+			armor.health -= Proj.damage
+		else
+			armor.health -= Proj.damage
+	..()
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)

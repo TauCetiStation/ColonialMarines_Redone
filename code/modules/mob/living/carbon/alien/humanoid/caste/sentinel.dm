@@ -42,6 +42,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/sentinel
 	internal_organs += new /obj/item/organ/internal/alien/acid_weak
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin_weak
+	internal_organs += new /obj/item/organ/internal/alien/carapace/medium
 	..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()

@@ -36,6 +36,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/acid
 	internal_organs += new /obj/item/organ/internal/alien/acid_strong
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	internal_organs += new /obj/item/organ/internal/alien/carapace/large
 	//var/datum/reagents/R = new/datum/reagents(100)
 	//reagents = R
 	//R.my_atom = src

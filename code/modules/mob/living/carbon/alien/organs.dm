@@ -260,3 +260,40 @@
 	slot = "gland"
 	origin_tech = "biotech=5;materials=4"
 	alien_powers = list(/obj/effect/proc_holder/alien/screech)
+
+/obj/item/organ/internal/alien/carapace
+	name = "carapace"
+	zone = "chest"
+	slot = "armor"
+	var/reduction = 20
+	var/health = 200
+
+/obj/item/organ/internal/alien/carapace/gigantic
+	name = "carapace"
+	zone = "chest"
+	slot = "armor"
+	reduction = 75
+
+/obj/item/organ/internal/alien/carapace/huge
+	name = "carapace"
+	zone = "chest"
+	slot = "armor"
+	reduction = 60
+
+/obj/item/organ/internal/alien/carapace/large
+	name = "carapace"
+	zone = "chest"
+	slot = "armor"
+	reduction = 45
+
+/obj/item/organ/internal/alien/carapace/medium
+	name = "carapace"
+	zone = "chest"
+	slot = "armor"
+	reduction = 30
+
+/obj/item/organ/internal/alien/carapace/small
+	name = "carapace"
+	zone = "chest"
+	slot = "armor"
+	reduction = 15

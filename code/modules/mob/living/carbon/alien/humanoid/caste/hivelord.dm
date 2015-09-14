@@ -20,6 +20,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/hivelord
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
 	internal_organs += new /obj/item/organ/internal/alien/acid
+	internal_organs += new /obj/item/organ/internal/alien/carapace/huge
 
 	//var/datum/reagents/R = new/datum/reagents(100)
 	//reagents = R

@@ -35,6 +35,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/eggsac
 	internal_organs += new /obj/item/organ/internal/alien/royalsac
 	internal_organs += new /obj/item/organ/internal/alien/screechcord
+	internal_organs += new /obj/item/organ/internal/alien/carapace/gigantic
 
 	hive_controller.active_queen = src
 

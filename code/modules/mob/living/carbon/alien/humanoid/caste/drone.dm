@@ -46,6 +46,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/drone
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
 	internal_organs += new /obj/item/organ/internal/alien/acid_weak
+	internal_organs += new /obj/item/organ/internal/alien/carapace/small
 
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()
