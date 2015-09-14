@@ -442,6 +442,9 @@
 	canSmoothWith = list(/obj/structure/window/bulletproof)
 	unacidable = 1
 
+/obj/structure/window/bulletproof/ex_act(severity, target)
+	return
+
 /* Full Tile Windows (more health) */
 
 /obj/structure/window/fulltile
