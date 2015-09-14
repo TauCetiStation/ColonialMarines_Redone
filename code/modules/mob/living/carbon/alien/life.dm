@@ -66,7 +66,7 @@
 	return 1
 
 var/aura_xeno = "XENO Purple Aura"
-var/aura_safe = "SAFE Green Aura"
+var/aura_safe = "SAFE Blue Aura"
 var/aura_caution = "CAUTION Yellow Aura"
 var/aura_danger = "DANGER Red Aura"
 
