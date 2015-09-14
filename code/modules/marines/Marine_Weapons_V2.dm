@@ -86,7 +86,7 @@
 	desc = "A 10mm special magazine"
 	icon_state = "10caseless"
 	ammo_type = "/obj/item/ammo_casing/m41"
-	max_ammo = 99
+	max_ammo = 40
 
 /obj/item/ammo_box/magazine/m41/update_icon()
 	..()
@@ -166,8 +166,8 @@
 ///***RIFLES***///
 
 /obj/item/weapon/gun/projectile/Assault/m41 //M41 Assault Rifle
-	name = "M41A"
-	desc = "M41A Pulse Rifle. The standard issue rifle of the Colonial Marines. Commonly carried by most combat personnel. Uses 10mm special ammunition."
+	name = "M41A MK2"
+	desc = "M41A Pulse Rifle MK2. The standard issue rifle of the Colonial Marines. Commonly carried by most combat personnel. Uses 10mm special ammunition."
 	icon_state = "m41a"
 	item_state = "m41a"
 	mag_type = /obj/item/ammo_box/magazine/m41
