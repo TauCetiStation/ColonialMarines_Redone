@@ -1429,3 +1429,23 @@ B --><-- A
 	if(orbiting)
 		loc = get_turf(orbiting)
 		orbiting = null
+
+
+/proc/check_ff(mob/victim, mob/attacker)
+	if(casual_mode)
+		if(!victim || !attacker)
+			return 0
+
+		if(!ismob(victim) || !ismob(attacker))
+			return 0
+
+		if(victim == attacker)
+			return 0
+
+		if(victim.mind)
+			if((attacker.mind.special_role != "survivor") && (victim.mind.special_role != "survivor"))
+				return 1
+		else
+			if(attacker.mind.special_role != "survivor")
+				return 1
+	return 0

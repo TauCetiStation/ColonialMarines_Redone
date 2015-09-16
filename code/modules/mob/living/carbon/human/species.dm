@@ -1004,8 +1004,13 @@
 	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor = min(90,armor) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+	var/damage = I.force
 
-	apply_damage(I.force, I.damtype, affecting, armor, H)
+	if(check_ff(H, user))
+		if(!isalien(user))
+			damage = 0
+
+	apply_damage(damage, I.damtype, affecting, armor, H)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))

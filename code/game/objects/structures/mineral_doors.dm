@@ -232,7 +232,8 @@
 		TemperatureAct(exposed_temperature)
 
 /obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct(temperature)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
+	if(!casual_mode)
+		atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
 	hardness = 0
 	CheckHardness()
 

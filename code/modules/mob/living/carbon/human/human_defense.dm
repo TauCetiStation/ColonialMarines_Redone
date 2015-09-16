@@ -42,10 +42,11 @@ emp_act
 	return
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.firer && (P.firer.client))
-		var/client/C = P.firer.client
-		if(isnum(C.player_age) && (C.player_age < ff_min_age))
-			P.damage = 1
+	if(check_ff(src, P.firer))
+		if(!isalien(P.firer))
+			P.damage = 0
+			P.irradiate = 0
+			return (..(P , def_zone))
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
@@ -158,8 +159,13 @@ emp_act
 		armor = min(90,armor) //cap damage reduction at 90%
 
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+		var/damage = I.force
 
-		apply_damage(I.force, I.damtype, affecting, armor , I)
+		if(check_ff(src, user))
+			if(!isalien(user))
+				damage = 0
+
+		apply_damage(damage, I.damtype, affecting, armor , I)
 		var/bloody = 0
 		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)
@@ -428,32 +434,33 @@ emp_act
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
-	if(M.occupant.a_intent == "harm")
-		if(M.damtype == "brute")
-			step_away(src,M,15)
-		var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))
-		if(temp)
-			var/update = 0
-			switch(M.damtype)
-				if("brute")
-					if(M.force > 20)
-						Paralyse(1)
-					update |= temp.take_damage(rand(M.force/2, M.force), 0)
-					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-				if("fire")
-					update |= temp.take_damage(0, rand(M.force/2, M.force))
-					playsound(src, 'sound/items/Welder.ogg', 50, 1)
-				if("tox")
-					M.mech_toxin_damage(src)
-				else
-					return
-			if(update)
-				update_damage_overlays(0)
-			updatehealth()
+	if(!casual_mode)
+		if(M.occupant.a_intent == "harm")
+			if(M.damtype == "brute")
+				step_away(src,M,15)
+			var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))
+			if(temp)
+				var/update = 0
+				switch(M.damtype)
+					if("brute")
+						if(M.force > 20)
+							Paralyse(1)
+						update |= temp.take_damage(rand(M.force/2, M.force), 0)
+						playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+					if("fire")
+						update |= temp.take_damage(0, rand(M.force/2, M.force))
+						playsound(src, 'sound/items/Welder.ogg', 50, 1)
+					if("tox")
+						M.mech_toxin_damage(src)
+					else
+						return
+				if(update)
+					update_damage_overlays(0)
+				updatehealth()
 
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>")
-		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
+									"<span class='userdanger'>[M.name] has hit [src]!</span>")
+			add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
 		..()
@@ -461,18 +468,27 @@ emp_act
 /mob/living/carbon/human/hitby(atom/movable/AM)
 	var/hitpush = 1
 	var/skipcatch = 0
-	if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
-		if(istype(AM, /obj/item))
-			var/obj/item/I = AM
-			if(can_embed(I))
-				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
-					throw_alert("embeddedobject")
-					var/obj/item/organ/limb/L = pick(organs)
-					L.embedded_objects |= I
-					I.add_blood(src)//it embedded itself in you, of course it's bloody!
-					I.loc = src
-					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
-					hitpush = 0
-					skipcatch = 1 //can't catch the now embedded item
+	var/execute = 1
+
+	if(istype(AM, /obj/item))
+		var/obj/item/I = AM
+		if(check_ff(src, I.thrownby))
+			if(!isalien(I.thrownby))
+				execute = 0
+
+	if(execute)
+		if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				if(can_embed(I))
+					if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
+						throw_alert("embeddedobject")
+						var/obj/item/organ/limb/L = pick(organs)
+						L.embedded_objects |= I
+						I.add_blood(src)//it embedded itself in you, of course it's bloody!
+						I.loc = src
+						L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
+						visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
+						hitpush = 0
+						skipcatch = 1 //can't catch the now embedded item
 	return ..(AM, skipcatch, hitpush)

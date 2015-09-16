@@ -15,7 +15,7 @@ var/shuttle_frozen = 0
 var/shuttle_left = 0
 var/tinted_weldhelh = 1
 
-var/ff_min_age = 3
+var/casual_mode = 1
 
 
 // Debug is used exactly once (in living.dm) but is commented out in a lot of places.  It is not set anywhere and only checked.

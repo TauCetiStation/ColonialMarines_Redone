@@ -71,7 +71,11 @@
 		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-		apply_damage(I.throwforce, dtype, zone, armor, I)
+		var/damage = I.throwforce
+		if(check_ff(src, I.thrownby))
+			if(!isalien(I.thrownby))
+				damage = 0
+		apply_damage(damage, dtype, zone, armor, I)
 		if(I.thrownby)
 			add_logs(I.thrownby, src, "hit", I)
 	else
@@ -145,7 +149,10 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
 
-/mob/living/fire_act()
+/mob/living/fire_act(mob/starter)
+	if(check_ff(src, starter))
+		if(!isalien(starter))
+			return
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 

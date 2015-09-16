@@ -140,9 +140,12 @@
 				Paralyse(10)
 
 		if(3.0)
-			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
-				b_loss = b_loss/2
+			if(casual_mode)
+				b_loss = 0
+			else
+				b_loss += 30
+				if (prob(getarmor(null, "bomb")))
+					b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(50))
