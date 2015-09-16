@@ -80,7 +80,7 @@ Doesn't work on other aliens/AI.*/
 	return 1
 
 /obj/effect/proc_holder/alien/proc/build_lay_fail(mob/living/carbon/user)
-	if((locate(/obj/structure/alien/egg) in get_turf(user)) || (locate(/obj/royaljelly) in get_turf(user)) || (locate(/obj/structure/mineral_door/resin) in get_turf(user)) || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)))
+	if((locate(/obj/item/clothing/mask/facehugger) in get_turf(user)) || (locate(/obj/structure/alien/egg) in get_turf(user)) || (locate(/obj/royaljelly) in get_turf(user)) || (locate(/obj/structure/mineral_door/resin) in get_turf(user)) || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)))
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 1
 	else
