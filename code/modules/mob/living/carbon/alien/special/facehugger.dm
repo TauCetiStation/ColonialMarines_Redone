@@ -38,20 +38,21 @@ var/const/MAX_ACTIVE_TIME = 200
 	..()
 
 /obj/item/clothing/mask/facehugger/process()
-	var/turf/T = get_turf(src)
-	for(var/obj/O in T.contents)
-		if(istype(O, /obj/structure/alien/resin/membrane))
-			Die()
-		else if(istype(O, /obj/structure/alien/resin/wall))
-			Die()
-		else if(istype(O, /obj/machinery/door))
-			var/obj/machinery/door/D = O
-			if(D.density)
+	if(!ismob(loc))
+		var/turf/T = get_turf(src)
+		for(var/obj/O in T.contents)
+			if(istype(O, /obj/structure/alien/resin/membrane))
 				Die()
-		else if(istype(O, /obj/structure/mineral_door))
-			var/obj/structure/mineral_door/MD = O
-			if(MD.density)
+			else if(istype(O, /obj/structure/alien/resin/wall))
 				Die()
+			else if(istype(O, /obj/machinery/door))
+				var/obj/machinery/door/D = O
+				if(D.density)
+					Die()
+			else if(istype(O, /obj/structure/mineral_door))
+				var/obj/structure/mineral_door/MD = O
+				if(MD.density)
+					Die()
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
