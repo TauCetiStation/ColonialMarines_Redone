@@ -136,7 +136,7 @@
 	owner.ventcrawler = 2
 	return
 
-
+/*
 /obj/item/organ/internal/gland/viral
 	origin_tech = "materials=4;biotech=6"
 	cooldown_low = 1800
@@ -152,7 +152,7 @@
 	owner.viruses += D
 	D.affected_mob = owner
 	D.holder = owner
-	owner.med_hud_set_status()
+	owner.med_hud_set_status()*/
 
 
 /obj/item/organ/internal/gland/emp //TODO : Replace with something more interesting

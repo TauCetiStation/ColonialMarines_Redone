@@ -2,7 +2,6 @@
 #define RUSKY_PARTY 2
 #define SPIDER_GIFT 3
 #define DEPARTMENT_RESUPPLY 4
-#define ANTIDOTE_NEEDED 5
 
 
 /datum/round_event_control/shuttle_loan
@@ -20,7 +19,7 @@
 	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -35,8 +34,6 @@
 			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
 			bonus_points = 0
-		if(ANTIDOTE_NEEDED)
-			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
@@ -63,8 +60,6 @@
 			SSshuttle.centcom_message += "Spider Clan gift incoming."
 		if(DEPARTMENT_RESUPPLY)
 			SSshuttle.centcom_message += "Department resupply incoming."
-		if(ANTIDOTE_NEEDED)
-			SSshuttle.centcom_message += "Virus samples incoming."
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -134,26 +129,6 @@
 				T = pick(empty_shuttle_turfs)
 				new /obj/effect/spider/stickyweb(T)
 
-
-			if(ANTIDOTE_NEEDED)
-				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
-				var/turf/T
-				for(var/i=0, i<10, i++)
-					if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle)
-					else if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/syringe)
-					else if(prob(25))
-						shuttle_spawns.Add(/obj/item/weapon/shard)
-					T = pick_n_take(empty_shuttle_turfs)
-					var/obj/effect/decal/cleanable/blood/b = new(T)
-					var/datum/disease/D = new virus_type()
-					D.longevity = 1000
-					b.viruses += D
-					D.holder = b
-				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
