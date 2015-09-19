@@ -272,19 +272,19 @@
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 60
+	reduction = 30
 
 /obj/item/organ/internal/alien/carapace/large
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 45
+	reduction = 25
 
 /obj/item/organ/internal/alien/carapace/medium
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 30
+	reduction = 20
 
 /obj/item/organ/internal/alien/carapace/small
 	name = "carapace"
