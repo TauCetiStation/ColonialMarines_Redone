@@ -29,6 +29,17 @@
 		return 0
 	return (chambered.BB ? 1 : 0)
 
+/obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
+	if(!two_handed)
+		if(recentpump)	return
+		pump(user)
+		recentpump = 1
+		spawn(10)
+			recentpump = 0
+		return
+	else
+		..()
+
 /obj/item/weapon/gun/projectile/shotgun/proc/attack_pump(mob/living/user)
 	if(recentpump)	return
 	pump(user)
