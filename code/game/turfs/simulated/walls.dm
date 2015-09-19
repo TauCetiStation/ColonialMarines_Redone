@@ -286,5 +286,11 @@
 	if(prob(20))
 		ChangeTurf(/turf/simulated/wall/cult)
 
+/turf/simulated/wall/bullet_act(obj/item/projectile/Proj)
+	var/obj/structure/alien/resin/wall/W = locate(/obj/structure/alien/resin/wall) in src
+	if(W)
+		W.bullet_act(Proj)
+	..()
+
 /turf/simulated/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0

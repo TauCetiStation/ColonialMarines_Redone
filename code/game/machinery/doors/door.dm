@@ -285,6 +285,16 @@
 		return 1
 	return 0
 
+/obj/machinery/door/bullet_act(obj/item/projectile/Proj)
+	var/turf/T = get_turf(src)
+	for(var/obj/O in T.contents)
+		if(istype(O, /obj/structure/alien/resin))
+			var/obj/structure/alien/resin/R = O
+			R.bullet_act(Proj)
+		else if(istype(O, /obj/structure/mineral_door))
+			var/obj/structure/mineral_door/MD = O
+			MD.bullet_act(Proj)
+
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
 
