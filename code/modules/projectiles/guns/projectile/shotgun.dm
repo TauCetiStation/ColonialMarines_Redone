@@ -32,7 +32,7 @@
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
 	if(!two_handed)
 		if(recentpump)	return
-		pump(user)
+		do_pump(user)
 		recentpump = 1
 		spawn(10)
 			recentpump = 0
@@ -42,14 +42,14 @@
 
 /obj/item/weapon/gun/projectile/shotgun/proc/attack_pump(mob/living/user)
 	if(recentpump)	return
-	pump(user)
+	do_pump(user)
 	recentpump = 1
 	spawn(10)
 		recentpump = 0
 	return
 
 
-/obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
+/obj/item/weapon/gun/projectile/shotgun/proc/do_pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	pump_unload(M)
 	pump_reload(M)
@@ -104,7 +104,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = 0
 
-/obj/item/weapon/gun/projectile/shotgun/boltaction/pump(mob/M)
+/obj/item/weapon/gun/projectile/shotgun/boltaction/do_pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	if(bolt_open)
 		pump_reload(M)
@@ -296,7 +296,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
 	..()
-	src.pump(user)
+	src.do_pump(user)
 
 // COMBAT SHOTGUN //
 

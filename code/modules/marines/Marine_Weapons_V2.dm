@@ -228,6 +228,23 @@
 	update_icon()
 	return
 
+/obj/item/weapon/gun/projectile/Assault/m41/verb/selectfire()
+	set name = "Rifle: selectfire" // i put such name after ":" - so it easier to understand which exact macro command we need.
+	set category = "Weapon"
+
+	var/mob/living/carbon/human/user = usr
+	switch(select)
+		if(1)
+			select = 2
+			user << "<span class='notice'>You switch to grenades.</span>"
+		if(2)
+			select = 1
+			burst_size = initial(burst_size)
+			fire_delay = initial(fire_delay)
+			user << "<span class='notice'>You switch to fully-auto.</span>"
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_icon()
+	return
 
 ///***SHOTGUNS***///
 
@@ -242,6 +259,18 @@
 	slot_flags = SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/m37
 	two_handed = 1
+
+/obj/item/weapon/gun/projectile/shotgun/verb/pump()
+	set name = "Shotgun: pump"
+	set category = "Weapon"
+
+	var/mob/living/carbon/human/user = usr
+	if(recentpump)	return
+	do_pump(user)
+	recentpump = 1
+	spawn(10)
+		recentpump = 0
+	return
 
 ///***MELEE/THROWABLES***///
 
