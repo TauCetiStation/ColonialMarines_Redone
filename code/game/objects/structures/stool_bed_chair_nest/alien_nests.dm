@@ -26,6 +26,8 @@
 			return
 
 		if(M != user)
+			if(user.buckled) // nope.avi
+				return
 			M.visible_message(\
 				"[user.name] pulls [M.name] free from the sticky nest!",\
 				"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
