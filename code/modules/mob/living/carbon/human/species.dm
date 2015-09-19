@@ -884,8 +884,8 @@
 			if(attacker_style && attacker_style.harm_act(M,H))
 				return 1
 			else
-				if(M.buckled && H.buckled)
-					if(istype(M.buckled, /obj/structure/stool/bed/nest) && istype(H.buckled, /obj/structure/stool/bed/nest))
+				if(M.buckled)
+					if(istype(M.buckled, /obj/structure/stool/bed/nest))
 						return 0
 				M.do_attack_animation(H)
 
