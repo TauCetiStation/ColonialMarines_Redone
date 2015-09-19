@@ -6,15 +6,17 @@
 
 	if (notransform)
 		return
-	if(..())
-		// GROW!
-		if(amount_grown < max_grown)
-			amount_grown++
 
+	if(health > 0)
 		if(!client)
 			larva_afk_tick++
 		else
 			larva_afk_tick = 0
+
+	if(..())
+		// GROW!
+		if(amount_grown < max_grown)
+			amount_grown++
 
 	//some kind of bug in canmove() isn't properly calling update_icons, so this is here as a placeholder
 	update_icons()

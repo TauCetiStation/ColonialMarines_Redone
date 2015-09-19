@@ -64,9 +64,20 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(70))
 				owner.adjustBruteLoss(5)
 
+/proc/get_larva_candidates(be_special_flag=0, afk_bracket=3000)
+	var/list/candidates = list()
+	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
+	while(!candidates.len && afk_bracket < 6000)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client != null)
+				if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+					candidates += G.client
+		afk_bracket += 600 // Add a minute to the bracket, for every attempt
+	return candidates
+
 /obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow()
 	if(!owner) return
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+	var/list/candidates = get_larva_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 	var/client/C = null
 
 	// To stop clientless larva, we will check that our host has a client
