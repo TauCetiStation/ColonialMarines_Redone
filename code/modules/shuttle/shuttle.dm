@@ -172,6 +172,7 @@
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
+	var/shuttle_locked = 0
 
 /obj/docking_port/mobile/New()
 	..()
@@ -569,6 +570,12 @@
 				continue
 			destination_found = 1
 			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
+		if(istype(src, /obj/machinery/computer/shuttle/marine1/one_way) || istype(src, /obj/machinery/computer/shuttle/marine2/one_way))
+			if(M.shuttle_locked)
+				dat += "<A href='?src=\ref[src];unlock=1'>Unlock shuttle controls</A><br>"
+			else
+				dat += "<A href='?src=\ref[src];lock=1'>Lock shuttle controls</A><br>"
+
 		if(!destination_found)
 			dat += "<B>Shuttle Locked</B><br>"
 			if(admin_controlled)
@@ -584,17 +591,33 @@
 /obj/machinery/computer/shuttle/Topic(href, href_list)
 	if(..())
 		return
+	
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
 		usr << "<span class='danger'>Access denied.</span>"
 		return
 
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+
 	if(href_list["move"])
+		if(M.shuttle_locked)
+			usr << "<span class='warning'>Shuttle controls locked!</span>"
+			return 0
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else	usr << "<span class='notice'>Unable to comply.</span>"
+
+	if(href_list["lock"])
+		if(M && !M.shuttle_locked)
+			M.shuttle_locked = 1
+			usr << "Locked."
+
+	if(href_list["unlock"])
+		if(M && M.shuttle_locked)
+			M.shuttle_locked = 0
+			usr << "Unlocked."
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)

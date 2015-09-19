@@ -2,20 +2,20 @@
 
 /obj/machinery/computer/shuttle/marine1
 	name = "Shuttle Console I"
-	desc = "Used to pilot the mining shuttle."
+	desc = "Used to pilot the shuttle."
 	circuit = /obj/item/weapon/circuitboard/shuttle
 	shuttleId = "marine1"
 	possible_destinations = "sulaco1;planet1"
 
 /obj/machinery/computer/shuttle/marine1/one_way/sulaco
 	name = "shuttle console"
-	desc = "A one-way shuttle console, used to summon the shuttle to the labor camp."
+	desc = "A one-way shuttle console, used to summon the shuttle to the sulaco."
 	possible_destinations = "sulaco1"
 	circuit = /obj/item/weapon/circuitboard/shuttle
 
 /obj/machinery/computer/shuttle/marine1/one_way/planet
 	name = "shuttle console"
-	desc = "A one-way shuttle console, used to summon the shuttle to the labor camp."
+	desc = "A one-way shuttle console, used to summon the shuttle to the destination"
 	possible_destinations = "planet1"
 	circuit = /obj/item/weapon/circuitboard/shuttle
 
@@ -28,13 +28,13 @@
 
 /obj/machinery/computer/shuttle/marine2/one_way/sulaco
 	name = "shuttle console"
-	desc = "A one-way shuttle console, used to summon the shuttle to the labor camp."
+	desc = "A one-way shuttle console, used to summon the shuttle to the sulaco."
 	possible_destinations = "sulaco2"
 	circuit = /obj/item/weapon/circuitboard/shuttle
 
 /obj/machinery/computer/shuttle/marine2/one_way/planet
 	name = "shuttle console"
-	desc = "A one-way shuttle console, used to summon the shuttle to the labor camp."
+	desc = "A one-way shuttle console, used to summon the shuttle to the destination."
 	possible_destinations = "planet2"
 	circuit = /obj/item/weapon/circuitboard/shuttle
 
