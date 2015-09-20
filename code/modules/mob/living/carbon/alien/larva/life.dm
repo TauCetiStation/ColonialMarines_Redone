@@ -7,13 +7,15 @@
 	if (notransform)
 		return
 
-	if(health > 0)
-		if(!client)
-			larva_afk_tick++
-		else
-			larva_afk_tick = 0
+	..()
+	if(stat != DEAD)
 
-	if(..())
+		if(health > 0)
+			if(!client)
+				larva_afk_tick++
+			else
+				larva_afk_tick = 0
+
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++

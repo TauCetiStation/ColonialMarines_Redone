@@ -47,7 +47,8 @@
 	return
 
 /mob/living/carbon/alien/Life()
-	if(..())
+	..()
+	if(stat != DEAD)
 		if(health <= 0)
 			if(istype(loc, /obj/machinery/atmospherics/components/unary))
 				adjustBruteLoss(15)
