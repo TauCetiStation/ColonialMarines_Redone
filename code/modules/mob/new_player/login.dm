@@ -3,10 +3,10 @@
 	if(join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
 
-	world << "<b>Current winrate:</b>"
-	world << "		<b>total wins	:	10+ players	:	major losses</b>"
-	world << "<b>Aliens:</b>	[a_wins]		<b>:</b>	[a10_wins]		<b>:</b>	[a_loss]"
-	world << "<b>Marines:</b>	[m_wins]		<b>:</b>	[m10_wins]		<b>:</b>	[m_loss]"
+	src << "<b>Current winrate:</b>"
+	src << "		<b>total wins	:	10+ players	:	major losses</b>"
+	src << "<b>Aliens:</b>	[a_wins]		<b>:</b>	[a10_wins]		<b>:</b>	[a_loss]"
+	src << "<b>Marines:</b>	[m_wins]		<b>:</b>	[m10_wins]		<b>:</b>	[m_loss]"
 
 	if(admin_notice)
 		src << "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>"
