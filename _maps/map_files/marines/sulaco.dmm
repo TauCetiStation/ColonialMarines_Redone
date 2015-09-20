@@ -119,7 +119,7 @@
 "co" = (/turf/simulated/floor/plasteel/darkpurple/side{dir = 1},/area/sulaco/containment)
 "cp" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel/darkpurple/side{dir = 1},/area/sulaco/containment)
 "cq" = (/obj/structure/closet/wardrobe/pjs,/turf/simulated/floor/plasteel/darkpurple/side{dir = 1},/area/sulaco/containment)
-"cr" = (/obj/structure/closet/secure_closet/medical2,/obj/item/weapon/soap,/turf/simulated/floor/plasteel/darkpurple/side{dir = 1},/area/sulaco/containment)
+"cr" = (/obj/structure/closet/secure_closet/medical2{req_access = null; req_one_access_txt = "400"},/obj/item/weapon/soap,/turf/simulated/floor/plasteel/darkpurple/side{dir = 1},/area/sulaco/containment)
 "cs" = (/obj/structure/table/glass,/obj/item/clothing/suit/apron/surgical,/obj/item/clothing/mask/surgical,/obj/item/clothing/gloves/color/latex,/turf/simulated/floor/plasteel/darkpurple/side{dir = 5},/area/sulaco/containment)
 "ct" = (/obj/structure/table,/obj/item/stack/cable_coil,/turf/simulated/floor/engine,/area/sulaco/fore_hall)
 "cu" = (/obj/structure/table,/obj/item/device/multitool,/turf/simulated/floor/engine,/area/sulaco/fore_hall)
