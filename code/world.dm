@@ -33,6 +33,7 @@
 	load_motd()
 	load_admins()
 	load_stealth_keys()
+	load_winrate()
 	LoadBansjob()
 	if(config.usewhitelist)
 		load_whitelist()
@@ -176,6 +177,32 @@
 	if(keys_list.len)
 		for(var/X in keys_list)
 			stealth_keys += lowertext(X)
+
+/world/proc/load_winrate()
+	var/list/Lines = file2list("data/win_rate.txt")
+	if(Lines.len)
+		if(Lines[1])
+			m_wins = Lines[1]
+		if(Lines[2])
+			a_wins = Lines[2]
+		if(Lines[3])
+			m10_wins = Lines[3]
+		if(Lines[4])
+			a10_wins = Lines[4]
+		if(Lines[5])
+			m_loss = Lines[5]
+		if(Lines[6])
+			a_loss = Lines[6]
+
+/world/proc/save_winrate()
+	var/F = file("data/win_rate.txt")
+	fdel(F)
+	F << m_wins
+	F << a_wins
+	F << m10_wins
+	F << a10_wins
+	F << m_loss
+	F << a_loss
 
 /world/proc/load_mode()
 	master_mode = "infestation"
