@@ -248,8 +248,8 @@ datum/game_mode/infestation/proc/check_alien_victory()
 			world << 'sound/misc/asses_kicked.ogg'
 		round_end_situation += 1
 		if(joined_player_list.len >= 4)
-			a_wins++
-			m_loss++
+			a_wins += 1
+			m_loss += 1
 		if(joined_player_list.len >= 10)
 			a10_wins++
 
@@ -263,19 +263,19 @@ datum/game_mode/infestation/proc/check_alien_victory()
 			world << 'sound/misc/hell_march.ogg'
 		round_end_situation += 2
 		if(joined_player_list.len >= 4)
-			m_wins++
-			a_loss++
+			m_wins += 1
+			a_loss += 1
 		if(joined_player_list.len >= 10)
-			m10_wins++
+			m10_wins += 1
 
 	else if(finished == 3)
 		feedback_set_details("round_end_result","marine minor victory - infestation stopped at a great cost")
 		world << "\red <FONT size = 3><B>Marine minor victory.</B></FONT>"
 		world << "\red <FONT size = 3><B>Both the marines and the aliens have been terminated. At least the infestation has been erradicated!</B></FONT>"
 		if(joined_player_list.len >= 4)
-			m_wins++
+			m_wins += 1
 		if(joined_player_list.len >= 10)
-			m10_wins++
+			m10_wins += 1
 
 	else if(finished == 4)
 		feedback_set_details("round_end_result","alien minor victory - infestation survives")
@@ -283,9 +283,9 @@ datum/game_mode/infestation/proc/check_alien_victory()
 		world << "\red <FONT size = 3><B>The station has been evacuated... but the infestation remains!</B></FONT>"
 		round_end_situation += 4
 		if(joined_player_list.len >= 4)
-			a_wins++
+			a_wins += 1
 		if(joined_player_list.len >= 10)
-			a10_wins++
+			a10_wins += 1
 
 	else if(finished == 5)
 		feedback_set_details("round_end_result","draw - the station has been nuked")
