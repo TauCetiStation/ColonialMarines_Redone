@@ -9,6 +9,11 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	var/stage = 0
 	var/stage_age = 0
 
+/obj/item/organ/internal/body_egg/alien_embryo/Insert(var/mob/living/carbon/M, special = 0)
+	..()
+	if(ismonkey(M))
+		stage = 3
+
 /obj/item/organ/internal/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 4)
