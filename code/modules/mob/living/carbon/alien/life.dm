@@ -80,7 +80,10 @@ var/aura_danger = "DANGER Red Aura"
 				var/image/I
 				var/location = L
 				if(L.z == 0)
-					location = get_turf(L)
+					if(istype(L.loc, /obj/mecha) || isalien(L.loc) || istype(L.loc, /obj/structure/closet))
+						location = L.loc
+					else
+						location = get_turf(L)
 				if(isalien(L))
 					if(isalienadult(L))
 						var/mob/living/carbon/alien/humanoid/A = L
@@ -91,7 +94,7 @@ var/aura_danger = "DANGER Red Aura"
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 				else if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+					if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo) || H.getorgan(/obj/item/organ/internal/alien/hivenode))
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 					else
 						if((H.r_hand && istype(H.r_hand, /obj/item/weapon/gun)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon/gun)))
