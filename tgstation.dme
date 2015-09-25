@@ -1008,6 +1008,7 @@
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
 #include "code\modules\lighting\lighting_system.dm"
+#include "code\modules\marines\buildings.dm"
 #include "code\modules\marines\closets.dm"
 #include "code\modules\marines\commandercomms.dm"
 #include "code\modules\marines\machinegun.dm"

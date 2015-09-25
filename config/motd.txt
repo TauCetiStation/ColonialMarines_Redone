@@ -8,3 +8,9 @@
 	<strong>• <a href="http://twitter.com/TauCetiDaily">Последние новости на @TauCetiDaily</a></strong>
 
 <strong>Wiki, Forum, Rules, Changelog, Github, Report Issue кнопки теперь подключены.<br>
+
+<strong>Последние важные новости:</strong>
+	• Введен респавн маринам:
+		Кнопку можно найти во вкладке "Ghost" с очевидным названием "Respawn as Marine".
+		Необходимо использовать заранее, таймер сам стартовать не будет.
+		Условие: предыдущее тело - человек.

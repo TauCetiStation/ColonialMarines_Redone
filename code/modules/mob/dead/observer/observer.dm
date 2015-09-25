@@ -69,6 +69,8 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	if(respawn_point)
+		respawn_point.reset()
 	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)

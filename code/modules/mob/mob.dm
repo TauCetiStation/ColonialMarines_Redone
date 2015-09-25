@@ -474,6 +474,7 @@ var/list/slot_equipment_priority = list( \
 	if (popup)
 		memory()
 
+/*
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -505,7 +506,7 @@ var/list/slot_equipment_priority = list( \
 
 	M.key = key
 //	M.Login()	//wat
-	return
+	return*/
 
 /client/verb/changes()
 	set name = "Changelog"
