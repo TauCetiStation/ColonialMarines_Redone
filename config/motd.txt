@@ -7,10 +7,12 @@
 	<strong>• <a href="http://tauceti.ru/wiki/CM:_Rules">Правила сервера</a></strong>
 	<strong>• <a href="http://twitter.com/TauCetiDaily">Последние новости на @TauCetiDaily</a></strong>
 
-<strong>Wiki, Forum, Rules, Changelog, Github, Report Issue кнопки теперь подключены.<br>
+<strong>Wiki, Forum, Rules, Changelog, Github, Report Issue кнопки теперь подключены.</strong>
 
-<strong>Последние важные новости:</strong>
+<span style="color: #B02D2D; font-weight: bold">Последние важные новости:</span><span style="color: #B02D2D">
 	• Введен респавн маринам:
 		Кнопку можно найти во вкладке "Ghost" с очевидным названием "Respawn as Marine".
 		Необходимо использовать заранее, таймер сам стартовать не будет.
 		Условие: предыдущее тело - человек.
+	• Дружественный огонь снова включен и работает так, как работал изначально.
+</span><br>
