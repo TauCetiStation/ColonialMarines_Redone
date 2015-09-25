@@ -295,9 +295,14 @@ var/const/MAX_ACTIVE_TIME = 200
 
 	return
 
-/proc/CanHug(mob/living/M)
+/obj/proc/CanHug(mob/living/M)
 	if(!istype(M))
 		return 0
+
+	if(isturf(src.loc))
+		if(!(M in view(1,src)))
+			return 0
+
 	if(M.stat == DEAD)
 		return 0
 
