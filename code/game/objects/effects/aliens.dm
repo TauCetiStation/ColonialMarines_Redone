@@ -75,6 +75,7 @@
 	desc = "Resin just thin enough to let light pass through."
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
+	layer = 3.6
 	opacity = 0
 	health = 270
 	resintype = "membrane"
@@ -222,7 +223,8 @@
 		if(T.density)
 			if(istype(T, /turf/simulated/wall))
 				new /obj/structure/alien/weeds(T)
-				new /obj/structure/alien/resin/wall(T)
+				var/obj/structure/alien/resin/wall/RW = new /obj/structure/alien/resin/wall(T)
+				RW.health = 70
 			continue
 
 		var/obj/structure/window/W = locate(/obj/structure/window) in T
@@ -230,12 +232,20 @@
 		if(W)
 			if(W.fulltile)
 				new /obj/structure/alien/weeds(T)
-				new /obj/structure/alien/resin/wall(T)
+				var/obj/structure/alien/resin/membrane/RM = new /obj/structure/alien/resin/membrane(T)
+				RM.health = 40
 				continue
 		else if(D)
 			if(!istype(D, /obj/machinery/door/window))
 				new /obj/structure/alien/weeds(T)
-				new /obj/structure/mineral_door/resin(T)
+				var/obj/structure/mineral_door/resin/new_door = new /obj/structure/mineral_door/resin(T)
+				if(!D.density)
+					new_door.state = 1
+					new_door.density = 0
+					new_door.opacity = 0
+					new_door.air_update_turf(1)
+					new_door.update_icon()
+					new_door.hardness = 100
 				continue
 		if(!(dirn in diagonals))
 			new /obj/structure/alien/weeds(T, linked_node)
