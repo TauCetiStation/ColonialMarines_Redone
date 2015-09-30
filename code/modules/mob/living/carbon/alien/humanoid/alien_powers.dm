@@ -681,7 +681,10 @@ Doesn't work on other aliens/AI.*/
 /obj/tunnel/relaymove(mob/living/carbon/user, direction)
 	if(user.tunnel_delay_move >= world.time)
 		return
-	user.tunnel_delay_move = world.time + 5
+	if(istype(user, /mob/living/carbon/alien/humanoid/digger))
+		user.tunnel_delay_move = world.time + 2
+	else
+		user.tunnel_delay_move = world.time + 5
 
 	if(istype(get_step(user, direction), /turf/indestructible))
 		return
@@ -704,9 +707,9 @@ Doesn't work on other aliens/AI.*/
 		if(user.getorgan(/obj/item/organ/internal/alien/digger))
 			if(user.next_move >= world.time)
 				return
-			user.changeNext_move(30)
+			user.changeNext_move(20)
 			var/turf/T = get_turf(get_step(user, direction))
-			if(!do_after(user, 30, target = T))
+			if(!do_after(user, 20, target = T))
 				return
 			new /obj/tunnel(T)
 		return
