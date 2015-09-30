@@ -94,7 +94,6 @@
 		else if(dir == 8)
 			if(Proj.dir == 4 || Proj.dir == 5 || Proj.dir == 6)
 				Proj.damage = round(Proj.damage * 0.2)
-	world << Proj.damage
 	..()
 
 /obj/effect/proc_holder/alien/crush
