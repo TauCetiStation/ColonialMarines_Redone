@@ -115,16 +115,23 @@
 		if(prob(50))
 			icon_state = "grass1"
 
-		if(prob(10))
-			new /obj/structure/flora/tree/dead(src)
-		else if(prob(2))
-			var/choice = pick(typesof(/obj/structure/flora/ausbushes))
-			new choice(src)
-		else if(prob(4))
-			var/choice = pick(/obj/structure/flora/rock,/obj/structure/flora/rock/pile)
-			new choice(src)
-		else if(prob(1))
-			overlays += image('icons/turf/desert2.dmi', "misc1", pixel_x = rand(-8,8), pixel_y = rand(-8,8))
+		var/check_passed = 1
+		for(var/obj/O in contents)
+			if(O.density)
+				check_passed = 0
+				break
+
+		if(check_passed)
+			if(prob(10))
+				new /obj/structure/flora/tree/dead(src)
+			else if(prob(2))
+				var/choice = pick(typesof(/obj/structure/flora/ausbushes))
+				new choice(src)
+			else if(prob(4))
+				var/choice = pick(/obj/structure/flora/rock,/obj/structure/flora/rock/pile)
+				new choice(src)
+			else if(prob(1))
+				overlays += image('icons/turf/desert2.dmi', "misc1", pixel_x = rand(-8,8), pixel_y = rand(-8,8))
 
 /turf/simulated/floor/plating/grass/grasscorners
 	name = "Grass"
