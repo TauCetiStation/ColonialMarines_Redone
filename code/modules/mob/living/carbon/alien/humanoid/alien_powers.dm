@@ -757,6 +757,20 @@ Doesn't work on other aliens/AI.*/
 			hole_found = null
 
 	if(hole_found)
+		if(!istype(src, /mob/living/carbon/alien/humanoid/digger))
+			var/check_passed = 0
+			for(var/direction_check in cardinal)
+				var/turf/Turf_check = get_turf(get_step(src, direction_check))
+				for(var/obj/tunnel/tunnel_check in Turf_check.contents)
+					if(tunnel_check)
+						check_passed = 1
+						break
+				if(check_passed)
+					break
+			if(!check_passed)
+				src << "<span class='warning'>This hole is not connected to anything!</span>"
+				return
+
 		visible_message("<span class='notice'>[src] begins climbing into the tunnel system...</span>" ,"<span class='notice'>You begin climbing into the tunnel system...</span>")
 
 		if(!do_after(src, 25, target = hole_found))
