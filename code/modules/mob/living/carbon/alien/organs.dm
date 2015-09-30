@@ -108,8 +108,17 @@
 	w_class = 3
 	storedPlasma = 50
 	max_plasma = 50
-	heal_rate = 5
-	plasma_rate = 6
+	heal_rate = 6
+	plasma_rate = 5
+	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
+
+/obj/item/organ/internal/alien/plasmavessel/crusher
+	name = "plasma vessel"
+	w_class = 3
+	storedPlasma = 100
+	max_plasma = 100
+	heal_rate = 9
+	plasma_rate = 10
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/runner
@@ -149,15 +158,21 @@
 /obj/item/organ/internal/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
-		if(owner.health >= owner.maxHealth - owner.getCloneLoss())
+		if(istype(src, /obj/item/organ/internal/alien/plasmavessel/crusher))
 			owner.adjustPlasma(plasma_rate)
+			owner.adjustBruteLoss(-heal_rate)
+			owner.adjustFireLoss(-heal_rate)
+			owner.adjustOxyLoss(-heal_rate)
 		else
-			var/mod = 1
-			if(!isalien(owner))
-				mod = 0.2
-			owner.adjustBruteLoss(-heal_rate*mod)
-			owner.adjustFireLoss(-heal_rate*mod)
-			owner.adjustOxyLoss(-heal_rate*mod)
+			if(owner.health >= owner.maxHealth - owner.getCloneLoss())
+				owner.adjustPlasma(plasma_rate)
+			else
+				var/mod = 1
+				if(!isalien(owner))
+					mod = 0.2
+				owner.adjustBruteLoss(-heal_rate*mod)
+				owner.adjustFireLoss(-heal_rate*mod)
+				owner.adjustOxyLoss(-heal_rate*mod)
 
 /obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -274,6 +289,14 @@
 	slot = "armor"
 	reduction = 30
 
+/obj/item/organ/internal/alien/carapace/crusher
+	name = "carapace"
+	zone = "head"
+	slot = "armor"
+	reduction = 0
+	health = 0
+	alien_powers = list(/obj/effect/proc_holder/alien/crusher_def)
+
 /obj/item/organ/internal/alien/carapace/large
 	name = "carapace"
 	zone = "chest"
@@ -291,3 +314,17 @@
 	zone = "chest"
 	slot = "armor"
 	reduction = 15
+
+/obj/item/organ/internal/alien/digger
+	name = "armored claws"
+	zone = "l_hand"
+	slot = "claws"
+	origin_tech = "biotech=5;materials=4"
+	alien_powers = list(/obj/effect/proc_holder/alien/dig)
+
+/obj/item/organ/internal/alien/crusher
+	name = "armored claws"
+	zone = "l_leg"
+	slot = "claws"
+	origin_tech = "biotech=5;materials=4"
+	alien_powers = list(/obj/effect/proc_holder/alien/crush)

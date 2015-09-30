@@ -19,6 +19,8 @@
 
 	else if(lying || resting || sleeping)
 		icon_state = "[caste] Sleeping"
+	else if(istype(src, /mob/living/carbon/alien/humanoid/crusher) && src:in_defense)
+		icon_state = "[caste] Charging"
 	else if(m_intent == "run")
 		icon_state = "[caste] Running"
 	else

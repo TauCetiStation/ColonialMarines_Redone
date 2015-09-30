@@ -1,7 +1,7 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/space
-	area = /area/space
+	turf = /turf/simulated/floor/plating/desert
+	area = /area/wasteland
 	view = "15x15"
 	cache_lifespan = 7
 
@@ -63,7 +63,7 @@
 
 	initialize_marine_armor()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
+	//process_teleport_locs()			//Sets up the wizard teleport locations
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 
 	#ifdef MAP_NAME

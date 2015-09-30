@@ -162,7 +162,7 @@
 		else
 			user << "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>"
 
-	if(istype(W, /obj/item/device/mmi))
+/*	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
@@ -248,7 +248,7 @@
 				O << "<span class='warning'>Error: Servo motors unresponsive.</span>"
 
 		else
-			user << "<span class='warning'>The MMI must go in after everything else!</span>"
+			user << "<span class='warning'>The MMI must go in after everything else!</span>"*/
 
 	if(istype(W,/obj/item/weapon/pen))
 		user << "<span class='warning'>You need to use a multitool to name [src]!</span>"

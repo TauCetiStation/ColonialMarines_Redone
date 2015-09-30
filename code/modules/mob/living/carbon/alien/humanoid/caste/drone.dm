@@ -121,7 +121,8 @@
 		//green is impossible to read, so i made these blue and changed the formatting slightly
 		src << "<B>Hivelord</B> \blue The ULTIMATE hive construction alien.  Capable of building massive hives, that's to it's tremendous Plasma reserve.  However, it is very slow and weak."
 		src << "<B>Carrier</B> \blue The latest advance in Alien Evolution.  Capable of holding upto 6 Facehugger, and throwing them a far distance, directly to someones face."
-		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hivelord","Carrier")
+		src << "<B>Digger</B> \blue The latest advance in Alien Evolution.  Capable of digging thru ground and build underground tunnel system."
+		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hivelord","Carrier","Digger")
 
 		var/mob/living/carbon/alien/humanoid/new_xeno
 		switch(alien_caste)
@@ -129,11 +130,12 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/hivelord(loc)
 			if("Carrier")
 				new_xeno = new /mob/living/carbon/alien/humanoid/carrier(loc)
-		if(mind)	mind.transfer_to(new_xeno)
-		del(src)
+			if("Digger")
+				new_xeno = new /mob/living/carbon/alien/humanoid/digger(loc)
+		if(mind)
+			mind.transfer_to(new_xeno)
+		qdel(src)
 		return
 	else
 		src << "\red You are not ready to evolve."
 		return
-
-	qdel(src)

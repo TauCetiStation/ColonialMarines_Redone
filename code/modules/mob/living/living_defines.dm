@@ -47,6 +47,8 @@
 	var/list/pipes_shown = list()
 	var/last_played_vent
 
+	var/list/tunnel_shown = list()
+
 	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
 
 	var/list/say_log = list() //a log of what we've said, plain text, no spans or junk, essentially just each individual "message"

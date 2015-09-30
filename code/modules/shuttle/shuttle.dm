@@ -123,8 +123,8 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-	var/turf_type = /turf/space
-	var/area_type = /area/space
+	var/turf_type = /turf/simulated/floor/plating/shuttle
+	var/area_type = /area/wasteland
 
 /obj/docking_port/stationary/New()
 	..()
@@ -150,7 +150,7 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	turf_type = /turf/space/transit
+	turf_type = /turf/simulated/floor/plating/shuttle
 
 /obj/docking_port/stationary/transit/New()
 	..()
@@ -261,14 +261,15 @@
 //		if(!destination)
 //			return
 	var/obj/docking_port/stationary/S0 = get_docked()
-	var/obj/docking_port/stationary/S1 = findTransitDock()
-	if(S1)
-		if(dock(S1))
-			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
+	if(callTime)
+		var/obj/docking_port/stationary/S1 = findTransitDock()
+		if(S1)
+			if(dock(S1))
+				WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
+			else
+				previous = S0
 		else
-			previous = S0
-	else
-		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
+			WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
 //default shuttleRotate
 /atom/proc/shuttleRotate(rotation)
@@ -309,8 +310,8 @@
 //			S1.dir = turn(NORTH, -travelDir)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
-	var/turf_type = /turf/space
-	var/area_type = /area/space
+	var/turf_type = /turf/simulated/floor/plating/shuttle
+	var/area_type = /area/wasteland
 	if(S0)
 		if(S0.turf_type)
 			turf_type = S0.turf_type

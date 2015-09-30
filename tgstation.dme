@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\cmr.dm"
+#include "_maps\cmr_v2.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -662,6 +662,7 @@
 #include "code\game\objects\items\weapons\tanks\tanks.dm"
 #include "code\game\objects\items\weapons\tanks\watertank.dm"
 #include "code\game\objects\structures\ai_core.dm"
+#include "code\game\objects\structures\alien_tank.dm"
 #include "code\game\objects\structures\artstuff.dm"
 #include "code\game\objects\structures\barsigns.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
@@ -1021,6 +1022,7 @@
 #include "code\modules\marines\motiondetector.dm"
 #include "code\modules\marines\newarmor.dm"
 #include "code\modules\marines\nonlethals.dm"
+#include "code\modules\marines\planet_scanner.dm"
 #include "code\modules\marines\restraints.dm"
 #include "code\modules\marines\scoreboard.dm"
 #include "code\modules\marines\shuttles2.dm"
@@ -1109,6 +1111,8 @@
 #include "code\modules\mob\living\carbon\alien\humanoid\update_icons.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\carrier.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\corroder.dm"
+#include "code\modules\mob\living\carbon\alien\humanoid\caste\crusher.dm"
+#include "code\modules\mob\living\carbon\alien\humanoid\caste\digger.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\drone.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\hivelord.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\hunter.dm"
@@ -1429,7 +1433,6 @@
 #include "code\modules\research\research.dm"
 #include "code\modules\research\server.dm"
 #include "code\modules\research\stock_parts.dm"
-#include "code\modules\research\designs\AI_module_designs.dm"
 #include "code\modules\research\designs\autolathe_designs.dm"
 #include "code\modules\research\designs\comp_board_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"

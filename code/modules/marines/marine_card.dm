@@ -6,7 +6,7 @@
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_access = list(access_logistics)
-	circuit = "/obj/item/weapon/circuitboard/card"
+	circuit = "/obj/item/weapon/circuitboard/card2"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0.0

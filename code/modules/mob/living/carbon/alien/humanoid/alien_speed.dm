@@ -13,6 +13,14 @@
 /mob/living/carbon/alien/humanoid/hivelord/movement_delay()
 	. = ..()
 	. += 2
+
+/mob/living/carbon/alien/humanoid/crusher/movement_delay()
+	if(in_defense)
+		. = ..()
+		. += 2
+	else
+		. = ..()
+		. += 0
 /*
 /mob/living/carbon/alien/humanoid/carrier/movement_delay()
 	. = 

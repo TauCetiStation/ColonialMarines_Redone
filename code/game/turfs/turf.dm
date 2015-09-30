@@ -287,6 +287,222 @@
 	opacity = 1
 	explosion_block = 50
 
+/turf/indestructible/wall/shuttle
+	name = "wall"
+	icon = 'icons/turf/walls/shuttle_wall2.dmi'
+	icon_state = "shuttle"
+	smooth = 1
+	canSmoothWith = null
+
+/turf/indestructible/wall/shuttle/New()
+	..()
+	if(smooth)
+		smooth_icon(src)
+		icon_state = ""
+
+/turf/indestructible/wall/rock
+	name = "Rock"
+	icon = 'icons/turf/walls/desert.dmi'
+	icon_state = "wall"
+
+var/global/list/rockEdgeCache
+#define NORTH_EDGING	"north"
+#define SOUTH_EDGING	"south"
+#define EAST_EDGING		"east"
+#define WEST_EDGING		"west"
+
+/turf/indestructible/rock
+	name = "Rock"
+	icon = 'icons/turf/rock.dmi'
+	icon_state = "rock"
+
+/turf/indestructible/rock/New()
+	..()
+	if(!rockEdgeCache || !rockEdgeCache.len)
+		rockEdgeCache = list()
+		rockEdgeCache.len = 4
+		rockEdgeCache[NORTH_EDGING] = image('icons/turf/rock.dmi', "rock_side_n", layer = 6)
+		rockEdgeCache[SOUTH_EDGING] = image('icons/turf/rock.dmi', "rock_side_s")
+		rockEdgeCache[EAST_EDGING] = image('icons/turf/rock.dmi', "rock_side_e", layer = 6)
+		rockEdgeCache[WEST_EDGING] = image('icons/turf/rock.dmi', "rock_side_w", layer = 6)
+
+	spawn(1)
+		var/turf/T
+		if(istype(get_step(src, NORTH), /turf/simulated/floor/plating/desert) || istype(get_step(src, NORTH), /turf/simulated/floor/plating/grass))
+			T = get_step(src, NORTH)
+			if (T)
+				T.overlays += rockEdgeCache[SOUTH_EDGING]
+		if(istype(get_step(src, SOUTH), /turf/simulated/floor/plating/desert) || istype(get_step(src, SOUTH), /turf/simulated/floor/plating/grass))
+			T = get_step(src, SOUTH)
+			if (T)
+				T.overlays += rockEdgeCache[NORTH_EDGING]
+		if(istype(get_step(src, EAST), /turf/simulated/floor/plating/desert) || istype(get_step(src, EAST), /turf/simulated/floor/plating/grass))
+			T = get_step(src, EAST)
+			if (T)
+				T.overlays += rockEdgeCache[WEST_EDGING]
+		if(istype(get_step(src, WEST), /turf/simulated/floor/plating/desert) || istype(get_step(src, WEST), /turf/simulated/floor/plating/grass))
+			T = get_step(src, WEST)
+			if (T)
+				T.overlays += rockEdgeCache[EAST_EDGING]
+
+/turf/indestructible/rock/destructible // Don't ask me why.
+	icon_state = "rock_d" //for mapping
+
+	var/hardness = 200
+
+/turf/indestructible/rock/destructible/New()
+	icon_state = "rock_weak"
+	..()
+
+/turf/indestructible/rock/destructible/proc/dismantle_wall()
+	qdel(src)
+
+/turf/indestructible/rock/destructible/ex_act(severity, target)
+	if(prob(85))
+		dismantle_wall()
+
+/turf/indestructible/rock/destructible/mech_melee_attack(obj/mecha/M)
+	if(M.damtype == "brute")
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
+		if(prob(5) && M.force > 20)
+			dismantle_wall()
+			visible_message("<span class='warning'>[src.name] smashes through the rock!</span>")
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+
+/turf/indestructible/rock/destructible/proc/checkhardness(damage)
+	hardness -= damage
+	if(hardness < 0)
+		dismantle_wall()
+
+/turf/indestructible/rock/destructible/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(M.a_intent == "harm")
+		M.changeNext_move(CLICK_CD_MELEE)
+		playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
+
+		var/damage = rand(M.damagemin, M.damagemax)
+		if(!damage)
+			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
+			visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
+				"<span class='userdanger'>[M] has lunged at [src]!</span>")
+			return 0
+
+		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+			"<span class='userdanger'>[M] has slashed at [src]!</span>")
+
+		checkhardness(damage)
+
+/turf/indestructible/rock/destructible/bullet_act(obj/item/projectile/Proj)
+	if(Proj.damage)
+	 checkhardness(Proj.damage)
+
+/*This is indestructible bulletproof window which will simulate
+window cracks if damaged. Doesn't matter that you can't shatter it in the process and i think -
+- it's still better with, than without. ~Zve
+*/
+/turf/indestructible/window/bulletproof
+	name = "bulletproof window"
+	icon = 'icons/obj/smooth_structures/bulletproof_window.dmi'
+	icon_state = "b_window"
+	smooth = 1
+	canSmoothWith = null
+
+	layer = 3.2
+	opacity = 0
+	var/maxhealth = 100
+	var/health = 0
+	var/image/crack_overlay
+
+/turf/indestructible/window/bulletproof/New()
+	..()
+	health = maxhealth
+	if(smooth)
+		smooth_icon(src)
+		icon_state = ""
+
+/turf/indestructible/window/bulletproof/bullet_act(obj/item/projectile/Proj)
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	if(health > 0)
+		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			health -= Proj.damage
+			update_icon()
+
+/turf/indestructible/window/bulletproof/ex_act(severity, target)
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	if(health > 0)
+		switch(severity)
+			if(1.0)
+				health -= 100
+			if(2.0)
+				health -= rand(25,50)
+			if(3.0)
+				if(prob(50))
+					health -= rand(1,25)
+		update_icon()
+
+/turf/indestructible/window/bulletproof/hitby(AM as mob|obj)
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	if(health > 0)
+		var/tforce = 0
+		if(ismob(AM))
+			tforce = 40
+
+		else if(isobj(AM))
+			var/obj/item/I = AM
+			tforce = I.throwforce
+
+		tforce *= 0.25
+
+		health = max(0, health - tforce)
+
+		update_icon()
+
+/turf/indestructible/window/bulletproof/attack_hand(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("[user] knocks on [src].")
+	add_fingerprint(user)
+	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
+
+/turf/indestructible/window/bulletproof/attack_paw(mob/user)
+	return attack_hand(user)
+
+/turf/indestructible/window/bulletproof/attack_alien(mob/living/user)
+	if(islarva(user)) return
+
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	if(health > 0)
+		user.do_attack_animation(src)
+		user.changeNext_move(CLICK_CD_MELEE)
+		health -= 15
+		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+		update_icon()
+
+/turf/indestructible/window/bulletproof/attackby(obj/item/I, mob/living/user, params)
+	playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	if(health > 0)
+		if(I.damtype == BRUTE || I.damtype == BURN)
+			user.changeNext_move(CLICK_CD_MELEE)
+			var/damage = I.force * 0.5
+			health = max(0, health - damage)
+			update_icon()
+
+/turf/indestructible/window/bulletproof/proc/update_icon()
+	spawn(2)
+		if(!src) return
+
+		var/ratio = health / maxhealth
+		ratio = Ceiling(ratio*4) * 25
+
+		if(smooth)
+			smooth_icon(src)
+
+		overlays -= crack_overlay
+		if(ratio > 75)
+			return
+		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
+		overlays += crack_overlay
+
 /turf/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
@@ -308,6 +524,12 @@
 	smooth = 1
 	canSmoothWith = null
 
+/turf/indestructible/riveted/alien
+	icon = 'icons/turf/walls/alien.dmi'
+	icon_state = "alien"
+	smooth = 1
+	canSmoothWith = null
+
 /turf/indestructible/abductor
 	icon_state = "alien1"
 
@@ -321,3 +543,7 @@
 	icon = 'icons/obj/doors/Doorele.dmi'
 	icon_state = "door_closed"
 
+#undef NORTH_EDGING
+#undef SOUTH_EDGING
+#undef EAST_EDGING
+#undef WEST_EDGING

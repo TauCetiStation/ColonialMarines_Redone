@@ -211,8 +211,8 @@ var/const/MAX_ACTIVE_TIME = 200
 		C.regenerate_icons()
 
 	GoIdle() //so it doesn't jump the people that tear it off
-	if(!sterile)
-		src.flags |= NODROP
+	//if(!sterile)
+	//	src.flags |= NODROP
 	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 		Impregnate(M)
 
@@ -231,7 +231,7 @@ var/const/MAX_ACTIVE_TIME = 200
 		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
 								"<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
-		src.flags &= ~NODROP
+		//src.flags &= ~NODROP
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target
 			loc = get_turf(C)

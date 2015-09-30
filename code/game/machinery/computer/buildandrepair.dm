@@ -84,9 +84,16 @@
 /obj/item/weapon/circuitboard/commander_communications/proc/cooldownLeft(deciseconds=600)
 	return max(deciseconds - (world.time - lastTimeUsed), 0)
 
+/obj/item/weapon/circuitboard/plan_scan
+	name = "circuit board (Planetary Scanner)"
+	build_path = /obj/machinery/computer/planet_scanner
+
 /obj/item/weapon/circuitboard/card
 	name = "circuit board (ID Console)"
 	build_path = /obj/machinery/computer/card
+/obj/item/weapon/circuitboard/card2
+	name = "circuit board (Marine ID Console)"
+	build_path = /obj/machinery/computer/marine_card
 /obj/item/weapon/circuitboard/card/centcom
 	name = "circuit board (Centcom ID Console)"
 	build_path = /obj/machinery/computer/card/centcom

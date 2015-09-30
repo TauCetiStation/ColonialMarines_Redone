@@ -115,6 +115,10 @@
 	icon_state = "warndarkcorners"
 
 
+/turf/simulated/floor/plasteel/darkloading
+	icon_state = "darkload"
+
+
 /turf/simulated/floor/plasteel/yellowsiding
 	icon_state = "yellowsiding"
 /turf/simulated/floor/plasteel/yellowsiding/corner

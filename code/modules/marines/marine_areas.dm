@@ -112,27 +112,47 @@
 
 /area/shuttle/marine_a
 	name = "\improper Marine Transport Shuttle One"
-	music = "music/escape.ogg"
-	requires_power = 0
 
 /area/shuttle/marine_a/sulaco
 	icon_state = "shuttle2"
-	requires_power = 0
 
 /area/shuttle/marine_a/station
 	icon_state = "shuttle"
-	requires_power = 0
 
 /area/shuttle/marine_b
 	name = "\improper Marine Transport Shuttle Two"
-	music = "music/escape.ogg"
-	requires_power = 0
 
 /area/shuttle/marine_b/sulaco
 	icon_state = "shuttle2"
-	requires_power = 0
 
 /area/shuttle/marine_b/station
 	icon_state = "shuttle"
-	requires_power = 0
 
+//New areas - planet
+/area/planet/xenolab
+	name = "\improper Lab X9"
+	icon_state = "p_labx9"
+
+/area/planet/construction/area1
+	name = "\improper WS Construction Area"
+	icon_state = "p_wscs1"
+
+/area/planet/storage/tech1
+	name = "\improper Bridge Storage"
+	icon_state = "p_tech1"
+
+/area/planet/emergency/smes1
+	name = "\improper Emergency Smes Storage 1"
+	icon_state = "p_smesstor"
+
+/area/planet/emergency/smes2
+	name = "\improper Emergency Smes Storage 2"
+	icon_state = "p_smesstor"
+
+/area/planet/emergency/smes3
+	name = "\improper Emergency Smes Storage 3"
+	icon_state = "p_smesstor"
+
+/area/planet/emergency/smes4
+	name = "\improper Emergency Smes Storage 4"
+	icon_state = "p_smesstor"

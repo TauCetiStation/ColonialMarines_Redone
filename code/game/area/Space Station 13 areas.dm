@@ -98,6 +98,18 @@ var/list/teleportlocs = list()
 	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 
+/area/wasteland
+	name = "\improper Wasteland"
+	icon_state = "yellow"
+	requires_power = 1
+	always_unpowered = 1
+	power_light = 0
+	power_equip = 0
+	power_environ = 0
+	has_gravity = 1
+	valid_territory = 0
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
 /area/shuttle

@@ -128,7 +128,7 @@
 				laws.add_inherent_law(M.laws[1])
 				usr << "<span class='notice'>Added a freeform law.</span>"
 
-			if(istype(P, /obj/item/device/mmi))
+			/*if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
 				if(!M.brainmob)
 					user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
@@ -167,7 +167,7 @@
 				M.loc = src
 				brain = M
 				usr << "<span class='notice'>Added a brain.</span>"
-				icon_state = "3b"
+				icon_state = "3b"*/
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)

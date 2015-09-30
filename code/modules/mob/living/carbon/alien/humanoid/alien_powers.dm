@@ -227,10 +227,6 @@ Doesn't work on other aliens/AI.*/
 		// TURF CHECK
 		else if(istype(target, /turf/simulated))
 			var/turf/T = target
-			// R WALL
-			if(istype(T, /turf/simulated/wall/r_wall))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
 			// R FLOOR
 			if(istype(T, /turf/simulated/floor/engine))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
@@ -391,7 +387,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Screech"
 	desc = "Emit a screech that stuns prey."
 	plasma_cost = 250
-	action_icon_state = "transmit"
+	action_icon_state = "alien_screech"
 	var/usedscreech = 0
 
 /obj/effect/proc_holder/alien/screech/fire(mob/living/carbon/user)
@@ -523,3 +519,255 @@ Doesn't work on other aliens/AI.*/
 	dat += "</body></html>"
 	usr << browse(dat, "window=roundstatus;size=600x400")
 	return
+
+
+//Digger ability
+/mob/living/proc/update_tunnel_vision()
+	remove_tunnel_vision()
+
+	if(istype(src.loc, /obj/tunnel))
+		for(var/obj/tunnel/A in world)
+			if(!A.tunnel_vision_img)
+				A.tunnel_vision_img = image(A, A.loc, layer = 20, dir = A.dir)
+				//20 for being above darkness
+			tunnel_shown += A.tunnel_vision_img
+			if(client)
+				client.images += A.tunnel_vision_img
+
+/mob/living/proc/remove_tunnel_vision()
+	if(client)
+		for(var/image/current_image in tunnel_shown)
+			client.images -= current_image
+		client.eye = src
+	tunnel_shown.len = 0
+
+/obj/effect/proc_holder/alien/dig
+	name = "Dig"
+	desc = "Dig tunnel"
+	plasma_cost = 0
+	action_icon_state = "alien_dig"
+
+	var/digging = 0
+
+/obj/effect/proc_holder/alien/dig/fire(mob/living/carbon/user)
+	if(user.z == 0)
+		if(!istype(user.loc, /obj/tunnel))
+			user << "<span class='noticealien'>You can't dig here.</span>"
+			return 0
+	else if(user.z != 1)
+		user << "<span class='noticealien'>You can't dig here.</span>"
+		return 0
+
+	//this is shuttle landing pad below, not sure how i want check that in other way.
+	if(((user.x >= 139 && user.x <= 156) && (user.y >= 171 && user.y <= 177)) || ((user.x >= 218 && user.x <= 235) && (user.y >= 206 && user.y <= 212)))
+		user << "<span class='noticealien'>You can't dig here.</span>"
+		return 0
+
+	if(digging)
+		return 0
+
+	var/turf/T = get_turf(user)
+
+	if(T.density)
+		user << "<span class='noticealien'>You can't dig here.</span>"
+		return 0
+	else
+		for(var/atom/A in T.contents)
+			if((A != user) && A.density)
+				user << "<span class='noticealien'>You can't dig here.</span>"
+				return 0
+
+	var/obj/tunnel/hole/Hole = locate(/obj/tunnel/hole) in T
+	if(Hole)
+		user << "<span class='noticealien'>You can't dig here.</span>"
+		return 0
+
+	var/obj/tunnel/Tunnel = locate(/obj/tunnel) in T
+	if(Tunnel)
+		digging = 1
+		if(!do_after(user, 100, target = T))
+			digging = 0
+			return 0
+
+		digging = 0
+		Hole = new /obj/tunnel/hole(T)
+
+		for(var/mob/living/L in Tunnel.contents)
+			L.loc = Hole
+			L.client.eye = Hole
+
+		qdel(Tunnel)
+	else
+		digging = 1
+		if(!do_after(user, 100, target = T))
+			digging = 0
+			return 0
+
+		digging = 0
+		new /obj/tunnel/hole(T)
+
+	return 1
+
+/mob/living/carbon
+	var/tunnel_delay_move = 0
+
+/obj/tunnel
+	name = "tunnel"
+	icon = 'icons/Xeno/effects.dmi'
+	icon_state = "tunnel"
+	var/image/tunnel_vision_img = null
+	anchored = 1
+	unacidable = 1
+	invisibility = 101
+
+/obj/tunnel/New()
+	..()
+
+	playsound(src.loc, 'sound/effects/shovel_dig.ogg', 50, 1, -3)
+
+	for(var/mob/living/carbon/C in living_mob_list)
+		if(istype(C.loc, /obj/tunnel))
+			if(!src.tunnel_vision_img)
+				src.tunnel_vision_img = image(src, src.loc, layer = 20)
+			C.tunnel_shown += src.tunnel_vision_img
+			if(C.client)
+				C.client.images += src.tunnel_vision_img
+
+/obj/tunnel/hole
+	name = "hole"
+	icon_state = "hole"
+	invisibility = 0
+
+/obj/tunnel/Destroy()
+	for(var/mob/living/L in contents)
+		L.forceMove(get_turf(src))
+
+	if(tunnel_vision_img)
+		qdel(tunnel_vision_img)
+	..()
+
+/obj/tunnel/hole/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/grenade/explosive))
+		var/answer = alert(user, "Do you want to throw explosive grenade in?",,"Yes","No")
+		if(answer == "No")
+			return
+		if(answer == "Yes")
+			if(!do_after(user, 20, target = src))
+				return
+
+			if(W && W == user.get_active_hand())
+				playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
+				qdel(W)
+				
+				grenade_act()
+
+/obj/tunnel/hole/proc/grenade_act()
+	spawn(30)
+		explosion(loc,0,0,3)
+		for(var/turf/T in range(10))
+			for(var/obj/tunnel/Tunnel in T.contents)
+				Tunnel.explode_act()
+				sleep(1)
+
+/obj/tunnel/proc/explode_act()
+	for(var/mob/living/L in contents)
+		L.adjustBruteLoss(1000)
+	var/turf/T = get_turf(src)
+	var/datum/effect/effect/system/smoke_spread/smoke = new
+	smoke.set_up(1, 0, T) // if more than one smoke, spread it around
+	smoke.start()
+	qdel(src)
+
+/obj/tunnel/relaymove(mob/living/carbon/user, direction)
+	if(user.tunnel_delay_move >= world.time)
+		return
+	user.tunnel_delay_move = world.time + 5
+
+	if(istype(get_step(user, direction), /turf/indestructible))
+		return
+
+	//this is shuttle landing pad below, not sure how i want check that in other way.
+	var/turf/check = get_step(user, direction)
+	if(((check.x >= 139 && check.x <= 156) && (check.y >= 171 && check.y <= 177)) || ((check.x >= 218 && check.x <= 235) && (check.y >= 206 && check.y <= 212)))
+		user << "<span class='noticealien'>You can't dig here.</span>"
+		return 0
+
+	var/obj/tunnel/target_move = locate(/obj/tunnel) in get_step(user, direction)
+
+	if(buckled_mob == user) // fixes buckle crawl edgecase fuck bug
+		return
+
+	if(user.stunned)
+		return
+
+	if(!target_move)
+		if(user.getorgan(/obj/item/organ/internal/alien/digger))
+			if(user.next_move >= world.time)
+				return
+			user.changeNext_move(30)
+			var/turf/T = get_turf(get_step(user, direction))
+			if(!do_after(user, 30, target = T))
+				return
+			new /obj/tunnel(T)
+		return
+	else
+		if(istype(target_move, /obj/tunnel/hole))
+			user.remove_tunnel_vision()
+			user.forceMove(target_move.loc) //handle entering and so on.
+			user.visible_message("<span class='notice'>You hear something squeezing through the tunnel...</span>","<span class='notice'>You climb out the tunnel system.")
+			user.stunned = 1
+			user.canmove = 0
+		else
+			//if(returnPipenet() != target_move.returnPipenet())
+			//	user.update_pipe_vision(target_move)
+			user.loc = target_move
+			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
+			//if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+			//	user.last_played_vent = world.time
+			//	playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
+
+	user.canmove = 0
+	spawn(1)
+		user.canmove = 1
+
+/obj/tunnel/hole/AltClick(mob/living/L)
+	if(istype(src, /obj/tunnel/hole))
+		L.handle_tunnelcrawl(src)
+		return
+	..()
+
+/mob/living/proc/handle_tunnelcrawl(atom/A)
+	if(!ventcrawler || !Adjacent(A))
+		return
+	if(stat)
+		src << "You must be conscious to do this!"
+		return
+	if(lying)
+		src << "You can't vent crawl while you're stunned!"
+		return
+	if(restrained())
+		src << "You can't vent crawl while you're restrained!"
+		return
+
+	var/obj/tunnel/hole/hole_found
+
+	if(A)
+		hole_found = A
+		if(!istype(hole_found))
+			hole_found = null
+
+	if(hole_found)
+		visible_message("<span class='notice'>[src] begins climbing into the tunnel system...</span>" ,"<span class='notice'>You begin climbing into the tunnel system...</span>")
+
+		if(!do_after(src, 25, target = hole_found))
+			return
+
+		if(!client)
+			return
+
+		if(isalien(src) && ventcrawler)//It must have atleast been 1 to get this far
+			visible_message("<span class='notice'>[src] scrambles into the tunnel system!</span>","<span class='notice'>You climb into the tunnel system.</span>")
+			loc = hole_found
+			update_tunnel_vision()
+	else
+		src << "<span class='warning'>This tunnel system is not connected to anything!</span>"

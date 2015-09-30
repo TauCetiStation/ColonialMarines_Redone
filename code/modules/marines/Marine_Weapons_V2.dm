@@ -9,14 +9,14 @@
 	damage = 45
 
 /obj/item/projectile/bullet/m39 // M39 SMG
-	damage = 10
+	damage = 15
 
 /obj/item/projectile/bullet/m41 //M41 Assault Rifle
-	damage = 15
+	damage = 20
 
 /obj/item/projectile/bullet/m37 //M37 Pump Shotgun
 	name = "pellet"
-	damage = 25
+	damage = 30
 
 ///***Ammo***///
 

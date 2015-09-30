@@ -148,6 +148,10 @@
 	H.client << "<h2>You are a survivor!</h2>"
 	H.client << "\blue You were a crew member on the Nostromo. Your crew was wiped out by an alien infestation. You should try to locate and help other survivors (If there are any other than you.)"
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight(H), slot_l_hand)
+	if(prob(30))
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+	if(prob(25))
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/random(H), slot_w_uniform)
 	return 1
 
 
