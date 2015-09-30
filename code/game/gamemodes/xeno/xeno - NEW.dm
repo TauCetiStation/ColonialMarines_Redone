@@ -170,7 +170,7 @@
 		var/nestedhost = (H.status_flags & XENO_HOST) && H.buckled
 		if(H) //Prevent any runtime errors
 
-			if(H.client && H.getorgan(/obj/item/organ/internal/brain) && H.stat != DEAD && !nestedhost) // If they're connected/unghosted, alive, not debrained, and not a nested host
+			if(H.client && H.getorgan(/obj/item/organ/internal/brain) && H.stat != DEAD && !nestedhost && !H.getorgan(/obj/item/organ/internal/alien/hivenode)) // If they're connected/unghosted, alive, not debrained, and not a nested host
 				humansurvivors += 1 //Add them to the amount of people who're alive.
 	for(var/mob/living/carbon/alien/A in living_mob_list)
 		if(A) //Prevent any runtime errors
