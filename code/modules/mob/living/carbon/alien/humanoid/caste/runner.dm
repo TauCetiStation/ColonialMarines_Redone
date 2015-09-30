@@ -160,7 +160,7 @@
 			else
 				src.canmove = 0
 				src.frozen = 1
-				target.Weaken(2)
+				target.Weaken(3)
 
 			spawn(15)
 				src.frozen = 0
