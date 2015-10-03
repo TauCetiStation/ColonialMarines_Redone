@@ -207,7 +207,7 @@ BLIND     // can't see anything
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = -1 //Not Burnable
 
-	health = 5
+	health = 3
 
 /obj/item/clothing/suit/space
 	name = "space suit"

@@ -15,7 +15,6 @@
 	action_button_name = "Toggle Helmet Light"
 	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	health = 5
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
@@ -118,7 +117,6 @@
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 90)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	health = 6
 
 
 /obj/item/clothing/suit/space/hardsuit/engine/elite

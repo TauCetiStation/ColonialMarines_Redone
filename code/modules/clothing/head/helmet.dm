@@ -47,7 +47,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	health = 10
+	health = 5
 
 /obj/item/clothing/head/helmet/attack_self()
 	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
