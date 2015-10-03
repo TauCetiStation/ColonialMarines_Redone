@@ -7,7 +7,6 @@ var/respawn_count[0]
 	density = 1
 	anchored = 1
 	var/timer = 0
-	var/client_timer = 180
 	var/mob/dead/observer/who_spawn
 	use_power = 0
 	var/hardness = 100
@@ -32,12 +31,6 @@ var/respawn_count[0]
 		src.reset()
 		return
 
-	if(!who_spawn.client)
-		client_timer--
-		if(client_timer <= 0)
-			src.reset()
-		return
-
 	if(timer)
 		if(world.time > timer)
 			if(who_spawn)
@@ -47,7 +40,6 @@ var/respawn_count[0]
 /obj/machinery/respawn_pod/proc/reset()
 	who_spawn = null
 	timer = 0
-	client_timer = 180
 
 /obj/machinery/respawn_pod/proc/start(mob/dead/observer/O, penalty = 1)
 	who_spawn = O
