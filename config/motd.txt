@@ -7,7 +7,7 @@
 	<strong>• <a href="http://tauceti.ru/wiki/CM:_Rules">Правила сервера</a></strong>
 	<strong>• <a href="http://twitter.com/TauCetiDaily">Последние новости на @TauCetiDaily</a></strong>
 
-	<strong>• <a href="http://tauceti.ru/w/images/8/87/Map-unk379.png">Карта планеты (02.10.15)</a></strong>
+	<strong>• <a href="http://tauceti.ru/w/images/8/87/Map-unk379.png">Карта планеты</a></strong>
 
 
 <strong>Wiki, Forum, Rules, Changelog, Github, Report Issue кнопки теперь подключены.</strong>
