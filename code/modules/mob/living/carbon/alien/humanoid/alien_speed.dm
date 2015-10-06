@@ -20,7 +20,7 @@
 /mob/living/carbon/alien/humanoid/crusher/movement_delay()
 	if(in_defense)
 		. = ..()
-		. += 1
+		. += 3
 	else
 		. = ..()
 		. += 0

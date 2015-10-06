@@ -130,9 +130,9 @@
 		playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
 
 		var/cur_dir = user.dir
-		var/turf/simulated/floor/tile = user.loc
-		if(tile)
-			tile.break_tile()
+		//var/turf/simulated/floor/tile = user.loc
+		//if(tile)
+		//	tile.break_tile()
 		var/speed = 3
 		var/hit = 0
 		for(var/i=0, i<30, i++)
@@ -149,9 +149,9 @@
 					hit = 1
 					break
 			else
-				if(istype(T, /turf/simulated/floor))
-					var/turf/simulated/floor/F = T
-					F.break_tile()
+				//if(istype(T, /turf/simulated/floor))
+				//	var/turf/simulated/floor/F = T
+				//	F.break_tile()
 				for(var/atom/A in T.contents)
 					if(isliving(A))
 						var/mob/living/L = A
