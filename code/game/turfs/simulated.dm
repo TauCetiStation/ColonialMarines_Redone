@@ -51,6 +51,10 @@
 				return
 			if(2) //lube
 				M.slip(0, 7, null, (SLIDE|GALOSHES_DONT_HELP))
+		if(istype(src, /turf/simulated/floor/plating/beach/sea))
+			if(M.m_intent == "run")
+				if(prob(25))
+					playsound(src, pick('sound/effects/water_move1.ogg','sound/effects/water_move2.ogg'), 50, 1)
 
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()

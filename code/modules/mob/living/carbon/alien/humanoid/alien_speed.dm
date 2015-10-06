@@ -1,6 +1,9 @@
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
+	if(istype(loc, /turf/simulated/floor/plating/beach/sea))
+		. +=  move_delay_add + 3
+	else
+		. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()

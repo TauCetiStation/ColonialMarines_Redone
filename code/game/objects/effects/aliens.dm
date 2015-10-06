@@ -15,6 +15,10 @@
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
 
+/obj/structure/alien/New()
+	..()
+	if(istype(loc, /turf/simulated/floor/plating/beach))
+		alpha = 80
 /*
  * Resin
  */

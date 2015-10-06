@@ -4,6 +4,8 @@
 
 	if(locate(/obj/structure/alien/weeds) in loc)
 		. += 2
+	if(istype(loc, /turf/simulated/floor/plating/beach/sea))
+		. += 3
 	. += ..()
 	. += config.human_delay
 
