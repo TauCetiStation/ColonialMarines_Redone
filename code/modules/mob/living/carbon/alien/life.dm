@@ -69,6 +69,7 @@ var/aura_xeno = "XENO Purple Aura"
 var/aura_safe = "SAFE Blue Aura"
 var/aura_caution = "CAUTION Yellow Aura"
 var/aura_danger = "DANGER Red Aura"
+var/aura_xenhum = "XEDA Danger Aura"
 
 /mob/living/carbon/alien/proc/handle_aura_icons()
 	if(client)
@@ -94,7 +95,9 @@ var/aura_danger = "DANGER Red Aura"
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 				else if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo) || H.getorgan(/obj/item/organ/internal/alien/hivenode))
+					if(H.getorgan(/obj/item/organ/internal/alien/hivenode))
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xenhum, layer = 16)
+					else if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 					else
 						if((H.r_hand && istype(H.r_hand, /obj/item/weapon/gun)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon/gun)))
