@@ -57,6 +57,9 @@ In all, this is a lot like the monkey code. /N
 		if("grab")
 			grabbedby(M)
 		if ("harm", "disarm")
+			if(M.buckled)
+				if(istype(M.buckled, /obj/structure/stool/bed/nest))
+					return 0
 			M.do_attack_animation(src)
 			return 1
 	return 0
