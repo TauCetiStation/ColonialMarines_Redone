@@ -194,6 +194,7 @@
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
 	w_class = 1
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
+	var/toxin_power = 0
 
 /obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -205,7 +206,9 @@
 
 /obj/item/organ/internal/alien/hivenode/on_life()
 	if(!isalien(owner))
-		owner.adjustToxLoss(2)
+		toxin_power++
+		var/tox_dmg = 1 + (toxin_power/100)
+		owner.adjustToxLoss(tox_dmg)
 
 
 /obj/item/organ/internal/alien/resinspinner
