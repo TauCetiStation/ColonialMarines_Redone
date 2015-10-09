@@ -29,6 +29,7 @@
 					/obj/item/device/flashlight/flare = 10,
 					/obj/item/device/flashlight/seclite = 2,
 					/obj/item/weapon/storage/belt/knifepouch/Carbon_Steel=2,
+					/obj/item/weapon/grenade/explosive = 5
 					)
 	contraband = list(/*bj/item/weapon/storage/fancy/donut_box = 5,
 					/obj/item/ammo_magazine/a357 = 5,
