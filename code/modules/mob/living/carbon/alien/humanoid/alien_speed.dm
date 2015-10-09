@@ -20,7 +20,7 @@
 /mob/living/carbon/alien/humanoid/crusher/movement_delay()
 	if(in_defense)
 		. = ..()
-		. += 3
+		. += 2
 	else
 		. = ..()
 		. += 0
@@ -30,12 +30,14 @@
 	. += */
 
 /mob/living/carbon/alien/humanoid/runner/movement_delay()
-	. = -2
-	. += ..()
-
-/mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1
 	. += ..()
+
+/*
+/mob/living/carbon/alien/humanoid/hunter/movement_delay()
+	. = -1
+	. += ..()*/
+
 /*
 /mob/living/carbon/alien/humanoid/praetorian/movement_delay()
 	. = 
