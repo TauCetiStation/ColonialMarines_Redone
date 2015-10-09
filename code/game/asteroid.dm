@@ -24,7 +24,7 @@ var/global/max_secret_rooms = 6
 				T.ChangeTurf(wall)
 				room_turfs["walls"] += T
 
-
+///////
 			else
 				T = cur_loc
 				T.ChangeTurf(floor)
