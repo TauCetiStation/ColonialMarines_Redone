@@ -203,6 +203,10 @@
 	M.faction -= "alien"
 	..()
 
+/obj/item/organ/internal/alien/hivenode/on_life()
+	if(!isalien(owner))
+		owner.adjustToxLoss(2)
+
 
 /obj/item/organ/internal/alien/resinspinner
 	name = "resin spinner"
