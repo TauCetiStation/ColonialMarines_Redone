@@ -426,7 +426,7 @@
 					else
 						W.afterattack(ms_last_pos,src,0,params)
 				if(isobj(ms_last_pos))
-					W.afterattack(get_turf(ms_last_pos),src,0,params)
+					W.afterattack(istype(ms_last_pos, /obj/item/clothing/mask/facehugger) ? ms_last_pos : get_turf(ms_last_pos),src,0,params)
 				else
 					W.afterattack(ms_last_pos,src,0,params)
 			else
