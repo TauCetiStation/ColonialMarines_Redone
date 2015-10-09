@@ -1226,7 +1226,7 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [master_mode].</span>")
 		world << "<span class='adminnotice'><b>The mode is now: [master_mode]</b></span>"
 		Game() // updates the main game menu
-		//world.save_mode(master_mode)
+		world.save_mode(master_mode)
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
