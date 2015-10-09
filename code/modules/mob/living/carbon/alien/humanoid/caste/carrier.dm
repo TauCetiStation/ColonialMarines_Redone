@@ -85,6 +85,11 @@
 	set name = "Throw Facehugger"
 	set desc = "Throw one of your facehuggers"
 	set category = "Alien"
+
+	if(!isturf(loc))
+		src << "\red Can throw only from a turf!"
+		return
+
 	if(health < 0)
 		src << "\red You can't throw huggers when unconcious."
 		return
