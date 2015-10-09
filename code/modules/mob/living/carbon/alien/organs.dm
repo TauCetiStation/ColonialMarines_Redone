@@ -207,7 +207,7 @@
 /obj/item/organ/internal/alien/hivenode/on_life()
 	if(!isalien(owner))
 		toxin_power++
-		var/tox_dmg = 1 + (toxin_power/100)
+		var/tox_dmg = 2 + (toxin_power/100)
 		owner.adjustToxLoss(tox_dmg)
 
 
