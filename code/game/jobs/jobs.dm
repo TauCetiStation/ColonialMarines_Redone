@@ -18,6 +18,10 @@ var/const/MARINE			=(1<<13)
 var/const/BIOHAZ			=(1<<14)
 var/const/LOGISTICS			=(1<<15)
 var/const/SULMED			=(1<<16)
+var/const/ASL			    =(1<<17)
+var/const/BSL			    =(1<<18)
+var/const/DSL			    =(1<<19)
+var/const/CSL			    =(1<<20)
 
 
 var/const/MEDSCI			=(1<<1)
@@ -62,6 +66,10 @@ var/list/assistant_occupations = list(
 var/list/command_positions = list(
 	"Commander",
 	"Logistics Officer",
+	"Alpha Squad Leader",
+	"Bravo Squad Leader",
+	"Delta Squad Leader",
+	"Charlie Squad Leader",
 
 	"Captain",
 	"Head of Personnel",
