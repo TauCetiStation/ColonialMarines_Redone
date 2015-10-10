@@ -205,12 +205,12 @@
 	F << a_loss
 
 /world/proc/load_mode()
-	master_mode = "infestation"
-	//var/list/Lines = file2list("data/mode.txt")
-	//if(Lines.len)
-	//	if(Lines[1])
-	//		master_mode = Lines[1]
-	//		diary << "Saved mode is '[master_mode]'"
+	//master_mode = "infestation"
+	var/list/Lines = file2list("data/mode.txt")
+	if(Lines.len)
+		if(Lines[1])
+			master_mode = Lines[1]
+			diary << "Saved mode is '[master_mode]'"
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")

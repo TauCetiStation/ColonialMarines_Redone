@@ -127,6 +127,11 @@
 
 /mob/living/carbon/alien/humanoid/proc/spit_neuro_aim(var/atom/T, var/power = 1)
 	if(!T) return
+
+	if(!isturf(loc))
+		src << "\red Can spit only from a turf!"
+		return
+
 	if(src.getPlasma() > 75)
 		if(usedspit <= world.time)
 			usedspit = world.time + SPITCOOLDOWN * 15

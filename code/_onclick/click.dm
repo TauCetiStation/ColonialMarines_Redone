@@ -16,8 +16,10 @@
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
 /atom/Click(location,control,params)
+	usr.ms_last_pos = src
 	usr.ClickOn(src, params)
 /atom/DblClick(location,control,params)
+	usr.ms_last_pos = src
 	usr.DblClickOn(src,params)
 
 /*
@@ -335,6 +337,7 @@
 		C.swap_hand()
 	else
 		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
+		usr.ms_last_pos = T
 		T.Click(location, control, params)
 	return 1
 
@@ -358,11 +361,22 @@
 
 				var/target = src
 
-				if(isliving(src))
-					var/mob/living/L = src
-					if((L.health > 0) && !L.lying) // We don't need auto aim if target alive and not lying, so player will be forced
-						target = get_turf(src) // to release LMB and click again, to correct his aim. (When shooting at moving target).
+				if(!W.smart_weapon)
+					if(isliving(src))
+						var/mob/living/L = src
+						if((L.health > 0) && !L.lying) // We don't need auto aim if target alive and not lying, so player will be forced
+							target = get_turf(src) // to release LMB and click again, to correct his aim. (When shooting at moving target).
+				usr.ms_last_pos = target
 				usr.ClickOnHold(target, params)
+
+/mob
+	var/ms_last_pos = null
+
+/atom/MouseDrag(atom/A)
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(ismob(A) || isturf(A) || isobj(A))
+			L.ms_last_pos = A
 
 /atom/MouseUp(location,control,params)
 	usr.mouse_hold = 0
@@ -374,6 +388,10 @@
 	while(mouse_hold)
 		var/obj/item/weapon/gun/W = get_active_hand()
 		spawn()
+			if(!istype(W))
+				mouse_hold = 0
+				return
+
 			if(!src || !A)
 				mouse_hold = 0
 				return
@@ -399,9 +417,21 @@
 				mouse_hold = 0
 				return
 
-			face_atom(A)
-
-			W.afterattack(A,src,0,params)
+			if(ms_last_pos)
+				face_atom(ms_last_pos)
+				if(isliving(ms_last_pos))
+					var/mob/living/L = ms_last_pos
+					if((L.health > 0) && !L.lying)
+						W.afterattack(get_turf(ms_last_pos),src,0,params)
+					else
+						W.afterattack(ms_last_pos,src,0,params)
+				if(isobj(ms_last_pos))
+					W.afterattack(istype(ms_last_pos, /obj/item/clothing/mask/facehugger) ? ms_last_pos : get_turf(ms_last_pos),src,0,params)
+				else
+					W.afterattack(ms_last_pos,src,0,params)
+			else
+				face_atom(A)
+				W.afterattack(A,src,0,params)
 
 		sleep(W.fire_delay ? W.fire_delay : 10)
 		fire_in_process = 0
