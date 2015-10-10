@@ -84,6 +84,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
 
+	var/job_marine_high = 0
+	var/job_marine_med = 0
+	var/job_marine_low = 0
+
 		// Want randomjob if preferences already filled - Donkie
 	var/userandomjob = 1 //defaults to 1 for fewer assistants
 
@@ -560,6 +564,20 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					job_engsec_low |= job.flag
 
 			return 1
+		else if (job.department_flag == MARINE)
+			job_marine_low &= ~job.flag
+			job_marine_med &= ~job.flag
+			job_marine_high &= ~job.flag
+
+			switch(level)
+				if (1)
+					job_engsec_high |= job.flag
+				if (2)
+					job_engsec_med |= job.flag
+				if (3)
+					job_engsec_low |= job.flag
+
+			return 1
 		else if (job.department_flag == MEDSCI)
 			job_medsci_low &= ~job.flag
 			job_medsci_med &= ~job.flag
@@ -620,6 +638,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		job_engsec_med = 0
 		job_engsec_low = 0
 
+		job_marine_high = 0
+		job_marine_med = 0
+		job_marine_low = 0
+
 
 	proc/GetJobDepartment(datum/job/job, level)
 		if(!job || !level)	return 0
@@ -648,6 +670,14 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						return job_engsec_med
 					if(3)
 						return job_engsec_low
+			if(MARINE)
+				switch(level)
+					if(1)
+						return job_marine_high
+					if(2)
+						return job_marine_med
+					if(3)
+						return job_marine_low
 		return 0
 
 	proc/process_link(mob/user, list/href_list)

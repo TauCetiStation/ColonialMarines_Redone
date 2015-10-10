@@ -213,6 +213,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	>> job_engsec_high
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
+	S["job_marine_high"]	>> job_marine_high
+	S["job_marine_med"]		>> job_marine_med
+	S["job_marine_low"]		>> job_marine_low
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -266,6 +269,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+	job_marine_high = sanitize_integer(job_marine_high, 0, 65535, initial(job_marine_high))
+	job_marine_med = sanitize_integer(job_marine_med, 0, 65535, initial(job_marine_med))
+	job_marine_low = sanitize_integer(job_marine_low, 0, 65535, initial(job_marine_low))
 
 	return 1
 
@@ -322,6 +328,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
+	S["job_marine_high"]	<< job_marine_high
+	S["job_marine_med"]		<< job_marine_med
+	S["job_marine_low"]		<< job_marine_low
 
 	return 1
 

@@ -3,7 +3,7 @@
 	title = "Commander"
 	flag = COMMANDER
 	department_head = list("Centcom")
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -43,7 +43,7 @@
 /datum/job/marine
 	title = "Marine"
 	flag = MARINE
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = -1
 	spawn_positions = -1
@@ -65,7 +65,7 @@
 /datum/job/military_officer
 	title = "Military Police"
 	flag = MPOLICE
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -86,7 +86,7 @@
 /datum/job/logistics_officer
 	title = "Logistics Officer"
 	flag = LOGISTICS
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 3
@@ -110,7 +110,7 @@
 /datum/job/sulmed
 	title = "Sulaco Medic"
 	flag = SULMED
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
