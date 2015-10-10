@@ -84,7 +84,9 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	name = "M10 Pattern Marine Helmet"
 	desc = "A standard M10 Pattern Helmet. It reads on the label, 'The difference between an open-casket and closed-casket funeral. Wear on head for best results.'."
 	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 35, bio = 0, rad = 0)
-	health = 4
+	spawnWithHelmetCam = 0
+	canAttachCam = 1
+	can_flashlight = 1
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	var/mob/living/carbon/human/wornby
 	var/squad = 0
@@ -150,7 +152,24 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 				wornby.overlays_standing += markingoverlay
 		wornby.update_icons()
 
+/obj/item/clothing/head/helmet/marine2/update_icon()
 
+	var/state = "[initial(icon_state)]"
+	if(helmetCam)
+		state += "-cam" //"helmet-cam"
+	if(F)
+		if(F.on)
+			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
+		else
+			state += "-flight" //etc.
+
+	icon_state = state
+
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_head(0)
+
+	return
 
 /obj/item/clothing/suit/storage/marine2
 	icon = 'icons/marines/marine_armor.dmi'

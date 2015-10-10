@@ -232,5 +232,36 @@ obj/item/device/radio/headset/mdelta
 		new /obj/item/device/mine(src)
 		return
 
+/obj/item/weapon/storage/box/helmet_cameras
+	name = "camera box"
+	desc = "A  box holding helmet mounted cameras"
+	icon_state = "minebox"
+	w_class = 3
+	storage_slots = 14
+	can_hold = list(
+		"/obj/item/weapon/camera_assembly"
+		)
+
+	New()
+		..()
+		contents = list()
+		sleep(1)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		new /obj/item/weapon/camera_assembly(src)
+		return
+
+
 /obj/item/stack/medical/bruise_pack/marine
 	amount = 2
