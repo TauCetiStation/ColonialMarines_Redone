@@ -205,6 +205,77 @@
 				if(excited_group)
 					last_share_check()
 
+	if(air.trace_gases.len)
+		for(var/datum/gas/trace_gas in air.trace_gases)
+			if(trace_gas.moles)
+				var/moles_this = trace_gas.moles
+				moles_this -= 1
+				if(moles_this <= 0)
+					air.trace_gases.Remove(trace_gas)
+				else
+					trace_gas.moles = moles_this
+
+	var/oxygen_this = air.oxygen
+	var/carbon_dioxide_this = air.carbon_dioxide
+	var/nitrogen_this = air.nitrogen
+	var/toxins_this = air.toxins
+
+	if(air.oxygen > oxygen)
+		var/air_calc = oxygen_this/100*10
+		if(air_calc < 1)
+			air_calc = 1
+		oxygen_this -= air_calc
+		if(oxygen_this < oxygen)
+			oxygen_this = oxygen
+		air.oxygen = oxygen_this
+	else if(air.oxygen < oxygen)
+		oxygen_this += 1
+		if(oxygen_this > oxygen)
+			oxygen_this = oxygen
+		air.oxygen = oxygen_this
+
+	if(air.carbon_dioxide > carbon_dioxide)
+		var/air_calc = carbon_dioxide_this/100*10
+		if(air_calc < 1)
+			air_calc = 1
+		carbon_dioxide_this -= 1
+		if(carbon_dioxide_this < oxygen)
+			carbon_dioxide_this = carbon_dioxide
+		air.carbon_dioxide = carbon_dioxide_this
+	else if(air.carbon_dioxide < carbon_dioxide)
+		carbon_dioxide_this += 1
+		if(carbon_dioxide_this > oxygen)
+			carbon_dioxide_this = carbon_dioxide
+		air.carbon_dioxide = carbon_dioxide_this
+
+	if(air.nitrogen > nitrogen)
+		var/air_calc = nitrogen_this/100*10
+		if(air_calc < 1)
+			air_calc = 1
+		nitrogen_this -= 1
+		if(nitrogen_this < nitrogen)
+			nitrogen_this = nitrogen
+		air.nitrogen = nitrogen_this
+	else if(air.nitrogen < nitrogen)
+		nitrogen_this += 1
+		if(nitrogen_this > nitrogen)
+			nitrogen_this = nitrogen
+		air.nitrogen = nitrogen_this
+
+	if(air.toxins > toxins)
+		var/air_calc = toxins_this/100*10
+		if(air_calc < 1)
+			air_calc = 1
+		toxins_this -= 1
+		if(toxins_this < toxins)
+			toxins_this = toxins
+		air.toxins = toxins_this
+	else if(air.toxins < toxins)
+		toxins_this += 1
+		if(toxins_this > toxins)
+			toxins_this = toxins
+		air.toxins = toxins_this
+
 	air.react()
 
 	update_visuals()
