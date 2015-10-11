@@ -279,6 +279,19 @@
 			return
 	return
 
+/obj/structure/girder/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(istype(M))
+		if(M.a_intent == "harm")
+			M.changeNext_move(CLICK_CD_MELEE)
+			M.do_attack_animation(src)
+
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+				"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			if(prob(50))
+				playsound(src, 'sound/effects/grillehit.ogg', 50, 1)
+				qdel(src)
+			else
+				playsound(src, 'sound/weapons/smash.ogg', 50, 1)
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 

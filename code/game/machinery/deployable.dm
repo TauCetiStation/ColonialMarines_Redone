@@ -122,6 +122,17 @@ for reference:
 	else
 		return 0
 
+/obj/structure/barricade/wooden/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(istype(M))
+		if(M.a_intent == "harm")
+			M.changeNext_move(CLICK_CD_MELEE)
+			M.do_attack_animation(src)
+
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+				"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			playsound(src, 'sound/effects/woodhit.ogg', 50, 1)
+			if(prob(50))
+				qdel(src)
 
 //Actual Deployable machinery stuff
 
