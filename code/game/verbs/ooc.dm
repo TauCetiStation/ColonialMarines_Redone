@@ -107,6 +107,77 @@ var/global/normal_ooc_colour = "#002eb8"
 		prefs.ooccolor = initial(prefs.ooccolor)
 		prefs.save_preferences()
 
+/client/verb/looc(msg as text)
+	set name = "LOOC"
+	set category = "OOC"
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+
+	if(!mob)	return
+	if(IsGuestKey(key))
+		src << "Guests may not use LOOC."
+		return
+
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(!msg)	return
+
+	if(!(prefs.chat_toggles & CHAT_OOC))
+		src << "<span class='danger'>You have LOOC muted.</span>"
+		return
+
+	if(!holder)
+		if(!ooc_allowed)
+			src << "<span class='danger'>LOOC is globally muted.</span>"
+			return
+		if(!dooc_allowed && (mob.stat == DEAD))
+			usr << "<span class='danger'>LOOC for dead mobs has been turned off.</span>"
+			return
+		if(prefs.muted & MUTE_OOC)
+			src << "<span class='danger'>You cannot use LOOC (muted).</span>"
+			return
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+		if(findtext(msg, "byond://"))
+			src << "<B>Advertising other servers is not allowed.</B>"
+			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in LOOC: [msg]")
+			return
+
+	log_ooc("(LOOC)[mob.name]/[key] : [msg]")
+
+	var/keyname = key
+	if(prefs.unlock_content)
+		if(prefs.toggles & MEMBER_PUBLIC)
+			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+
+	msg = emoji_parse(msg)
+
+	var/list/heard = range(7, src.mob)
+	for(var/mob/M in heard)
+		if(!M.client)
+			continue
+		var/client/C = M.client
+		if(C in admins)
+			continue //they are handled after that
+
+		if(C.prefs.chat_toggles & CHAT_OOC)
+			var/display_name = src.key
+			if(holder)
+				if(holder.fakekey)
+					if(C.holder)
+						display_name = "[holder.fakekey]/([src.key])"
+					else
+						display_name = holder.fakekey
+			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+	for(var/client/C in admins)
+		if(C.prefs.chat_toggles & CHAT_OOC)
+			var/prefix = "(R)LOOC"
+			if(C.mob in heard)
+				prefix = "LOOC"
+			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
+
 //Checks admin notice
 /client/verb/admin_notice()
 	set name = "Adminnotice"
