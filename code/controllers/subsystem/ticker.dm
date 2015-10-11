@@ -171,13 +171,6 @@ var/datum/subsystem/ticker/ticker
 
 	master_controller.roundHasStarted()
 
-	spawn(72000)
-		if(!(SSshuttle.emergency.mode >= SHUTTLE_DOCKED))
-			SSshuttle.emergency.request()
-			world << "Server called the emergency shuttle (2 hours passed)"
-			log_admin("Server called the emergency shuttle (2 hours passed).")
-			message_admins("<span class='adminnotice'>Server called the emergency shuttle (2 hours passed).</span>")
-
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
 

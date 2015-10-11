@@ -62,6 +62,10 @@ var/datum/subsystem/vote/SSvote
 				choices["Continue Playing"] += non_voters
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
+			else if(mode == "crew_transfer")
+				choices["Continue Playing"] += non_voters
+				if(choices["Continue Playing"] >= greatest_votes)
+					greatest_votes = choices["Continue Playing"]
 			else if(mode == "gamemode")
 				if(master_mode in choices)
 					choices[master_mode] += non_voters
@@ -103,11 +107,15 @@ var/datum/subsystem/vote/SSvote
 /datum/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
+	var/crewtransfer = 0
 	if(.)
 		switch(mode)
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
+			if("crew_transfer")
+				if(. == "End Round")
+					crewtransfer = 1
 			if("gamemode")
 				if(master_mode != .)
 					//world.save_mode(.)
@@ -126,6 +134,11 @@ var/datum/subsystem/vote/SSvote
 		else
 			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
+	if(crewtransfer)
+		if(!(SSshuttle.emergency.mode >= SHUTTLE_DOCKED))
+			SSshuttle.emergency.request()
+			message_admins("A crew transfer vote has passed, calling the shuttle.")
+			log_admin("A crew transfer vote has passed, calling the shuttle.")
 
 	return .
 
@@ -150,6 +163,7 @@ var/datum/subsystem/vote/SSvote
 		reset()
 		switch(vote_type)
 			if("restart")	choices.Add("Restart Round","Continue Playing")
+			if("crew_transfer")	choices.Add("End Round","Continue Playing")
 			if("gamemode")	choices.Add(config.votable_modes)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
@@ -166,6 +180,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
+		world << sound('sound/misc/notice1.ogg')
 		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 		time_remaining = round(config.vote_period/10)
 		return 1
@@ -202,6 +217,14 @@ var/datum/subsystem/vote/SSvote
 		if(trialmin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
+		//crew transfer
+		if(trialmin || config.allow_vote_crew)
+			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
+		else
+			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
+		if(trialmin)
+			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_crew?"Allowed":"Disallowed"]</a>)"
+		. += "</li><li>"
 		//gamemode
 		if(trialmin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
@@ -235,12 +258,18 @@ var/datum/subsystem/vote/SSvote
 		if("toggle_gamemode")
 			if(usr.client.holder)
 				config.allow_vote_mode = !config.allow_vote_mode
+		if("toggle_crew")
+			if(usr.client.holder)
+				config.allow_vote_crew = !config.allow_vote_crew
 		if("restart")
 			if(config.allow_vote_restart || usr.client.holder)
 				initiate_vote("restart",usr.key)
 		if("gamemode")
 			if(config.allow_vote_mode || usr.client.holder)
 				initiate_vote("gamemode",usr.key)
+		if("crew_transfer")
+			if(config.allow_vote_crew || usr.client.holder)
+				initiate_vote("crew_transfer",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)

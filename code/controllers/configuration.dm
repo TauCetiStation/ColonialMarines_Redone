@@ -29,6 +29,7 @@
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
+	var/allow_vote_crew = 0
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
@@ -252,6 +253,8 @@
 					config.allow_vote_restart = 1
 				if("allow_vote_mode")
 					config.allow_vote_mode = 1
+				if("allow_vote_crew")
+					config.allow_vote_crew = 1
 				if("no_dead_vote")
 					config.vote_no_dead = 1
 				if("default_no_vote")
