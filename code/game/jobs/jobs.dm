@@ -1,4 +1,3 @@
-
 var/const/ENGSEC			=(1<<0)
 
 var/const/CAPTAIN			=(1<<0)
@@ -9,19 +8,21 @@ var/const/OFFICER			=(1<<4)
 var/const/CHIEF				=(1<<5)
 var/const/ENGINEER			=(1<<6)
 var/const/ATMOSTECH			=(1<<7)
-var/const/ROBOTICIST		=(1<<8)
+var/const/ROBOTICIST			=(1<<8)
 var/const/AI				=(1<<9)
 var/const/CYBORG			=(1<<10)
-var/const/COMMANDER			=(1<<11)
-var/const/MPOLICE			=(1<<12)
-var/const/MARINE			=(1<<13)
-var/const/BIOHAZ			=(1<<14)
-var/const/LOGISTICS			=(1<<15)
-var/const/SULMED			=(1<<16)
-var/const/ASL			    =(1<<17)
-var/const/BSL			    =(1<<18)
-var/const/DSL			    =(1<<19)
-var/const/CSL			    =(1<<20)
+
+var/const/MARINES			=(1<<0)
+
+var/const/COMMANDER			=(1<<0)
+var/const/LOGISTICS			=(1<<1)
+var/const/MPOLICE			=(1<<2)
+var/const/SULMED			=(1<<3)
+var/const/MARINE			=(1<<4)	
+var/const/ASL				=(1<<5)
+var/const/BSL				=(1<<6)
+var/const/DSL				=(1<<7)
+var/const/CSL				=(1<<8)	
 
 
 var/const/MEDSCI			=(1<<1)
