@@ -392,25 +392,28 @@ var/const/PATCH = 4 //patches
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
-	if(istype(M, /mob))
+	M.status_flags &= ~IGNORESLOWDOWN
+/*	if(istype(M, /mob))
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
-			M.status_flags &= ~IGNORESLOWDOWN
+			M.status_flags &= ~IGNORESLOWDOWN*/
 
 /datum/reagents/proc/check_gofast(mob/M)
-	if(istype(M, /mob))
+	M.status_flags &= ~GOTTAGOFAST
+	/*if(istype(M, /mob))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
-			M.status_flags &= ~GOTTAGOFAST
+			M.status_flags &= ~GOTTAGOFAST*/
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
-	if(istype(M, /mob))
+	M.status_flags &= ~GOTTAGOREALLYFAST
+	/*if(istype(M, /mob))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
+			M.status_flags &= ~GOTTAGOREALLYFAST*/
 
 /datum/reagents/proc/update_total()
 	total_volume = 0

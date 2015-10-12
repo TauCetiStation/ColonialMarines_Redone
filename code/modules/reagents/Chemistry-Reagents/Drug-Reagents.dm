@@ -159,7 +159,7 @@
 	M.AdjustStunned(-2)
 	M.AdjustWeakened(-2)
 	M.adjustStaminaLoss(-2)
-	M.status_flags |= GOTTAGOREALLYFAST
+	//M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
 	M.adjustBrainLoss(0.25)
 	if(prob(5))

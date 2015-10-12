@@ -840,12 +840,12 @@
 
 			mspeed += speedmod
 
-		if(grav)
+		/*if(grav)
 			if(H.status_flags & GOTTAGOFAST)
 				mspeed -= 1
 
 			if(H.status_flags & GOTTAGOREALLYFAST)
-				mspeed -= 2
+				mspeed -= 2*/
 
 	return mspeed
 
