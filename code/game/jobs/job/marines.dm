@@ -131,14 +131,14 @@
 /datum/job/alpha_squad_leader
 	title = "Alpha Squad Leader"
 	flag = ASL
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the commander"
 	selection_color = "#ffeeee"
-	access = list(access_alpha_prep, access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_sulaco_brig, access_sulaco_cells)
-	minimal_access = list(access_alpha_prep,access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_sulaco_brig, access_sulaco_cells)
+	access = list(access_alpha_prep, access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_logistics )
+	minimal_access = list(access_alpha_prep,access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_logistics)
 	minimal_player_age = 7
 
 	default_id = /obj/item/weapon/card/id/silver
@@ -154,14 +154,14 @@
 /datum/job/bravo_squad_leader
 	title = "Bravo Squad Leader"
 	flag = BSL
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the commander"
 	selection_color = "#ffeeee"
-	access = list(access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_sulaco_brig, access_sulaco_cells)
-	minimal_access = list(access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_sulaco_brig, access_sulaco_cells)
+	access = list(access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_logistics)
+	minimal_access = list(access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_logistics)
 	minimal_player_age = 7
 
 	default_id = /obj/item/weapon/card/id/silver
@@ -178,14 +178,14 @@
 /datum/job/delta_squad_leader
 	title = "Delta Squad Leader"
 	flag = DSL
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the commander"
 	selection_color = "#ffeeee"
-	access = list(access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_sulaco_brig, access_sulaco_cells)
-	minimal_access = list(access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_sulaco_brig, access_sulaco_cells)
+	access = list(access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_logistics)
+	minimal_access = list(access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_logistics)
 	minimal_player_age = 7
 
 	default_id = /obj/item/weapon/card/id/silver
@@ -202,14 +202,14 @@
 /datum/job/charlie_squad_leader
 	title = "Charlie Squad Leader"
 	flag = CSL
-	department_flag = ENGSEC
+	department_flag = MARINES
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the commander"
 	selection_color = "#ffeeee"
-	access = list(access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_sulaco_brig, access_sulaco_cells)
-	minimal_access = list(access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_sulaco_brig, access_sulaco_cells)
+	access = list(access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_logistics)
+	minimal_access = list(access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_logistics)
 	minimal_player_age = 7
 
 	default_id = /obj/item/weapon/card/id/silver
