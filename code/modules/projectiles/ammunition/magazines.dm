@@ -51,7 +51,7 @@
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
-	ammo_type = /obj/item/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 6
 	multiload = 0
