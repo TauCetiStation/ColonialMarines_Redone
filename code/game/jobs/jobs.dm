@@ -22,8 +22,8 @@ var/const/SULMED			=(1<<3)
 var/const/MARINE			=(1<<4)
 var/const/ASL				=(1<<5)
 var/const/BSL				=(1<<6)
-var/const/DSL				=(1<<7)
-var/const/CSL				=(1<<8)
+var/const/CSL				=(1<<7)
+var/const/DSL				=(1<<8)
 
 
 var/const/MEDSCI			=(1<<1)
