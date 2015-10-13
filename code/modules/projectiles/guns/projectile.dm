@@ -56,16 +56,18 @@
 		if(magazine)
 			var/obj/item/ammo_casing/AC = chambered //Find chambered round
 			if(magazine)
+				if(chambered)
+					if(magazine.give_round(AC))
+						AC.loc = magazine
+						chambered = null
+					else
+						AC.loc = get_turf(src)
+						chambered = null
+						user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
 				magazine.loc = get_turf(src)
 				magazine.update_icon()
 				magazine = null
 				user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
-				if(chambered)
-					AC.loc = get_turf(src)
-					AC.SpinAnimation(10, 1)
-					chambered = null
-					user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
-			//user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)

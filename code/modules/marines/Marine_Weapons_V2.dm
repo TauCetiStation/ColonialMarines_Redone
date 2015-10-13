@@ -17,7 +17,7 @@
 	name = "pellet"
 	damage = 30
 
-/obj/item/projectile/bullet/a10x28
+/obj/item/projectile/bullet/a10x28 //M59B Smartgun
 	damage = 30
 
 ///***Ammo***///
@@ -51,7 +51,7 @@
 	pellets = 5
 	variance = 0.8
 
-/obj/item/ammo_casing/a10x28
+/obj/item/ammo_casing/a10x28 //M59B Smartgun
 	desc = "A 10mm special bullet casing."
 	caliber = "a10x28"
 	projectile_type = /obj/item/projectile/bullet/a10x28
@@ -115,7 +115,7 @@
 	max_ammo = 8
 	multiload = 0
 
-/obj/item/ammo_box/magazine/a10x28
+/obj/item/ammo_box/magazine/a10x28 //M59B Smartgun
 	name = "Magazine (10x28)"
 	desc = "A 10mm special magazine"
 	icon_state = "a10x28"
@@ -310,13 +310,21 @@
 	burst_size = 1
 	two_handed = 1
 	smart_weapon = 1
+	action_button_name = "Aim Mode"
 	var/smart_aim = 1
-	var/locking_in = 0
 	var/mob/living/locked_target = null
+	var/obj/screen/ammo_counter
 
 /obj/item/weapon/gun/projectile/Assault/m59b/New()
 	..()
 	SSobj.processing |= src
+
+	ammo_counter = new /obj/screen()
+	ammo_counter.name = "ammo"
+	ammo_counter.screen_loc = "CENTER+1,CENTER-1"
+	ammo_counter.layer = 20
+
+	update_ammo()
 
 /obj/item/weapon/gun/projectile/Assault/m59b/Destroy()
 	SSobj.processing -= src
@@ -328,49 +336,55 @@
 			target_reset(loc)
 	return
 
+/obj/item/weapon/gun/projectile/Assault/m59b/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
+	..()
+
 /obj/item/weapon/gun/projectile/Assault/m59b/afterattack(atom/target, mob/living/user, flag, params)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2/harness))
 			var/obj/item/clothing/suit/storage/marine2/harness/Armor = H.wear_suit
-			if(Armor.harness_cell && (Armor.harness_cell.charge >= 45))
+			if(Armor.harness_cell && (Armor.harness_cell.charge >= 30))
 				if(smart_aim)
 					if(target == user)
 						target_reset(user)
 						return
 
-					if(locking_in)
-						return
-
 					if(!locked_target)
 						target_get(target)
-						return
 
 					if(locked_target && (locked_target.stat == DEAD))
 						target_reset(user)
-						return
 					else if(locked_target)
 						if(ismob(target) && target != locked_target)
 							target_reset(user)
 							target_get(target)
-							return
 						else if(get_dist(locked_target,user) > 7)
 							target_reset(user)
-							return
 						else if(get_dist(locked_target,user.ms_last_pos) > 1)
 							target_reset(user)
-							return
-						target = locked_target
-						Armor.harness_cell.charge -= 45
-						..()
-				else
-					Armor.harness_cell.charge -= 45
+						if(locked_target)
+							target = locked_target
+
+				var/obj/item/weapon/gun/offhand/O = H.get_inactive_hand()
+				if(istype(O))
+					if(chambered && chambered.BB)
+						if(smart_aim)
+							chambered.BB.damage -= 5
 					..()
+					Armor.harness_cell.charge -= 30
+					Armor.update_power()
+					update_ammo()
+				else
+					H.mouse_hold = 0
+					return
 			else
-				user << "<span class='warning'>Not enough power. Recharge current power cell or insert a fresh one..</span>"
+				H.mouse_hold = 0
+				user << "<span class='warning'>Not enough charge.</span>"
 				return
 		else
-			user << "<span class='warning'>No power. Must equipped with Combat Harness.</span>"
+			H.mouse_hold = 0
+			user << "<span class='warning'>No power.</span>"
 			return
 	return
 
@@ -386,6 +400,10 @@
 		else
 			var/list/targets = list()
 			for(var/mob/living/L in view(1,user.ms_last_pos))
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2))
+						continue
 				if(L.stat == DEAD)
 					continue
 				if(L != user)
@@ -397,49 +415,33 @@
 	if(!istype(A) || !istype(user))
 		return
 
-	if(locking_in || locked_target)
+	if(locked_target)
 		return
 
-	locking_in = 1
 	var/image/I
-	var/drawn_crooshair = 0
 	if(isalienadult(A))
 		var/mob/living/carbon/alien/humanoid/H = A
 		var/pix_x = -H.custom_pixel_x_offset
 		var/pix_y = -H.custom_pixel_y_offset
-		I = image('icons/effects/effects.dmi', loc = A, icon_state = "medi_holo", layer = 16, pixel_x = pix_x, pixel_y = pix_y)
+		I = image('icons/marines/cr_lock.dmi', loc = A, icon_state = "hms_lock", layer = 16, pixel_x = pix_x, pixel_y = pix_y)
 	else
-		I = image('icons/effects/effects.dmi', loc = A, icon_state = "medi_holo", layer = 16)
+		I = image('icons/marines/cr_lock.dmi', loc = A, icon_state = "hms_lock", layer = 16)
 	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hms))
-		drawn_crooshair = 1
 		user.client.images += I
-	I.color = "#ff0000"
+	locked_target = A
 	user << 'sound/items/timer.ogg'
-	spawn(10)
-		if(locking_in)
-			locking_in = 0
-			if(A)
-				if(get_dist(A,user.ms_last_pos) <= 1)
-					locked_target = A
-					I.color = "#ffffff"
-					user << 'sound/items/timer.ogg'
-				else
-					if(drawn_crooshair)
-						user.client.images -= I
 
 /obj/item/weapon/gun/projectile/Assault/m59b/proc/target_reset(mob/living/carbon/human/user)
 	locked_target = null
-	locking_in = 0
 	if(user && user.client)
 		for(var/image/I in user.client.images)
-			if(I.icon_state == "medi_holo")
+			if(I.icon_state == "hms_lock")
 				user.client.images.Remove(I)
-				user << 'sound/items/timer.ogg'
 
-/obj/item/weapon/gun/projectile/Assault/m59b/verb/aimmode()
-	set name = "Rifle: aimmode" // i put such name after ":" - so it easier to understand which exact macro command we need.
-	set category = "Weapon"
+/obj/item/weapon/gun/projectile/Assault/m59b/ui_action_click()
+	aimmode()
 
+/obj/item/weapon/gun/projectile/Assault/m59b/proc/aimmode()
 	var/mob/living/carbon/human/user = usr
 	switch(smart_aim)
 		if(1)
@@ -452,9 +454,35 @@
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
+/obj/item/weapon/gun/projectile/Assault/m59b/pickup(mob/living/carbon/human/user)
+	if(istype(user) && user.client)
+		user.client.screen += ammo_counter
+
 /obj/item/weapon/gun/projectile/Assault/m59b/dropped(mob/user)
+	if(istype(user) && user.client)
+		for(var/obj/screen/S in user.client.screen)
+			if(S.name == "ammo")
+				user.client.screen.Remove(S)
 	target_reset(user)
 	..()
+
+/obj/item/weapon/gun/projectile/Assault/m59b/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/ammo_box/magazine))
+		if(do_reload(user, src, I, 25))
+			if(user.get_active_hand() == I)
+				..()
+	else
+		..()
+	update_ammo()
+
+/obj/item/weapon/gun/projectile/Assault/m59b/proc/update_ammo()
+	if(ammo_counter)
+		var/ammo = 0
+		if(magazine)
+			ammo = magazine.ammo_count()
+		if(chambered)
+			ammo += 1
+		ammo_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e40000'>[ammo]</font></div>"
 
 /obj/item/clothing/glasses/hms
 	name = "HMS"
@@ -462,6 +490,66 @@
 	desc = "The Head Mounted Sight. Allow user to see targets detected by the smartgun's infrared tracker."
 	flags = null
 	origin_tech = "magnets=3;biotech=2"
+
+/obj/item/clothing/glasses/hms/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/clothing/glasses/hms/Destroy()
+	SSobj.processing -= src
+	if(ishuman(loc))
+		reset_treats(loc)
+	..()
+
+/obj/item/clothing/glasses/hms/proc/reset_treats(mob/living/carbon/human/user)
+	if(user.client)
+		for(var/image/I in user.client.images)
+			if(I.icon_state == "hms_treats")
+				user.client.images.Remove(I)
+
+/obj/item/clothing/glasses/hms/process()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/user = loc
+		if(user.glasses == src && user.wear_suit && istype(user.wear_suit, /obj/item/clothing/suit/storage/marine2/harness))
+			if(user.client)
+				reset_treats(user)
+				for(var/mob/living/L in living_mob_list)
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2))
+							continue
+
+					var/turf/location
+					if(L.z == 0)
+						var/turf/T = get_turf(L)
+						if(T.z != user.z)
+							continue
+						else
+							location = T
+					else if(L.z != user.z)
+						continue
+
+					if(location && (get_dist(location,user) > 2))
+						continue
+
+					var/image/I
+					if(isalienadult(L))
+						var/mob/living/carbon/alien/humanoid/H = L
+						var/pix_x = -H.custom_pixel_x_offset
+						var/pix_y = -H.custom_pixel_y_offset
+						I = image('icons/marines/cr_lock.dmi', loc = location ? location : L, icon_state = "hms_treats", layer = 16, pixel_x = pix_x, pixel_y = pix_y)
+					else
+						I = image('icons/marines/cr_lock.dmi', loc = location ? location : L, icon_state = "hms_treats", layer = 16)
+					user.client.images += I
+
+/obj/item/clothing/glasses/hms/equipped(mob/living/carbon/human/user, slot)
+	if(istype(user) && user.client && slot == slot_glasses)
+		user.client.mouse_pointer_icon = file("icons/marines/crosshair1.dmi")
+
+/obj/item/clothing/glasses/hms/unequipped(mob/living/carbon/human/user)
+	if(istype(user) && user.client && user.glasses != src)
+		reset_treats(user)
+		user.client.mouse_pointer_icon = initial(user.client.mouse_pointer_icon)
 
 /obj/item/weapon/stock_parts/cell/harness_cell
 	name = "combat harness power cell"
@@ -474,34 +562,61 @@
 	desc = "A harness for use with M59/B Smartgun."
 	blood_overlay_type = "armor"
 	armor = list(melee = 75, bullet = 80, laser = 50, energy = 10, bomb = 35, bio = 0, rad = 0)
+	action_button_name = "Insert/Remove Battery"
 	var/obj/item/weapon/stock_parts/cell/harness_cell
+	var/obj/screen/power_counter
 
 /obj/item/clothing/suit/storage/marine2/harness/New()
 	..()
 	harness_cell = new /obj/item/weapon/stock_parts/cell/harness_cell(src)
 
-/obj/item/clothing/suit/storage/marine2/harness/verb/remove_cell()
-	set name = "Remove Power Cell"
-	set category = "Object"
+	power_counter = new /obj/screen()
+	power_counter.name = "power"
+	power_counter.screen_loc = "CENTER-1,CENTER-1"
+	power_counter.layer = 20
 
+	update_power()
+
+/obj/item/clothing/suit/storage/marine2/harness/ui_action_click()
+	ins_rem_battery()
+
+/obj/item/clothing/suit/storage/marine2/harness/proc/ins_rem_battery()
+	var/mob/living/carbon/human/user = usr
 	if(harness_cell)
-		harness_cell.loc = get_turf(usr)
+		if(user.get_active_hand())
+			user << "<span class='warning'>You need a free hand to do that.</span>"
+			return
+
+		harness_cell.loc = get_turf(loc)
+		user.put_in_hands(harness_cell)
 		harness_cell = null
-	return
+		user << "<span class='warming'>You took the [harness_cell] out of [src].</span>"
+	else
+		var/obj/item/weapon/stock_parts/cell/harness_cell/HC = user.get_active_hand()
+		if(istype(HC))
+			user.remove_from_mob(HC)
+			harness_cell = HC
+			HC.loc = src
+			user << "<span class='notice'>You insert the [HC] into [src].</span>"
 
-/obj/item/clothing/suit/storage/marine2/harness/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell/harness_cell))
+	update_power()
+
+/obj/item/clothing/suit/storage/marine2/harness/proc/update_power()
+	if(power_counter)
+		var/power = 0
 		if(harness_cell)
-			user << "\red Must remove power cell from [src] first."
-			return
+			power = harness_cell.charge * 100 / harness_cell.maxcharge
+		power_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e40000'>[power]</font></div>"
 
-		if(!user.drop_item())
-			return
+/obj/item/clothing/suit/storage/marine2/harness/equipped(mob/living/carbon/human/user, slot)
+	if(istype(user) && user.client && slot == slot_wear_suit)
+		user.client.screen += power_counter
 
-		harness_cell = W
-		W.loc = src
-		user.visible_message("[user] inserts [W] in [src].", \
-							"<span class='notice'>You insert [W] in [src].</span>")
+/obj/item/clothing/suit/storage/marine2/harness/unequipped(mob/living/carbon/human/user)
+	if(istype(user) && user.client && user.wear_suit != src)
+		for(var/obj/screen/S in user.client.screen)
+			if(S.name == "power")
+				user.client.screen.Remove(S)
 
 ///***MELEE/THROWABLES***///
 
