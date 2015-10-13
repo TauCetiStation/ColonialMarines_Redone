@@ -162,7 +162,7 @@
 	minimal_player_age = 7
 	default_id = /obj/item/weapon/card/id/silver
 	default_headset = /obj/item/device/radio/headset/mbravol
-/datum/job/alpha_squad_leader/equip_items(mob/living/carbon/human/H)
+/datum/job/bravo_squad_leader/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine2 (H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine(H), slot_wear_suit)
@@ -183,7 +183,7 @@
 	minimal_player_age = 7
 	default_id = /obj/item/weapon/card/id/silver
 	default_headset = /obj/item/device/radio/headset/mcharliel
-/datum/job/alpha_squad_leader/equip_items(mob/living/carbon/human/H)
+/datum/job/charlie_squad_leader/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine2 (H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine(H), slot_wear_suit)
@@ -204,7 +204,7 @@
 	minimal_player_age = 7
 	default_id = /obj/item/weapon/card/id/silver
 	default_headset = /obj/item/device/radio/headset/mdeltal
-/datum/job/alpha_squad_leader/equip_items(mob/living/carbon/human/H)
+/datum/job/delta_leader/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine2 (H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine(H), slot_wear_suit)
