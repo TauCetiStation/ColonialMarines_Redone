@@ -1,4 +1,5 @@
 
+
 var/const/ENGSEC			=(1<<0)
 
 var/const/CAPTAIN			=(1<<0)
@@ -20,6 +21,10 @@ var/const/LOGISTICS			=(1<<1)
 var/const/MPOLICE			=(1<<2)
 var/const/SULMED			=(1<<3)
 var/const/MARINE			=(1<<4)
+var/const/ASL				=(1<<5)
+var/const/BSL				=(1<<6)
+var/const/DSL				=(1<<7)
+var/const/CSL				=(1<<8)
 
 
 var/const/MEDSCI			=(1<<1)
@@ -51,6 +56,9 @@ var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 
 
+
+
+
 var/list/assistant_occupations = list(
 	"Assistant",
 	"Atmospheric Technician",
@@ -64,6 +72,10 @@ var/list/assistant_occupations = list(
 var/list/command_positions = list(
 	"Commander",
 	"Logistics Officer",
+	"Alpha Squad Leader",
+	"Bravo Squad Leader",
+	"Charlie Squad Leader",
+	"Delta Squad Leader",
 
 	"Captain",
 	"Head of Personnel",
