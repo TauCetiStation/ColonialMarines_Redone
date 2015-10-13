@@ -86,12 +86,12 @@
 	var/readyplayers = num_players() //Gets the number of players, to determine the number of aliens and survivors
 	var/list/datum/mind/possible_aliens = get_players_for_as(1) //populate a list of people who want to be aliens
 
-	// 1 Alien per 5 players
+	// 1 Alien per 5 players (default)
 	if(!possible_aliens.len)
 		world << "<span class='userdanger'>No alien players.</span>"
 		return 0
 
-	for(var/C = 0, C < readyplayers, C += 5)
+	for(var/C = 0, C < readyplayers, C += 3)
 		var/datum/mind/alien = pick(possible_aliens)
 		aliens += alien
 		alien.assigned_role = "MODE" //so it doesn't get picked for survivor or marine
