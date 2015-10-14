@@ -152,18 +152,10 @@
 					src.weakened = 5//Stun the fucker instead
 					visible_message("<span class='userdanger'>[target] blocked [src] with his shield!</span>")
 				else
-					src.canmove = 0
-					src.frozen = 1
 					target.Weaken(2)
-					spawn(15)
-						src.frozen = 0
 			else
-				src.canmove = 0
-				src.frozen = 1
 				target.Weaken(3)
 
-			spawn(15)
-				src.frozen = 0
 			spawn(50)
 				src.usedpounce = 0
 		else
