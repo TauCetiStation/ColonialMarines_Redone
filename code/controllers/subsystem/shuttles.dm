@@ -194,13 +194,48 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	if(!M)
 		return 1
-	if(timed)
-		if(M.request(getDock(dockId)))
-			return 2
+	if(M.jumping)
+		return 4
+	if(M.jump_cooldown)
+		if(M.docked_time >= world.time)
+			return 3
+		else
+			M.docked_time = world.time + M.jump_cooldown //save the time, when we started to jump
+		if(start_engines(M))
+			if(timed)
+				if(M.request(getDock(dockId)))
+					return 2
+			else
+				if(M.dock(getDock(dockId)))
+					return 2
+			return 0	//dock successful
 	else
-		if(M.dock(getDock(dockId)))
-			return 2
-	return 0	//dock successful
+		if(timed)
+			if(M.request(getDock(dockId)))
+				return 2
+		else
+			if(M.dock(getDock(dockId)))
+				return 2
+		return 0	//dock successful
+
+/datum/subsystem/shuttle/proc/start_engines(obj/docking_port/mobile/M)
+	M.jumping = 1
+	var/area/A = get_area(M)
+	A.readyalert()
+	sleep(150)
+	for(var/obj/machinery/door/airlock/Door in A.contents)
+		if(Door && Door.name == "shuttle airlock")
+			spawn(-1)
+				Door.safe = 0
+				if(Door.close())
+					Door.bolt()
+					Door.safe = 1
+					spawn(60)
+						Door.unbolt()
+	sleep(50)
+	A.readyreset()
+	M.jumping = 0
+	return 1
 
 
 /*

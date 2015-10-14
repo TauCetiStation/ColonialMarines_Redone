@@ -173,6 +173,9 @@
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
 	var/shuttle_locked = 0
+	var/jump_cooldown = 0 //used as a cooldown after each jump. (deciseconds) 1800 (3 minutes) is a recommended value.
+	var/jumping = 0 //if shuttle is about to make a jump (no need to set this).
+	var/docked_time = 0 //contains a time from last jump (no need to set this).
 
 /obj/docking_port/mobile/New()
 	..()
@@ -390,9 +393,9 @@
 							shake_camera(M, 2, 1) // turn it down a bit come on
 						else
 							shake_camera(M, 7, 1)
-				if(istype(M, /mob/living/carbon))
-					if(!M.buckled)
-						M.Weaken(3)
+				//if(istype(M, /mob/living/carbon))
+				//	if(!M.buckled)
+				//		M.Weaken(3)
 
 
 		if (rotation)
@@ -515,6 +518,11 @@
 /obj/docking_port/mobile/proc/getStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
 	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
+	if(jump_cooldown)
+		if(jumping)
+			. += "<br>Shuttle is about to leave this dock station. Prepare for jump."
+		if(docked_time >= world.time)
+			. += "<br>[round((docked_time - world.time)/10)] seconds left until next jump will be available."
 	if(istype(dockedAt, /obj/docking_port/stationary/transit))
 		var/obj/docking_port/stationary/dst
 		if(mode == SHUTTLE_RECALL)
@@ -599,6 +607,12 @@
 		usr << "<span class='danger'>Access denied.</span>"
 		return
 
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.mind.special_role == "survivor")
+			usr << "<span class='danger'>Unfortunately, the stress you had in this place, makes you to forget how to use this...</span>"
+			return
+
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 
 	if(href_list["move"])
@@ -608,6 +622,8 @@
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)	usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
+			if(3)	usr << "<span class='warning'>Please wait, while shuttle is refueling. [round((M.docked_time - world.time)/10)] seconds left.</span>"
+			if(4)	usr << "<span class='warning'>Shuttle is about to leave this dock station.</span>"
 			else	usr << "<span class='notice'>Unable to comply.</span>"
 
 	if(href_list["lock"])
