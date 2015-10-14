@@ -19,14 +19,8 @@
 
 /obj/item/weapon/implant/loyalty/implant(mob/target)
 	if(..())
-		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_shadow_or_thrall(target))
+		if((target.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(target))
 			target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
-			removed(target, 1)
-			qdel(src)
-			return -1
-		if(target.mind in ticker.mode.get_gangsters())
-			ticker.mode.remove_gangster(target.mind)
-			target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
 			removed(target, 1)
 			qdel(src)
 			return -1

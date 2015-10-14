@@ -11,8 +11,8 @@ z3 = Sulaco
 #if !defined(MAP_FILE)
 
         #include "map_files\marines\unk379.dmm"
-        #include "map_files\generic\z2.dmm"
-        #include "map_files\marines\sulaco2.dmm"
+        #include "map_files\marines\z2.dmm"
+        #include "map_files\marines\sulaco.dmm"
 
         #define MAP_FILE "unk379.dmm"
         #define MAP_NAME "CMR"

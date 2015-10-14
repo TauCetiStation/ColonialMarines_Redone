@@ -163,11 +163,6 @@
 	remove_objectives()
 	remove_antag_equip()
 
-
-/datum/mind/proc/remove_gang()
-		ticker.mode.remove_gangster(src,0,1,1)
-		remove_objectives()
-
 /datum/mind/proc/remove_malf()
 	if(src in ticker.mode.malf_ai)
 		ticker.mode.malf_ai -= src
@@ -203,7 +198,6 @@
 	remove_cultist()
 	remove_rev()
 	remove_malf()
-	remove_gang()
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)

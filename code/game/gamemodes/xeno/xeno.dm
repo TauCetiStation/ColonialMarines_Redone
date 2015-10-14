@@ -1,3 +1,4 @@
+//COLONIAL MARINES GAME MODE REDUX -APOPHIS775 - CREATED: 07APR2015
 /datum/game_mode
 	var/list/datum/mind/aliens = list()
 	var/list/datum/mind/survivors = list()
@@ -5,155 +6,157 @@
 /datum/game_mode/infestation
 	name = "infestation"
 	config_tag = "infestation"
-	required_players = 2
-	recommended_enemies = 2
+	required_players = 0
 	required_enemies = 1
-	var/checkwin_counter = 0
-	var/finished = 0
-	var/humansurvivors = 0
-	var/aliensurvivors = 0
-	var/ready_aliens = 0
-	var/ready_survivors = 0
+	recommended_enemies = 1
 
-// Edit these as needed
-	var/min_aliens = 2
+//Adjustable Variables
+	var/min_aliens = 0
 	var/max_aliens = 8
 	var/min_survivors = 0
 	var/max_survivors = 3
 
+//Non-adjustable variables (as in, DON'T FUCK WITH THEM)
+	var/humansurvivors = 0
+	var/aliensurvivors = 0
+	var/checkwin_counter = 0
+	var/finished = 0
 
-//////////////////////////////////////////
-//////////////////////////////////////////
-/* Pre-pre-startup */
+/datum/game_mode/infestation/proc/get_players_for_as(var/which)
+	var/list/players = list()
+	var/list/candidates = list()
+	var/list/drafted = list()
+	var/datum/mind/applicant = null
 
+	// Ultimate randomizing code right here
+	for(var/mob/new_player/player in player_list)
+		if(player.client && player.ready)
+			players += player
+
+	// Shuffling, the players list is now ping-independent!!!
+	// Goodbye antag dante
+	players = shuffle(players)
+
+	for(var/mob/new_player/player in players)
+		if(player.client && player.ready)
+			switch(which)
+				if(1)
+					if(player.client.prefs.be_special & BE_ALIEN)
+						if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "Xenomorph")) //Nodrak/Carn: Antag Job-bans
+							//if(age_check(player.client)) //Must be older than the minimum age
+							candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+				if(2)
+					if(player.client.prefs.be_special & BE_SURVIVOR)
+						if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "Survivor")) //Nodrak/Carn: Antag Job-bans
+							//if(age_check(player.client)) //Must be older than the minimum age
+							candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+
+	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
+
+	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+		if(drafted.len > 0)
+			applicant = pick(drafted)
+			if(applicant)
+				candidates += applicant
+				drafted.Remove(applicant)
+
+		else												// Not enough scrubs, ABORT ABORT ABORT
+			break
+
+	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
+
+	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+		if(drafted.len > 0)
+			applicant = pick(drafted)
+			if(applicant)
+				candidates += applicant
+				drafted.Remove(applicant)
+
+		else												// Not enough scrubs, ABORT ABORT ABORT
+			break
+
+	return candidates
+
+
+//Pre-game
 /datum/game_mode/infestation/can_start()
 	if(!..())
-		return
+		return 0
 
-	var/readyplayers = num_players()
+	var/readyplayers = num_players() //Gets the number of players, to determine the number of aliens and survivors
+	var/list/datum/mind/possible_aliens = get_players_for_as(1) //populate a list of people who want to be aliens
 
-// 1 Alien per 5 players, 1 Survivor per 10 players
-	for(var/C = 0, C < readyplayers, C += 5)
-		ready_aliens++
-	for(var/C = 0, C < readyplayers, C += 10)
-		ready_survivors++
+	// 1 Alien per 5 players (default)
+	if(!possible_aliens.len)
+		world << "<span class='userdanger'>No alien players.</span>"
+		return 0
 
-
-// Handle Aliens
-	// ready_aliens = Clamp((readyplayers/5), min_aliens, max_aliens) //(n, minimum, maximum)
-	var/list/datum/mind/possible_aliens = get_players_for_role(BE_ALIEN)
-	if(possible_aliens.len < min_aliens)
-		world << "<h2 style=\"color:red\">Not enough players have chosen 'Be alien' in their character setup. Aborting.</h2>"
-		return
-	for(var/i = 0, i < ready_aliens, i++)
+	for(var/C = 0, C < readyplayers, C += 3)
 		var/datum/mind/alien = pick(possible_aliens)
 		aliens += alien
-	for(var/datum/mind/A in aliens)
-		// modePlayer += A
-		A.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		A.special_role = "Drone"
-		// A.original = A.current
+		alien.assigned_role = "MODE" //so it doesn't get picked for survivor or marine
+		alien.special_role = "drone"
 
-// Handle Survivors
-	// ready_survivors = Clamp((readyplayers/10), min_survivors, max_survivors) //(n, minimum, maximum)
-	var/list/datum/mind/possible_survivors = get_players_for_role(BE_SURVIVOR) // Get all players with "Be survivor: Yes"
-	if(possible_survivors.len > 0) // If no players want to be a survivor, do nothing
-		// Add players to "survivors" list
-		for(var/i = 0, i < ready_survivors, i++)
-			var/datum/mind/surv = pick(possible_survivors)
-			survivors += surv
-		// Wait! If they also have "Be alien: Yes", remove them from the list (this prevents a major bug found that spawns aliens into survivor landmarks. Can probably be improved.
-		for(var/mob/new_player/player in player_list)
-			if(player.client.prefs.be_special & BE_ALIEN)
-				var/datum/mind/surv = pick(possible_survivors)
-				survivors -= surv
-		for(var/datum/mind/S in survivors)
-			// modePlayer += S
-			S.assigned_role = "Survivor" //So they aren't chosen for other jobs.
-			S.special_role = "Survivor"
-			// S.original = S.current
+	var/list/datum/mind/possible_survivors = get_players_for_as(2) //populate a list of people who want to be survivors
 
-	return 1
+	// 1 survivor per 10 players
+	if(possible_survivors.len)
+		for(var/C = 0, C < readyplayers, C += 10)
+			var/datum/mind/survivor = pick(possible_survivors)
+			survivors += survivor
+			survivor.assigned_role = "MODE" //so it doesn't get picked for marine
+			survivor.special_role = "survivor"
+
+	return 1 //signals the game can start
 
 
-//////////////////////////////////////////
-//////////////////////////////////////////
-/* Pre-setup */
-
+//Game-Start
 /datum/game_mode/infestation/pre_setup()
+
 	//Spawn aliens
 	for(var/datum/mind/alien in aliens)
 		alien.current.loc = pick(xeno_spawn)
+
 	//Spawn survivors
 	for(var/datum/mind/surv in survivors)
 		surv.current.loc = pick(surv_spawn)
+
+	//Alert the marines that they have a job
 	spawn (50)
-		command_alert("Distress signal received from the NSS Nostromo. A response team from NMV Sulaco will be dispatched shortly to investigate.", "NMV Sulaco")
+		priority_announce("Distress signal received from the NSS Nostromo. A response team from NMV Sulaco will be dispatched shortly to investigate.", "NMV Sulaco")
 	return 1
 
 
-//////////////////////////////////////////
-//////////////////////////////////////////
-/* Post-setup */
-
+//Post-Start
 /datum/game_mode/infestation/post_setup()
-	defer_powernet_rebuild = 2 // Apparently this can help with lag
+	//defer_powernet_rebuild = 2 // Apparently this can help with lag
+
 	//Do stuff to the aliens
 	for(var/datum/mind/alien in aliens)
 		transform_player(alien.current)
+
 	//Do stuff to the survivors
 	for(var/datum/mind/surv in survivors)
 		transform_player2(surv.current)
-	tell_story()
 
 /datum/game_mode/proc/transform_player(mob/living/carbon/human/H)
 	H.Alienize2()
 	return 1
 
 /datum/game_mode/proc/transform_player2(mob/living/carbon/human/H)
-	H.take_organ_damage(rand(1,25), rand(1,25))
+	//H.take_organ_damage(rand(1,25), rand(1,25))
 	H.client << "<h2>You are a survivor!</h2>"
 	H.client << "\blue You were a crew member on the Nostromo. Your crew was wiped out by an alien infestation. You should try to locate and help other survivors (If there are any other than you.)"
+	H.equip_to_slot_or_del(new /obj/item/device/flashlight(H), slot_l_hand)
+	if(prob(30))
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+	if(prob(25))
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/random(H), slot_w_uniform)
 	return 1
 
-var/list/survivorstory = list("You watched your friend {name}'s chest burst and an alien larva come out. You tried to capture it but it escaped through the vents. ", "{name} was attacked by a facehugging alien, which impregnated them with an alien lifeform. {name}'s chest burst and a larva emerged and escaped through the vents", "You watched {name} get the alien lifeform's acid on them, melting away their flesh. You can still hear the screams... ", "The Head of Security, {name}, made an announcement that the aliens killed the Captain and Head of Personnel, and that all crew should hide and wait for rescue." )
-var/list/survivorstorymulti = list("You were separated from your friend, {surv}. You hope they're still alive. ", "You were having some drinks at the bar with {surv} and {name} when an alien crawled out of the vent and dragged {name} away. You and {surv} split up to find help. ")
-var/list/toldstory = list()
-/datum/game_mode/infestation/proc/tell_story()
-	for(var/datum/mind/surv in survivors)
-		if(!(surv.name in toldstory))
-			var/story
-			var/mob/living/carbon/human/OH
-			var/mob/living/carbon/human/H = surv.current
-			var/list/otherplayers = survivors
-			for(var/datum/mind/surv2 in otherplayers)
-				if(surv == surv2)
-					otherplayers.Remove(surv2)
-			var/randomname = random_name(FEMALE)
-			if(prob(50))
-				randomname = random_name(MALE)
-			if(length(survivors) > 1)
-				if(length(toldstory) == length(survivors) - 1 || length(otherplayers) == 0)
-					story = pick(survivorstory)
-					survivorstory.Remove(story)
-				else
-					story = pick(survivorstorymulti)
-					survivorstorymulti.Remove(story)
-					OH = pick(otherplayers)
-			else
-				story = pick(survivorstory)
-				survivorstory.Remove(story)
-			story = replacetext(story, "{name}", "[randomname]")
-			if(istype(OH))
-				toldstory.Add(OH.name)
-				OH << replacetext(story, "{surv}", "[H.name]")
-				H << replacetext(story, "{surv}", "[OH.name]")
 
-			toldstory.Add(H.name)
+//EVERYTHING BELOW THIS, IS FROM THE OLD XENO.DM  it should function without issues
 
-
-//////////////////////////////////////////
-//////////////////////////////////////////
 /* Victory Conditions */
 
 // Add dead/alive aliens/humans every few seconds to see if there's a winner
@@ -166,13 +169,13 @@ var/list/toldstory = list()
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/nestedhost = (H.status_flags & XENO_HOST) && H.buckled
 		if(H) //Prevent any runtime errors
-			if(H.client && H.brain_op_stage != 4 && H.stat != DEAD && !nestedhost) // If they're connected/unghosted, alive, not debrained, and not a nested host
+
+			if(H.client && H.getorgan(/obj/item/organ/internal/brain) && H.stat != DEAD && !nestedhost && !H.getorgan(/obj/item/organ/internal/alien/hivenode)) // If they're connected/unghosted, alive, not debrained, and not a nested host
 				humansurvivors += 1 //Add them to the amount of people who're alive.
 	for(var/mob/living/carbon/alien/A in living_mob_list)
 		if(A) //Prevent any runtime errors
-			if(A.client && A.brain_op_stage != 4 && A.stat != DEAD) // If they're connected/unghosted and alive and not debrained
+			if(A.client && A.getorgan(/obj/item/organ/internal/brain) && A.stat != DEAD) // If they're connected/unghosted and alive and not debrained
 				aliensurvivors += 1
-
 
 	checkwin_counter++
 	if(checkwin_counter >= 3)
@@ -180,7 +183,6 @@ var/list/toldstory = list()
 			ticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
-
 
 //Checks to see who won
 /datum/game_mode/infestation/check_win()
@@ -226,7 +228,7 @@ datum/game_mode/infestation/proc/check_alien_victory()
 
 //Check for minor marine victor (shuttle)
 /datum/game_mode/infestation/proc/check_survivors_victory()
-	if(emergency_shuttle.location==2)
+	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME)
 		return 1
 	else
 		return 0
@@ -248,6 +250,12 @@ datum/game_mode/infestation/proc/check_alien_victory()
 			world << 'sound/misc/Game_Over_Man.ogg'
 		else
 			world << 'sound/misc/asses_kicked.ogg'
+		round_end_situation += 1
+		if(joined_player_list.len >= 4)
+			a_wins += 1
+			m_loss += 1
+		if(joined_player_list.len >= 10)
+			a10_wins++
 
 	else if(finished == 2)
 		feedback_set_details("round_end_result","marine major victory - xenomorph infestation erradicated")
@@ -257,20 +265,39 @@ datum/game_mode/infestation/proc/check_alien_victory()
 			world << 'sound/misc/hardon.ogg'
 		else
 			world << 'sound/misc/hell_march.ogg'
+		round_end_situation += 2
+		if(joined_player_list.len >= 4)
+			m_wins += 1
+			a_loss += 1
+		if(joined_player_list.len >= 10)
+			m10_wins += 1
 
 	else if(finished == 3)
 		feedback_set_details("round_end_result","marine minor victory - infestation stopped at a great cost")
 		world << "\red <FONT size = 3><B>Marine minor victory.</B></FONT>"
 		world << "\red <FONT size = 3><B>Both the marines and the aliens have been terminated. At least the infestation has been erradicated!</B></FONT>"
+		if(joined_player_list.len >= 4)
+			m_wins += 1
+		if(joined_player_list.len >= 10)
+			m10_wins += 1
+
 	else if(finished == 4)
 		feedback_set_details("round_end_result","alien minor victory - infestation survives")
 		world << "\red <FONT size = 3><B>Alien minor victory.</B></FONT>"
 		world << "\red <FONT size = 3><B>The station has been evacuated... but the infestation remains!</B></FONT>"
+		round_end_situation += 4
+		if(joined_player_list.len >= 4)
+			a_wins += 1
+		if(joined_player_list.len >= 10)
+			a10_wins += 1
+
 	else if(finished == 5)
 		feedback_set_details("round_end_result","draw - the station has been nuked")
 		world << "\red <FONT size = 3><B>Draw.</B></FONT>"
 		world << "\red <FONT size = 3><B>The station has blown by a nuclear fission device... there are no winners!</B></FONT>"
+		round_end_situation +=5
 
+	world.save_winrate()
 	..()
 	return 1
 
@@ -283,7 +310,11 @@ datum/game_mode/infestation/proc/check_alien_victory()
 				if(L.mind.assigned_role == "Alien")
 					var/mob/M = L.mind.current
 					if(M)
-						text += "<br>[M.key] was [M.name] ("
+						if(M.key)
+							text += "<br>[M.key] "
+						else if(M.mind)
+							text += "<br>[M.mind.key] "
+						text += "was [M.name] ("
 						if(M.stat == DEAD)
 							text += "died"
 						else

@@ -117,7 +117,7 @@ var/list/uplink_items = list()
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun that fires .45 rounds with a 20-round magazine and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 14
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
 /datum/uplink_item/dangerous/carbine
@@ -125,7 +125,7 @@ var/list/uplink_items = list()
 	desc = "A fully-loaded three-round burst carbine that uses 30-round 5.56mm magazines with a togglable underslung 40mm grenade launcher."
 	item = /obj/item/weapon/gun/projectile/automatic/m90
 	cost = 18
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 50
 
 /datum/uplink_item/dangerous/machinegun
@@ -142,7 +142,7 @@ var/list/uplink_items = list()
 	The bow generates bolts using an internal power source but must be manually charged between shots."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
-	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear)
 	surplus = 50
 
 /datum/uplink_item/dangerous/flamethrower
@@ -150,7 +150,7 @@ var/list/uplink_items = list()
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/weapon/flamethrower/full/tank
 	cost = 11
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 40
 
 /datum/uplink_item/dangerous/sword
@@ -201,7 +201,7 @@ var/list/uplink_items = list()
 	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	cost = 20
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
 /datum/uplink_item/dangerous/gygax
@@ -258,7 +258,7 @@ var/list/uplink_items = list()
 	desc = "An additional 20-round .45 magazine for use in the C-20r submachine gun. These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
@@ -307,7 +307,7 @@ var/list/uplink_items = list()
 	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
 	name = "Ammo Box - 40mm grenades"
@@ -351,7 +351,6 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
 	cost = 6
 	surplus = 10
-	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"
@@ -359,7 +358,7 @@ var/list/uplink_items = list()
 	The pen holds one dose of the mixture, and cannot be refilled."
 	item = /obj/item/weapon/pen/sleepy
 	cost = 4
-	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -459,7 +458,6 @@ var/list/uplink_items = list()
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. Disguised users cannot run, and projectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 7
-	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
@@ -492,7 +490,6 @@ var/list/uplink_items = list()
 	desc = "The cryptographic sequencer, or emag, is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 6
-	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
@@ -519,7 +516,7 @@ var/list/uplink_items = list()
 	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 9
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 /datum/uplink_item/device_tools/space_suit
@@ -527,7 +524,6 @@ var/list/uplink_items = list()
 	desc = "The red and black syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
-	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/hardsuit
 	name = "Blood-red Hardsuit"
@@ -537,7 +533,6 @@ var/list/uplink_items = list()
 	Nanotrasen crewmembers are trained to report red space suit sightings, these suits in particular are known to drive employees into a panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -602,7 +597,6 @@ var/list/uplink_items = list()
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14
-	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
@@ -639,7 +633,7 @@ var/list/uplink_items = list()
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
 	item = /obj/item/weapon/shield/energy
 	cost = 16
-	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 20
 
 
@@ -738,7 +732,7 @@ var/list/uplink_items = list()
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 20 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
-	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"

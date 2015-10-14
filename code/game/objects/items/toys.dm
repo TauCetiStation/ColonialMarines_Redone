@@ -412,29 +412,6 @@
 		else if(graffiti.Find(drawtype))
 			temp = "graffiti"
 
-		////////////////////////// GANG FUNCTIONS
-		var/area/territory
-		var/gangID
-		if(gang)
-			//Determine gang affiliation
-			gangID = user.mind.gang_datum
-
-			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if(gangID)
-				territory = get_area(target)
-				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
-					//Check if this area is already tagged by a gang
-					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-						if(territory_claimed(territory, user))
-							return
-					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
-						user << "<span class='warning'>You cannot tag here.</span>"
-						return
-				else
-					user << "<span class='warning'>[territory] is unsuitable for tagging.</span>"
-					return
-		/////////////////////////////////////////
-
 		var/graf_rot
 		if(oriented.Find(drawtype))
 			switch(user.dir)
@@ -452,19 +429,7 @@
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if((instant>0) || do_after(user, 50, target = target))
 
-			//Gang functions
-			if(gangID)
-				//Delete any old markings on this tile, including other gang tags
-				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-					if(territory_claimed(territory, user))
-						return
-				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
-					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",graf_rot)
-				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
-
-			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+			new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
 
 			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
@@ -490,17 +455,6 @@
 			qdel(src)
 	else
 		..()
-
-/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
-	var/occupying_gang
-	for(var/datum/gang/G in ticker.mode.gangs)
-		if(territory.type in (G.territory|G.territory_new))
-			occupying_gang = G.name
-			break
-	if(occupying_gang)
-		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
-		return 1
-	return 0
 
 /*
  * Snap pops

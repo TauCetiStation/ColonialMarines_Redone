@@ -191,15 +191,3 @@
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	overlays += I
-
-/obj/item/toy/crayon/spraycan/gang
-	desc = "A modified container containing suspicious paint."
-	gang = 1
-	uses = 20
-	instant = -1
-
-/obj/item/toy/crayon/spraycan/gang/New(loc, datum/gang/G)
-	..()
-	if(G)
-		colour = G.color_hex
-		update_icon()
