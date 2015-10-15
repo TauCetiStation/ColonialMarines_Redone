@@ -7,27 +7,31 @@
 		if(M.a_intent == "harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
+
 			var/damage = rand(M.damagemin, M.damagemax)
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
 					"<span class='userdanger'>[M] has lunged at [src]!</span>")
 				return 0
-			var/obj/item/organ/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
+			var/obj/item/organ/limb/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+			var/armor_block = run_armor_check(affecting, "melee","","",10)
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (damage >= 25)
+			if(damage < 25)
+				visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+					"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			else
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
-				apply_effect(4, WEAKEN, armor_block)
-				add_logs(M, src, "attacked")
-			if (src.stat != DEAD)
+				//apply_effect(4, WEAKEN, armor_block)
+
+			if(src.stat != DEAD)
 				score_slashes_made++
+
+			add_logs(M, src, "attacked")
 			updatehealth()
 
 		if(M.a_intent == "disarm")
@@ -36,7 +40,7 @@
 				if(weakened)
 					if(prob(20))
 						if(stat != DEAD)
-							score_slashes_made++
+							score_tackles_made++
 						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 						Weaken(rand(M.tacklemin,M.tacklemax))
 						adjustStaminaLoss(rand(M.tacklemin*10,M.tacklemax*10))
@@ -50,7 +54,7 @@
 				else
 					if(prob(M.tackle_chance)) //Tackle_chance is now a special var for each caste.
 						if(stat != DEAD)
-							score_slashes_made++
+							score_tackles_made++
 						playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 						Weaken(rand(M.tacklemin,M.tacklemax))
 						adjustStaminaLoss(rand(M.tacklemin*10,M.tacklemax*10))
@@ -62,7 +66,9 @@
 						visible_message("<span class='danger'>[M] tried to tackle [src]!</span>", \
 							"<span class='userdanger'>[M] tried to tackle [src]!</span>")
 			else
-				if (randn <= 99)
+				if(randn <= 99)
+					if(stat != DEAD)
+						score_tackles_made++
 					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 					drop_item()
 					visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
