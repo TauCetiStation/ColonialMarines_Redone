@@ -105,9 +105,6 @@
 /obj/effect/proc_holder/alien/crush/fire(mob/living/carbon/user)
 	if(!isalien(user))
 		return 0
-	if(user.in_defense)
-		user << "\red Can't charge while in defense mode!"
-		return 0
 	var/turf/T = get_turf(get_step(user,user.dir))
 	for(var/mob/living/M in T.contents)
 		user << "\red Something right in front of you!"
@@ -118,7 +115,7 @@
 		return 0
 
 	if(istype(user.loc,/mob) || user.lying || user.stunned || user.buckled || user.stat)
-		user << "\red You can't dash right now!"
+		user << "\red You can't charge right now!"
 		return 0
 
 	if (istype(user.loc,/turf) && !(istype(user.loc,/turf/space)))
@@ -157,11 +154,13 @@
 						var/mob/living/L = A
 						if(L.lying)
 							if(!isalien(L))
-								L.adjustBruteLoss(rand(55,65))
+								L.adjustBruteLoss(rand(45,55))
 							playsound(L, 'sound/misc/slip.ogg', 50, 1)
 						else
 							if(!isalien(L))
-								L.adjustBruteLoss(rand(65,95))
+								L.adjustBruteLoss(rand(55,75))
+							else
+								L.Weaken(1) //For fun
 							var/turf/target = get_turf(get_step(user,cur_dir))
 							for(var/o=0, o<10, o++)
 								target = get_turf(get_step(target,cur_dir))
