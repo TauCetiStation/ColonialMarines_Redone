@@ -1521,6 +1521,43 @@
 /mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
 	..()
 	mind.special_role = "Sentinel"
+
+/mob/living/carbon/alien/humanoid/digger/mind_initialize()
+	..()
+	mind.special_role = "Digger"
+
+/mob/living/carbon/alien/humanoid/hivelord/mind_initialize()
+	..()
+	mind.special_role = "Hivelord"
+
+/mob/living/carbon/alien/humanoid/crusher/mind_initialize()
+	..()
+	mind.special_role = "Crusher"
+
+/mob/living/carbon/alien/humanoid/carrier/mind_initialize()
+	..()
+	mind.special_role = "Carrier"
+
+/mob/living/carbon/alien/humanoid/runner/mind_initialize()
+	..()
+	mind.special_role = "Runner"
+
+/mob/living/carbon/alien/humanoid/praetorian/mind_initialize()
+	..()
+	mind.special_role = "Praetorian"
+
+/mob/living/carbon/alien/humanoid/ravager/mind_initialize()
+	..()
+	mind.special_role = "Ravager"
+
+/mob/living/carbon/alien/humanoid/spitter/mind_initialize()
+	..()
+	mind.special_role = "Spitter"
+
+/mob/living/carbon/alien/humanoid/corroder/mind_initialize()
+	..()
+	mind.special_role = "Corroder"
+
 	//XENO LARVA
 /mob/living/carbon/alien/larva/mind_initialize()
 	..()
