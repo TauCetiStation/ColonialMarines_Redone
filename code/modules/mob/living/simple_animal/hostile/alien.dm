@@ -12,11 +12,11 @@
 	speed = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	maxHealth = 100
-	health = 100
+	maxHealth = 250
+	health = 250
 	harm_intent_damage = 5
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 30
+	melee_damage_upper = 35
 	attacktext = "slashes"
 	speak_emote = list("hisses")
 	a_intent = "harm"
@@ -35,9 +35,10 @@
 	icon_state = "aliend_running"
 	icon_living = "aliend_running"
 	icon_dead = "aliend_dead"
-	health = 60
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	maxHealth = 170
+	health = 170
+	melee_damage_lower = 12
+	melee_damage_upper = 16
 	var/plant_cooldown = 30
 	var/plants_off = 0
 
@@ -55,13 +56,14 @@
 	icon_state = "aliens_running"
 	icon_living = "aliens_running"
 	icon_dead = "aliens_dead"
-	health = 120
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 18
+	melee_damage_upper = 24
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	projectiletype = /obj/item/projectile/neurotox
+	projectiletype = /obj/item/projectile/bullet/neurotoxin
 	projectilesound = 'sound/weapons/pierce.ogg'
 
 
@@ -70,17 +72,17 @@
 	icon_state = "alienq_running"
 	icon_living = "alienq_running"
 	icon_dead = "alienq_dead"
-	health = 250
-	maxHealth = 250
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	health = 700
+	maxHealth = 700
+	melee_damage_lower = 30
+	melee_damage_upper = 35
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	move_to_delay = 4
+	move_to_delay = 2
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	projectiletype = /obj/item/projectile/neurotox
+	projectiletype = /obj/item/projectile/bullet/neurotoxin
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
 	unique_name = 0
@@ -124,17 +126,12 @@
 	icon_state = "queen_s"
 	icon_living = "queen_s"
 	icon_dead = "queen_dead"
-	move_to_delay = 4
+	move_to_delay = 2
 	maxHealth = 400
 	health = 400
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
-
-/obj/item/projectile/neurotox
-	name = "neurotoxin"
-	damage = 30
-	icon_state = "toxin"
 
 /mob/living/simple_animal/hostile/alien/death(gibbed)
 	..(gibbed)
