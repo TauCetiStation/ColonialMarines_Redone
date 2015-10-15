@@ -25,8 +25,6 @@
 /datum/game_mode/infestation/proc/get_players_for_as(var/which)
 	var/list/players = list()
 	var/list/candidates = list()
-	var/list/drafted = list()
-	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in player_list)
@@ -44,38 +42,15 @@
 					if(player.client.prefs.be_special & BE_ALIEN)
 						if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "Xenomorph")) //Nodrak/Carn: Antag Job-bans
 							//if(age_check(player.client)) //Must be older than the minimum age
-							candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+							if(player.mind.assigned_role != "MODE")
+								candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 				if(2)
 					if(player.client.prefs.be_special & BE_SURVIVOR)
 						if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "Survivor")) //Nodrak/Carn: Antag Job-bans
 							//if(age_check(player.client)) //Must be older than the minimum age
-							candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
-
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else												// Not enough scrubs, ABORT ABORT ABORT
-			break
-
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else												// Not enough scrubs, ABORT ABORT ABORT
-			break
-
-	return candidates
+							if(player.mind.assigned_role != "MODE")
+								candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+	return shuffle(candidates)
 
 
 //Pre-game
@@ -95,7 +70,6 @@
 		var/datum/mind/alien = pick(possible_aliens)
 		aliens += alien
 		alien.assigned_role = "MODE" //so it doesn't get picked for survivor or marine
-		alien.special_role = "drone"
 
 	var/list/datum/mind/possible_survivors = get_players_for_as(2) //populate a list of people who want to be survivors
 
