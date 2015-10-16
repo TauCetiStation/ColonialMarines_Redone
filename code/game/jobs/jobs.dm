@@ -9,7 +9,7 @@ var/const/OFFICER			=(1<<4)
 var/const/CHIEF				=(1<<5)
 var/const/ENGINEER			=(1<<6)
 var/const/ATMOSTECH			=(1<<7)
-var/const/ROBOTICIST		=(1<<8)
+var/const/ROBOTICIST			=(1<<8)
 var/const/AI				=(1<<9)
 var/const/CYBORG			=(1<<10)
 
@@ -20,6 +20,10 @@ var/const/LOGISTICS			=(1<<1)
 var/const/MPOLICE			=(1<<2)
 var/const/SULMED			=(1<<3)
 var/const/MARINE			=(1<<4)
+var/const/ASL				=(1<<5)
+var/const/BSL				=(1<<6)
+var/const/CSL				=(1<<7)
+var/const/DSL				=(1<<8)
 
 
 var/const/MEDSCI			=(1<<1)
@@ -29,8 +33,8 @@ var/const/SCIENTIST			=(1<<1)
 var/const/CHEMIST			=(1<<2)
 var/const/CMO				=(1<<3)
 var/const/DOCTOR			=(1<<4)
-var/const/GENETICIST		=(1<<5)
-var/const/VIROLOGIST		=(1<<6)
+var/const/GENETICIST			=(1<<5)
+var/const/VIROLOGIST			=(1<<6)
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -41,7 +45,7 @@ var/const/BOTANIST			=(1<<2)
 var/const/COOK				=(1<<3)
 var/const/JANITOR			=(1<<4)
 var/const/LIBRARIAN			=(1<<5)
-var/const/QUARTERMASTER		=(1<<6)
+var/const/QUARTERMASTER			=(1<<6)
 var/const/CARGOTECH			=(1<<7)
 var/const/MINER				=(1<<8)
 var/const/LAWYER			=(1<<9)
@@ -64,6 +68,10 @@ var/list/assistant_occupations = list(
 var/list/command_positions = list(
 	"Commander",
 	"Logistics Officer",
+	"Alpha Squad Leader",
+	"Bravo Squad Leader",
+	"Charlie Squad Leader",
+	"Delta Squad Leader",
 
 	"Captain",
 	"Head of Personnel",
