@@ -41,43 +41,44 @@ var/const/MAX_ACTIVE_TIME = 200
 	..()
 
 /obj/item/clothing/mask/facehugger/process()
-	if(!stat)
-		//With moving FHs i think we don't need this.
-		/*if(!ismob(loc))
-			var/turf/T = get_turf(src)
-			for(var/obj/O in T.contents)
-				if(istype(O, /obj/structure/alien/resin/membrane))
-					Die()
-				else if(istype(O, /obj/structure/alien/resin/wall))
-					Die()
-				else if(istype(O, /obj/machinery/door))
-					var/obj/machinery/door/D = O
-					if(D.density)
+	if(facehugger_ai)
+		if(!stat)
+			//With moving FHs i think we don't need this.
+			/*if(!ismob(loc))
+				var/turf/T = get_turf(src)
+				for(var/obj/O in T.contents)
+					if(istype(O, /obj/structure/alien/resin/membrane))
 						Die()
-				else if(istype(O, /obj/structure/mineral_door))
-					var/obj/structure/mineral_door/MD = O
-					if(MD.density)
-						Die()*/
-		spawn()
-			if(isturf(loc))
-				if(!target)
-					for(var/mob/living/carbon/C in view(7, src))
-						var/obj/effect/vision/V = new /obj/effect/vision(get_turf(src))
-						V.target = C
-						if(V.check())
-							qdel(V)
-							if(CanHug(C,0))
-								chase_time = 28
-								target = C
-								chase()
-								break
+					else if(istype(O, /obj/structure/alien/resin/wall))
+						Die()
+					else if(istype(O, /obj/machinery/door))
+						var/obj/machinery/door/D = O
+						if(D.density)
+							Die()
+					else if(istype(O, /obj/structure/mineral_door))
+						var/obj/structure/mineral_door/MD = O
+						if(MD.density)
+							Die()*/
+			spawn()
+				if(isturf(loc))
+					if(!target)
+						for(var/mob/living/carbon/C in view(7, src))
+							var/obj/effect/vision/V = new /obj/effect/vision(get_turf(src))
+							V.target = C
+							if(V.check())
+								qdel(V)
+								if(CanHug(C,0))
+									chase_time = 28
+									target = C
+									chase()
+									break
+								else
+									continue
 							else
+								qdel(V)
 								continue
-						else
-							qdel(V)
-							continue
-					if(!target && prob(65))
-						step(src, pick(cardinal))
+						if(!target && prob(65))
+							step(src, pick(cardinal))
 
 /obj/item/clothing/mask/facehugger/proc/chase()
 	while(target)

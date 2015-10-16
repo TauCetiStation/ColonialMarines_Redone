@@ -41,6 +41,8 @@ var/round_end_situation = 3
 //Aliens
 var/score_alienscore = 0
 var/score_aliens_won = 0
+
+var/facehugger_ai = 0
 /*
 0 = fail
 1 = alien major

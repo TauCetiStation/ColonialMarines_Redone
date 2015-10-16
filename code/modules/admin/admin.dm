@@ -539,6 +539,14 @@ var/global/floorIsLava = 0
 	world.update_status()
 	feedback_add_details("admin_verb","TAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggleFHAI()
+	set category = "Server"
+	set desc="Facehuggers AI"
+	set name="Toggle FHAI"
+	facehugger_ai = !facehugger_ai
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled facehuggers AI to [facehugger_ai ? "On" : "Off"].</span>")
+	feedback_add_details("admin_verb","FHAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleaban()
 	set category = "Server"
 	set desc="Respawn basically"
