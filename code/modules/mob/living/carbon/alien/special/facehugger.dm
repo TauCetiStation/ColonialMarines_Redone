@@ -29,30 +29,104 @@ var/const/MAX_ACTIVE_TIME = 200
 
 	var/attached = 0
 
+	var/mob/living/carbon/target = null
+	var/chase_time = 0
+
 /obj/item/clothing/mask/facehugger/New()
 	..()
-	SSobj.processing |= src
+	SSobj.processing += src
 
 /obj/item/clothing/mask/facehugger/Destroy()
 	SSobj.processing.Remove(src)
 	..()
 
 /obj/item/clothing/mask/facehugger/process()
-	if(!ismob(loc))
-		var/turf/T = get_turf(src)
-		for(var/obj/O in T.contents)
-			if(istype(O, /obj/structure/alien/resin/membrane))
-				Die()
-			else if(istype(O, /obj/structure/alien/resin/wall))
-				Die()
-			else if(istype(O, /obj/machinery/door))
-				var/obj/machinery/door/D = O
-				if(D.density)
+	if(!stat)
+		//With moving FHs i think we don't need this.
+		/*if(!ismob(loc))
+			var/turf/T = get_turf(src)
+			for(var/obj/O in T.contents)
+				if(istype(O, /obj/structure/alien/resin/membrane))
 					Die()
-			else if(istype(O, /obj/structure/mineral_door))
-				var/obj/structure/mineral_door/MD = O
-				if(MD.density)
+				else if(istype(O, /obj/structure/alien/resin/wall))
 					Die()
+				else if(istype(O, /obj/machinery/door))
+					var/obj/machinery/door/D = O
+					if(D.density)
+						Die()
+				else if(istype(O, /obj/structure/mineral_door))
+					var/obj/structure/mineral_door/MD = O
+					if(MD.density)
+						Die()*/
+		spawn()
+			if(isturf(loc))
+				if(!target)
+					for(var/mob/living/carbon/C in view(7, src))
+						var/obj/effect/vision/V = new /obj/effect/vision(get_turf(src))
+						V.target = C
+						if(V.check())
+							qdel(V)
+							if(CanHug(C,0))
+								chase_time = 28
+								target = C
+								chase()
+								break
+							else
+								continue
+						else
+							qdel(V)
+							continue
+					if(!target && prob(65))
+						step(src, pick(cardinal))
+
+/obj/item/clothing/mask/facehugger/proc/chase()
+	while(target)
+		if(!isturf(loc))
+			target = null
+			return
+		else if(stat)
+			target = null
+			return
+
+		for(var/mob/living/carbon/C in view(4, src))
+			if(CanHug(C,0))
+				if(get_dist(src,C) < get_dist(src,target))
+					target = C
+					break
+				else
+					continue
+			else
+				continue
+
+		if(!CanHug(target,0))
+			target = null
+			return
+		else if(get_dist(src,target) < 2)
+			Attach(target)
+			target = null
+			return
+		else if(target in view(7,src))
+			step_to(src,target)
+		else if(chase_time > 0)
+			chase_time--
+			step_towards(src,target)
+		else
+			target = null
+			return
+		sleep(rand(2,3))
+
+/obj/effect/vision
+	invisibility = 101
+	var/target = null
+
+/obj/effect/vision/proc/check()
+	for(var/i = 1, i < 9, i++)
+		if(!src || !target)
+			return 0
+		step_to(src,target)
+		if(get_dist(src,target) == 0)
+			return 1
+	return 0
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
@@ -295,13 +369,14 @@ var/const/MAX_ACTIVE_TIME = 200
 
 	return
 
-/obj/proc/CanHug(mob/living/M)
+/obj/proc/CanHug(mob/living/M,var/check = 1)
 	if(!istype(M))
 		return 0
 
-	if(isturf(src.loc))
-		if(!(M in view(1,src)))
-			return 0
+	if(check)
+		if(isturf(src.loc))
+			if(!(M in view(1,src)))
+				return 0
 
 	if(M.stat == DEAD)
 		return 0
@@ -313,6 +388,9 @@ var/const/MAX_ACTIVE_TIME = 200
 		return 0
 
 	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
+		return 0
+
+	if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 		return 0
 
 	var/mob/living/carbon/C = M
