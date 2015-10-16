@@ -353,6 +353,10 @@
 			if(href_list["allowed"])
 				if(authenticated)
 					var/access_type = text2num(href_list["access_target"])
+
+					if(modify_failed(access_type, 1))
+						return
+
 					var/access_allowed = text2num(href_list["allowed"])
 					if(access_type in get_all_marine_accesses())
 						modify.access -= access_type
@@ -361,6 +365,10 @@
 		if ("assign")
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
+
+				if(modify_failed(t1))
+					return
+
 				if(t1 == "Custom")
 					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
@@ -455,3 +463,32 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(rank in job.department_head)
 			head_subordinates += job.title
+
+/obj/machinery/computer/marine_card/proc/modify_failed(job, var/get_desc = 0)
+	var/squad
+	if(istype(scan, /obj/item/weapon/card/id/silver))
+		if(scan.assignment == "Alpha Squad Leader")
+			squad = "Alpha"
+		else if(scan.assignment == "Bravo Squad Leader")
+			squad = "Bravo"
+		else if(scan.assignment == "Charlie Squad Leader")
+			squad = "Charlie"
+		else if(scan.assignment == "Delta Squad Leader")
+			squad = "Delta"
+
+	if(squad)
+		if(get_desc)
+			job = get_marine_access_desc(job)
+
+		if(modify.assignment == "Marine" || findtext(modify.assignment, squad))
+			if(!findtext(job, squad))
+				usr << "<span class='warning'>Can assign card for [squad] squad only.</span>"
+				return 1
+			else if(findtext(job, "Leader"))
+				usr << "<span class='warning'>Cannot assign leader access.</span>"
+				return 1
+		else
+			usr << "<span class='warning'>Can modify access for marine or your own squad members only.</span>"
+			return 1
+	else
+		return 0
