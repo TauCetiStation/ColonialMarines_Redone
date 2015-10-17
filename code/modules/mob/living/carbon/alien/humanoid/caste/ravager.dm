@@ -71,21 +71,6 @@
 		else
 			adjustToxLoss(-heal_rate)*/
 
-/proc/oppositedir(var/dir)
-	var/newdir
-	switch(dir)
-		if(1)
-			newdir = 2
-		if(2)
-			newdir = 1
-		if(3)
-			newdir = 4
-		if(4)
-			newdir = 3
-		else
-			newdir = 2
-	return newdir
-
 /mob/living/carbon/alien/humanoid/ravager/ClickOn(var/atom/A, params)
 	face_atom(A)
 	var/list/modifiers = params2list(params)

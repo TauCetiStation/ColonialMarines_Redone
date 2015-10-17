@@ -39,7 +39,7 @@
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
-	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
+	explosion(isturf(target) ? get_turf(get_step(src, oppositedir(dir))) : target, -1, 0, 2, 1, 0, flame_range = 3) //Makes explosions a bit better, when they hit walls or smt like that.
 	return 1
 
 /obj/item/projectile/temp

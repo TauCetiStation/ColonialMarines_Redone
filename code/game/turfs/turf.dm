@@ -395,7 +395,8 @@ var/global/list/rockEdgeCache
 
 /turf/indestructible/rock/destructible/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)
-	 checkhardness(Proj.damage)
+		checkhardness(Proj.damage)
+	..()
 
 /*This is indestructible bulletproof window which will simulate
 window cracks if damaged. Doesn't matter that you can't shatter it in the process and i think -
@@ -424,9 +425,10 @@ window cracks if damaged. Doesn't matter that you can't shatter it in the proces
 /turf/indestructible/window/bulletproof/bullet_act(obj/item/projectile/Proj)
 	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	if(health > 0)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		if(Proj.damage_type == BRUTE)
 			health -= Proj.damage
 			update_icon()
+	..()
 
 /turf/indestructible/window/bulletproof/ex_act(severity, target)
 	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)

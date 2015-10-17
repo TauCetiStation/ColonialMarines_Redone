@@ -294,6 +294,7 @@
 		else if(istype(O, /obj/structure/mineral_door))
 			var/obj/structure/mineral_door/MD = O
 			MD.bullet_act(Proj)
+	..()
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

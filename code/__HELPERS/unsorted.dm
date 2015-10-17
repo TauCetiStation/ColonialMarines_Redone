@@ -1475,3 +1475,18 @@ B --><-- A
 			if(attacker.mind.special_role != "survivor")
 				return 1
 	return 0
+
+/proc/oppositedir(var/dir)
+	var/newdir
+	switch(dir)
+		if(1)
+			newdir = 2
+		if(2)
+			newdir = 1
+		if(3)
+			newdir = 4
+		if(4)
+			newdir = 3
+		else
+			newdir = 2
+	return newdir
