@@ -1011,6 +1011,7 @@
 #include "code\modules\marines\restraints.dm"
 #include "code\modules\marines\scoreboard.dm"
 #include "code\modules\marines\shuttles2.dm"
+#include "code\modules\marines\sounds_list.dm"
 #include "code\modules\marines\hazresearch\gas_acidic.dm"
 #include "code\modules\marines\hazresearch\gas_hall.dm"
 #include "code\modules\marines\hazresearch\haz_gas.dm"
