@@ -227,14 +227,20 @@
 // Turret //
 ////////////
 /obj/item/marines/turret_deployer
-	icon = 'icons/marines/portable_gun.dmi'
-	icon_state = "mgun"
-	name = "machinegun"
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "syndieturret0"
+	name = "sentry turret (packed)"
 	desc = "Used to deploy a machinegun"
 	w_class = 5
 	action_button_name = "Deploy"
 
-	var/deploy_try = 0
+	var/deploy_try = 3
+	var/ammo = 250
+
+/obj/item/marines/turret_deployer/New(loc, var/new_ammo = -1)
+	if(new_ammo >= 0)
+		ammo = new_ammo
+	..()
 
 /obj/item/marines/turret_deployer/attack_self(mob/user)
 	dir = user.dir
@@ -245,11 +251,12 @@
 
 /obj/item/marines/turret_deployer/proc/try_to_deploy()
 	var/mob/living/carbon/human/user = usr
-	if(deploy_try < 2)
-		deploy_try++
-		user << "<span class='danger'>Check the direction before deploying. Once deployed, direction cannot be changed!!<br>Current direction: [dir2text(dir)].</span>"
+	if(deploy_try > 1)
+		deploy_try--
+		user << "<span class='danger'>Check the direction before deploying. Once deployed, direction cannot be changed!!<br>Current direction: [dir2text(dir)].<br>[deploy_try] tries left.</span>"
 	else
-		if(do_mob(user, user, 50))
+		user << "<span class='danger'>Deploying...</span>"
+		if(do_mob(user, user, 150))
 			if(isturf(user.loc))
 				var/turf/T = user.loc
 				for(var/atom/A in T.contents)
@@ -258,13 +265,13 @@
 					if(A.density)
 						user << "<span class='danger'>Bad position.</span>"
 						break
-				new /obj/machinery/marines/gun_turret(T,dir)
+				new /obj/machinery/marines/gun_turret(T,dir,ammo)
 				qdel(src)
 			else
 				user << "<span class='danger'>Bad position.</span>"
 
 /obj/machinery/marines/gun_turret
-	name = "machine gun turret"
+	name = "sentry turret"
 	desc = "USCM defense turret. It really packs a bunch."
 	density = 1
 	anchored = 1
@@ -282,12 +289,26 @@
 	var/ammo = 250
 	var/idle_count = 0
 
-/obj/machinery/marines/gun_turret/New(loc, var/new_dir = 2)
+/obj/machinery/marines/gun_turret/New(loc, var/new_dir = 2, var/new_ammo = -1)
 	..()
+	if(new_ammo >= 0)
+		ammo = new_ammo
 	direction = new_dir
 	playsound(src, 'sound/cmr/effects/turret_deploy.ogg', 50)
 	take_damage(0) //check your health
 	icon_state = "[base_icon_state]" + "0"
+
+/obj/machinery/marines/gun_turret/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
+		if(!do_after(user,300, target = src))
+			user.visible_message("\blue \The [user] decides not to unbolt \the [src].")
+			return
+		user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
+		if(state < 2)
+			new /obj/item/marines/turret_deployer(loc, ammo)
+		qdel(src)
+		return
 
 /obj/machinery/marines/gun_turret/ex_act(severity, target)
 	switch(severity)
