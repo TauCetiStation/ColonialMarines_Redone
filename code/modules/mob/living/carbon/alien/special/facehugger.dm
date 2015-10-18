@@ -14,6 +14,7 @@ var/const/MAX_ACTIVE_TIME = 200
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
+	density = 1
 	layer = 3.3
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKINTERNALS
@@ -22,7 +23,6 @@ var/const/MAX_ACTIVE_TIME = 200
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
-
 	var/sterile = 0
 	var/real = 1 //0 for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
@@ -62,7 +62,7 @@ var/const/MAX_ACTIVE_TIME = 200
 			spawn()
 				if(isturf(loc))
 					if(!target)
-						for(var/mob/living/carbon/C in view(7, src))
+						for(var/mob/living/carbon/C in range(7, src))
 							var/obj/effect/vision/V = new /obj/effect/vision(get_turf(src))
 							V.target = C
 							if(V.check())
@@ -89,7 +89,7 @@ var/const/MAX_ACTIVE_TIME = 200
 			target = null
 			return
 
-		for(var/mob/living/carbon/C in view(4, src))
+		for(var/mob/living/carbon/C in range(4, src))
 			if(CanHug(C,0))
 				if(get_dist(src,C) < get_dist(src,target))
 					target = C
@@ -103,8 +103,9 @@ var/const/MAX_ACTIVE_TIME = 200
 			target = null
 			return
 		else if(get_dist(src,target) < 2)
-			Attach(target)
+			var/saved_target = target//not sure if this will fixes attachment process, but lets see.
 			target = null
+			Attach(saved_target)
 			return
 		else if(target in view(7,src))
 			step_to(src,target)
@@ -114,7 +115,7 @@ var/const/MAX_ACTIVE_TIME = 200
 		else
 			target = null
 			return
-		sleep(rand(2,3))
+		sleep(5)
 
 /obj/effect/vision
 	invisibility = 101
@@ -363,6 +364,7 @@ var/const/MAX_ACTIVE_TIME = 200
 
 /*		RemoveActiveIndicators()	*/
 
+	density = 0
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 

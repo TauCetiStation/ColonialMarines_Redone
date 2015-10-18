@@ -60,6 +60,9 @@ mob/var/current_detector = null
 		for(var/obj/machinery/door/D in range(14,M))
 			if(D.operating)
 				detected += D
+		for(var/obj/item/clothing/mask/facehugger/F in range(14,M))
+			if(!F.stat)
+				detected += F
 
 		if(detected.len>=1)
 			var/dist = 100 // this used below, to get sound tone for pinging.
@@ -78,6 +81,15 @@ mob/var/current_detector = null
 				var/obj/Blip/o = PoolOrNew(/obj/Blip) // Get a blip from the blip pool
 				o.pixel_x = (D.x-M.x)*4-4 // Make the blip in the right position on the radar (multiplied by the icon dimensions)
 				o.pixel_y = (D.y-M.y)*4-4 //-4 is a slight offset south and west
+				o.screen_loc = "detector:3:[o.pixel_x],3:[o.pixel_y]" // Make it appear on the radar map
+				user.client.screen+=o // Add it to the radar
+				flick("blip", o)
+			for(var/obj/item/clothing/mask/facehugger/F in detected) //Too many copy-pasta, need to reduce later...
+				if(get_dist(F, M) < dist)
+					dist = get_dist(F, M)
+				var/obj/Blip/o = PoolOrNew(/obj/Blip) // Get a blip from the blip pool
+				o.pixel_x = (F.x-M.x)*4-4 // Make the blip in the right position on the radar (multiplied by the icon dimensions)
+				o.pixel_y = (F.y-M.y)*4-4 //-4 is a slight offset south and west
 				o.screen_loc = "detector:3:[o.pixel_x],3:[o.pixel_y]" // Make it appear on the radar map
 				user.client.screen+=o // Add it to the radar
 				flick("blip", o)
