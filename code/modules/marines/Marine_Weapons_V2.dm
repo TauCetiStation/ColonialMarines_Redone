@@ -698,7 +698,6 @@
 	unacidable = 1
 
 	var/triggered = 0
-	var/triggertype = "explosive" //Calls that proc
 	/*
 		"explosive"
 		//"incendiary" //New bay//
@@ -734,8 +733,16 @@
 			icon_state = "mine"
 			return
 
+/obj/item/device/mine/attack_hand(mob/user)
+	if(anchored)
+		return
+	..()
+
 //Triggering
 /obj/item/device/mine/Crossed(AM as mob|obj)
+	Bumped(AM)
+
+/obj/item/device/mine/Uncrossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/item/device/mine/Bumped(mob/M as mob|obj)
@@ -743,14 +750,15 @@
 	if(triggered) return
 
 	if(istype(M, /mob/living/carbon/alien) && !istype(M, /mob/living/carbon/alien/larva)) //Only humanoid aliens can trigger it.
-		for(var/mob/O in viewers(world.view, src.loc))
-			O << "<font color='red'>[M] triggered the \icon[src] [src]!</font>"
+		visible_message("<span class='danger'>[M] triggered the \icon[src] [src]!</span>")
 		triggered = 1
-		call(src,triggertype)(M)
+		trigger(M)
 
 //TYPES//
 //Explosive
-/obj/item/device/mine/proc/explosive(obj)
+/obj/item/device/mine/proc/trigger(mob/living/carbon/alien/A)
+	if(isalien_t1(A))
+		A.gib()
 	explosion(src.loc,-1,-1,2)
 	spawn(0)
 		qdel(src)

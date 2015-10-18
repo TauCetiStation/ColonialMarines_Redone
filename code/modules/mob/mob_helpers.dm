@@ -25,6 +25,15 @@
 		return 1
 	return 0
 
+/proc/isalien_t1(A)
+	if(istype(A, /mob/living/carbon/alien/humanoid/drone))
+		return 1
+	else if(istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+		return 1
+	else if(istype(A, /mob/living/carbon/alien/humanoid/runner))
+		return 1
+	return 0
+
 /proc/isqueen(A)
 	if(istype(A, /mob/living/carbon/alien/humanoid/queen))
 		return 1
