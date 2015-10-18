@@ -8,8 +8,24 @@
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
-/obj/item/projectile/bullet/machinegun
-	damage = 60
+	var/sound_fx = 0
+	var/sound_fx_type = "bullet"
+	var/list/snd_bypass_hearers = list()
+
+/obj/item/projectile/bullet/proc/get_sound_fx()
+	switch(sound_fx_type)
+		if("bullet")
+			return pick(snd_bullet_fly)
+
+/obj/item/projectile/bullet/before_move()
+	if(sound_fx)
+		if(kill_count < 47)
+			for(var/mob/M in view(1,src))
+				if(M in snd_bypass_hearers)
+					continue
+				if(loc != M.loc && get_dir(src,M) != dir && get_dir(M,src) != dir)//So the bullet really passes by and not going to hit us.
+					snd_bypass_hearers += M
+					M << get_sound_fx()
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5

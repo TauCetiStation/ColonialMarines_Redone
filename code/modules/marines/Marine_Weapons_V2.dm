@@ -3,15 +3,19 @@
 ///***Bullets***///
 /obj/item/projectile/bullet/m4a3 //Colt 45 Pistol
 	damage = 25
+	sound_fx = 1
 
 /obj/item/projectile/bullet/m44m //44 Magnum Peacemaker
 	damage = 45
+	sound_fx = 1
 
 /obj/item/projectile/bullet/m39 // M39 SMG
 	damage = 15
+	sound_fx = 1
 
 /obj/item/projectile/bullet/m41 //M41 Assault Rifle
 	damage = 20
+	sound_fx = 1
 
 /obj/item/projectile/bullet/m37 //M37 Pump Shotgun
 	name = "pellet"
@@ -19,6 +23,11 @@
 
 /obj/item/projectile/bullet/a10x28 //M59B Smartgun
 	damage = 30
+	sound_fx = 1
+
+/obj/item/projectile/bullet/machinegun
+	damage = 60
+	sound_fx = 1
 
 ///***Ammo***///
 
