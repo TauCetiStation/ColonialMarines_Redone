@@ -29,6 +29,17 @@
 	damage = 60
 	sound_fx = 1
 
+/obj/item/projectile/bullet/turret
+	damage = 30
+	sound_fx = 1
+
+/obj/item/projectile/bullet/turret/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(M.stat == DEAD && prob(15))
+			M.gib()
+
 ///***Ammo***///
 
 /obj/item/ammo_casing/m4a3 //45 Pistol

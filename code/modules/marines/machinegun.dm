@@ -220,3 +220,230 @@
 	desc = "Machine gun ammo. It has 100 rounds remaining"
 	var/count = 100
 	w_class = 5
+
+
+
+////////////
+// Turret //
+////////////
+/obj/item/marines/turret_deployer
+	icon = 'icons/marines/portable_gun.dmi'
+	icon_state = "mgun"
+	name = "machinegun"
+	desc = "Used to deploy a machinegun"
+	w_class = 5
+	action_button_name = "Deploy"
+
+	var/deploy_try = 0
+
+/obj/item/marines/turret_deployer/attack_self(mob/user)
+	dir = user.dir
+	user << "<span class='notice'>Once deployed, turret will face [dir2text(dir)].</span>"
+
+/obj/item/marines/turret_deployer/ui_action_click()
+	try_to_deploy()
+
+/obj/item/marines/turret_deployer/proc/try_to_deploy()
+	var/mob/living/carbon/human/user = usr
+	if(deploy_try < 2)
+		deploy_try++
+		user << "<span class='danger'>Check the direction before deploying. Once deployed, direction cannot be changed!!<br>Current direction: [dir2text(dir)].</span>"
+	else
+		if(do_mob(user, user, 50))
+			if(isturf(user.loc))
+				var/turf/T = user.loc
+				for(var/atom/A in T.contents)
+					if(ismob(A))
+						continue
+					if(A.density)
+						user << "<span class='danger'>Bad position.</span>"
+						break
+				new /obj/machinery/marines/gun_turret(T,dir)
+				qdel(src)
+			else
+				user << "<span class='danger'>Bad position.</span>"
+
+/obj/machinery/marines/gun_turret
+	name = "machine gun turret"
+	desc = "USCM defense turret. It really packs a bunch."
+	density = 1
+	anchored = 1
+	var/state = 0 //Like stat on mobs, 0 is alive, 1 is damaged, 2 is dead
+	var/atom/cur_target = null
+	var/scan_range = 9 //You will never see them coming
+	var/health = 200
+	var/base_icon_state = "syndieturret"
+	var/projectile_type = /obj/item/projectile/bullet/turret
+	var/fire_sound = 'sound/cmr/effects/turret_firing.ogg'
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "syndieturret0"
+
+	var/direction = 2
+	var/ammo = 250
+	var/idle_count = 0
+
+/obj/machinery/marines/gun_turret/New(loc, var/new_dir = 2)
+	..()
+	direction = new_dir
+	playsound(src, 'sound/cmr/effects/turret_deploy.ogg', 50)
+	take_damage(0) //check your health
+	icon_state = "[base_icon_state]" + "0"
+
+/obj/machinery/marines/gun_turret/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			die()
+		if(2)
+			take_damage(100)
+		if(3)
+			take_damage(50)
+	return
+
+/obj/machinery/marines/gun_turret/emp_act() //Can't emp an mechanical turret.
+	return
+
+/obj/machinery/marines/gun_turret/update_icon()
+	if(state > 2 || state < 0) //someone fucked up the vars so fix them
+		take_damage(0)
+	icon_state = "[base_icon_state]" + "[state]"
+	return
+
+
+/obj/machinery/marines/gun_turret/proc/take_damage(damage)
+	health -= damage
+	switch(health)
+		if(101 to INFINITY)
+			state = 0
+		if(1 to 100)
+			state = 1
+		if(-INFINITY to 0)
+			if(state != 2)
+				die()
+				return
+			state = 2
+	update_icon()
+	return
+
+
+/obj/machinery/marines/gun_turret/bullet_act(obj/item/projectile/Proj)
+	take_damage(Proj.damage)
+	return
+
+/obj/machinery/marines/gun_turret/proc/die()
+	state = 2
+	update_icon()
+
+/obj/machinery/marines/gun_turret/attack_hand(mob/user)
+	return
+
+/obj/machinery/marines/gun_turret/attack_ai(mob/user)
+	return attack_hand(user)
+
+
+/obj/machinery/marines/gun_turret/attack_alien(mob/living/carbon/alien/humanoid/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] slashes at [src]!</span>", "<span class='danger'>You slash at [src]!</span>")
+	take_damage(rand(user.damagemin, user.damagemax))
+	return
+
+/obj/machinery/marines/gun_turret/proc/validate_target(atom/target)
+	if(get_dist(target, src)>scan_range)
+		return 0
+	if(istype(target, /mob))
+		var/mob/M = target
+		if(M.stat != DEAD)
+			return 1
+	else if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
+		if(M.occupant)
+			return 1
+	return 0
+
+
+/obj/machinery/marines/gun_turret/process()
+	if(state == 2)
+		return
+	if(!ammo)
+		return
+	spawn()
+		if(!validate_target(cur_target))
+			cur_target = null
+		if(!cur_target)
+			cur_target = get_target()
+		if(cur_target)
+			firing()
+		else
+			idle_count++
+			if(idle_count > 3)
+				idle_count = 0
+				playsound(src, 'sound/cmr/effects/turret_idle.ogg', 50)
+	return
+
+/obj/machinery/marines/gun_turret/proc/firing()
+	while(cur_target)
+		if(!ammo)
+			cur_target = null
+			return
+		if(!get_shooting_dir(cur_target))
+			cur_target = null
+			return
+		ammo--
+		fire(cur_target)
+		sleep(1)
+
+/obj/machinery/marines/gun_turret/proc/get_shooting_dir(atom/target)
+	if(direction == NORTH)
+		if(get_dir(target, src) in list(SOUTHWEST,SOUTH,SOUTHEAST))
+			return 1
+	else if(direction == SOUTH)
+		if(get_dir(target, src) in list(NORTHWEST,NORTH,NORTHEAST))
+			return 1
+	else if(direction == EAST)
+		if(get_dir(target, src) in list(NORTHWEST,WEST,SOUTHWEST))
+			return 1
+	else if(direction == WEST)
+		if(get_dir(target, src) in list(NORTHEAST, EAST, SOUTHEAST))
+			return 1
+	return 0
+
+/obj/machinery/marines/gun_turret/proc/get_target()
+	var/list/pos_targets = list()
+	var/target = null
+	for(var/mob/living/M in view(scan_range,src))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2))
+				continue
+		if(!get_shooting_dir(M))
+			continue
+		if(M.stat == DEAD)
+			continue
+		pos_targets += M
+	if(pos_targets.len)
+		target = pick(pos_targets)
+	return target
+
+
+/obj/machinery/marines/gun_turret/proc/fire(atom/target)
+	if(!target)
+		cur_target = null
+		return
+	src.dir = get_dir(src,target)
+	var/turf/targloc = get_turf(target)
+	if(!src)
+		return
+	var/turf/curloc = get_turf(src)
+	if (!targloc || !curloc)
+		return
+	if (targloc == curloc)
+		return
+	playsound(src, fire_sound, 100, 1)
+	var/obj/item/projectile/A = new projectile_type(curloc)
+	A.original = target
+	A.current = curloc
+	A.starting = curloc
+	A.yo = targloc.y - curloc.y
+	A.xo = targloc.x - curloc.x
+	A.fire()
+	return
