@@ -542,15 +542,6 @@
 						I = image('icons/marines/cr_lock.dmi', loc = location ? location : L, icon_state = "hms_treats", layer = 16)
 					user.client.images += I
 
-/obj/item/clothing/glasses/hms/equipped(mob/living/carbon/human/user, slot)
-	if(istype(user) && user.client && slot == slot_glasses)
-		user.client.mouse_pointer_icon = file("icons/marines/crosshair1.dmi")
-
-/obj/item/clothing/glasses/hms/unequipped(mob/living/carbon/human/user)
-	if(istype(user) && user.client && user.glasses != src)
-		reset_treats(user)
-		user.client.mouse_pointer_icon = initial(user.client.mouse_pointer_icon)
-
 /obj/item/weapon/stock_parts/cell/harness_cell
 	name = "combat harness power cell"
 	maxcharge = 10000
