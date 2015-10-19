@@ -2,8 +2,8 @@
 
 //TODO: Make these simple_animals
 
-var/const/MIN_IMPREGNATION_TIME = 200 //time it takes to impregnate someone
-var/const/MAX_IMPREGNATION_TIME = 400
+var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
+var/const/MAX_IMPREGNATION_TIME = 150
 
 var/const/MIN_ACTIVE_TIME = 100 //time between being dropped and going idle
 var/const/MAX_ACTIVE_TIME = 200
@@ -39,6 +39,14 @@ var/const/MAX_ACTIVE_TIME = 200
 /obj/item/clothing/mask/facehugger/Destroy()
 	SSobj.processing.Remove(src)
 	..()
+
+/obj/item/clothing/mask/facehugger/CanPass(atom/movable/mover, turf/target, height=0)
+	if(ismob(mover))
+		return 1
+	if(stat == DEAD)
+		return 1
+	else
+		return 0
 
 /obj/item/clothing/mask/facehugger/process()
 	if(facehugger_ai)
@@ -90,22 +98,22 @@ var/const/MAX_ACTIVE_TIME = 200
 			return
 
 		for(var/mob/living/carbon/C in range(4, src))
-			if(CanHug(C,0))
-				if(get_dist(src,C) < get_dist(src,target))
-					target = C
-					break
+			if(C != target)
+				if(CanHug(C,0))
+					if(get_dist(src,C) < get_dist(src,target))
+						target = C
+						break
+					else
+						continue
 				else
 					continue
-			else
-				continue
 
 		if(!CanHug(target,0))
 			target = null
 			return
 		else if(get_dist(src,target) < 2)
-			var/saved_target = target//not sure if this will fixes attachment process, but lets see.
+			Attach(target)
 			target = null
-			Attach(saved_target)
 			return
 		else if(target in view(7,src))
 			step_to(src,target)
