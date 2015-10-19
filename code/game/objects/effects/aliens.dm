@@ -175,10 +175,23 @@
 	icon_state = "weeds"
 	anchored = 1
 	density = 0
-	layer = 2.45
+	layer = 2
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache
+
+	burn_state = 0
+	burntime = 3
+
+/obj/structure/alien/weeds/burn()
+	for(var/dirn in alldirs)
+		if(prob(45))
+			var/turf/T = get_step(src, dirn)
+			var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in T
+			if(W)
+				W.fire_act()
+	SSobj.burning -= src
+	qdel(src)
 
 
 /obj/structure/alien/weeds/New(pos, node)
