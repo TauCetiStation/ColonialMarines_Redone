@@ -49,12 +49,15 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/burger/fish = 20, /obj/item/weapon/reagent_containers/food/snacks/burger/tofu = 5,
 					/obj/item/weapon/reagent_containers/food/snacks/omelette = 10, /obj/item/weapon/reagent_containers/food/snacks/muffin = 20,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30, /obj/item/weapon/reagent_containers/food/snacks/meat/steak = 10)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)
+	contraband = list(/obj/item/weapon/paper/cake = 1)
 	vend_delay = 15
 	product_slogans = "Standard Issue Marine food!;It's good for you, and not the worst thing in the world.;Just fucking eat it;"
 	product_ads = "Your only choice for food...Literally;"
 	req_access_txt = ""
 
+/obj/item/weapon/paper/cake
+	name = "Cake"
+	info = "Cake is a lie."
 
 //MARINE MEDICAL VENDOR -APOPHIS775 24JAN2015
 /obj/machinery/vending/MarineMed
