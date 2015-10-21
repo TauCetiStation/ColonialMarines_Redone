@@ -60,6 +60,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
+	var/zoomdevicename = null //name used for message when binoculars/scope is used
+	var/zoom = 0 //1 if item is actively being used to zoom. For scoped guns and binoculars.
+
 	//So items can have custom embedd values
 	//Because customisation is king
 	var/embed_chance = EMBED_CHANCE
@@ -280,6 +283,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/proc/dropped(mob/user)
 	..()
+	if(zoom) //binoculars, scope, etc
+		user.client.view = world.view
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0
+		zoom = 0
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -494,3 +502,78 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
+
+/*
+For zooming with scope or binoculars. This is called from
+modules/mob/mob_movement.dm if you move you will be zoomed out
+modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
+*/
+
+/obj/item/proc/zoom(var/tileoffset = 11,var/viewsize = 12) //tileoffset is client view offset in the direction the user is facing. viewsize is how far out this thing zooms. 7 is normal view
+
+	var/devicename
+
+	if(zoomdevicename)
+		devicename = zoomdevicename
+	else
+		devicename = src.name
+
+	var/cannotzoom
+
+	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
+		usr << "You are unable to focus through the [devicename]"
+		cannotzoom = 1
+	else if(!zoom && global_hud.darkMask[1] in usr.client.screen)
+		usr << "Your welding equipment gets in the way of you looking through the [devicename]"
+		cannotzoom = 1
+	else if(!zoom && usr.get_active_hand() != src)
+		usr << "You are too distracted to look through the [devicename], perhaps if it was in your active hand this might work better"
+		cannotzoom = 1
+
+	if(!zoom && !cannotzoom)
+		//if(!usr.hud_used.hud_shown)
+		//	usr.button_pressed_F12(1)	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
+		//usr.button_pressed_F12(1)
+		usr.client.view = viewsize
+		zoom = 1
+
+		var/tilesize = 32
+		var/viewoffset = tilesize * tileoffset
+
+		switch(usr.dir)
+			if (NORTH)
+				usr.client.pixel_x = 0
+				usr.client.pixel_y = viewoffset
+			if (SOUTH)
+				usr.client.pixel_x = 0
+				usr.client.pixel_y = -viewoffset
+			if (EAST)
+				usr.client.pixel_x = viewoffset
+				usr.client.pixel_y = 0
+			if (WEST)
+				usr.client.pixel_x = -viewoffset
+				usr.client.pixel_y = 0
+
+		usr.visible_message("[usr] peers through the [devicename].")
+
+		/*
+		if(istype(usr,/mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = usr
+			usr.visible_message("[usr] holds [devicename] up to [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] eyes.")
+		else
+			usr.visible_message("[usr] holds [devicename] up to its eyes.")
+		*/
+
+	else
+		usr.client.view = world.view
+		//if(!usr.hud_used.hud_shown)
+		//	usr.button_pressed_F12(1)
+		zoom = 0
+
+		usr.client.pixel_x = 0
+		usr.client.pixel_y = 0
+
+		if(!cannotzoom)
+			usr.visible_message("[usr] lowers the [devicename].")
+
+	return 

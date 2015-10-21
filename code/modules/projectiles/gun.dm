@@ -372,6 +372,7 @@
 			SetLuminosity(0)
 
 /obj/item/weapon/gun/dropped(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)

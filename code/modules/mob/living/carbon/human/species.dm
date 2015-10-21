@@ -632,6 +632,11 @@
 		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		H.see_in_dark = 8
 		if(!H.druggy)		H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(H.client && H.client.view != world.view) // If mob moves while zoomed in with device, unzoom them.
+			for(var/obj/item/item in H.contents)
+				if(item.zoom)
+					item.zoom()
+					break
 	else
 		if(!(SEE_TURFS & H.permanent_sight_flags))
 			H.sight &= ~SEE_TURFS
