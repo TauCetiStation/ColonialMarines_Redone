@@ -48,7 +48,9 @@
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
-	
+
+	var/dispersion = 0.0
+
 	var/datum/plot_vector/trajectory	// used to plot the path of the projectile
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't 
@@ -193,6 +195,7 @@
 
 				if(first_step)
 					muzzle_effect(effect_transform)
+					on_fire()
 					first_step = 0
 				else
 					tracer_effect(effect_transform)
@@ -202,11 +205,17 @@
 			if(!hitscan)
 				sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
 
+/obj/item/projectile/proc/on_fire()
+	return
+
 /obj/item/projectile/proc/before_move()
 	return
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0
+	if(dispersion)
+		var/radius = round(dispersion*9, 1)
+		offset = rand(-radius, radius)
 
 	// plot the initial trajectory
 	trajectory = new()

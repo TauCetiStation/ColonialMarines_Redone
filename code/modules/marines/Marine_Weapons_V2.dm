@@ -4,34 +4,48 @@
 /obj/item/projectile/bullet/m4a3 //Colt 45 Pistol
 	damage = 25
 	sound_fx = 1
+	dispersion = 0.5
 
 /obj/item/projectile/bullet/m44m //44 Magnum Peacemaker
 	damage = 45
 	sound_fx = 1
+	dispersion = 0.6
 
 /obj/item/projectile/bullet/m39 // M39 SMG
 	damage = 15
 	sound_fx = 1
+	dispersion = 1
 
 /obj/item/projectile/bullet/m41 //M41 Assault Rifle
 	damage = 20
 	sound_fx = 1
+	dispersion = 0.8
 
 /obj/item/projectile/bullet/m37 //M37 Pump Shotgun
 	name = "pellet"
-	damage = 30
+	icon_state = "pellet"
+	damage = 12
+	dispersion = 1.5
+
+/obj/item/projectile/bullet/m37/on_fire()
+	..()
+	pixel_x += rand(-8,8)
+	pixel_y += rand(-8,8)
 
 /obj/item/projectile/bullet/a10x28 //M59B Smartgun
 	damage = 30
 	sound_fx = 1
+	dispersion = 0.5
 
 /obj/item/projectile/bullet/machinegun
 	damage = 60
 	sound_fx = 1
+	dispersion = 0.5
 
 /obj/item/projectile/bullet/turret
 	damage = 30
 	sound_fx = 1
+	dispersion = 0.5
 
 /obj/item/projectile/bullet/turret/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -68,7 +82,7 @@
 	icon_state = "gshell"
 	caliber = "12gs"
 	projectile_type = /obj/item/projectile/bullet/m37
-	pellets = 5
+	pellets = 12
 	variance = 0.8
 
 /obj/item/ammo_casing/a10x28 //M59B Smartgun
