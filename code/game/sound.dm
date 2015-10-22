@@ -18,7 +18,7 @@
 		var/mob/M = P
 		if(!M || !M.client)
 			continue
-		if(get_dist(M, turf_source) <= world.view + extrarange)
+		if(get_dist(M, turf_source) <= (world.view + extrarange) * 3)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround)
@@ -31,6 +31,7 @@
 	S.wait = 0 //No queue
 	S.channel = 0 //Any channel
 	S.volume = vol
+	S.environment = 2
 
 	if (vary)
 		if(frequency)
@@ -59,6 +60,8 @@
 
 		S.volume *= pressure_factor
 		//End Atmosphere affecting sound
+
+		S.volume -= get_dist(T, turf_source) * 2
 
 		if(S.volume <= 0)
 			return //No sound
