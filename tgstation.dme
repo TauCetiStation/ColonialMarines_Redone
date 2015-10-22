@@ -997,6 +997,7 @@
 #include "code\modules\marines\buildings.dm"
 #include "code\modules\marines\closets.dm"
 #include "code\modules\marines\commandercomms.dm"
+#include "code\modules\marines\fragmentation.dm"
 #include "code\modules\marines\machinegun.dm"
 #include "code\modules\marines\marine_areas.dm"
 #include "code\modules\marines\marine_card2.dm"

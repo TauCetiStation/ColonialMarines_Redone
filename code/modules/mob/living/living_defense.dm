@@ -6,19 +6,19 @@
 		armor = max(0, armor - armour_penetration)
 		if(penetrated_text)
 			src << "<span class='userdanger'>[penetrated_text]</span>"
-		else
-			src << "<span class='userdanger'>Your armor was penetrated!</span>"
+		//else
+		//	src << "<span class='userdanger'>Your armor was penetrated!</span>"
 
 	if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
-		else
-			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
+		//else
+		//	src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
 	else if(armor > 0)
 		if(soften_text)
 			src << "<span class='userdanger'>[soften_text]</span>"
-		else
-			src << "<span class='userdanger'>Your armor softens the blow!</span>"
+		//else
+		//	src << "<span class='userdanger'>Your armor softens the blow!</span>"
 	return armor
 
 

@@ -10,6 +10,7 @@
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/suppressed = 0	//Attack message
+	var/no_message = 0 //can disable even suppressed type hit message and so can be used with var above.
 	var/yo = null
 	var/xo = null
 	var/current = null
@@ -86,12 +87,14 @@
 			organ_hit_text = " in \the [parse_zone(def_zone)]"
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
-			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
+			if(!no_message)
+				L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
-			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
+			if(!no_message)
+				L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		L.on_hit(type)
 
@@ -157,6 +160,8 @@
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
+/obj/item/projectile/ex_act()
+	return //explosions probably shouldn't delete projectiles
 
 /obj/item/projectile/proc/fire()
 	var/first_step = 1

@@ -1013,12 +1013,12 @@
 
 ///***GRENADES***///
 /obj/item/weapon/grenade/explosive
+	name = "Grenade (HE)"
 	desc = "A Colonial Marines fragmentation grenade. It explodes 5 seconds after the pin has been pulled."
-	name = "Frag grenade"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade_ex"
-	det_time = 50
 	item_state = "grenade_ex"
+	det_time = 50
 	slot_flags = SLOT_BELT
 	w_class = 3
 
