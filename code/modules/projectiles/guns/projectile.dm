@@ -53,6 +53,23 @@
 		return 0
 	return 1
 
+/obj/item/weapon/gun/projectile/proc/drop_magazine(mob/user)
+	if(magazine && !istype(magazine, /obj/item/ammo_box/magazine/internal))
+		var/obj/item/ammo_casing/AC = chambered //Find chambered round
+		if(chambered)
+			if(magazine.give_round(AC))
+				AC.loc = magazine
+				chambered = null
+			else
+				AC.loc = get_turf(src)
+				chambered = null
+				user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
+		magazine.loc = get_turf(src)
+		magazine.update_icon()
+		magazine = null
+		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
+		update_icon()
+
 /obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
