@@ -54,6 +54,35 @@
 		if(M.stat == DEAD && prob(15))
 			M.gib()
 
+/obj/item/projectile/bullet/rocket
+	name = "rocket"
+	sound_fx = 1
+	sound_fx_type = "rocket"
+	dispersion = 0.5
+
+/obj/item/projectile/bullet/rocket/on_fire()
+	var/datum/effect/effect/system/smoke_spread/smoke = new
+	smoke.set_up(1, 0, loc)
+	smoke.start()
+
+/obj/item/projectile/bullet/rocket/he
+	icon_state = "rocket_he"
+	damage = 10
+
+/obj/item/projectile/bullet/rocket/he/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(get_turf(get_step(src, oppositedir(dir))), 1, 2, 3, 2, 1, flame_range = 5)
+	return 1
+
+/obj/item/projectile/bullet/rocket/ap
+	icon_state = "rocket_ap"
+	damage = 100
+
+/obj/item/projectile/bullet/rocket/ap/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(target, 1, 2, 3, 2, 1, flame_range = 3)
+	return 1
+
 ///***Ammo***///
 
 /obj/item/ammo_casing/m4a3 //45 Pistol
@@ -89,6 +118,25 @@
 	desc = "A 10mm special bullet casing."
 	caliber = "a10x28"
 	projectile_type = /obj/item/projectile/bullet/a10x28
+
+/obj/item/ammo_casing/rocket
+	caliber = "60mm"
+
+/obj/item/ammo_casing/rocket/update_icon()
+	if(BB)
+		icon_state = "rocket-[istype(src, /obj/item/ammo_casing/rocket/he) ? "he" : "ap"]-live"//if there will be more than two type of rockets in future, this and below must be rewritten.
+	else
+		icon_state = "rocket-[istype(src, /obj/item/ammo_casing/rocket/he) ? "he" : "ap"]"
+
+/obj/item/ammo_casing/rocket/he
+	name = "Rocket (High Explosive)"
+	icon_state = "rocket_he"
+	projectile_type = /obj/item/projectile/bullet/rocket/he
+
+/obj/item/ammo_casing/rocket/ap
+	name = "Rocket (Armor Piercing)"
+	icon_state = "rocket_ap"
+	projectile_type = /obj/item/projectile/bullet/rocket/ap
 
 ///***Ammo Boxes***///
 
@@ -159,6 +207,15 @@
 /obj/item/ammo_box/magazine/a10x28/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
+
+/obj/item/ammo_box/magazine/internal/m6b
+	name = "m-6b rocket launcher internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/rocket
+	caliber = "60mm"
+	max_ammo = 1
+	multiload = 0
+	new_and_loaded = 0
 
 ///***Pistols***///
 
@@ -642,6 +699,119 @@
 		for(var/obj/screen/S in user.client.screen)
 			if(S.name == "power")
 				user.client.screen.Remove(S)
+
+//M-6B Rocket Launcher
+/obj/item/weapon/gun/projectile/rocket/m6b
+	name = "M-6B Rocket Launcher"
+	desc = ""
+	icon_state = "m6b-e"
+	item_state = "rocket"
+	w_class = 5
+	force = 10
+	mag_type = /obj/item/ammo_box/magazine/internal/m6b
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	burst_size = 1
+	fire_delay = 0
+	two_handed = 1
+	action_button_name = "Use Scope"
+	zoomdevicename = "Scope"
+	new_and_chambered = 0
+	var/locking_in = 0
+
+/obj/item/weapon/gun/projectile/rocket/m6b/ui_action_click()//Scope must be coded as separate item later.
+	zoom()
+
+/obj/item/weapon/gun/projectile/rocket/m6b/New()
+	..()
+	new/obj/item/action_buttons/weapons/m6b/unload_rocket(src)
+
+/obj/item/action_buttons/weapons/m6b/unload_rocket/proc/unload_shell()
+	var/mob/living/carbon/human/user = usr
+	var/obj/item/weapon/gun/projectile/rocket/m6b/Gun = loc
+	var/obj/item/ammo_box/magazine = Gun.magazine
+
+	if(weapon_unload_check(user,Gun,1))
+		if(magazine.stored_ammo.len)
+			if(do_unload(user, Gun, 25))
+				if(Gun.chambered)
+					Gun.chambered = null
+				var/obj/item/ammo_casing/AC = locate(/obj/item/ammo_casing) in magazine.stored_ammo
+				if(AC)
+					magazine.stored_ammo -= AC
+					AC.loc = get_turf(src.loc)
+					Gun.update_icon()
+			else
+				user << "<span class='warning'>Unloading has been interrupted!</span>"
+		else
+			user << "<span class='notice'>Nothing to unload.</span>"
+	return
+
+/obj/item/weapon/gun/projectile/rocket/m6b/afterattack(atom/target, mob/living/user, flag, params)
+	if(!chambered || !chambered.BB)
+		..()
+		return
+
+	if(!can_trigger_gun(user))
+		return
+	if(locking_in)
+		return
+
+	locking_in = 1
+	var/turf/T = get_turf(target)
+	var/image/I = image('icons/marines/cr_lock.dmi',loc = T, icon_state = "hms_treats", layer = 16)
+	user.client.images += I
+	spawn()
+		var/scl = 6
+		while(locking_in)
+			scl--
+			var/matrix/M = matrix()
+			M.Scale(scl,scl)
+			I.transform = M
+			if(ismob(target))
+				I.loc = get_turf(target)
+			sleep(10)
+
+	if(do_mob(user,user,50))
+		if(!can_trigger_gun(user))
+			return
+		..()
+	user.client.images -= I
+	locking_in = 0
+
+/obj/item/weapon/gun/projectile/rocket/m6b/update_icon()
+	if(magazine)
+		var/obj/item/ammo_casing/rocket/AC = locate(/obj/item/ammo_casing/rocket) in magazine
+		if(AC)
+			if(AC.BB)
+				icon_state = "m6b-[istype(AC, /obj/item/ammo_casing/rocket/he) ? "he" : "ap"]"//if there will be more than two type of rockets in future, this and below must be rewritten.
+			else
+				icon_state = "m6b-[istype(AC, /obj/item/ammo_casing/rocket/he) ? "he" : "ap"]-e"
+		else
+			icon_state = "m6b-e"
+
+/obj/item/weapon/gun/projectile/rocket/m6b/chamber_round()
+	if ((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
+		return
+	else if (magazine.ammo_count())
+		chambered = magazine.get_round(1)
+	return
+
+/obj/item/weapon/gun/projectile/rocket/m6b/process_chamber(eject_casing = 0, empty_chamber = 1)
+	..()
+
+/obj/item/weapon/gun/projectile/rocket/m6b/attackby(obj/item/A, mob/user, params)
+	if(chambered || magazine.stored_ammo.len)
+		user << "<span class='warning'>There is a rocket inside already, unload it first!</span>"
+		return
+
+	if(do_reload(user, src, A, 25))
+		var/loaded = magazine.attackby(A, user, params, 1)
+		if(loaded)
+			user << "<span class='notice'>You load [A] into \the [src].</span>"
+			update_icon()
+			chamber_round()
+	else
+		user << "<span class='warning'>Loading has been interrupted!</span>"
 
 ///***MELEE/THROWABLES***///
 

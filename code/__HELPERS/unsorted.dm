@@ -705,32 +705,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		user.client.images -= progbar
 	return 1
 
-/proc/do_reload(mob/user , obj/item/weapon, obj/item/magazine, time = 30, numticks = 5)
-	if(!user || !weapon || !magazine)
-		return 0
-	if(numticks == 0)
-		return 0
-	var/timefraction = round(time/numticks)
-	var/image/progbar
-	for(var/i = 1 to numticks)
-		if(user.client)
-			progbar = make_progress_bar(i, numticks, user)
-			user.client.images |= progbar
-		sleep(timefraction)
-		if(!user || !weapon || !magazine)
-			if(user && user.client)
-				user.client.images -= progbar
-			return 0
-		if(user.get_inactive_hand() != weapon || user.get_active_hand() != magazine || user.incapacitated() || user.lying)
-			if(user && user.client)
-				user.client.images -= progbar
-			return 0
-		if(user && user.client)
-			user.client.images -= progbar
-	if(user && user.client)
-		user.client.images -= progbar
-	return 1
-
 /proc/make_progress_bar(current_number, goal_number, atom/target)
 	if(current_number && goal_number && target)
 		var/image/progbar

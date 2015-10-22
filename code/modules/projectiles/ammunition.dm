@@ -73,10 +73,12 @@
 	var/multiple_sprites = 0
 	var/caliber
 	var/multiload = 1
+	var/new_and_loaded = 1
 
 /obj/item/ammo_box/New()
-	for(var/i = 1, i <= max_ammo, i++)
-		stored_ammo += new ammo_type(src)
+	if(new_and_loaded)
+		for(var/i = 1, i <= max_ammo, i++)
+			stored_ammo += new ammo_type(src)
 	update_icon()
 
 /obj/item/ammo_box/proc/get_round(keep = 0)

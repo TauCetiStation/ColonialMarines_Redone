@@ -9,11 +9,14 @@
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 
+	var/new_and_chambered = 1
+
 /obj/item/weapon/gun/projectile/New()
 	..()
 	if (!magazine)
 		magazine = new mag_type(src)
-	chamber_round()
+	if(new_and_chambered)
+		chamber_round()
 	update_icon()
 	return
 
