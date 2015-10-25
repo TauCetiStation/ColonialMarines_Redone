@@ -20,6 +20,8 @@
 	id = "vp78"
 	category = list("VP78 Pistol")
 
+	vendor = "ColMarWeap"
+
 	research_time = 300
 	maxlevel = 1
 
@@ -39,6 +41,8 @@
 	id = "m37_flec"
 	category = list("M37A2 Pump Shotgun")
 
+	vendor = "ColMarAmmo"
+
 	research_time = 240
 	maxlevel = 1
 
@@ -52,6 +56,8 @@
 	desc = "Highest accuracy and penetration just for your shotgun."
 	id = "m37_slug"
 	category = list("M37A2 Pump Shotgun")
+
+	vendor = "ColMarAmmo"
 
 	research_time = 240
 	cost = 2
@@ -69,6 +75,8 @@
 	id = "m39_hc"
 	category = list("M39 Submachine Gun")
 
+	vendor = "ColMarWeap"
+
 	research_time = 300
 	cost = 2
 	maxlevel = 1
@@ -84,6 +92,8 @@
 	desc_req = "High Cap magazine must be researched."
 	id = "m39_inc"
 	category = list("M39 Submachine Gun")
+
+	vendor = "ColMarAmmo"
 
 	research_time = 300
 	maxlevel = 1
@@ -102,6 +112,8 @@
 	id = "m41a_u_gren"
 	category = list("M41A Pulse Rifle MK2")
 
+	vendor = "ColMarAmmo"
+
 	research_time = 300
 	maxlevel = 1
 
@@ -116,6 +128,8 @@
 	desc = "Actually dumb, if used without HMS and junk without combat harness."
 	id = "m59b"
 	category = list("M59B Smartgun")
+
+	vendor = "ColMarWeap and ColMarAmmo"
 
 	research_time = 600
 	cost = 3
@@ -137,6 +151,8 @@
 	id = "m59b_harn"
 	category = list("M59B Smartgun")
 
+	vendor = "ColMarEquip"
+
 	research_time = 300
 	maxlevel = 1
 	req_upgrade = "m59b"
@@ -157,6 +173,8 @@
 	id = "m59b_head"
 	category = list("M59B Smartgun")
 
+	vendor = "ColMarEquip"
+
 	research_time = 150
 	maxlevel = 1
 	req_upgrade = "m59b_harn"
@@ -173,6 +191,8 @@
 	desc = "No one can hide from you.. If only this comes with scope by default.."
 	id = "m42c"
 	category = list("M42C Rifle")
+
+	vendor = "ColMarWeap and ColMarAmmo"
 
 	research_time = 600
 	cost = 2
@@ -194,6 +214,8 @@
 	id = "m42c_scope"
 	category = list("M42C Rifle")
 
+	vendor = "ColMarEquip"
+
 	research_time = 120
 	maxlevel = 1
 	req_upgrade = "m42c"
@@ -210,6 +232,8 @@
 	desc_req = "M42C Rifle research required."
 	id = "m42c_inc"
 	category = list("M42C Rifle")
+
+	vendor = "ColMarAmmo"
 
 	research_time = 300
 	maxlevel = 1
@@ -228,6 +252,8 @@
 	id = "m42c_spc"
 	category = list("M42C Rifle")
 
+	vendor = "ColMarAmmo"
+
 	research_time = 540
 	maxlevel = 1
 	req_upgrade = "m42c_inc"
@@ -245,6 +271,8 @@
 	id = "m6b"
 	category = list("M-6B Rocket Launcher")
 
+	vendor = "ColMarWeap"
+
 	research_time = 300
 	cost = 4
 	maxlevel = 1
@@ -260,6 +288,8 @@
 	id = "m6b_r_he"
 	category = list("M-6B Rocket Launcher")
 
+	vendor = "ColMarAmmo"
+
 	research_time = 420
 	maxlevel = 1
 
@@ -273,6 +303,8 @@
 	desc = "Best against single target."
 	id = "m6b_r_ap"
 	category = list("M-6B Rocket Launcher")
+
+	vendor = "ColMarAmmo"
 
 	research_time = 420
 	maxlevel = 1
@@ -289,6 +321,8 @@
 	id = "scope4"
 	category = list("Mods and Special")
 
+	vendor = "ColMarEquip"
+
 	research_time = 120
 	maxlevel = 1
 
@@ -302,6 +336,8 @@
 	desc = "DO. NOT. USE. If you have no escape plan."
 	id = "gr_frag"
 	category = list("Mods and Special")
+
+	vendor = "ColMarAmmo"
 
 	research_time = 300
 	cost = 2
@@ -317,6 +353,8 @@
 	desc = "Will shoot those pesky intruders."
 	id = "sentry"
 	category = list("Mods and Special")
+
+	vendor = "ColMarEquip"
 
 	research_time = 500
 	maxlevel = 1

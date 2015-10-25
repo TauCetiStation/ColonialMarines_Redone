@@ -22,6 +22,8 @@
 
 	var/tokens = 0
 
+	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+
 	var/list/categories = list(
 							//"M4A3 Service Pistol",
 							"VP78 Pistol",
@@ -38,6 +40,10 @@ var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchabl
 
 /obj/machinery/upgrade_station/New()
 	..()
+
+	Radio = new/obj/item/device/radio(src)
+	Radio.listening = 0
+
 	files = current_marine_upgrades
 
 /obj/machinery/upgrade_station/interact(mob/user)
@@ -198,6 +204,9 @@ var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchabl
 		src.updateUsrDialog()
 
 /obj/machinery/upgrade_station/proc/end_research(datum/upgrade/U)
+	Radio.set_frequency(MSUL_FREQ)
+	Radio.talk_into(src, "[U.name] research completed. You can find new toys at [U.vendor] vending machines.", MSUL_FREQ)
+
 	being_researched = null
 	overlays.Cut()
 	progress = 0

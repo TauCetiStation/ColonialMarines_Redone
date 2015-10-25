@@ -18,6 +18,8 @@
 	var/id = "id"
 	var/list/category = null
 
+	var/vendor = "Unknown"
+
 	var/research_time = 0
 	var/cost = 1
 	var/level = 0
