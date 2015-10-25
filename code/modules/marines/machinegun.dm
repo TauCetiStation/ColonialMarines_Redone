@@ -354,6 +354,7 @@
 	return
 
 /obj/machinery/marines/gun_turret/proc/die()
+	playsound(src.loc, "sparks", 100, 1)
 	state = 2
 	update_icon()
 
@@ -368,6 +369,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	user.visible_message("<span class='danger'>[user] slashes at [src]!</span>", "<span class='danger'>You slash at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	take_damage(rand(user.damagemin, user.damagemax))
 	return
 
