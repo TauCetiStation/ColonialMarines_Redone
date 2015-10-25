@@ -83,7 +83,7 @@
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
 	else
-		playsound(user, fire_sound, 50, 1)
+		playsound(user, fire_sound, 100, 1)
 		if(!message)
 			return
 		if(!fire_delay)
