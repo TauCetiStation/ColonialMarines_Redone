@@ -119,6 +119,12 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
+	mymob.armors = new /obj/screen()
+	mymob.armors.icon = 'icons/mob/screen_alien.dmi'
+	mymob.armors.icon_state = "armor0"
+	mymob.armors.name = "armor"
+	mymob.armors.screen_loc = ui_alien_armor
+
 	nightvisionicon = new /obj/screen/alien/nightvision()
 	nightvisionicon.screen_loc = ui_alien_nightvision
 
@@ -157,6 +163,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.armors, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 	mymob.client.screen += mymob.client.void

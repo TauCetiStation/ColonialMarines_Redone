@@ -1,10 +1,14 @@
-///**************NEW LORE COLONIAL MARINES WEAPON EDIT 31JAN2015 - BY APOPHIS**************///
-
 ///***Bullets***///
 /obj/item/projectile/bullet/m4a3 //Colt 45 Pistol
 	damage = 25
 	sound_fx = 1
 	dispersion = 0.5
+	penetration = -20
+
+/obj/item/projectile/bullet/vp78
+	damage = 40
+	sound_fx = 1
+	dispersion = 0.6
 
 /obj/item/projectile/bullet/m44m //44 Magnum Peacemaker
 	damage = 45
@@ -15,22 +19,52 @@
 	damage = 15
 	sound_fx = 1
 	dispersion = 1
+	penetration = -40
+
+/obj/item/projectile/bullet/m39/incendiary
+	icon_state = "tracer"
+
+/obj/item/projectile/bullet/m39/incendiary/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(3)
+		M.IgniteMob()
 
 /obj/item/projectile/bullet/m41 //M41 Assault Rifle
 	damage = 20
 	sound_fx = 1
-	dispersion = 0.8
+	dispersion = 0.5
+	penetration = 30
 
 /obj/item/projectile/bullet/m37 //M37 Pump Shotgun
 	name = "pellet"
 	icon_state = "pellet"
-	damage = 12
+
+/obj/item/projectile/bullet/m37/buckshot
+	damage = 13
 	dispersion = 1.5
 
-/obj/item/projectile/bullet/m37/on_fire()
+/obj/item/projectile/bullet/m37/flechette
+	damage = 30
+	dispersion = 1
+	penetration = -60
+
+/obj/item/projectile/bullet/m37/slug
+	damage = 150
+	dispersion = 0.5
+	penetration = 60
+
+/obj/item/projectile/bullet/m37/buckshot/on_fire()
 	..()
 	pixel_x += rand(-8,8)
 	pixel_y += rand(-8,8)
+
+/obj/item/projectile/bullet/m37/flechette/on_fire()
+	..()
+	pixel_x += rand(-8,8)
+	pixel_y += rand(-8,8)
+
 
 /obj/item/projectile/bullet/a10x28 //M59B Smartgun
 	damage = 30
@@ -43,24 +77,46 @@
 	damage = 120
 	sound_fx = 1
 	dispersion = 0.2
+	penetration = 80
+
+	var/special = 0
+
+/obj/item/projectile/bullet/m42c/incendiary
+	damage = 90
+	penetration = 70
+
+/obj/item/projectile/bullet/m42c/special
+	damage = 140
+	dispersion = 0.1
+	special = 1
+	penetration = 100
 
 /obj/item/projectile/bullet/m42c/on_hit(atom/target, blocked = 0)
 	..()
 	spawn(7)
-		if(prob(75) && target && isliving(target))
+		if(special ? prob(100) : prob(50) && target && isliving(target))
 			var/mob/living/L = target
 			if(L.stat == DEAD)
 				L.gib()
+
+/obj/item/projectile/bullet/m42c/incendiary/on_hit(atom/target, blocked = 0)
+	..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(20)
+		M.IgniteMob()
 
 /obj/item/projectile/bullet/machinegun
 	damage = 60
 	sound_fx = 1
 	dispersion = 0.5
+	penetration = 50
 
 /obj/item/projectile/bullet/turret
-	damage = 30
+	damage = 25
 	sound_fx = 1
 	dispersion = 0.5
+	penetration = -30
 
 /obj/item/projectile/bullet/turret/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -82,7 +138,8 @@
 
 /obj/item/projectile/bullet/rocket/he
 	icon_state = "rocket_he"
-	damage = 10
+	damage = 100
+	penetration = -50
 
 /obj/item/projectile/bullet/rocket/he/on_hit(atom/target, blocked = 0)
 	..()
@@ -92,6 +149,7 @@
 /obj/item/projectile/bullet/rocket/ap
 	icon_state = "rocket_ap"
 	damage = 100
+	penetration = 60
 
 /obj/item/projectile/bullet/rocket/ap/on_hit(atom/target, blocked = 0)
 	..()
@@ -105,6 +163,11 @@
 	caliber = "45s"
 	projectile_type = /obj/item/projectile/bullet/m4a3
 
+/obj/item/ammo_casing/vp78 //VP78 Pistol
+	desc = "A 9mm squash head bullet casing."
+	caliber = "9mmsh"
+	projectile_type = /obj/item/projectile/bullet/vp78
+
 /obj/item/ammo_casing/m44m //44 Magnum Peacemaker
 	desc = "A 44 Magnum bullet casing."
 	caliber = "38s"
@@ -115,6 +178,9 @@
 	caliber = "9mms"
 	projectile_type = /obj/item/projectile/bullet/m39
 
+/obj/item/ammo_casing/m39/incendiary
+	projectile_type = /obj/item/projectile/bullet/m39/incendiary
+
 /obj/item/ammo_casing/m41 //M41Assault Rifle
 	desc = "A 10mm special bullet casing."
 	caliber = "10mms"
@@ -123,11 +189,29 @@
 /obj/item/ammo_casing/m37 //M37 Pump Shotgun
 	name = "Shotgun shell"
 	desc = "A 12 gauge shell."
-	icon_state = "gshell"
 	caliber = "12gs"
-	projectile_type = /obj/item/projectile/bullet/m37
-	pellets = 12
+
+/obj/item/ammo_casing/m37/buckshot
+	name = "Shotgun shell"
+	desc = "A 12 gauge shell."
+	icon_state = "buckshell"
+	projectile_type = /obj/item/projectile/bullet/m37/buckshot
+	pellets = 11
 	variance = 0.8
+
+/obj/item/ammo_casing/m37/flechette
+	name = "Shotgun shell"
+	desc = "A 12 gauge flechette shell."
+	icon_state = "flecshell"
+	projectile_type = /obj/item/projectile/bullet/m37/flechette
+	pellets = 10
+	variance = 0.8
+
+/obj/item/ammo_casing/m37/slug
+	name = "Shotgun shell"
+	desc = "A 12 gauge slug shell."
+	icon_state = "slugshell"
+	projectile_type = /obj/item/projectile/bullet/m37/slug
 
 /obj/item/ammo_casing/a10x28 //M59B Smartgun
 	desc = "A 10mm special bullet casing."
@@ -139,8 +223,15 @@
 	caliber = "a10x26"
 	projectile_type = /obj/item/projectile/bullet/m42c
 
+/obj/item/ammo_casing/m42c/incendiary
+	projectile_type = /obj/item/projectile/bullet/m42c/incendiary
+
+/obj/item/ammo_casing/m42c/special
+	projectile_type = /obj/item/projectile/bullet/m42c/special
+
 /obj/item/ammo_casing/rocket
 	caliber = "60mm"
+	w_class = 5
 
 /obj/item/ammo_casing/rocket/update_icon()
 	if(BB)
@@ -171,6 +262,17 @@
 	..()
 	icon_state = ".45a[ammo_count() ? "" : "0"]"
 
+/obj/item/ammo_box/magazine/vp78
+	name = "VP78 Magazine"
+	desc = "A magazine with 9mm ammo"
+	icon_state = "vp78"
+	ammo_type = "/obj/item/ammo_casing/vp78"
+	max_ammo = 18
+
+/obj/item/ammo_box/magazine/vp78/update_icon()
+	..()
+	icon_state = "vp78[ammo_count() ? "" : "-0"]"
+
 /obj/item/ammo_box/magazine/m44m // 44 Magnum Peacemaker
 	name = "44 Magnum Speed Loader (.44)"
 	desc = "A 44 Magnum speed loader"
@@ -185,6 +287,16 @@
 	icon_state = "9x19p-8"
 	ammo_type = "/obj/item/ammo_casing/m39"
 	max_ammo = 48
+
+/obj/item/ammo_box/magazine/m39/highcap
+	name = "M39 SMG Mag (High Cap)"
+	desc = "A 9mm special magazine"
+	max_ammo = 70
+
+/obj/item/ammo_box/magazine/m39/highcap/incendiary
+	name = "M39 SMG Mag (Incendiary)"
+	desc = "A 9mm special magazine"
+	ammo_type = "/obj/item/ammo_casing/m39/incendiary"
 
 /obj/item/ammo_box/magazine/m39/update_icon()
 	..()
@@ -202,20 +314,39 @@
 	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/m37 //M37 Shotgun
-	name = "M37 Shotgun shells (box)"
-	desc = "A box of standard issue high-powered 12 gauge buckshot rounds. Manufactured by Armat Systems for military and civilian use."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "shells"
-	ammo_type = /obj/item/ammo_casing/m37
-	max_ammo = 8
+	max_ammo = 7
+
+/obj/item/ammo_box/m37/buckshot
+	name = "M37 Shotgun buckshot shells (box)"
+	desc = "A box of standard issue high-powered 12 gauge buckshot rounds. Manufactured by Armat Systems for military and civilian use."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "buckshells"
+	ammo_type = /obj/item/ammo_casing/m37/buckshot
+
+/obj/item/ammo_box/m37/flechette
+	name = "M37 Shotgun flechette shells (box)"
+	desc = "A box of standard issue high-powered 12 gauge flechette rounds. Manufactured by Armat Systems for military and civilian use."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "flecshells"
+	ammo_type = /obj/item/ammo_casing/m37/flechette
+
+/obj/item/ammo_box/m37/slug
+	name = "M37 Shotgun slug shells (box)"
+	desc = "A box of standard issue high-powered 12 gauge slug rounds. Manufactured by Armat Systems for military and civilian use."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "slugshells"
+	ammo_type = /obj/item/ammo_casing/m37/slug
 
 /obj/item/ammo_box/magazine/internal/m37
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/m37
 	caliber = "12gs"
-	max_ammo = 8
+	max_ammo = 7
 	multiload = 0
+	new_and_loaded = 0
 
 /obj/item/ammo_box/magazine/a10x28 //M59B Smartgun
 	name = "Magazine (10x28)"
@@ -230,10 +361,20 @@
 
 /obj/item/ammo_box/magazine/m42c
 	name = "Magazine (10x26)"
-	desc = "A 10mm special magazine"
+	desc = "A 10mm magazine"
 	icon_state = "m42c"
 	ammo_type = /obj/item/ammo_casing/m42c
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/m42c/incendiary
+	name = "Magazine (10x26 incendiary)"
+	desc = "A 10mm magazine with incendiary rounds"
+	ammo_type = /obj/item/ammo_casing/m42c/incendiary
+
+/obj/item/ammo_box/magazine/m42c/special
+	name = "Magazine (10x26 special)"
+	desc = "A 10mm magazine with special rounds"
+	ammo_type = /obj/item/ammo_casing/m42c/special
 
 /obj/item/ammo_box/magazine/m42c/update_icon()
 	..()
@@ -256,6 +397,7 @@
 	icon_state = "m4a3"
 	w_class = 2
 	mag_type = /obj/item/ammo_box/magazine/m4a3
+	new_and_loaded = 0
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
@@ -264,6 +406,21 @@
 /obj/item/weapon/gun/projectile/pistol/m4a3/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+
+/obj/item/weapon/gun/projectile/pistol/VP78 //VP78
+	name = "VP78 pistol"
+	desc = "A specially made pistol manufactured by the Weyland Yutani corporation. Chambered with custom-made rounds."
+	icon_state = "vp78"
+	w_class = 2
+	mag_type = /obj/item/ammo_box/magazine/vp78
+	new_and_loaded = 0
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	fire_sound = 'sound/weapons/servicepistol.ogg'
+
+/obj/item/weapon/gun/projectile/pistol/VP78/update_icon()
+	return
 
 /*
 /obj/item/weapon/gun/projectile/pistol/m4a3/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
@@ -291,17 +448,43 @@
 	w_class = 4
 	can_suppress = 0
 	mag_type = /obj/item/ammo_box/magazine/m39
+	new_and_loaded = 0
 	fire_sound = 'sound/weapons/Gunshot2.ogg'
 	fire_delay = 1
 	burst_size = 1
 	can_flashlight = 1
 
+	var/obj/item/device/mod/scope = null
+	zoomdevicename = "Reflex Sight"
+
 /obj/item/weapon/gun/projectile/Assault/m39/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
 	..()
+
+/obj/item/weapon/gun/projectile/Assault/m39/attackby(obj/item/A, mob/user, params)
+	if(istype(A, /obj/item/device/mod/scope4) && !scope)
+		if(user.l_hand != src && user.r_hand != src)
+			user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
+			return
+		if(!user.unEquip(A))
+			user << "<span class='warning'>\The [A] is stuck to you and cannot be installed onto the [name].</span>"
+			return
+
+		var/obj/item/device/mod/scope4/S = A
+		user << "<span class='notice'>You click [S] into place on [src].</span>"
+		scope = S
+		S.installed = src
+		S.loc = src
+		update_icon()
+	else
+		..()
 
 /obj/item/weapon/gun/projectile/Assault/m39/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	overlays.Cut()
+	if(scope)
+		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m39-s")
+		overlays += mod
 	return
 
 ///***RIFLES***///
@@ -313,6 +496,7 @@
 	item_state = "m41a"
 	w_class = 4
 	mag_type = /obj/item/ammo_box/magazine/m41
+	new_and_loaded = 0
 	fire_sound = 'sound/weapons/Gunshot_m41.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/projectile/revolver/grenadelauncher/underbarrel
@@ -322,6 +506,9 @@
 	var/select = 1
 	action_button_name = "Toggle Firemode"
 	can_flashlight = 1
+
+	var/obj/item/device/mod/scope = null
+	zoomdevicename = "Reflex Sight"
 
 /obj/item/weapon/gun/projectile/Assault/m41/New()
 	..()
@@ -340,7 +527,21 @@
 		return
 
 /obj/item/weapon/gun/projectile/Assault/m41/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/ammo_casing))
+	if(istype(A, /obj/item/device/mod/scope4) && !scope && user.unEquip(A))
+		if(user.l_hand != src && user.r_hand != src)
+			user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
+			return
+		if(!user.unEquip(A))
+			user << "<span class='warning'>\The [A] is stuck to you and cannot be installed onto the [name].</span>"
+			return
+
+		var/obj/item/device/mod/scope4/S = A
+		user << "<span class='notice'>You click [S] into place on [src].</span>"
+		scope = S
+		S.installed = src
+		S.loc = src
+		update_icon()
+	else if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self()
 			underbarrel.attackby(A, user, params)
@@ -350,6 +551,10 @@
 /obj/item/weapon/gun/projectile/Assault/m41/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	overlays.Cut()
+	if(scope)
+		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m41a-s")
+		overlays += mod
 	return
 
 /obj/item/weapon/gun/projectile/Assault/m41/ui_action_click()
@@ -400,6 +605,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/m37
+	new_and_chambered = 0
 	two_handed = 1
 
 /obj/item/weapon/gun/projectile/shotgun/verb/pump()
@@ -427,6 +633,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/a10x28
+	new_and_loaded = 0
 	fire_sound = 'sound/weapons/Gunshot_m59.ogg'
 	fire_delay = 1
 	burst_size = 1
@@ -846,89 +1053,41 @@
 
 //M42C
 /obj/item/weapon/gun/projectile/Assault/m42c //M42C Scoped Rifle
-	name = "M42C Scoped Rifle"
-	desc = "The M42C Scoped Rifle is a sniper rifle manufactured by Armat Battlefield Systems and used primarily by the United States Colonial Marine Corps and Weyland-Yutani."
+	name = "M42C Rifle"
+	desc = "The M42C Rifle is a sniper rifle manufactured by Armat Battlefield Systems and used primarily by the United States Colonial Marine Corps and Weyland-Yutani."
 	icon_state = "m42c"
 	item_state = "c20r"
 	w_class = 4
 	mag_type = /obj/item/ammo_box/magazine/m42c
+	new_and_loaded = 0
 	fire_sound = 'sound/cmr/weapons/Gunshot_m42c.ogg'
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 25
 	two_handed = 1
-	action_button_name = "Toggle Scope"
-	var/zoom_power = 0
-	var/scope_active = 0
+
+	var/obj/item/device/mod/scope = null
+	zoomdevicename = "Rifle Scope"
 
 /obj/item/weapon/gun/projectile/Assault/m42c/process_chamber(eject_casing = 0, empty_chamber = 1, no_casing = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/Assault/m42c/ui_action_click()
-	if(!zoom)
-		zoom_power = 0
-
-	switch(zoom_power)
-		if(0)
-			zoom_power = 12
-		if(12)
-			zoom = 0
-			zoom_power = 24
-
-	zoom(tileoffset=zoom_power)
-
-	if(!scope_active)
-		scope_active = 1
-		scope_marktreats(usr)
-
-/obj/item/weapon/gun/projectile/Assault/m42c/zoom(var/tileoffset = 12, var/viewsize = 10)
-	..()
-
-/obj/item/weapon/gun/projectile/Assault/m42c/proc/reset_treats(mob/living/carbon/human/user)
-	if(user.client)
-		for(var/image/I in user.client.images)
-			if(I.icon_state == "hms_treats")
-				user.client.images.Remove(I)
-
-/obj/item/weapon/gun/projectile/Assault/m42c/proc/scope_marktreats(mob/living/user)
-	while(user && user.client && user.client.view > 7)
-		reset_treats(user)
-		for(var/mob/living/L in living_mob_list)
-			if(L == user)
-				continue
-
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2))
-					continue
-
-			var/turf/location
-			if(L.z == 0)
-				var/turf/T = get_turf(L)
-				if(T.z != user.z)
-					continue
-				else
-					location = T
-			else if(L.z != user.z)
-				continue
-
-			var/image/I
-			if(isalienadult(L))
-				var/mob/living/carbon/alien/humanoid/H = L
-				var/pix_x = -H.custom_pixel_x_offset
-				var/pix_y = -H.custom_pixel_y_offset
-				I = image('icons/marines/cr_lock.dmi', loc = location ? location : L, icon_state = "hms_treats", layer = 16, pixel_x = pix_x, pixel_y = pix_y)
-			else
-				I = image('icons/marines/cr_lock.dmi', loc = location ? location : L, icon_state = "hms_treats", layer = 16)
-			user.client.images += I
-		sleep(10)
-
-	scope_active = 0
-	if(user)
-		reset_treats(user)
-
 /obj/item/weapon/gun/projectile/Assault/m42c/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/ammo_box/magazine/m42c))
+	if(istype(I, /obj/item/device/mod/scope1224) && !scope)
+		if(user.l_hand != src && user.r_hand != src)
+			user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
+			return
+		if(!user.unEquip(I))
+			user << "<span class='warning'>\The [I] is stuck to you and cannot be installed onto the [name].</span>"
+			return
+
+		var/obj/item/device/mod/scope1224/S = I
+		user << "<span class='notice'>You click [S] into place on [src].</span>"
+		scope = S
+		S.installed = src
+		S.loc = src
+		update_icon()
+	else if(istype(I, /obj/item/ammo_box/magazine/m42c))
 		drop_magazine(user)
 		if(do_reload(user, src, I, 12))
 			if(user.get_active_hand() == I)
@@ -939,27 +1098,10 @@
 /obj/item/weapon/gun/projectile/Assault/m42c/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-	return
-
-/*
-/obj/item/weapon/gun/projectile/Assault/m42c/afterattack(atom/target, mob/living/user, flag, params)
-	if(select == 2)
-		underbarrel.afterattack(target, user, flag, params)
-	else
-		..()
-		return*/
-/*
-/obj/item/weapon/gun/projectile/Assault/m42c/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/ammo_casing))
-		if(istype(A, underbarrel.magazine.ammo_type))
-			underbarrel.attack_self()
-			underbarrel.attackby(A, user, params)
-	else
-		..()*/
-
-/obj/item/weapon/gun/projectile/Assault/m42c/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	overlays.Cut()
+	if(scope)
+		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m42c-scope")
+		overlays += mod
 	return
 
 

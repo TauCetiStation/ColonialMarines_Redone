@@ -99,11 +99,11 @@
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			health -= rand(250,300)
+			qdel(src)
 		if(2.0)
-			health -= rand(200,250)
+			health -= rand(200,500)
 		if(3.0)
-			health -= rand(100,200)
+			health -= rand(100,350)
 	healthcheck()
 
 
@@ -367,9 +367,14 @@
 	icon_state = "egg_growing"
 	density = 0
 	anchored = 1
-	var/health = 100
+	var/health = 50
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 
+/obj/structure/alien/egg/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover, /obj/item/projectile))
+		return 0
+
+	return 1
 
 /obj/structure/alien/egg/New()
 	new /obj/item/clothing/mask/facehugger(src)
@@ -431,6 +436,26 @@
 /obj/structure/alien/egg/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
+	healthcheck()
+
+/obj/structure/alien/egg/ex_act(severity, target)
+	switch (severity)
+		if (1.0)
+			if(status != BURST && status != BURSTING)
+				Burst()
+			else if(status == BURST && prob(50))
+				qdel(src)	//Remove the egg after it has been hit after bursting.
+			return
+
+		if (2.0)
+			if(prob(50))
+				health -= 50
+			else
+				health -= rand(25,50)
+
+		if(3.0)
+			health -= rand(15,45)
+
 	healthcheck()
 
 

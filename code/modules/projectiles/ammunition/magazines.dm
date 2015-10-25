@@ -85,6 +85,7 @@
 	ammo_type = /obj/item/ammo_casing/a40mm
 	caliber = "40mm"
 	max_ammo = 1
+	new_and_loaded = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi
 	ammo_type = /obj/item/ammo_casing/a40mm

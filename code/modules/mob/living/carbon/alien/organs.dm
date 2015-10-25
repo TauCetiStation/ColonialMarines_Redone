@@ -205,10 +205,11 @@
 	..()
 
 /obj/item/organ/internal/alien/hivenode/on_life()
-	if(!isalien(owner))
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
 		toxin_power++
 		var/tox_dmg = 2 + (toxin_power/100)
-		owner.adjustToxLoss(tox_dmg)
+		H.adjustToxLoss(tox_dmg)
 
 
 /obj/item/organ/internal/alien/resinspinner
@@ -294,7 +295,7 @@
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 30
+	reduction = 70
 
 /obj/item/organ/internal/alien/carapace/crusher
 	name = "carapace"
@@ -308,19 +309,19 @@
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 25
+	reduction = 50
 
 /obj/item/organ/internal/alien/carapace/medium
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 20
+	reduction = 35
 
 /obj/item/organ/internal/alien/carapace/small
 	name = "carapace"
 	zone = "chest"
 	slot = "armor"
-	reduction = 15
+	reduction = 20
 
 /obj/item/organ/internal/alien/digger
 	name = "armored claws"

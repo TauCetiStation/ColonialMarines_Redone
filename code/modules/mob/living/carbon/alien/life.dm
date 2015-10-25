@@ -58,12 +58,33 @@
 /mob/living/carbon/alien/handle_hud_icons()
 
 	handle_hud_icons_health()
+	handle_hud_icons_armor()
 	if(islarva(src) || (isalienadult(src) && !isqueen(src)))
 		queen_locator()
 
 	handle_aura_icons()
 
 	return 1
+
+/mob/living/carbon/alien/proc/handle_hud_icons_armor()
+	if(armors)
+		var/obj/item/organ/internal/alien/carapace/armor = getorgan(/obj/item/organ/internal/alien/carapace)
+		if(armor)
+			switch(armor.health)
+				if(200 to INFINITY)
+					armors.icon_state = "armor0"
+				if(160 to 200)
+					armors.icon_state = "armor1"
+				if(120 to 160)
+					armors.icon_state = "armor2"
+				if(80 to 120)
+					armors.icon_state = "armor3"
+				if(40 to 80)
+					armors.icon_state = "armor4"
+				if(1 to 40)
+					armors.icon_state = "armor5"
+				else
+					armors.icon_state = "armor6"
 
 var/aura_xeno = "XENO Purple Aura"
 var/aura_safe = "SAFE Blue Aura"

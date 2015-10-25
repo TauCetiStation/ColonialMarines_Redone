@@ -229,17 +229,19 @@
 /obj/item/marines/turret_deployer
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "syndieturret0"
-	name = "sentry turret (packed)"
-	desc = "Used to deploy a machinegun"
+	name = "Sentry Turret (Packed)"
+	desc = "Used to deploy a sentry turret."
 	w_class = 5
 	action_button_name = "Deploy"
 
 	var/deploy_try = 3
 	var/ammo = 250
 
-/obj/item/marines/turret_deployer/New(loc, var/new_ammo = -1)
+/obj/item/marines/turret_deployer/New(loc, var/new_ammo = -1, direction)
 	if(new_ammo >= 0)
 		ammo = new_ammo
+	if(direction)
+		dir = direction
 	..()
 
 /obj/item/marines/turret_deployer/attack_self(mob/user)
@@ -271,7 +273,7 @@
 				user << "<span class='danger'>Bad position.</span>"
 
 /obj/machinery/marines/gun_turret
-	name = "sentry turret"
+	name = "Sentry Turret"
 	desc = "USCM defense turret. It really packs a bunch."
 	density = 1
 	anchored = 1
@@ -286,7 +288,7 @@
 	icon_state = "syndieturret0"
 
 	var/direction = 2
-	var/ammo = 250
+	var/ammo = 500
 	var/idle_count = 0
 
 /obj/machinery/marines/gun_turret/New(loc, var/new_dir = 2, var/new_ammo = -1)
@@ -294,6 +296,7 @@
 	if(new_ammo >= 0)
 		ammo = new_ammo
 	direction = new_dir
+	dir = new_dir
 	playsound(src, 'sound/cmr/effects/turret_deploy.ogg', 50)
 	take_damage(0) //check your health
 	icon_state = "[base_icon_state]" + "0"
@@ -306,7 +309,7 @@
 			return
 		user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
 		if(state < 2)
-			new /obj/item/marines/turret_deployer(loc, ammo)
+			new /obj/item/marines/turret_deployer(loc, ammo, direction)
 		qdel(src)
 		return
 
@@ -375,6 +378,10 @@
 		var/mob/M = target
 		if(M.stat != DEAD)
 			return 1
+	else if(istype(target, /obj/item/clothing/mask/facehugger))
+		var/obj/item/clothing/mask/facehugger/FH = target
+		if(FH.stat != DEAD)
+			return 1
 	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		if(M.occupant)
@@ -411,7 +418,7 @@
 			return
 		ammo--
 		fire(cur_target)
-		sleep(1)
+		sleep(3)
 
 /obj/machinery/marines/gun_turret/proc/get_shooting_dir(atom/target)
 	if(direction == NORTH)
@@ -431,11 +438,17 @@
 /obj/machinery/marines/gun_turret/proc/get_target()
 	var/list/pos_targets = list()
 	var/target = null
-	for(var/mob/living/M in view(scan_range,src))
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2))
-				continue
+	for(var/obj/item/clothing/mask/facehugger/FH in view(scan_range,src))
+		if(!istype(FH))
+			continue
+		if(!get_shooting_dir(FH))
+			continue
+		if(FH.stat == DEAD)
+			continue
+		pos_targets += FH
+	for(var/mob/living/carbon/alien/M in view(scan_range,src))
+		if(!istype(M))
+			continue
 		if(!get_shooting_dir(M))
 			continue
 		if(M.stat == DEAD)

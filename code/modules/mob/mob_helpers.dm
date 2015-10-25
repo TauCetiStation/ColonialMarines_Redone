@@ -188,6 +188,35 @@
 
 	return zone
 
+//Bullet damage checks for armor
+//I wan't bullet hits to count armor from chest or head only.
+//Also its easy to reverse this system back to normal later.
+//This used in human_defense.dm in getarmor() proc.
+/proc/check_zone_armor(zone)
+	if(!zone)	return "chest"
+	switch(zone)
+		if("eyes","mouth")
+			zone = "head"
+		if("l_arm","l_hand","r_arm","r_hand","l_leg","l_foot","r_leg","r_foot","groin")
+			zone = "chest"
+	return zone
+
+/proc/ran_zone_armor(zone)
+
+	zone = check_zone_armor(zone)
+
+	if(prob(80))
+		return zone
+
+	var/t = rand(1,10)
+	switch(t)
+		if(1 to 8)
+			return "chest"
+		if(9 to 10)
+			return "head"
+
+	return zone
+
 /proc/above_neck(zone)
 	var/list/zones = list("head", "mouth", "eyes")
 	if(zones.Find(zone))

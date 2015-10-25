@@ -9,6 +9,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = 3
+	new_and_chambered = 0
 
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/attackby(obj/item/A, mob/user, params)
 	..()

@@ -26,7 +26,7 @@
 
 /mob/living/carbon/alien/humanoid/ravager/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/ravager
-	internal_organs += new /obj/item/organ/internal/alien/carapace/medium
+	internal_organs += new /obj/item/organ/internal/alien/carapace/large
 	//var/datum/reagents/R = new/datum/reagents(100)
 	//reagents = R
 	//R.my_atom = src

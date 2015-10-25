@@ -653,7 +653,7 @@ Doesn't work on other aliens/AI.*/
 	..()
 
 /obj/tunnel/hole/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/grenade/explosive))
+	if(istype(W, /obj/item/weapon/grenade/explosive) || istype(W, /obj/item/weapon/grenade/frag) || istype(W, /obj/item/weapon/c4))
 		var/answer = alert(user, "Do you want to throw explosive grenade in?",,"Yes","No")
 		if(answer == "No")
 			return
@@ -667,6 +667,13 @@ Doesn't work on other aliens/AI.*/
 				
 				grenade_act()
 
+/obj/tunnel/hole/Crossed(AM as obj)
+	if(istype(AM, /obj/item/weapon/grenade/explosive) || istype(AM, /obj/item/weapon/grenade/frag))
+		var/obj/item/weapon/grenade/G = AM
+		if(G.active)
+			qdel(G)
+			grenade_act()
+
 /obj/tunnel/hole/proc/grenade_act()
 	spawn(30)
 		explosion(loc,0,0,3)
@@ -678,10 +685,11 @@ Doesn't work on other aliens/AI.*/
 /obj/tunnel/proc/explode_act()
 	for(var/mob/living/L in contents)
 		L.adjustBruteLoss(1000)
-	var/turf/T = get_turf(src)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(1, 0, T) // if more than one smoke, spread it around
-	smoke.start()
+	if(prob(25))
+		var/turf/T = get_turf(src)
+		var/datum/effect/effect/system/smoke_spread/smoke = new
+		smoke.set_up(1, 0, T) // if more than one smoke, spread it around
+		smoke.start()
 	qdel(src)
 
 /obj/tunnel/relaymove(mob/living/carbon/user, direction)

@@ -21,6 +21,15 @@
 		//	src << "<span class='userdanger'>Your armor softens the blow!</span>"
 	return armor
 
+/mob/living/proc/bullet_penetration_check(def_zone = null, damage, penetration)
+	var/armor = getarmor(def_zone, "bullet")
+
+	if(armor && damage)
+		armor *= (100-penetration)/100
+		if(armor)
+			damage *= (100-min(armor,100))/100
+		return round(max(1,damage))
+	return damage
 
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
@@ -31,6 +40,7 @@
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
+		P.damage = bullet_penetration_check(def_zone, P.damage, P.penetration)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 		score_rounds_hit++
 	return P.on_hit(src, armor, def_zone)

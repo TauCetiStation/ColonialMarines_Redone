@@ -76,6 +76,8 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
+.red					{color: #ff0303;}
+
 .shadowling				{color: #3b2769;}
 
 .newscaster				{color: #800000;}

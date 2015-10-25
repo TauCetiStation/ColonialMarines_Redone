@@ -3,42 +3,40 @@
 
 ///******MARINE VENDOR******///
 
-/obj/machinery/vending/marine
-	name = "ColMarTech"
+/obj/machinery/vending/marine/weapons
+	name = "ColMarWeap"
+	desc = "A marine weapon vendor"
+	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
+	products = list(
+					/obj/item/weapon/gun/projectile/pistol/m4a3 = 25,
+					/obj/item/weapon/gun/projectile/shotgun/m37 = 25,
+					/obj/item/weapon/gun/projectile/Assault/m39 = 25,
+					/obj/item/weapon/gun/projectile/Assault/m41 = 25,
+					/obj/item/weapon/combat_knife = 25
+					)
+
+/obj/machinery/vending/marine/ammunition
+	name = "ColMarAmmo"
+	desc = "A marine ammunition vendor"
+	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
+	products = list(
+					/obj/item/ammo_box/magazine/m4a3 = 25,
+					/obj/item/ammo_box/m37/buckshot = 25,
+					/obj/item/ammo_box/magazine/m39 = 25,
+					/obj/item/ammo_box/magazine/m41 = 25
+					)
+
+/obj/machinery/vending/marine/equipment
+	name = "ColMarEquip"
 	desc = "A marine equipment vendor"
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/donut = 25,
-
-					/obj/item/weapon/gun/projectile/pistol/m4a3 = 5,
-					/obj/item/weapon/gun/projectile/m44m = 5,
-					/obj/item/weapon/gun/projectile/Assault/m39 = 5,
-					/obj/item/weapon/gun/projectile/Assault/m41 = 5,
-					/obj/item/weapon/gun/projectile/shotgun/m37 = 5,
-
-
-					/obj/item/ammo_box/magazine/m4a3 = 25,
-					/obj/item/ammo_box/magazine/m44m =25,
-					/obj/item/ammo_box/magazine/m39 = 25,
-					/obj/item/ammo_box/magazine/m41 = 25,
-					/obj/item/ammo_box/m37 = 25,
-					/obj/item/ammo_box/a40mm = 5,
-
-
-//					/obj/item/device/motiondetector = 5,
-					/obj/item/weapon/combat_knife = 5,
-					/obj/item/device/flashlight/flare = 10,
-					/obj/item/device/flashlight/seclite = 2,
-					/obj/item/weapon/storage/belt/knifepouch/Carbon_Steel=2,
+	products = list(
+					/obj/item/weapon/storage/backpack/marine = 10,
+					/obj/item/device/flashlight/flare = 25,
+					/obj/item/device/flashlight/seclite = 10,
+					/obj/item/device/radio/marine = 10,
 					/obj/item/weapon/grenade/explosive = 5
 					)
-	contraband = list(/*bj/item/weapon/storage/fancy/donut_box = 5,
-					/obj/item/ammo_magazine/a357 = 5,
-					/obj/item/ammo_magazine/a50 = 5,*/
-					)
-	premium = list(
-//				/obj/item/ammo_magazine/a762 = 5,
-				)
-//	prices = list()
 
 //MARINE FOOD VENDOR APOPHIS775 10JAN2014
 /obj/machinery/vending/marineFood

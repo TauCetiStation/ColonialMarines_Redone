@@ -3,6 +3,11 @@
 	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
 
+	if(isalien_t1(src) && prob(25))
+		new /obj/item/token(get_turf(src))
+	else
+		new /obj/item/token(get_turf(src))
+
 	if(!gibbed)
 		playsound(loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 		visible_message("<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw...")

@@ -6,20 +6,6 @@
 	icon = 'icons/marines/PMC.dmi'
 	icon_state = "smg"
 
-/obj/item/weapon/gun/projectile/automatic/pistol/VP78 //VP78
-	name = "\improper VP78 pistol"
-	desc = "A specially made pistol manufactured by the Weyland Yutani corporation. Chambered with custom-made rounds."
-	icon = 'icons/marines/PMC.dmi'
-	icon_state = "VP78"
-
-	mag_type = /obj/item/ammo_box/magazine/VP78
-	can_suppress = 0
-	burst_size = 1
-	fire_delay = 0
-	action_button_name = null
-
-	fire_sound = 'sound/weapons/mg.ogg'
-
 //bullets
 	//M39
 /obj/item/projectile/bullet/m39/toxic // M39 SMG
@@ -38,22 +24,6 @@
 	icon_state = "9x19toxic"
 	ammo_type = /obj/item/ammo_casing/m39/toxic
 	max_ammo = 20
-
-//VP78
-/obj/item/projectile/bullet/VP78
-	damage = 50
-	weaken = 5
-
-/obj/item/ammo_casing/VP78 //VP78
-	desc = "A 44 Magnum bullet casing."
-	projectile_type = /obj/item/projectile/bullet/m44m
-
-/obj/item/ammo_box/magazine/VP78 //VP78 Pistol mag
-	name = "VP78 Magazine (.9mms special)"
-	desc = "A magazine with .9mms ammo"
-	icon_state = "a45"
-	ammo_type = /obj/item/ammo_casing/VP78
-	max_ammo = 18
 
 //PMC Grunt gear
 

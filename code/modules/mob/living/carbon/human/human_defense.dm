@@ -10,10 +10,12 @@ emp_act
 	var/armorval = 0
 	var/organnum = 0
 
+	def_zone = ran_zone_armor(def_zone)
+
 	if(def_zone)
 		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
-		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
+		var/obj/item/organ/limb/affecting = get_organ(def_zone)
 		return checkarmor(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
