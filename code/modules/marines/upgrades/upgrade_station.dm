@@ -135,7 +135,7 @@ var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchabl
 		line_length++
 
 	dat += "</tr></table></div>"
-	dat += "<b>Tokens amount:</b> [tokens > 1 ? "<span class='good'>[tokens]</span>" : "<span class='bad'>[0]</span>"]<br>"
+	dat += "<b>Tokens amount:</b> [tokens ? "<span class='good'>[tokens]</span>" : "<span class='bad'>[0]</span>"]<br>"
 	return dat
 
 /obj/machinery/upgrade_station/proc/category_win(mob/user,selected_category)
@@ -156,7 +156,7 @@ var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchabl
 		dat += "<span class='average'>[U.desc]</span><br>"
 
 	dat += "</div>"
-	dat += "<b>Tokens amount:</b> [tokens > 1 ? "<span class='good'>[tokens]</span>" : "<span class='bad'>[0]</span>"]<br>"
+	dat += "<b>Tokens amount:</b> [tokens ? "<span class='good'>[tokens]</span>" : "<span class='bad'>[0]</span>"]<br>"
 	return dat
 
 /obj/machinery/upgrade_station/proc/req_research(datum/upgrade/U)
