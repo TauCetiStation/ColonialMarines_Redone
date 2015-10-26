@@ -34,7 +34,7 @@
 	if(!scanning)
 		scanning = 1
 		visible_message("<span class='notice'>[src.name]: scanning procedure activated... approximate completion time: 1 minute.</span>")
-		spawn(450)
+		spawn(planscan_scan)
 			for(var/mob/living/t in living_mob_list)
 				if(ismouse(t))
 					continue
@@ -47,7 +47,7 @@
 			if(detected.len)
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 125)
 				visible_message("<span class='danger'>[src.name]: scanning prodecure completed... Life signs detected.</span>")
-				spawn(3000)
+				spawn(planscan_clear)
 					playsound(src.loc, 'sound/machines/twobeep.ogg', 125)
 					visible_message("<span class='danger'>[src.name]: Scanning data outdated, new scan required!</span>")
 					detected = list()
@@ -77,6 +77,8 @@
 					var/mob/living/carbon/human/C = t
 					if(istype(C.wear_suit, /obj/item/clothing/suit/storage/marine2))
 						o.color = "#ff0000"
+				if(planscan_accurate && isalien(t))
+					o.color = "#8800cc"
 				o.screen_loc = "detector:3:[o.pixel_x],3:[o.pixel_y]" // Make it appear on the radar map
 				user.client.screen+=o // Add it to the radar
 				flick("blip", o)

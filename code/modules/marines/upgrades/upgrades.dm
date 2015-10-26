@@ -363,3 +363,35 @@
 	for(var/obj/machinery/vending/marine/equipment/V in world)
 		var/list/upgrade = list(/obj/item/marines/turret_deployer = 2)
 		V.build_inventory(upgrade)
+
+/datum/upgrade/p_scn_speed
+	name = "Planetary Scanner Accelerator"
+	desc = "For each level: Scan time reduced to (30, 15) seconds. Rescan possible every (3, 1) minutes."
+	id = "p_scn_speed"
+	category = list("Planetary Scanner")
+
+	vendor = "skip"
+
+	research_time = 180
+	maxlevel = 2
+
+/datum/upgrade/p_scn_speed/on_level()
+	planscan_scan -= 150
+	planscan_clear -= 1200
+
+/datum/upgrade/p_scn_acc
+	name = "Planetary Scanner Accuracy"
+	desc = "Unknown targets will be marked with purple color."
+	desc_req = "Lv. 2 Scanner Accelerator research required."
+	id = "p_scn_acc"
+	category = list("Planetary Scanner")
+
+	vendor = "skip"
+
+	research_time = 600
+	maxlevel = 1
+	req_upgrade = "p_scn_speed"
+	req_upgrade_level = 2
+
+/datum/upgrade/p_scn_acc/on_level()
+	planscan_accurate = 1
