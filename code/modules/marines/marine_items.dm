@@ -167,7 +167,7 @@ obj/item/device/radio/headset/mdelta
 /obj/item/weapon/storage/box/rubbershot
 	name = "box of rubber shells"
 	desc = "A box of 12 gauge rubber rounds. Manufactured by Armat Systems for prison guard and police use in non-lethal pacification."
-	icon_state = "beanshells"
+	icon_state = "rubbshells"
 	w_class=2
 	New()
 		..()

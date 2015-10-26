@@ -51,7 +51,7 @@
 /obj/item/ammo_casing/shotgun/rubbershot
 	name = "rubber shot"
 	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
-	icon_state = "bshell"
+	icon_state = "rubbershell"
 	projectile_type = /obj/item/projectile/bullet/rpellet
 	pellets = 5
 	variance = 0.8
