@@ -6,7 +6,7 @@
 	name = "marine standard helmet"
 	desc = "Standard marine gear. Protects the head from damage."
 	flags = BLOCKHAIR
-	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 40, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	health = 5
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -16,7 +16,7 @@
 /obj/item/clothing/head/soft/marine
 	name = "marine sergeant cap"
 	desc = "It's a soft cap made from advanced ballistic-resistant fibres. Fails to prevent lumps in the head."
-	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 50, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 25, laser = 50,energy = 10, bomb = 50, bio = 0, rad = 0)
 	icon_state = "greysoft"
 	item_color = "grey"
 
@@ -48,7 +48,7 @@
 /obj/item/clothing/head/beret/marine
 	name = "marine officer beret"
 	desc = "A beret with the ensign insignia emblazoned on it. It radiates respect and authority."
-	armor = list(melee = 50, bullet = 100, laser = 50,energy = 50, bomb = 50, bio = 100, rad = 100)
+	armor = list(melee = 15, bullet = 15, laser = 50,energy = 50, bomb = 50, bio = 100, rad = 100)
 	icon_state = "beret_badge"
 
 /obj/item/clothing/head/beret/marine/commander
@@ -160,14 +160,14 @@
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 50, bullet = 80, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 60, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 	allowed = list(/obj/item/weapon/gun/, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/device/flashlight,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/grenade)
 
 /obj/item/clothing/suit/storage/marine/officer
 	name = "officer jacket"
 	desc = "The leather is fake, but the style is real."
-	armor = list(melee = 60, bullet = 90, laser = 60, energy = 20, bomb = 25, bio = 10, rad = 10)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 20, bomb = 25, bio = 10, rad = 10)
 	icon_state = "leatherjack"
 	item_state = "leatherjack"
 	item_color = "leatherjack"
@@ -175,7 +175,7 @@ v
 /obj/item/clothing/suit/storage/marine/officer/commander
 	name = "commander jacket"
 	desc = "This single item cost as much as a brand new space station. Remember to drywash."
-	armor = list(melee = 80, bullet = 90, laser = 60, energy = 60, bomb = 100, bio = 100, rad = 100)
+	armor = list(melee = 80, bullet = 60, laser = 60, energy = 60, bomb = 100, bio = 100, rad = 100)
 	icon_state = "capjacket"
 	item_state = "bio_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -199,7 +199,7 @@ v
 	desc = "A suit of armor with heavy plates and padding. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
-	armor = list(melee = 80, bullet = 90, laser = 50, energy = 50, bomb = 80, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 80, bio = 0, rad = 0)
 
 //GLOVES
 /obj/item/clothing/gloves/marine
@@ -266,7 +266,7 @@ v
 	desc = "Standard issue combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
-	armor = list(melee = 20, bullet = 80, laser = 10,energy = 10, bomb = 20, bio = 10, rad = 0)
+	armor = list(melee = 20, bullet = 30, laser = 10,energy = 10, bomb = 20, bio = 10, rad = 0)
 	siemens_coefficient = 0.7
 	var/obj/item/weapon/combat_knife/knife //Thank you Apo and LLA~~
 
