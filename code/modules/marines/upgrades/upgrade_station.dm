@@ -206,7 +206,7 @@ var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchabl
 
 /obj/machinery/upgrade_station/proc/end_research(datum/upgrade/U)
 	Radio.set_frequency(MSUL_FREQ)
-	Radio.talk_into(src, "[U.name] research completed. [U.vendor == "skip" ? "You can find new toys at [U.vendor] vending machines." : ""]", MSUL_FREQ)
+	Radio.talk_into(src, "[U.name] research completed. [U.vendor == "skip" ? "" : "Available at [U.vendor] vending machines."]", MSUL_FREQ)
 
 	being_researched = null
 	overlays.Cut()
