@@ -45,10 +45,10 @@ RUN_DELAY 0
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types.
-HUMAN_DELAY 0.5
+HUMAN_DELAY 1
 ROBOT_DELAY 0
 MONKEY_DELAY 0
-ALIEN_DELAY 0
+ALIEN_DELAY 1
 SLIME_DELAY 0
 ANIMAL_DELAY 0
 

@@ -11,7 +11,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	. = ..()
-	. += 2
+	. += 3
 
 /mob/living/carbon/alien/humanoid/hivelord/movement_delay()
 	. = ..()
@@ -30,26 +30,25 @@
 	. += */
 
 /mob/living/carbon/alien/humanoid/runner/movement_delay()
-	. = -1
+	. = -2
 	. += ..()
 
-/*
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1
-	. += ..()*/
+	. += ..()
 
 /*
 /mob/living/carbon/alien/humanoid/praetorian/movement_delay()
 	. = 
 	. += */
-/*
-/mob/living/carbon/alien/humanoid/ravager/movement_delay()
-	. = 
-	. += */
 
-/mob/living/carbon/alien/humanoid/sentinel/movement_delay()
+/mob/living/carbon/alien/humanoid/ravager/movement_delay()
+	. = -0.5
+	. += ..()
+
+/*/mob/living/carbon/alien/humanoid/sentinel/movement_delay()
 	. = ..()
-	. += 1
+	. += 1*/
 /*
 /mob/living/carbon/alien/humanoid/spitter/movement_delay()
 	. = 

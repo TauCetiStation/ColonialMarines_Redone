@@ -1495,3 +1495,34 @@ B --><-- A
 		else
 			newdir = 2
 	return newdir
+
+/proc/get_glide(x) //floats here, but before 509 they are kinda useless for now.
+	switch(x)
+		if(-1)
+			return 14
+		if(-0.5)
+			return 12
+		if(0)
+			return 10
+		if(0.5)
+			return 8
+		if(1)
+			return 6
+		if(1.5)
+			return 5.5
+		if(2)
+			return 5
+		if(2.5)
+			return 4
+		if(3)
+			return 4
+		if(3.5)
+			return 3.5
+		if(4)
+			return 3
+		if(4.5)
+			return 2.7
+		if(5)
+			return 2.5
+		else
+			return 0

@@ -164,12 +164,19 @@
 				move_delay += config.run_speed
 			if("walk")
 				move_delay += config.walk_speed
-		move_delay += mob.movement_delay()
+
+		var/mob_original_delay = mob.movement_delay()
+		move_delay += mob_original_delay
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
 			var/tickcomp = (1 / (world.tick_lag)) * 1.3
 			move_delay = move_delay + tickcomp
+
+		if(world.tick_lag == 0.5)
+			mob.glide_size = get_glide(round(mob_original_delay, 0.5))
+		else
+			mob.glide_size = 8 //TG default
 
 		//We are now going to move
 		moving = 1
