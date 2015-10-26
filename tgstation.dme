@@ -1027,6 +1027,7 @@
 #include "code\modules\marines\research\medical_designs.dm"
 #include "code\modules\marines\research\weapon_designs.dm"
 #include "code\modules\marines\upgrades\datums.dm"
+#include "code\modules\marines\upgrades\globals.dm"
 #include "code\modules\marines\upgrades\mods.dm"
 #include "code\modules\marines\upgrades\token.dm"
 #include "code\modules\marines\upgrades\upgrade_station.dm"
