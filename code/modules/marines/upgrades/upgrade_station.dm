@@ -185,7 +185,8 @@ var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchabl
 	var/time_started = world.time
 	var/time_needed = U.research_time*10
 	var/time_finished = world.time + time_needed
-	tokens--
+	if(U.cost)
+		tokens -= U.cost
 
 	var/image/prog_bar
 	prog_bar = image("icon" = 'icons/effects/doafter_icon.dmi', "icon_state" = "prog_bar_0")
