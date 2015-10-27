@@ -290,6 +290,7 @@
 	var/direction = 2
 	var/ammo = 500
 	var/idle_count = 0
+	var/firing = 0
 
 /obj/machinery/marines/gun_turret/New(loc, var/new_dir = 2, var/new_ammo = -1)
 	..()
@@ -374,6 +375,8 @@
 	return
 
 /obj/machinery/marines/gun_turret/proc/validate_target(atom/target)
+	if(!(target in view(scan_range,src)))
+		return 0
 	if(get_dist(target, src)>scan_range)
 		return 0
 	if(istype(target, /mob))
@@ -401,16 +404,18 @@
 			cur_target = null
 		if(!cur_target)
 			cur_target = get_target()
-		if(cur_target)
-			firing()
-		else
-			idle_count++
-			if(idle_count > 3)
-				idle_count = 0
-				playsound(src, 'sound/cmr/effects/turret_idle.ogg', 50)
+		if(!firing)
+			if(cur_target)
+				firing()
+			else
+				idle_count++
+				if(idle_count > 3)
+					idle_count = 0
+					playsound(src, 'sound/cmr/effects/turret_idle.ogg', 50)
 	return
 
 /obj/machinery/marines/gun_turret/proc/firing()
+	firing = 1
 	while(cur_target)
 		if(!ammo)
 			cur_target = null
@@ -421,6 +426,7 @@
 		ammo--
 		fire(cur_target)
 		sleep(3)
+	firing = 0
 
 /obj/machinery/marines/gun_turret/proc/get_shooting_dir(atom/target)
 	if(direction == NORTH)
