@@ -417,7 +417,7 @@
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
-	fire_sound = 'sound/weapons/servicepistol.ogg'
+	fire_sound = 'sound/cmr/weapons/Gunshot_vp78.ogg'
 
 /obj/item/weapon/gun/projectile/pistol/VP78/update_icon()
 	return
