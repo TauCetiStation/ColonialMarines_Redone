@@ -292,6 +292,8 @@
 	var/idle_count = 0
 	var/firing = 0
 
+	var/stationary = 0
+
 /obj/machinery/marines/gun_turret/New(loc, var/new_dir = 2, var/new_ammo = -1)
 	..()
 	if(new_ammo >= 0)
@@ -303,6 +305,9 @@
 	icon_state = "[base_icon_state]" + "0"
 
 /obj/machinery/marines/gun_turret/attackby(obj/item/W as obj, mob/user as mob)
+	if(stationary)
+		return
+
 	if(istype(W, /obj/item/weapon/wrench))
 		user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
 		if(!do_after(user,300, target = src))
@@ -408,6 +413,8 @@
 			if(cur_target)
 				firing()
 			else
+				if(stationary)
+					return
 				idle_count++
 				if(idle_count > 3)
 					idle_count = 0
