@@ -298,8 +298,9 @@
 	..()
 	if(new_ammo >= 0)
 		ammo = new_ammo
-	direction = new_dir
-	dir = new_dir
+	if(!stationary)
+		direction = new_dir
+		dir = new_dir
 	playsound(src, 'sound/cmr/effects/turret_deploy.ogg', 50)
 	take_damage(0) //check your health
 	icon_state = "[base_icon_state]" + "0"
