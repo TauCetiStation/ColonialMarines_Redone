@@ -251,3 +251,258 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 		if(mob.head && istype(mob.head, /obj/item/clothing/head/helmet/marine2))
 			var/obj/item/clothing/head/helmet/marine2/helmet = mob.head
 			helmet.update_icon()
+
+//Power Armor
+/obj/item/clothing/glasses/power_armor
+	name = "Visor"
+	desc = "Part of a Power Armor."
+	icon_state = "visor"
+
+	flags = NODROP
+	vision_flags = 0
+	darkness_view = 2
+	invis_view = SEE_INVISIBLE_LIVING
+
+	action_button_name = "Toggle Vision"
+	var/vision = 0
+	var/obj/item/clothing/head/helmet/space/pa/helmet
+
+/obj/item/clothing/glasses/power_armor/ui_action_click()
+	switch_vision()
+
+/obj/item/clothing/glasses/power_armor/proc/switch_vision()
+	switch(vision)
+		if(0)
+			vision = 1
+			usr << "Night Vision Mode."
+
+			darkness_view = 8
+			vision_flags = SEE_TURFS
+			invis_view = SEE_INVISIBLE_MINIMUM
+		if(1)
+			vision = 2
+			usr << "Thermal Vision Mode."
+
+			darkness_view = 2
+			vision_flags = SEE_MOBS
+			invis_view = 2
+		if(2)
+			vision = 3
+			usr << "Advanced Thermal Vision Mode."
+
+			darkness_view = 8
+			vision_flags = SEE_TURFS|SEE_MOBS
+			invis_view = SEE_INVISIBLE_MINIMUM
+		if(3)
+			vision = 0
+			usr << "Normal Vision Mode."
+
+			darkness_view = 2
+			vision_flags = 0
+			invis_view = SEE_INVISIBLE_LIVING
+
+/obj/item/weapon/stock_parts/cell/nuclear_cell
+	name = "nuclear power cell"
+	maxcharge = 50000
+	rating = 3
+	chargerate = 150
+
+/obj/item/clothing/head/helmet/space/pa
+	name = "advanced power helmet"
+	desc = "Top secret helmet."
+	icon_state = "pa_helm"
+	item_state = "pa_helm"
+	desc = "Has a tag: Totally not property of an Weyland-Yutani, honest."
+	w_class = 5
+	armor = list(melee = 60, bullet = 60, laser = 55,energy = 55, bomb = 60, bio = 45, rad = 45)
+	action_button_name = "Toggle Power"
+	var/obj/item/weapon/stock_parts/cell/nuclear_cell
+
+	var/obj/item/clothing/glasses/power_armor/visor
+
+	var/busy = 0
+	var/activated = 0
+	var/drain_power = 83
+
+	var/obj/screen/power_counter
+	var/obj/screen/health_counter
+
+/obj/item/clothing/head/helmet/space/pa/New()
+	..()
+	SSobj.processing |= src
+	nuclear_cell = new /obj/item/weapon/stock_parts/cell/nuclear_cell(src)
+
+	power_counter = new /obj/screen()
+	power_counter.name = "power_c"
+	power_counter.screen_loc = "CENTER+1,CENTER+1"
+	power_counter.layer = 20
+
+	health_counter = new /obj/screen()
+	health_counter.name = "health_c"
+	health_counter.screen_loc = "CENTER-1,CENTER+1"
+	health_counter.layer = 20
+
+	if(!visor)
+		visor = new /obj/item/clothing/glasses/power_armor(src)
+		visor.helmet = src
+
+/obj/item/clothing/head/helmet/space/pa/Destroy()
+	SSobj.processing.Remove(src)
+	if(ishuman(loc))
+		deactivate(loc)
+	..()
+
+/obj/item/clothing/head/helmet/space/pa/take_damage(var/amt)
+	if(activated)
+		drain_power(amt * (rand(1,3) * 1000))
+	else
+		..()
+
+/obj/item/clothing/head/helmet/space/pa/proc/drain_power(amount)
+	if(!amount || !activated)
+		return
+
+	nuclear_cell.charge = max(0, nuclear_cell.charge - amount)
+	update_counters()
+
+/obj/item/clothing/head/helmet/space/pa/process()
+	if(activated)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.stat == DEAD)
+				deactivate(H)
+			else if(nuclear_cell.charge)
+				nuclear_cell.charge = max(0, nuclear_cell.charge - (drain_power * (visor.vision ? visor.vision * 3 : 1)))
+				if(activated)
+					update_counters()
+			else
+				deactivate(H)
+	else
+		nuclear_cell.charge = min(nuclear_cell.maxcharge, nuclear_cell.charge + 150)
+
+/obj/item/clothing/head/helmet/space/pa/ui_action_click()
+	switch_power()
+
+/obj/item/clothing/head/helmet/space/pa/proc/equip_visor()
+	var/mob/living/carbon/human/H = usr
+	H.equip_to_slot_if_possible(visor,slot_glasses,0,0,1)
+	H.update_inv_wear_suit()
+
+/obj/item/clothing/head/helmet/space/pa/proc/remove_visor()
+	if(ishuman(visor.loc))
+		var/mob/living/carbon/H = visor.loc
+		H.unEquip(visor, 1)
+		H.update_inv_wear_suit()
+	visor.loc = src
+
+/obj/item/clothing/head/helmet/space/pa/proc/activate(mob/living/carbon/human/H)
+	if(activated) return
+
+	activated = 1
+
+	H.status_resistance = 100
+
+	var/obj/item/clothing/suit/space/pa/armor = H.wear_suit
+	armor.slowdown = 2
+
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	var/image/overlay = image('icons/mob/head.dmi', icon_state = "pa_helm_over", layer = 16)
+	H.overlays_standing += overlay
+
+	overlay = image('icons/obj/clothing/hats.dmi', icon_state = "pa_helm_over", layer = 16)
+	overlays += overlay
+
+	overlay = image('icons/mob/suit.dmi', icon_state = "pa_suit_over", layer = 16)
+	H.overlays_standing += overlay
+	H.update_icons()
+
+	overlay = image('icons/obj/clothing/suits.dmi', icon_state = "pa_suit_over", layer = 16)
+	armor.overlays += overlay
+
+	H.client.screen += power_counter
+	H.client.screen += health_counter
+	update_counters()
+
+/obj/item/clothing/head/helmet/space/pa/proc/deactivate(mob/living/carbon/human/H)
+	if(!activated) return
+
+	activated = 0
+
+	H.status_resistance = 0
+
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	remove_visor()
+	var/obj/item/clothing/suit/space/pa/armor = H.wear_suit
+	armor.slowdown = initial(armor.slowdown)
+	armor.flags &= ~NODROP
+	src.flags &= ~NODROP
+
+	for(var/image/I in H.overlays_standing)
+		if(I.icon_state == "pa_helm_over" || I.icon_state == "pa_suit_over")
+			H.overlays_standing.Remove(I)
+	for(var/image/I in overlays)
+		if(I.icon_state == "pa_helm_over" || I.icon_state == "pa_suit_over")
+			overlays.Remove(I)
+
+	H.update_icons()
+
+	for(var/obj/screen/S in H.client.screen)
+		if(S.name == "power_c" || S.name == "health_c")
+			H.client.screen.Remove(S)
+
+/obj/item/clothing/head/helmet/space/pa/proc/update_counters()
+	if(power_counter)
+		var/power = 0
+		power = nuclear_cell.charge * 100 / nuclear_cell.maxcharge
+		power_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(power)]</font></div>"
+
+	if(health_counter && ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		var/health = 0
+		health = H.health
+		health_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FFAB00'>[round(health)]</font></div>"
+
+/obj/item/clothing/head/helmet/space/pa/proc/switch_power()
+	if(busy)
+		return
+	if(nuclear_cell.charge < 10000)
+		usr << "Error... Not enough power to start the system."
+		return
+	busy = 1
+
+	var/mob/living/carbon/human/H = usr
+	if(!activated)
+		if(H.head == src)
+			if(!(H.glasses))
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/pa))
+					equip_visor()
+					var/obj/item/clothing/suit/space/pa/armor = H.wear_suit
+					armor.flags |= NODROP
+					src.flags |= NODROP
+					if(do_mob(H,H, 200))
+						activate(H)
+					else
+						remove_visor()
+						armor.flags &= ~NODROP
+						src.flags &= ~NODROP
+						H << "Activation interrupted."
+				else
+					H << "Error... Armor not found."
+			else
+				H << "Error... Remove glasses."
+		else
+			H << "Error... No user."
+	else
+		deactivate(H)
+
+	busy = 0
+
+/obj/item/clothing/suit/space/pa
+	name = "advanced power armor"
+	icon_state = "pa_suit"
+	item_state = "pa_suit"
+	desc = "Has a tag: Totally not property of an Weyland-Yutani, honest."
+	w_class = 5
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	slowdown = 5
+	armor = list(melee = 60, bullet = 60, laser = 55,energy = 55, bomb = 60, bio = 45, rad = 45)

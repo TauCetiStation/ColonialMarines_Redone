@@ -348,6 +348,15 @@
 	multiload = 0
 	new_and_loaded = 0
 
+/obj/item/ammo_box/magazine/internal/combat
+	name = "combat shotgun internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/m37
+	caliber = "12gs"
+	max_ammo = 5
+	multiload = 0
+	new_and_loaded = 0
+
 /obj/item/ammo_box/magazine/a10x28 //M59B Smartgun
 	name = "Magazine (10x28)"
 	desc = "A 10mm special magazine"
@@ -620,6 +629,19 @@
 		recentpump = 0
 	return
 
+/obj/item/weapon/gun/projectile/shotgun/combat
+	name = "combat shotgun"
+	desc = "A semi automatic shotgun with tactical furniture and a five-shell capacity underneath."
+	icon_state = "cshotgun"
+	origin_tech = "combat=5;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/combat
+	w_class = 5
+	two_handed = 1
+
+/obj/item/weapon/gun/projectile/shotgun/combat/shoot_live_shot(mob/living/user as mob|obj)
+	..()
+	src.do_pump(user)
+
 ///***m59b***///
 /obj/item/weapon/gun/var/smart_weapon = 0
 
@@ -671,6 +693,15 @@
 /obj/item/weapon/gun/projectile/Assault/m59b/afterattack(atom/target, mob/living/user, flag, params)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(H.head && istype(H.head, /obj/item/clothing/head/helmet/space/pa))
+			var/obj/item/clothing/head/helmet/space/pa/helmet = H.head
+			if(helmet.activated && helmet.nuclear_cell.charge)
+				helmet.drain_power(75)
+				if(chambered && chambered.BB)
+					chambered.BB.damage += rand(5,15)
+					..()
+					update_ammo()
+				return
 		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/storage/marine2/harness))
 			var/obj/item/clothing/suit/storage/marine2/harness/Armor = H.wear_suit
 			if(Armor.harness_cell && (Armor.harness_cell.charge >= 30))

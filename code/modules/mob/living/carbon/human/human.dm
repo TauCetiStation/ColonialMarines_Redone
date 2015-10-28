@@ -807,4 +807,108 @@
 			H.bloody_hands = 0
 			H.bloody_hands_mob = null
 			H.update_inv_gloves()
-	update_icons()	//apply the now updated overlays to the mob
+	update_icons()	//apply the now updated overlays to the mob\
+
+/mob/living/carbon/human
+	var/status_resistance = 0
+
+/mob/living/carbon/human/proc/getResistedLoss(amount)
+	if(health > 0) amount = status_resistance ? round(amount*(100-status_resistance)/100) : amount
+	return amount
+
+/mob/living/carbon/human/proc/check_pa(amount)
+	if(head && istype(head, /obj/item/clothing/head/helmet/space/pa))
+		var/obj/item/clothing/head/helmet/space/pa/helmet = head
+		if(helmet.activated)
+			helmet.drain_power(amount * 6)
+
+/mob/living/carbon/human/adjustStaminaLoss(amount)
+	if(status_flags & GODMODE)	return 0
+	check_pa(amount)
+	staminaloss = min(max(staminaloss + getResistedLoss(amount), 0),(maxHealth*2))
+
+/mob/living/carbon/human/setStaminaLoss(amount)
+	if(status_flags & GODMODE)	return 0
+	check_pa(amount)
+	staminaloss = getResistedLoss(amount)
+
+/mob/living/carbon/human/Stun(amount)
+	if(status_flags & CANSTUN)
+		check_pa(amount)
+		stunned = max(max(stunned,getResistedLoss(amount)),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		update_canmove()
+	return
+
+/mob/living/carbon/human/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+	if(status_flags & CANSTUN)
+		check_pa(amount)
+		stunned = max(getResistedLoss(amount),0)
+		update_canmove()
+	return
+
+/mob/living/carbon/human/AdjustStunned(amount)
+	if(status_flags & CANSTUN)
+		check_pa(amount)
+		stunned = max(stunned + getResistedLoss(amount),0)
+		update_canmove()
+	return
+
+/mob/living/carbon/human/Weaken(amount, ignore_canweaken = 0)
+	if(status_flags & CANWEAKEN || ignore_canweaken)
+		check_pa(amount)
+		weakened = max(max(weakened,getResistedLoss(amount)),0)
+		update_canmove()	//updates lying, canmove and icons
+	return
+
+/mob/living/carbon/human/SetWeakened(amount)
+	if(status_flags & CANWEAKEN)
+		check_pa(amount)
+		weakened = max(getResistedLoss(amount),0)
+		update_canmove()	//updates lying, canmove and icons
+	return
+
+/mob/living/carbon/human/AdjustWeakened(amount)
+	if(status_flags & CANWEAKEN)
+		check_pa(amount)
+		weakened = max(weakened + getResistedLoss(amount),0)
+		update_canmove()	//updates lying, canmove and icons
+	return
+
+/mob/living/carbon/human/Paralyse(amount)
+	if(status_flags & CANPARALYSE)
+		check_pa(amount)
+		paralysis = max(max(paralysis,getResistedLoss(amount)),0)
+		update_canmove()
+	return
+
+/mob/living/carbon/human/SetParalysis(amount)
+	if(status_flags & CANPARALYSE)
+		check_pa(amount)
+		paralysis = max(getResistedLoss(amount),0)
+		update_canmove()
+	return
+
+/mob/living/carbon/human/AdjustParalysis(amount)
+	if(status_flags & CANPARALYSE)
+		check_pa(amount)
+		paralysis = max(paralysis + getResistedLoss(amount),0)
+		update_canmove()
+	return
+
+/mob/living/carbon/human/Sleeping(amount)
+	check_pa(amount)
+	sleeping = max(max(sleeping,getResistedLoss(amount)),0)
+	update_canmove()
+	return
+
+/mob/living/carbon/human/SetSleeping(amount)
+	check_pa(amount)
+	sleeping = max(getResistedLoss(amount),0)
+	update_canmove()
+	return
+
+/mob/living/carbon/human/AdjustSleeping(amount)
+	check_pa(amount)
+	sleeping = max(sleeping + getResistedLoss(amount),0)
+	update_canmove()
+	return

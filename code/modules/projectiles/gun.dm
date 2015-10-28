@@ -136,7 +136,17 @@
 		return 0
 
 	var/obj/item/weapon/gun/offhand/O = user.get_inactive_hand()
-	if(two_handed && !istype(O))
+	var/two_handed_check = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.head && istype(H.head, /obj/item/clothing/head/helmet/space/pa))
+			var/obj/item/clothing/head/helmet/space/pa/helmet = H.head
+			if(helmet.activated)
+				two_handed_check = 0
+				if(!istype(O))
+					helmet.drain_power(55)
+
+	if(two_handed_check && two_handed && !istype(O))
 		user << "<span class='warning'>You must grab the [name] with both hands in order to fire.</span>"
 		return 0
 

@@ -20,21 +20,22 @@
 	var/selected_category
 	var/screen = 1
 
-	var/tokens = 0
+	var/tokens = 1
 
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
 	var/list/categories = list(
 							//"M4A3 Service Pistol",
 							"VP78 Pistol",
-							"M37A2 Pump Shotgun",
+							"Shotgun",
 							"M39 Submachine Gun",
 							"M41A Pulse Rifle MK2",
 							"M59B Smartgun",
 							"M42C Rifle",
 							"M-6B Rocket Launcher",
 							"Mods and Special",
-							"Planetary Scanner"
+							"Planetary Scanner",
+							"Power Armor"
 							)
 
 var/datum/researchable_upgrades/current_marine_upgrades = new /datum/researchable_upgrades()

@@ -34,16 +34,34 @@
 		var/list/upgrade = list(/obj/item/ammo_box/magazine/vp78 = 10)
 		V.build_inventory(upgrade)
 
-//M37A2 Pump Shotgun
+//Shotgun
+/datum/upgrade/shotcom
+	name = "Combat Shotgun"
+	desc = "Totally legal."
+	id = "shotcom"
+	category = list("Shotgun")
+
+	vendor = "ColMarWeap"
+
+	research_time = 240
+	cost = 2
+	maxlevel = 1
+
+/datum/upgrade/shotcom/on_level()
+	for(var/obj/machinery/vending/marine/weapons/V in world)
+		var/list/upgrade = list(/obj/item/weapon/gun/projectile/shotgun/combat = 5)
+		V.build_inventory(upgrade)
+
 /datum/upgrade/m37_flec
 	name = "12 gauge flechette shells"
 	desc = "Provides highest damage against unarmored targets and better accuracy than buckshot. Worst against armor."
 	id = "m37_flec"
-	category = list("M37A2 Pump Shotgun")
+	category = list("Shotgun")
 
 	vendor = "ColMarAmmo"
 
 	research_time = 240
+	cost = 2
 	maxlevel = 1
 
 /datum/upgrade/m37_flec/on_level()
@@ -55,7 +73,7 @@
 	name = "12 gauge slug shells"
 	desc = "Highest accuracy and penetration just for your shotgun."
 	id = "m37_slug"
-	category = list("M37A2 Pump Shotgun")
+	category = list("Shotgun")
 
 	vendor = "ColMarAmmo"
 
@@ -145,7 +163,7 @@
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m59b_harn
-	name = "Combat Harness and Battery."
+	name = "Combat Harness, Battery and HMS"
 	desc = "Armor that required for smartgun functionality. Provides better protection than regular armor."
 	desc_req = "M59B research required."
 	id = "m59b_harn"
@@ -162,27 +180,9 @@
 	for(var/obj/machinery/vending/marine/equipment/V in world)
 		var/list/upgrade = list(
 								/obj/item/clothing/suit/storage/marine2/harness = 2,
+								/obj/item/clothing/glasses/hms = 2,
 								/obj/item/weapon/stock_parts/cell/harness_cell = 20
 								)
-		V.build_inventory(upgrade)
-
-/datum/upgrade/m59b_head
-	name = "HMS"
-	desc = "A Head Mounted Sight which highlights any treats. Can detect targets even underground at close range."
-	desc_req = "Combat Harness research required."
-	id = "m59b_head"
-	category = list("M59B Smartgun")
-
-	vendor = "ColMarEquip"
-
-	research_time = 150
-	maxlevel = 1
-	req_upgrade = "m59b_harn"
-	req_upgrade_level = 1
-
-/datum/upgrade/m59b_head/on_level()
-	for(var/obj/machinery/vending/marine/equipment/V in world)
-		var/list/upgrade = list(/obj/item/clothing/glasses/hms = 2)
 		V.build_inventory(upgrade)
 
 //"M42C Rifle"
@@ -340,7 +340,7 @@
 	vendor = "ColMarAmmo"
 
 	research_time = 300
-	cost = 2
+	cost = 1
 	maxlevel = 1
 
 /datum/upgrade/gr_frag/on_level()
@@ -395,3 +395,23 @@
 
 /datum/upgrade/p_scn_acc/on_level()
 	planscan_accurate = 1
+
+/datum/upgrade/adv_pa
+	name = "Advanced Power Armor"
+	desc = "Produce two sets."
+	id = "adv_pa"
+	category = list("Power Armor")
+
+	vendor = "skip"
+
+	research_time = 500
+	cost = 4
+	maxlevel = 1
+
+/datum/upgrade/adv_pa/on_level()
+	var/obj/machinery/upgrade_station/US = locate(/obj/machinery/upgrade_station) in world
+	if(US)
+		new /obj/item/clothing/head/helmet/space/pa(US.loc)
+		new /obj/item/clothing/suit/space/pa(US.loc)
+		new /obj/item/clothing/head/helmet/space/pa(US.loc)
+		new /obj/item/clothing/suit/space/pa(US.loc)
