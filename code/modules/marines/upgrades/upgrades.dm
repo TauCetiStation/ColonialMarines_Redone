@@ -405,7 +405,7 @@
 	vendor = "skip"
 
 	research_time = 500
-	cost = 4
+	cost = 5
 	maxlevel = 1
 
 /datum/upgrade/adv_pa/on_level()
