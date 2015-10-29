@@ -90,52 +90,89 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	var/squad = 0
 	var/rank = 0
 	var/image/markingoverlay
+	var/obj/machinery/camera/portable/helmetCam = null
 
-	proc/get_squad(var/obj/item/weapon/card/id/card)
-		rank = 0
-		squad = 0
-		if(!card)
+/obj/item/clothing/head/helmet/marine2/New(loc)
+	..(loc)
+
+/obj/item/clothing/head/helmet/marine2/attackby(var/obj/item/A as obj, mob/user as mob, params)
+	if(istype(A, /obj/item/weapon/camera_assembly))
+		if(helmetCam)
+			user << "<span class='notice'>[src] already has a mounted camera.</span>"
 			return
-		if(findtext(card.assignment, "Leader") != 0)
-			rank = 1
-		if(findtext(card.assignment, "Alpha") != 0)
-			squad = 1
-		if(findtext(card.assignment, "Bravo") != 0)
-			squad = 2
-		if(findtext(card.assignment, "Charlie") != 0)
-			squad = 3
-		if(findtext(card.assignment, "Delta") != 0)
-			squad = 4
+		user.drop_item()
+		helmetCam = new /obj/machinery/camera/portable(src)
+		helmetCam.assembly = A
+		A.loc = helmetCam
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
+		helmetCam.network = list("Sulaco")
+		user.visible_message("[user] attaches [A] to [src].","<span class='notice'>You attach [A] to [src].</span>")
+		update_icon()
 		return
 
-	proc/update_helmet(var/obj/item/weapon/card/id/card = null)
-		if(!card)
-			if(wornby && wornby.wear_id)
-				card = wornby.wear_id
-		get_squad(card)
+	if(istype(A, /obj/item/weapon/crowbar))
+		if(!helmetCam)
+			..()
+			return
+		helmetCam.assembly.loc = get_turf(src)
+		helmetCam.assembly = null
+		qdel(helmetCam)
+		helmetCam = null
+		user.visible_message("[user] removes [helmetCam] from [src].","<span class='notice'>You remove [helmetCam] from [src].</span>")
+		update_icon()
+		return
+
+/obj/item/clothing/head/helmet/marine2/proc/get_squad(var/obj/item/weapon/card/id/card)
+	rank = 0
+	squad = 0
+	if(!card)
+		return
+	if(findtext(card.assignment, "Leader") != 0)
+		rank = 1
+	if(findtext(card.assignment, "Alpha") != 0)
+		squad = 1
+	if(findtext(card.assignment, "Bravo") != 0)
+		squad = 2
+	if(findtext(card.assignment, "Charlie") != 0)
+		squad = 3
+	if(findtext(card.assignment, "Delta") != 0)
+		squad = 4
+	return
+
+/obj/item/clothing/head/helmet/marine2/equipped(mob/living/carbon/human/user, slot)
+	if(slot == slot_head)
+		if(helmetCam)
+			helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
+
+		wornby = user
+		update_helmet()
+
+/obj/item/clothing/head/helmet/marine2/unequipped(mob/living/carbon/human/user)
+	if(user.head != src)
+		if(helmetCam)
+			helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])" 
+
+		if(istype(markingoverlay) && markingoverlay in user.overlays_standing)
+			user.overlays_standing.Remove(markingoverlay)
+		user.update_icons()
+		wornby = null
 		update_icon()
 
-	New(loc)
-		..(loc)
-
-	equipped(var/mob/living/carbon/human/mob, slot)
-		if(slot == slot_head)
-			wornby = mob
-			update_helmet()
-			if(istype(markingoverlay))
-				mob.overlays_standing += markingoverlay
-		else
-			if(istype(markingoverlay) && markingoverlay in mob.overlays_standing)
-				mob.overlays_standing.Remove(markingoverlay)
-
-	dropped(var/mob/living/carbon/human/mob)
-		if(istype(markingoverlay) && markingoverlay in mob.overlays_standing)
-			mob.overlays_standing.Remove(markingoverlay)
-
+/obj/item/clothing/head/helmet/marine2/proc/update_helmet(var/obj/item/weapon/card/id/card = null)
+	if(!card)
+		if(wornby && wornby.wear_id)
+			card = wornby.wear_id
+	get_squad(card)
 	update_icon()
-		overlays = list() //resets list
-		underlays = list()
 
+/obj/item/clothing/head/helmet/marine2/update_icon()
+	overlays = list() //resets list
+	underlays = list()
+
+	if(helmetCam)
+		overlays += "cam" //"helmet-cam"
+
+	if(wornby)
 		if(istype(markingoverlay) && markingoverlay in wornby.overlays_standing)
 			wornby.overlays_standing.Remove(markingoverlay)
 
@@ -149,7 +186,6 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 				overlays += markingoverlay
 				wornby.overlays_standing += markingoverlay
 		wornby.update_icons()
-
 
 
 /obj/item/clothing/suit/storage/marine2
@@ -173,53 +209,53 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	var/rank = 0
 	var/image/markingoverlay
 
-	proc/get_squad(var/obj/item/weapon/card/id/card)
-		rank = 0
-		squad = 0
-		if(!card)
-			return
-		if(findtext(card.assignment, "Leader") != 0)
-			rank = 1
-		if(findtext(card.assignment, "Alpha") != 0)
-			squad = 1
-		if(findtext(card.assignment, "Bravo") != 0)
-			squad = 2
-		if(findtext(card.assignment, "Charlie") != 0)
-			squad = 3
-		if(findtext(card.assignment, "Delta") != 0)
-			squad = 4
-		return
+/obj/item/clothing/suit/storage/marine2/New(loc)
+	..(loc)
+	icon_state = "[rand(1,6)]"
+	item_state = icon_state
 
-	proc/update_armor(var/obj/item/weapon/card/id/card = null)
-		if(!card)
-			if(wornby && wornby.wear_id)
-				card = wornby.wear_id
-		get_squad(card)
+/obj/item/clothing/suit/storage/marine2/proc/get_squad(var/obj/item/weapon/card/id/card)
+	rank = 0
+	squad = 0
+	if(!card)
+		return
+	if(findtext(card.assignment, "Leader") != 0)
+		rank = 1
+	if(findtext(card.assignment, "Alpha") != 0)
+		squad = 1
+	if(findtext(card.assignment, "Bravo") != 0)
+		squad = 2
+	if(findtext(card.assignment, "Charlie") != 0)
+		squad = 3
+	if(findtext(card.assignment, "Delta") != 0)
+		squad = 4
+	return
+
+/obj/item/clothing/suit/storage/marine2/equipped(mob/living/carbon/human/user, slot)
+	if(slot == slot_wear_suit)
+		wornby = user
+		update_armor()
+
+/obj/item/clothing/suit/storage/marine2/unequipped(mob/living/carbon/human/user)
+	if(user.wear_suit != src)
+		if(istype(markingoverlay) && markingoverlay in user.overlays_standing)
+			user.overlays_standing.Remove(markingoverlay)
+		user.update_icons()
+		wornby = null
 		update_icon()
 
-	New(loc)
-		..(loc)
-		icon_state = "[rand(1,6)]"
-		item_state = icon_state
-
-	equipped(var/mob/living/carbon/human/mob, slot)
-		if(slot == slot_wear_suit)
-			wornby = mob
-			update_armor()
-			if(istype(markingoverlay))
-				mob.overlays_standing += markingoverlay
-		else
-			if(istype(markingoverlay) && markingoverlay in mob.overlays_standing)
-				mob.overlays_standing.Remove(markingoverlay)
-
-	dropped(var/mob/living/carbon/human/mob)
-		if(istype(markingoverlay) && markingoverlay in mob.overlays_standing)
-			mob.overlays_standing.Remove(markingoverlay)
-
+/obj/item/clothing/suit/storage/marine2/proc/update_armor(var/obj/item/weapon/card/id/card = null)
+	if(!card)
+		if(wornby && wornby.wear_id)
+			card = wornby.wear_id
+	get_squad(card)
 	update_icon()
-		overlays = list() //resets list
-		underlays = list()
 
+/obj/item/clothing/suit/storage/marine2/update_icon()
+	overlays = list() //resets list
+	underlays = list()
+
+	if(wornby)
 		if(istype(markingoverlay) && markingoverlay in wornby.overlays_standing)
 			wornby.overlays_standing.Remove(markingoverlay)
 
@@ -234,23 +270,33 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 				wornby.overlays_standing += markingoverlay
 		wornby.update_icons()
 
-/obj/item/weapon/card/id/equipped(var/mob/living/carbon/human/mob, slot)
+/obj/item/weapon/card/id/equipped(mob/living/carbon/human/user, slot)
 	if(slot == slot_wear_id)
-		if(mob.wear_suit && istype(mob.wear_suit, /obj/item/clothing/suit/storage/marine2))
-			var/obj/item/clothing/suit/storage/marine2/armor = mob.wear_suit
+		if(user.wear_suit && istype(user.wear_suit, /obj/item/clothing/suit/storage/marine2))
+			var/obj/item/clothing/suit/storage/marine2/armor = user.wear_suit
+			armor.wornby = user
 			armor.update_armor(src)
-		if(mob.head && istype(mob.head, /obj/item/clothing/head/helmet/marine2))
-			var/obj/item/clothing/head/helmet/marine2/helmet = mob.head
+		if(user.head && istype(user.head, /obj/item/clothing/head/helmet/marine2))
+			var/obj/item/clothing/head/helmet/marine2/helmet = user.head
+			helmet.wornby = user
 			helmet.update_helmet(src)
 
-/obj/item/weapon/card/id/dropped(var/mob/living/carbon/human/mob)
-	if(!mob.wear_id)
-		if(mob.wear_suit && istype(mob.wear_suit, /obj/item/clothing/suit/storage/marine2))
-			var/obj/item/clothing/suit/storage/marine2/armor = mob.wear_suit
-			armor.update_icon()
-		if(mob.head && istype(mob.head, /obj/item/clothing/head/helmet/marine2))
-			var/obj/item/clothing/head/helmet/marine2/helmet = mob.head
-			helmet.update_icon()
+/obj/item/weapon/card/id/unequipped(mob/living/carbon/human/user)
+	if(user.wear_id != src)
+		if(user.wear_suit && istype(user.wear_suit, /obj/item/clothing/suit/storage/marine2))
+			var/obj/item/clothing/suit/storage/marine2/armor = user.wear_suit
+			if(istype(armor.markingoverlay) && armor.markingoverlay in user.overlays_standing)
+				user.overlays_standing.Remove(armor.markingoverlay)
+			user.update_icons()
+			armor.wornby = null
+			armor.update_armor(src)
+		if(user.head && istype(user.head, /obj/item/clothing/head/helmet/marine2))
+			var/obj/item/clothing/head/helmet/marine2/helmet = user.head
+			if(istype(helmet.markingoverlay) && helmet.markingoverlay in user.overlays_standing)
+				user.overlays_standing.Remove(helmet.markingoverlay)
+			user.update_icons()
+			helmet.wornby = null
+			helmet.update_helmet(src)
 
 //Power Armor
 /obj/item/clothing/glasses/power_armor

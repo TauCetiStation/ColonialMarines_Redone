@@ -960,6 +960,7 @@
 		power_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e40000'>[power]</font></div>"
 
 /obj/item/clothing/suit/storage/marine2/harness/equipped(mob/living/carbon/human/user, slot)
+	..()
 	if(istype(user) && user.client && slot == slot_wear_suit)
 		user.client.screen += power_counter
 
@@ -968,6 +969,7 @@
 		for(var/obj/screen/S in user.client.screen)
 			if(S.name == "power")
 				user.client.screen.Remove(S)
+	..()
 
 //M-6B Rocket Launcher
 /obj/item/weapon/gun/projectile/rocket/m6b
