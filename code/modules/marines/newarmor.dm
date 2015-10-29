@@ -373,6 +373,9 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	var/obj/screen/power_counter
 	var/obj/screen/health_counter
 
+/obj/screen
+	var/text_color = "#ffffff"
+
 /obj/item/clothing/head/helmet/space/pa/New()
 	..()
 	SSobj.processing |= src
@@ -382,6 +385,7 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	power_counter.name = "power_c"
 	power_counter.screen_loc = "CENTER+1,CENTER+1"
 	power_counter.layer = 20
+	power_counter.text_color = "#00ff00"
 
 	health_counter = new /obj/screen()
 	health_counter.name = "health_c"
@@ -419,12 +423,12 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 				deactivate(H)
 			else if(nuclear_cell.charge)
 				nuclear_cell.charge = max(0, nuclear_cell.charge - (drain_power * (visor.vision ? visor.vision * 3 : 1)))
-				if(activated)
-					update_counters()
 			else
 				deactivate(H)
 	else
+		power_counter.text_color = "#00ff00"
 		nuclear_cell.charge = min(nuclear_cell.maxcharge, nuclear_cell.charge + 150)
+	update_counters()
 
 /obj/item/clothing/head/helmet/space/pa/ui_action_click()
 	switch_power()
@@ -454,25 +458,33 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	H.sleeping = 0
 
 	var/obj/item/clothing/suit/space/pa/armor = H.wear_suit
+	equip_visor()
 	armor.slowdown = 2
 
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	var/image/overlay = image('icons/mob/head.dmi', icon_state = "pa_helm_over", layer = 16)
 	H.overlays_standing += overlay
 
-	overlay = image('icons/obj/clothing/hats.dmi', icon_state = "pa_helm_over", layer = 16)
-	overlays += overlay
-
 	overlay = image('icons/mob/suit.dmi', icon_state = "pa_suit_over", layer = 16)
 	H.overlays_standing += overlay
 	H.update_icons()
 
-	overlay = image('icons/obj/clothing/suits.dmi', icon_state = "pa_suit_over", layer = 16)
-	armor.overlays += overlay
-
-	H.client.screen += power_counter
 	H.client.screen += health_counter
+	power_counter.text_color = "#ff0000"
 	update_counters()
+
+/obj/item/clothing/head/helmet/space/pa/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(user.client && slot == slot_head)
+		user.client.screen += power_counter
+		update_counters()
+
+/obj/item/clothing/head/helmet/space/pa/unequipped(mob/living/carbon/human/user)
+	if(user.client && user.head != src)
+		for(var/obj/screen/S in user.client.screen)
+			if(S.name == "power_c")
+				user.client.screen.Remove(S)
+	..()
 
 /obj/item/clothing/head/helmet/space/pa/proc/deactivate(mob/living/carbon/human/H)
 	if(!activated) return
@@ -491,21 +503,18 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	for(var/image/I in H.overlays_standing)
 		if(I.icon_state == "pa_helm_over" || I.icon_state == "pa_suit_over")
 			H.overlays_standing.Remove(I)
-	for(var/image/I in overlays)
-		if(I.icon_state == "pa_helm_over" || I.icon_state == "pa_suit_over")
-			overlays.Remove(I)
 
 	H.update_icons()
 
 	for(var/obj/screen/S in H.client.screen)
-		if(S.name == "power_c" || S.name == "health_c")
+		if(S.name == "health_c")
 			H.client.screen.Remove(S)
 
 /obj/item/clothing/head/helmet/space/pa/proc/update_counters()
 	if(power_counter)
 		var/power = 0
 		power = nuclear_cell.charge * 100 / nuclear_cell.maxcharge
-		power_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(power)]</font></div>"
+		power_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[power_counter.text_color]'>[round(power)]</font></div>"
 
 	if(health_counter && ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -526,14 +535,17 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 		if(H.head == src)
 			if(!(H.glasses))
 				if(istype(H.wear_suit, /obj/item/clothing/suit/space/pa))
-					equip_visor()
+					var/fail = 1
 					var/obj/item/clothing/suit/space/pa/armor = H.wear_suit
 					armor.flags |= NODROP
 					src.flags |= NODROP
 					if(do_mob(H,H, 200))
-						activate(H)
-					else
-						remove_visor()
+						if(!(H.glasses))
+							activate(H)
+							fail = 0
+						else
+							H << "Error... Remove glasses."
+					if(fail)
 						armor.flags &= ~NODROP
 						src.flags &= ~NODROP
 						H << "Activation interrupted."
