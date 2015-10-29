@@ -425,6 +425,9 @@
 /obj/machinery/marines/gun_turret/proc/firing()
 	firing = 1
 	while(cur_target)
+		if(state == 2)
+			cur_target = null
+			return
 		if(!ammo)
 			cur_target = null
 			return
