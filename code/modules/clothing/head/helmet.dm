@@ -10,10 +10,13 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	strip_delay = 60
-	burn_state = -1 //Won't burn in fires
 	flags_cover = HEADCOVERSEYES
-
+	strip_delay = 60
+	health = 5
+	burn_state = -1 //Won't burn in fires
+	var/obj/machinery/camera/portable/helmetCam = null
+	var/spawnWithHelmetCam = 0
+	var/canAttachCam = 0
 
 /obj/item/clothing/head/helmet/New()
 	..()
@@ -21,7 +24,17 @@
 /obj/item/clothing/head/helmet/emp_act(severity)
 	..()
 
+/obj/item/clothing/head/helmet/New()
+	..()
+	if(spawnWithHelmetCam)
+		helmetCam = new /obj/machinery/camera/portable(src)
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
+		helmetCam.c_tag = list("SS13")
+		update_icon()
+
 /obj/item/clothing/head/helmet/sec
+	spawnWithHelmetCam = 1
+	canAttachCam = 1
 	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/alt
@@ -47,7 +60,6 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	health = 5
 
 /obj/item/clothing/head/helmet/attack_self()
 	if(usr.canmove && !usr.stat && !usr.restrained() && can_toggle)
@@ -82,7 +94,7 @@
 	can_toggle = 1
 	toggle_cooldown = 20
 	active_sound = 'sound/items/WEEOO1.ogg'
-	
+
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
@@ -171,6 +183,8 @@
 /obj/item/clothing/head/helmet/update_icon()
 
 	var/state = "[initial(icon_state)]"
+	if(helmetCam)
+		state += "-cam" //"helmet-cam"
 	if(F)
 		if(F.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
@@ -181,7 +195,7 @@
 
 	if(istype(loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
+		H.update_inv_head(0)
 
 	return
 
@@ -189,13 +203,12 @@
 	toggle_helmlight()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(obj/item/A, mob/user, params)
+/obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
 			if(!F)
-				if(!user.unEquip(A))
-					return
+				user.drop_item()
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
@@ -215,9 +228,39 @@
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()
-				usr.update_inv_head()
+				usr.update_inv_head(0)
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
 			return
+
+
+	if(istype(A, /obj/item/weapon/camera_assembly))
+		if(!canAttachCam)
+			user << "<span class='warning'>You can't attach [A] to [src]!</span>"
+			return
+		if(helmetCam)
+			user << "<span class='notice'>[src] already has a mounted camera.</span>"
+			return
+		user.drop_item()
+		helmetCam = new /obj/machinery/camera/portable(src)
+		helmetCam.assembly = A
+		A.loc = helmetCam
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
+		helmetCam.c_tag = list("SS13")
+		update_icon()
+		user.visible_message("[user] attaches [A] to [src].","<span class='notice'>You attach [A] to [src].</span>")
+		return
+
+	if(istype(A, /obj/item/weapon/crowbar))
+		if(!helmetCam)
+			..()
+			return
+		user.visible_message("[user] removes [helmetCam] from [src].","<span class='notice'>You remove [helmetCam] from [src].</span>")
+		helmetCam.assembly.loc = get_turf(src)
+		helmetCam.assembly = null
+		qdel(helmetCam)
+		helmetCam = null
+		update_icon()
+		return
 
 	..()
 	return
@@ -240,7 +283,7 @@
 	update_helmlight(user)
 	return
 
-/obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
+/obj/item/clothing/head/helmet/proc/update_helmlight(var/mob/user = null)
 	if(F)
 		action_button_name = "Toggle Helmetlight"
 		if(F.on)
@@ -269,8 +312,16 @@
 			SetLuminosity(0)
 
 
+/obj/item/clothing/head/helmet/equipped(mob/user)
+	if(helmetCam)
+		spawn(10) //Gives time for the game to set a name (lol rhyme) to roundstart officers.
+			helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
+
 /obj/item/clothing/head/helmet/dropped(mob/user)
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+	if(helmetCam)
+		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"

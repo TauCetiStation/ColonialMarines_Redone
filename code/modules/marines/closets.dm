@@ -58,6 +58,7 @@
 	new /obj/item/clothing/suit/storage/marine(src)
 	new /obj/item/weapon/storage/belt/marine(src)
 	new /obj/item/weapon/storage/belt/marine(src)
+	new /obj/item/weapon/storage/box/helmet_cameras(src)
 	return
 
 
