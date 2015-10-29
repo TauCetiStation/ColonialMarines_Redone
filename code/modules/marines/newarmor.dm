@@ -401,6 +401,11 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	activated = 1
 
 	H.status_resistance = 100
+	H.staminaloss = 0
+	H.stunned = 0
+	H.weakened = 0
+	H.paralysis = 0
+	H.sleeping = 0
 
 	var/obj/item/clothing/suit/space/pa/armor = H.wear_suit
 	armor.slowdown = 2
