@@ -267,10 +267,10 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	name = "Critical Finisher"
 	desc = "<xeno>Critical Finisher</xeno><br>Regenerate some health and armor after head bite."
 	desc_level = list(
-					1 = "Regenerate <statp>10</statp>% health and <statp>20</statp>% armor from a maximum.",
-					2 = "Regenerate <statp>20</statp>% health and <statp>30</statp>% armor from a maximum.",
-					3 = "Regenerate <statp>40</statp>% health and <statp>40</statp>% armor from a maximum.<br>Decrease ability execution time by <statp>1</statp> second.",
-					4 = "Regenerate <statc>40</statc>% health and <statc>40</statc>% armor from a maximum.<br>Decrease ability execution time by <statc>1</statc> second.")
+					1 = "Regenerate <statp>30</statp>% health and <statp>30</statp>% armor from a maximum.",
+					2 = "Regenerate <statp>40</statp>% health and <statp>40</statp>% armor from a maximum.",
+					3 = "Regenerate <statp>50</statp>% health and <statp>50</statp>% armor from a maximum.<br>Decrease ability execution time by <statp>1</statp> second.",
+					4 = "Regenerate <statc>50</statc>% health and <statc>50</statc>% armor from a maximum.<br>Decrease ability execution time by <statc>1</statc> second.")
 	id = "h_fin"
 
 	tier = 1
@@ -282,11 +282,11 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 /datum/evolution/hive/finisher/on_level()
 	switch(level)
 		if(1)
-			x_stats.h_finisher = 0.20
-		if(2)
 			x_stats.h_finisher = 0.30
-		if(3)
+		if(2)
 			x_stats.h_finisher = 0.40
+		if(3)
+			x_stats.h_finisher = 0.50
 			x_stats.h_finisher_cd = 10
 	..()
 

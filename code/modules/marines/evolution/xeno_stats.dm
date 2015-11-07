@@ -86,7 +86,7 @@
 	var/h_sixsense = 0
 	var/h_true_sight = 0
 	var/h_carapace = 200
-	var/h_finisher = 0
+	var/h_finisher = 0.20
 	var/h_finisher_cd = 0
 	var/h_facehugger = 0
 

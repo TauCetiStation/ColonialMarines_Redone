@@ -220,7 +220,7 @@
 						if(do_after(user, 30-x_stats.h_finisher_cd, target = affecting))
 							victim.head_bitten = 1
 							victim.adjustBruteLoss(300)
-							user.visible_message("<span class='danger'>[user] has bitten [affecting] in the head!</span>")
+							user.visible_message("<span class='danger'>[user] bites [affecting] in the head!</span>")
 							var/mob/living/carbon/alien/humanoid/attacker = user
 
 							var/a_maxHeal = attacker.maxHealth * x_stats.h_finisher
