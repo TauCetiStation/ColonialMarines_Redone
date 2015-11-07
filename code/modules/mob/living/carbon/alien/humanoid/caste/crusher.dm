@@ -15,7 +15,7 @@
 	ventcrawler = 0
 	mob_size = MOB_SIZE_LARGE
 	custom_pixel_x_offset = -18
-	var/charging = 0
+	var/cooldown = 0
 
 /mob/living/carbon/alien/humanoid/crusher/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/crusher
@@ -55,13 +55,14 @@
 /obj/effect/proc_holder/alien/crush
 	name = "Charge and Crush"
 	desc = "Charge forward."
-	plasma_cost = 100
+	plasma_cost = 0
 	action_icon_state = "crusher_charge"
 
 /obj/effect/proc_holder/alien/crush/fire(mob/living/carbon/alien/humanoid/crusher/user)
 	if(!isalien(user))
 		return 0
-	if(user.charging)
+	if(user.cooldown > world.time)
+		user << "\red Ability is cooling down!"
 		return 0
 	var/turf/T = get_turf(get_step(user,user.dir))
 	for(var/mob/living/M in T.contents)
@@ -90,9 +91,7 @@
 		//	tile.break_tile()
 		var/speed = 3
 		var/hit = 0
-		user.charging = 1
-		spawn(50)
-			user.charging = 0
+		user.cooldown = world.time + 100
 		for(var/i=0, i<30, i++)
 			user.canmove = 0
 			T = get_turf(get_step(user,user.dir))

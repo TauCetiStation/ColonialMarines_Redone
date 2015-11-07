@@ -1,6 +1,6 @@
-#define RESEARCH_T1	1200
-#define RESEARCH_T2	2400
-#define RESEARCH_T3	3600
+#define RESEARCH_T1	600
+#define RESEARCH_T2	1200
+#define RESEARCH_T3	1800
 
 #define COST_T1	5
 #define COST_T2	7
