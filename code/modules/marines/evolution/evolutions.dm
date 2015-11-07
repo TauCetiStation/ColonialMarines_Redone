@@ -3,8 +3,8 @@
 #define RESEARCH_T3	1800
 
 #define COST_T1	5
-#define COST_T2	7
-#define COST_T3	10
+#define COST_T2	10
+#define COST_T3	15
 
 var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
