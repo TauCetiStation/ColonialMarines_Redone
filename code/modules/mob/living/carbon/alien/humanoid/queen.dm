@@ -150,7 +150,7 @@ mob/living/carbon/alien/humanoid/queen/death(gibbed)
 				if(active_queen.stat == DEAD)
 					psychicstrength = round(psychicstrength / 2)
 					active_queen = null
-			sleep(50)
+			sleep(40)
 
 /var/global/datum/hive_controller/hive_controller = new()
 
