@@ -265,7 +265,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 /datum/evolution/hive/finisher
 	name = "Critical Finisher"
-	desc = "<xeno>Critical Finisher</xeno><br>Regenerate some health and armor after head bite."
+	desc = "<xeno>Critical Finisher</xeno><br>Aggressive Grab any human (dying or dead), aim in <stat>head</stat> then click yourself to bite."
 	desc_level = list(
 					1 = "Regenerate <statp>30</statp>% health and <statp>30</statp>% armor from a maximum.",
 					2 = "Regenerate <statp>40</statp>% health and <statp>40</statp>% armor from a maximum.",

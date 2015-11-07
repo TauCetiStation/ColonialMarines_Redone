@@ -220,6 +220,7 @@
 						if(do_after(user, 30-x_stats.h_finisher_cd, target = affecting))
 							victim.head_bitten = 1
 							victim.adjustBruteLoss(300)
+							playsound(affecting, 'sound/weapons/genhit3.ogg', 40, 1)
 							user.visible_message("<span class='danger'>[user] bites [affecting] in the head!</span>")
 							var/mob/living/carbon/alien/humanoid/attacker = user
 
