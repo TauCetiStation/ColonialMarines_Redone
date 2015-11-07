@@ -2,8 +2,8 @@
 
 //TODO: Make these simple_animals
 
-var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
-var/const/MAX_IMPREGNATION_TIME = 150
+var/const/MIN_IMPREGNATION_TIME = 150 //time it takes to impregnate someone
+var/const/MAX_IMPREGNATION_TIME = 200
 
 var/const/MIN_ACTIVE_TIME = 100 //time between being dropped and going idle
 var/const/MAX_ACTIVE_TIME = 200
@@ -147,10 +147,16 @@ var/const/MAX_ACTIVE_TIME = 200
 		if(Attach(user))
 			return
 	else
+		if(stat == DEAD && isalien(user))
+			if(do_after(user, 20, target = src))
+				user << "You ate a facehugger."
+				qdel(src)
+			return
+
 		var/mob/living/carbon/alien/humanoid/carrier/carr = user
 
 		if(carr && istype(carr, /mob/living/carbon/alien/humanoid/carrier))
-			if(carr.facehuggers >= 6)
+			if(carr.facehuggers >= x_stats.d_carrier_limit)
 				carr << "You can't hold anymore facehuggers. You pick it up"
 				..()
 				return
@@ -287,7 +293,7 @@ var/const/MAX_ACTIVE_TIME = 200
 		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask,,0)
 
-		if(!sterile) M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile) M.Paralyse(MAX_IMPREGNATION_TIME/8) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
 		var/mob/living/simple_animal/pet/dog/corgi/C = M
 		loc = C
@@ -297,7 +303,7 @@ var/const/MAX_ACTIVE_TIME = 200
 	GoIdle() //so it doesn't jump the people that tear it off
 	//if(!sterile)
 	//	src.flags |= NODROP
-	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
+	spawn(rand(MIN_IMPREGNATION_TIME-x_stats.h_facehugger,MAX_IMPREGNATION_TIME-x_stats.h_facehugger))
 		Impregnate(M)
 
 	return 1

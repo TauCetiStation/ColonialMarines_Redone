@@ -157,16 +157,23 @@
 					else
 						M.stop_pulling()
 
+		var/mob_original_delay = mob.movement_delay()
+		move_delay += mob_original_delay
+
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
 					move_delay += 6
+				if(mob.pulling && ismob(mob.pulling))
+					var/added_delay = 3 - (0 + mob_original_delay)
+					if(added_delay > 0)
+						move_delay += added_delay
 				move_delay += config.run_speed
 			if("walk")
-				move_delay += config.walk_speed
-
-		var/mob_original_delay = mob.movement_delay()
-		move_delay += mob_original_delay
+				if(istype(mob, /mob/living/carbon/alien/humanoid/hunter))
+					move_delay += config.walk_speed - x_stats.w_stealth
+				else
+					move_delay += config.walk_speed
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
@@ -175,6 +182,8 @@
 
 		if(world.tick_lag == 0.5)
 			mob.glide_size = get_glide(round(mob_original_delay, 0.5))
+			if(mob.pulling)
+				mob.pulling.glide_size = mob.glide_size
 		else
 			mob.glide_size = 8 //TG default
 

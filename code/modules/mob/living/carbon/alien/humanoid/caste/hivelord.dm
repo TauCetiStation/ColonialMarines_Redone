@@ -10,54 +10,17 @@
 	tacklemin = 2
 	tacklemax = 4
 	tackle_chance = 70 //Should not be above 100%
-	psychiccost = 32
 	ventcrawler = 0
 	mob_size = MOB_SIZE_LARGE
 	custom_pixel_x_offset = -16
-	//class = 3
 
 /mob/living/carbon/alien/humanoid/hivelord/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/hivelord
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/carapace/huge
+	internal_organs += new /obj/item/organ/internal/alien/acid_weak
+	internal_organs += new /obj/item/organ/internal/alien/carapace
 
-	//var/datum/reagents/R = new/datum/reagents(100)
-	//reagents = R
-	//R.my_atom = src
-	//if(src.name == "alien hivelord")
-	//	src.name = text("alien hivelord ([rand(1, 1000)])")
-	//src.real_name = src.name
-	//verbs -= /mob/living/carbon/alien/verb/ventcrawl
-
-	//verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
-	//var/matrix/M = matrix()
-	//M.Scale(0.9,0.9)
-	//src.transform = M
-	//pixel_x = -16
-	
 	..()
-
-/mob/living/carbon/alien/humanoid/hivelord/handle_hud_icons_health()
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(320 to INFINITY)
-					healths.icon_state = "health0"
-				if(256 to 320)
-					healths.icon_state = "health1"
-				if(192 to 256)
-					healths.icon_state = "health2"
-				if(128 to 192)
-					healths.icon_state = "health3"
-				if(64 to 128)
-					healths.icon_state = "health4"
-				if(0 to 64)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 //Why did i put resin doors in hivelord??? Need to move code below somewhere else later... ~Zve
 
@@ -117,7 +80,7 @@
 	else
 		return TryToSwitchState(user)
 
-/obj/structure/mineral_door/ex_act(severity = 1)
+/obj/structure/mineral_door/resin/ex_act(severity = 1)
 	switch(severity)
 		if(1)
 			Dismantle()
@@ -131,3 +94,27 @@
 			hardness -= rand(50,125)
 			CheckHardness()
 	return
+
+/mob/living/carbon/alien/humanoid/hivelord/ClickOn(var/atom/A, params)
+	face_atom(A)
+	var/list/modifiers = params2list(params)
+	if(modifiers["alt"])
+		if(isobj(A) && !src.stat && A.Adjacent(src))
+			if(istype(A, /obj/structure/alien/resin/wall) || istype(A, /obj/structure/alien/resin/membrane))
+				if(x_stats.d_hivelord_reinf)
+					var/obj/structure/alien/resin/W = A
+					if(W.can_reinforce())
+						if(getPlasma() >= 750)
+							if(do_after(src, 150, target = W))
+								if(getPlasma() >= 750)
+									src.adjustPlasma(-750)
+									new /obj/structure/alien/weeds(W.loc)
+									if(istype(W, /obj/structure/alien/resin/wall))
+										new /obj/structure/alien/resin/wall/reinforced(W.loc)
+									else if(istype(W, /obj/structure/alien/resin/membrane))
+										new /obj/structure/alien/resin/membrane/reinforced(W.loc)
+									qdel(W)
+						else
+							src << {"<span class='noticealien'>We need 750 plasma to reinforce [W.name].</span>"}
+						return
+	..()

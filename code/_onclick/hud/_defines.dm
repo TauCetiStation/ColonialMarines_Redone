@@ -93,6 +93,10 @@
 #define ui_alien_armor "EAST-1:28,CENTER-1:15"
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 #define ui_queen_locator "EAST-1:28,CENTER-3:13"
+#define ui_parasite_locator "EAST-2:28,CENTER-3:13"
+#define ui_hive_1_locator "EAST-2:28,CENTER-4:13"
+#define ui_hive_2_locator "EAST-1:28,CENTER-4:13"
+#define ui_alientreatsdisplay "EAST-1:28,CENTER-5:13"
 
 // AI
 

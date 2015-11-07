@@ -27,8 +27,6 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
-	var/psychiccost = 1
-
 /mob/living/carbon/alien/New()
 	create_reagents(1000)
 
@@ -41,6 +39,7 @@
 		I.Insert(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
+	AddAbility(new/obj/effect/proc_holder/alien/evo_menu(null))
 	..()
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
@@ -141,6 +140,7 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
+		stat(null, "Evolution Points: [x_points_controller.keys["[client.ckey]"] ? "[x_points_controller.keys["[client.ckey]"]]" : "no points"]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -152,6 +152,52 @@
 
 /mob/living/carbon/alien/getTrail()
 	return "xltrails"
+
+/mob/living/carbon/alien/start_pulling(var/atom/movable/AM)
+	if(isalienadult(AM))
+		var/mob/living/carbon/alien/humanoid/H = AM
+		if(H.health > 0)
+			src << "<span class='warning'>You can only pull xenomorphs who are in crit.</span>"
+			return
+	..()
+
+//Aimable Transfer Plasma *********************************************************
+/mob/living/carbon/alien/ClickOn(var/atom/A, params)
+	face_atom(A)
+	var/list/modifiers = params2list(params)
+	if(modifiers["alt"])
+		if(A != src && isalien(A) && get_dist(src,A) <= 1)
+			var/mob/living/carbon/alien/target = A
+			var/obj/item/organ/internal/alien/plasmavessel/PV = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+			var/obj/item/organ/internal/alien/plasmavessel/target_PV = target.getorgan(/obj/item/organ/internal/alien/plasmavessel)
+			if(PV && target_PV)
+				if(target_PV.max_plasma > 0)
+					var/amount = min(abs(round(PV.transfer_plasma_amount)), getPlasma())
+					if(amount)
+						target.adjustPlasma(amount)
+						src.adjustPlasma(-amount)
+						target << "<span class='noticealien'>[src] has transfered [amount] plasma to us.</span>"
+						src << {"<span class='noticealien'>We trasfer [amount] plasma to [target]</span>"}
+					else
+						src << "<span class='warning'>Wrong ammount to transfer. Use transfer skill to setup the amount.</span>"
+				else
+					src << "<span class='warning'>This xenomorph plasmavessel has no plasma storage.</span>"
+				return
+	if(modifiers["middle"])
+		if((isobj(A) || isturf(A)) && get_dist(src,A) <= 1 && isturf(loc))
+			var/obj/item/organ/internal/alien/IA
+			IA = getorgan(/obj/item/organ/internal/alien/acid_weak)
+			if(!IA)
+				IA = getorgan(/obj/item/organ/internal/alien/acid)
+			if(!IA)
+				IA = getorgan(/obj/item/organ/internal/alien/acid_strong)
+			if(IA)
+				for(var/obj/effect/proc_holder/alien/PHA in IA.alien_powers)
+					if(PHA && PHA.plasma_cost <= getPlasma())
+						if(PHA:corrode(A,src))
+							src.adjustPlasma(-PHA.plasma_cost)
+							return
+	..()
 
 /*----------------------------------------
 Proc: AddInfectionImages()

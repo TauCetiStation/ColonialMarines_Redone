@@ -1,70 +1,29 @@
 /mob/living/carbon/alien/humanoid/hunter
-	name = "alien hunter"
+	name = "alien warrior"
 	caste = "Hunter"
 	maxHealth = 250
 	health = 250
 	icon_state = "Hunter Walking"
 
-	var/hasJelly = 1
-	var/jellyProgress = 0
-	var/jellyProgressMax = 900
 	damagemin = 30
 	damagemax = 35
 	tacklemin = 3
 	tacklemax = 5
 	tackle_chance = 80 //Should not be above 100%
-	psychiccost = 25
-
-	Stat()
-		..()
-		stat(null, "Jelly Progress: [jellyProgress]/[jellyProgressMax]")
-	proc/growJelly()
-		spawn while(1)
-			if(hasJelly)
-				if(jellyProgress < jellyProgressMax)
-					jellyProgress = min(jellyProgress + 1, jellyProgressMax)
-			sleep(10)
-	proc/canEvolve()
-		if(!hasJelly)
-			return 0
-		if(jellyProgress < jellyProgressMax)
-			return 0
-		return 1
 
 /mob/living/carbon/alien/humanoid/hunter/New()
-	growJelly()
 	src.frozen = 1
 	spawn (50)
 		src.frozen = 0
 
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/hunter
+	AddAbility(new/obj/effect/proc_holder/alien/evolve_next(null))
 	..()
-
-/mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(250 to INFINITY)
-					healths.icon_state = "health0"
-				if(200 to 250)
-					healths.icon_state = "health1"
-				if(150 to 200)
-					healths.icon_state = "health2"
-				if(100 to 150)
-					healths.icon_state = "health3"
-				if(50 to 100)
-					healths.icon_state = "health4"
-				if(0 to 50)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 //Hunter verbs
 
 
-/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
+/mob/living/carbon/alien/humanoid/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
@@ -74,7 +33,7 @@
 		return
 
 
-/mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
+/mob/living/carbon/alien/humanoid/ClickOn(atom/A, params)
 	face_atom(A)
 	if(leap_on_click)
 		leap_at(A)
@@ -84,7 +43,11 @@
 
 #define MAX_ALIEN_LEAP_DIST 7
 
-/mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
+/mob/living/carbon/alien/humanoid/proc/leap_at(atom/A)
+	if(!x_stats.w_leap)
+		src << "<span class='alertalien'>You are unsure how to do this!</span>"
+		return
+
 	if(pounce_cooldown)
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return
@@ -106,7 +69,7 @@
 		leaping = 0
 		update_icons()
 
-/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
+/mob/living/carbon/alien/humanoid/throw_impact(atom/A)
 
 	if(!leaping)
 		return ..()
@@ -126,6 +89,10 @@
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
 			weakened = 2
+		else
+			pounce_cooldown = !pounce_cooldown
+			spawn(30) //3s by default
+				pounce_cooldown = !pounce_cooldown
 
 		if(leaping)
 			leaping = 0
@@ -137,37 +104,3 @@
 	if(leaping)
 		return
 	..()
-
-/mob/living/carbon/alien/humanoid/hunter/verb/evolve2() // -- TLE
-	set name = "Evolve (Jelly)"
-	set desc = "Evolve into a Ravager or Crusher"
-	set category = "Alien"
-	if(!hivemind_check(psychiccost))
-		src << "\red Your queen's psychic strength is not powerful enough for you to evolve further."
-		return
-	if(!canEvolve())
-		if(hasJelly)
-			src << "You are not ready to evolve yet"
-		else
-			src << "You need a mature royal jelly to evolve"
-		return
-	if(src.stat != CONSCIOUS)
-		src << "You are unable to do that now."
-		return
-	if(jellyProgress >= jellyProgressMax)
-		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Ravager","Crusher")
-
-		var/mob/living/carbon/alien/humanoid/new_xeno
-		switch(alien_caste)
-			if("Ravager")
-				new_xeno = new /mob/living/carbon/alien/humanoid/ravager(loc)
-			if("Crusher")
-				new_xeno = new /mob/living/carbon/alien/humanoid/crusher(loc)
-
-		if(mind)
-			mind.transfer_to(new_xeno)
-		qdel(src)
-		return
-	else
-		src << "\red You are not ready to evolve."
-		return

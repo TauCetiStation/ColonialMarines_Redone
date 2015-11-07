@@ -101,6 +101,10 @@ var/datum/global_hud/global_hud = new()
 	var/obj/screen/blobhealthdisplay
 	var/obj/screen/alien_plasma_display
 	var/obj/screen/locate_queen
+	var/obj/screen/locate_hive_1
+	var/obj/screen/locate_hive_2
+	var/obj/screen/alien_treats_display
+	var/obj/screen/alien/locate_parasite/parasiteicon
 	var/obj/screen/nightvisionicon
 	var/obj/screen/r_hand_hud_object
 	var/obj/screen/l_hand_hud_object

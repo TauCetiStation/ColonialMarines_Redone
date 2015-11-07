@@ -43,6 +43,9 @@
 	air_update_turf(1)
 	return
 
+/obj/structure/alien/resin/proc/can_reinforce()
+	return 0
+
 /obj/structure/alien/resin/Destroy()
 	if(our_weed && loc.density) //Destroy weed under us, only if our loc is dense (mostly walls).
 		qdel(our_weed)
@@ -64,7 +67,11 @@
 	icon_state = "wall0"	//same as resin, but consistency ho!
 	layer = 3.6
 	resintype = "wall"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+	canSmoothWith = list(
+						/obj/structure/alien/resin/wall,
+						/obj/structure/alien/resin/wall/reinforced,
+						/obj/structure/alien/resin/membrane,
+						/obj/structure/alien/resin/membrane/reinforced)
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -83,7 +90,39 @@
 	opacity = 0
 	health = 270
 	resintype = "membrane"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+	canSmoothWith = list(
+						/obj/structure/alien/resin/wall,
+						/obj/structure/alien/resin/wall/reinforced,
+						/obj/structure/alien/resin/membrane,
+						/obj/structure/alien/resin/membrane/reinforced)
+
+/obj/structure/alien/resin/wall/reinforced
+	name = "reinforced resin wall"
+	icon = 'icons/obj/smooth_structures/alien/resin_wall_reinf.dmi'
+
+/obj/structure/alien/resin/wall/reinforced/New()
+	..()
+	health *= x_stats.d_hivelord_reinf
+
+/obj/structure/alien/resin/membrane/reinforced
+	name = "reinforced resin membrane"
+	icon = 'icons/obj/smooth_structures/alien/resin_membrane_reinf.dmi'
+
+/obj/structure/alien/resin/membrane/reinforced/New()
+	..()
+	health *= x_stats.d_hivelord_reinf
+
+/obj/structure/alien/resin/wall/can_reinforce()
+	return 1
+
+/obj/structure/alien/resin/membrane/reinforced/can_reinforce()
+	return 0
+
+/obj/structure/alien/resin/membrane/can_reinforce()
+	return 1
+
+/obj/structure/alien/resin/membrane/reinforced/can_reinforce()
+	return 0
 
 /obj/structure/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -346,6 +385,15 @@
 /obj/structure/alien/weeds/node/New()
 	..(loc, src)
 
+/obj/structure/alien/weeds/node/attack_alien(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(islarva(user))
+		return
+	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	user.visible_message("<span class='danger'>[user] slices the [name] apart!</span>")
+	qdel(src)
+
 #undef NODERANGE
 
 
@@ -379,7 +427,7 @@
 /obj/structure/alien/egg/New()
 	new /obj/item/clothing/mask/facehugger(src)
 	..()
-	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+	spawn(rand(MIN_GROWTH_TIME * x_stats.q_egg_boost, MAX_GROWTH_TIME * x_stats.q_egg_boost))
 		Grow()
 
 

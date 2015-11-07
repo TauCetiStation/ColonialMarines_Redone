@@ -36,10 +36,14 @@
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
 
-	var/storedPlasma = 100
+	var/storedPlasma = 0
 	var/max_plasma = 250
 	var/heal_rate = 5
 	var/plasma_rate = 10
+
+	var/transfer_plasma_amount = 0
+
+	var/delay = 0
 
 /obj/item/organ/internal/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
@@ -47,111 +51,56 @@
 	return S
 
 /obj/item/organ/internal/alien/plasmavessel/larva
-	name = "tiny plasma vessel"
+	max_plasma = 5
+	plasma_rate = 1
 	w_class = 1
-	storedPlasma = 50
-	max_plasma = 50
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/carrier
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 50
-	max_plasma = 250
-	heal_rate = 2
-	plasma_rate = 5
 
 /obj/item/organ/internal/alien/plasmavessel/corroder
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 80
-	max_plasma = 150
-	heal_rate = 2
-	plasma_rate = 18
+	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/drone
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 350
-	max_plasma = 750
-	heal_rate = 8
-	plasma_rate = 13
 
 /obj/item/organ/internal/alien/plasmavessel/hivelord
 	name = "large plasma vessel"
 	w_class = 4
-	storedPlasma = 100
-	max_plasma = 1000
-	heal_rate = 6
-	plasma_rate = 50
 
 /obj/item/organ/internal/alien/plasmavessel/hunter
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 100
-	max_plasma = 150
-	heal_rate = 4
-	plasma_rate = 8
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/praetorian
-	name = "plasma vessel"
 	w_class = 3
-	storedPlasma = 0
-	max_plasma = 600
-	heal_rate = 5
-	plasma_rate = 10
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/ravager
-	name = "plasma vessel"
 	w_class = 3
-	storedPlasma = 50
-	max_plasma = 50
-	heal_rate = 6
-	plasma_rate = 5
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/crusher
-	name = "plasma vessel"
 	w_class = 3
-	storedPlasma = 100
-	max_plasma = 100
-	heal_rate = 9
-	plasma_rate = 10
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/runner
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 50
-	max_plasma = 100
-	heal_rate = 4
-	plasma_rate = 5
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/sentinel
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 75
-	max_plasma = 300
-	heal_rate = 6
-	plasma_rate = 7
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/spitter
-	name = "plasma vessel"
 	w_class = 2
-	storedPlasma = 150
-	max_plasma = 600
-	heal_rate = 3
-	plasma_rate = 30
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/queen
 	name = "large plasma vessel"
 	w_class = 4
-	storedPlasma = 300
 	max_plasma = 700
 	plasma_rate = 20
 
@@ -160,9 +109,7 @@
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(istype(src, /obj/item/organ/internal/alien/plasmavessel/crusher))
 			owner.adjustPlasma(plasma_rate)
-			owner.adjustBruteLoss(-heal_rate)
-			owner.adjustFireLoss(-heal_rate)
-			owner.adjustOxyLoss(-heal_rate)
+			regenerate_health()
 		else
 			if(owner.health >= owner.maxHealth - owner.getCloneLoss())
 				owner.adjustPlasma(plasma_rate)
@@ -170,9 +117,17 @@
 				var/mod = 1
 				if(!isalien(owner))
 					mod = 0.2
-				owner.adjustBruteLoss(-heal_rate*mod)
-				owner.adjustFireLoss(-heal_rate*mod)
-				owner.adjustOxyLoss(-heal_rate*mod)
+				regenerate_health(mod)
+	else if(isalien(owner) && x_stats.h_acc_regen > 0)
+		regenerate_health(x_stats.h_acc_regen)
+
+/obj/item/organ/internal/alien/plasmavessel/proc/regenerate_health(mod = 1)
+	delay--
+	if(delay <= 0)
+		delay = x_stats.h_regen
+		owner.adjustBruteLoss(-(heal_rate+x_stats.h_adv_regen)*mod)
+		owner.adjustFireLoss(-(heal_rate+x_stats.h_adv_regen)*mod)
+		owner.adjustOxyLoss(-(heal_rate+x_stats.h_adv_regen)*mod)
 
 /obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -240,27 +195,6 @@
 	origin_tech = "biotech=5;materials=2;combat=2"
 	alien_powers = list(/obj/effect/proc_holder/alien/acid_weak)
 
-/obj/item/organ/internal/alien/acid_launcher
-	name = "large acid gland"
-	zone = "mouth"
-	slot = "acidgland"
-	origin_tech = "biotech=5;materials=2;combat=2"
-	alien_powers = list(/obj/effect/proc_holder/alien/acid_launcher)
-
-/obj/item/organ/internal/alien/neurotoxin
-	name = "neurotoxin gland"
-	zone = "mouth"
-	slot = "neurotoxingland"
-	origin_tech = "biotech=5;combat=5"
-	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin)
-
-/obj/item/organ/internal/alien/neurotoxin_weak
-	name = "small neurotoxin gland"
-	zone = "mouth"
-	slot = "smallneurotoxingland"
-	origin_tech = "biotech=5;combat=5"
-	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin_weak)
-
 /obj/item/organ/internal/alien/eggsac
 	name = "egg sac"
 	zone = "groin"
@@ -269,13 +203,13 @@
 	origin_tech = "biotech=8"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)
 
-/obj/item/organ/internal/alien/royalsac
+/*/obj/item/organ/internal/alien/royalsac
 	name = "egg sac"
 	zone = "groin"
 	slot = "royalsac"
 	w_class = 4
 	origin_tech = "biotech=8"
-	alien_powers = list(/obj/effect/proc_holder/alien/lay_jelly)
+	alien_powers = list(/obj/effect/proc_holder/alien/lay_jelly)*/
 
 /obj/item/organ/internal/alien/screechcord
 	name = "vocal cord"
@@ -289,39 +223,22 @@
 	zone = "chest"
 	slot = "armor"
 	var/reduction = 20
+	var/maxHealth = 200
 	var/health = 200
 
+/obj/item/organ/internal/alien/carapace/New()
+	maxHealth = x_stats.h_carapace
+	..()
+
 /obj/item/organ/internal/alien/carapace/huge
-	name = "carapace"
-	zone = "chest"
-	slot = "armor"
 	reduction = 70
 
 /obj/item/organ/internal/alien/carapace/crusher
-	name = "carapace"
 	zone = "head"
-	slot = "armor"
 	reduction = 0
+	maxHealth = 0
 	health = 0
 	alien_powers = list(/obj/effect/proc_holder/alien/crusher_def)
-
-/obj/item/organ/internal/alien/carapace/large
-	name = "carapace"
-	zone = "chest"
-	slot = "armor"
-	reduction = 50
-
-/obj/item/organ/internal/alien/carapace/medium
-	name = "carapace"
-	zone = "chest"
-	slot = "armor"
-	reduction = 35
-
-/obj/item/organ/internal/alien/carapace/small
-	name = "carapace"
-	zone = "chest"
-	slot = "armor"
-	reduction = 20
 
 /obj/item/organ/internal/alien/digger
 	name = "armored claws"

@@ -14,7 +14,7 @@ hr
 	height: 1px;
 }
 
-a, a:link, a:visited, a:active, .linkOn, .linkOff
+a, a:link, a:visited, a:active, .linkOn, .linkOff, .linkMax
 { 
 	color: #ffffff; 
 	text-decoration: none;
@@ -60,6 +60,118 @@ a.white:hover
 	color: #ffffff; 
 	background: #999999;
 	border-color: #666666;
+}
+
+.linkMax
+{
+	color: #D00000; 
+	background: #800000;
+	border-color: #300000;
+}
+
+.skill
+{
+	position: relative;
+	width: 220px;
+}
+
+.description
+{
+	top: 40%;
+	position: fixed;
+	left: 250px;
+	width: 250px;
+}
+
+.description_table
+{
+	float: left;
+	position: relative;
+	left: 50%;
+}
+
+.description_content
+{
+	float: left;
+	position: relative;
+	left: -50%;
+}
+
+.statusDisplay .description
+{
+	display: none;
+	z-index: 20;
+	background-color: #2C0050;
+	color: white;
+	padding: 0 0.25em 0.5em;
+	text-align: center;
+	border: 1px solid #8D00FF;
+}
+
+.statusDisplayfixed
+{
+	position: fixed;
+	bottom: 0;
+	right: 8px;
+	background: #000000;
+	color: #ffffff;
+	border: 1px solid #40628a;
+	padding: 4px;
+	margin: 3px 0;
+}
+
+xeno
+{
+	font-weight: bold;
+	color: #8D00FF;
+}
+
+stat
+{
+	font-weight: bold;
+	color: #00A000;
+}
+
+statc
+{
+	font-weight: bold;
+	color: #ffa200;
+}
+
+statp
+{
+	font-weight: bold;
+	color: #00ff00;
+}
+
+.linkOff:hover .description
+{
+	display: block;
+}
+
+.linkOff:hover .description:hover
+{
+	display: none;
+}
+
+.linkMax:hover .description
+{
+	display: block;
+}
+
+.linkMax:hover .description:hover
+{
+	display: none;
+}
+
+a:hover .description
+{
+	display: block;
+}
+
+a:hover .description:hover
+{
+	display: none;
 }
 
 a.icon, .linkOn.icon, .linkOff.icon
@@ -119,6 +231,15 @@ h3
 h4
 {
 	font-size: 12px;
+}
+
+.title
+{
+	font-size: 14px;
+	font-weight: bold;
+	background: #2C0050;
+	text-align: center;
+	color: #8D00FF;
 }
 
 .uiWrapper

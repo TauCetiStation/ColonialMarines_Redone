@@ -11,7 +11,7 @@
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	. = ..()
-	. += 3
+	. += 3 - x_stats.q_move_speed
 
 /mob/living/carbon/alien/humanoid/hivelord/movement_delay()
 	. = ..()
@@ -43,7 +43,7 @@
 	. += */
 
 /mob/living/carbon/alien/humanoid/ravager/movement_delay()
-	. = -0.5
+	. = -0.5 + speed_bonus
 	. += ..()
 
 /*/mob/living/carbon/alien/humanoid/sentinel/movement_delay()

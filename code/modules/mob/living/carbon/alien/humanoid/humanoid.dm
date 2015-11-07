@@ -10,6 +10,7 @@
 	var/pounce_cooldown_time = 100
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
+	var/evolving = 0
 
 	var/damagemin = 10
 	var/damagemax = 19
@@ -23,9 +24,30 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
-	AddAbility(new/obj/effect/proc_holder/alien/unweld_vent(null))
+	update_stats()
+
+	//AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	..()
+
+/mob/living/carbon/alien/humanoid/proc/update_stats(alive=0)
+	var/datum/xeno_stats/XS = x_stats.FindCaste(caste)
+	if(XS)
+		maxHealth = XS.max_health["base"]
+		if(!alive)
+			health = XS.max_health["base"]
+		var/obj/item/organ/internal/alien/carapace/Armor = getorgan(/obj/item/organ/internal/alien/carapace)
+		if(Armor)
+			Armor.reduction = XS.armor["base"]
+		var/obj/item/organ/internal/alien/plasmavessel/PV = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+		if(PV)
+			PV.heal_rate = XS.heal_rate["base"]
+			PV.max_plasma = XS.max_plasma["base"]
+			PV.plasma_rate = XS.plasma_rate["base"]
+		damagemin = XS.damage_min["base"]
+		damagemax = XS.damage_max["base"]
+		tacklemin = XS.tackle_min["base"]
+		tacklemax = XS.tackle_max["base"]
+		tackle_chance = XS.tackle_chance["base"]
 
 /mob/living/carbon/alien/humanoid/getarmor(def_zone, type)
 	var/obj/item/organ/internal/alien/carapace/armor = getorgan(/obj/item/organ/internal/alien/carapace)
@@ -158,3 +180,147 @@
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
+
+/mob/living/carbon/alien/humanoid/proc/get_evolve_choices()
+	switch(caste)
+		if("Drone")
+			return list("Digger")
+		if("Digger")
+			return list("Carrier","Hivelord")
+		if("Sentinel")
+			return list("Spitter")
+		if("Spitter")
+			return list("Corroder","Praetorian")
+		if("Runner")
+			return list("Hunter")
+		if("Hunter")
+			return list("Crusher","Ravager")
+		else
+			return list("No choice")
+
+/mob/living/carbon/alien/humanoid/proc/get_evolve_cost(caste)
+	switch(caste)
+		if("Digger","Spitter","Hunter")
+			return 20
+		if("Carrier","Corroder","Crusher")
+			return 40
+		if("Hivelord","Praetorian","Ravager")
+			return 50
+
+/mob/living/carbon/alien/humanoid/proc/check_current_caste(caste, chosen_caste)
+	switch(chosen_caste)
+		if("Carrier","Hivelord")
+			if(caste == "Digger")
+				return 1
+		if("Digger")
+			if(caste == "Drone")
+				return 1
+		if("Spitter")
+			if(caste == "Sentinel")
+				return 1
+		if("Corroder","Praetorian")
+			if(caste == "Spitter")
+				return 1
+		if("Hunter")
+			if(caste == "Runner")
+				return 1
+		if("Crusher","Ravager")
+			if(caste == "Hunter")
+				return 1
+	return 0
+
+/mob/living/carbon/alien/humanoid/proc/is_lifeform_avail(mob/user, caste)
+	switch(caste)
+		if("Digger")
+			if(x_stats.d_digger)
+				return 1
+		if("Carrier")
+			if(x_stats.d_carrier)
+				return 1
+		if("Hivelord")
+			if(x_stats.d_hivelord)
+				return 1
+		if("Spitter")
+			if(x_stats.s_spitter)
+				return 1
+		if("Corroder")
+			if(x_stats.s_corroder)
+				return 1
+		if("Praetorian")
+			if(x_stats.s_praetorian)
+				return 1
+		if("Hunter")
+			if(x_stats.w_hunter)
+				return 1
+		if("Crusher")
+			if(x_stats.w_crusher)
+				return 1
+		if("Ravager")
+			if(x_stats.w_ravager)
+				return 1
+	user << "<span class='noticealien'>[caste] lifeform is unavailable. Queen may open it.</span>"
+	return 0
+
+/mob/living/carbon/alien/humanoid/proc/do_evolve(new_caste)
+	if(evolving) return
+	anchored = 1
+	evolving = 1
+
+	src << "\green You begin to evolve!"
+	visible_message("<span class='noticealien'>[src] begins to twist and contort!</span>")
+
+	var/timer = 1200
+
+	if(we_inside_hive(src))
+		switch(x_stats.q_declare_hive_level)
+			if(1)
+				timer -= 600
+			if(2)
+				timer -= 900
+		src << "<span class='noticealien'><b>This is our home</b> evolution in effect. (Process shortened to [timer/10] seconds!)</span>"
+	timer += world.time
+	spawn()
+		while(src && evolving && stat != DEAD && timer > world.time)
+			sleeping = 999
+			sleep(10)
+
+		if(stat == DEAD)
+			return
+
+		var/mob/living/carbon/alien/humanoid/new_xeno
+		switch(new_caste)
+			if("Digger")
+				new_xeno = new /mob/living/carbon/alien/humanoid/digger(loc)
+			if("Carrier")
+				new_xeno = new /mob/living/carbon/alien/humanoid/carrier(loc)
+			if("Hivelord")
+				new_xeno = new /mob/living/carbon/alien/humanoid/hivelord(loc)
+			if("Spitter")
+				new_xeno = new /mob/living/carbon/alien/humanoid/spitter(loc)
+			if("Corroder")
+				new_xeno = new /mob/living/carbon/alien/humanoid/corroder(loc)
+			if("Praetorian")
+				new_xeno = new /mob/living/carbon/alien/humanoid/praetorian(loc)
+			if("Hunter")
+				new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
+			if("Crusher")
+				new_xeno = new /mob/living/carbon/alien/humanoid/crusher(loc)
+			if("Ravager")
+				new_xeno = new /mob/living/carbon/alien/humanoid/ravager(loc)
+		if(new_xeno)
+			if(mind)
+				mind.transfer_to(new_xeno)
+			new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)
+			qdel(src)
+
+/proc/we_inside_hive(mob/user)
+	if(x_stats.hive_1)
+		var/turf/T = x_stats.hive_1
+		if(T.z == user.z && get_dist(user, T) <= 10)
+			return 1
+
+	if(x_stats.hive_2)
+		var/turf/T = x_stats.hive_2
+		if(T.z == user.z && get_dist(user, T) <= 10)
+			return 1
+	return 0

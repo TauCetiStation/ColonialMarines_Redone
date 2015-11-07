@@ -10,7 +10,6 @@
 	tacklemin = 3
 	tacklemax = 6
 	tackle_chance = 60 //Should not be above 100%
-	psychiccost = 32
 	ventcrawler = 0
 	custom_pixel_x_offset = -16
 	custom_pixel_y_offset = -7
@@ -18,46 +17,12 @@
 /mob/living/carbon/alien/humanoid/corroder/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/corroder
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid_launcher
-
-	//var/datum/reagents/R = new/datum/reagents(100)
-	//reagents = R
-	//R.my_atom = src
-	//if(src.name == "alien corroder")
-	//	src.name = text("alien corroder ([rand(1, 1000)])")
-	//src.real_name = src.name
-	//verbs -= /mob/living/carbon/alien/verb/ventcrawl
-	//verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin)
-	
-	//pixel_y = -7
-	//pixel_x = -16
-	//verbs -= /atom/movable/verb/pull
+	AddAbility(new/obj/effect/proc_holder/alien/unweld_vent(null))
 
 	var/matrix/M = matrix()
 	M.Scale(0.85,0.85)
 	src.transform = M
 	..()
-
-/mob/living/carbon/alien/humanoid/corroder/handle_hud_icons_health()
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 /obj/item/projectile/bullet/acid
 	name = "acid"
@@ -89,7 +54,7 @@
 	var/atom/target
 	var/mob/living/carbon/human/attached
 	var/ticks = 0
-	var/target_strength = 0
+	var/target_strength = 10
 	var/onskin = 0
 	layer = 4
 	color = "#CCCCCC"
@@ -105,9 +70,7 @@
 	//if(istype(target, /turf/simulated/shuttle))
 	//	qdel(src)
 	if(isturf(target)) // Turf take twice as long to take down.
-		target_strength = 2
-	else
-		target_strength = 2
+		target_strength *= 2
 
 	var/matrix/M = matrix()
 	M.Scale(0.85,0.85)
@@ -116,6 +79,7 @@
 		attached = target
 		attached.contents += src
 		attached.overlays += src
+		attached.update_icons()
 		humantick()
 
 	else
@@ -124,9 +88,9 @@
 			al.visible_message("[target] is hit by the acid, but shakes it off.")
 			qdel(src)
 			return
-		var/obj/targ = target
-		if(targ)
-			if(targ.unacidable == 1)
+		if(isobj(target))
+			var/obj/target_obj = target
+			if(target_obj.unacidable)
 				qdel(src)
 				return
 		tick()
@@ -156,7 +120,6 @@
 			qdel(src)
 			return
 
-
 		if(attached && target.loc == attached)
 			attached.remove_from_mob(target)
 			qdel(target)
@@ -164,7 +127,6 @@
 			ticks = 0
 			spawn(0) humantick()
 			return
-
 		else
 			if(target.loc == attached)
 				attached.remove_from_mob(target)
@@ -186,9 +148,11 @@
 /obj/effect/alien/superacid2/proc/humantick()
 	if(!target || attached.stat == DEAD)
 		qdel(src)
+		return
 	var/mob/living/carbon/human/H = attached
 	if(!H)
 		qdel(src)
+		return
 
 
 	if(src.onskin == 1)
@@ -239,7 +203,7 @@
 	if(!T) return
 	if(src.getPlasma() > 75)
 		if(usedspit <= world.time)
-			usedspit = world.time + SPITCOOLDOWN * 15
+			usedspit = world.time + 200
 
 			src.adjustPlasma(-75)
 			var/turf/curloc = get_turf(get_step(src, dir))

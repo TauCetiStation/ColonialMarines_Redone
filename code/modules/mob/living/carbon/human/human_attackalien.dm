@@ -8,6 +8,17 @@
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 
+			if(!istype(M, /mob/living/carbon/alien/humanoid/queen) && x_stats.q_xeno_canharm == 0)
+				var/found_queen = 0
+				for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
+					if(!Q.stat)
+						found_queen = 1
+						break
+
+				if(found_queen)
+					M << "<span class='warning'>You may not harm any host. That's an order from the Queen.</span>"
+					return 0
+
 			var/damage = rand(M.damagemin, M.damagemax)
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)

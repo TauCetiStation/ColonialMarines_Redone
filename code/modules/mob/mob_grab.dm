@@ -209,7 +209,58 @@
 		return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if(isalienadult(user) && iscarbon(affecting) && !isalien(affecting))
+			if(user.zone_sel.selecting == "head")
+				if(x_stats.h_finisher)
+					var/mob/living/carbon/victim = affecting
+					if(victim.head_bitten)
+						user << "<span class='notice'>Someone else already did that.</span>"
+					else if(victim.health <= 0)
+						user.visible_message("<span class='danger'>[user] is attempting to bite [affecting] in the head!</span>")
+						if(do_after(user, 30-x_stats.h_finisher_cd, target = affecting))
+							victim.head_bitten = 1
+							victim.adjustBruteLoss(300)
+							user.visible_message("<span class='danger'>[user] has bitten [affecting] in the head!</span>")
+							var/mob/living/carbon/alien/humanoid/attacker = user
+
+							var/a_maxHeal = attacker.maxHealth * x_stats.h_finisher
+							var/a_maxArmorHeal = x_stats.h_carapace * x_stats.h_finisher
+
+							var/brute_dam = attacker.getBruteLoss()
+							var/fire_dam = attacker.getFireLoss()
+							var/oxy_dam = attacker.getOxyLoss()
+							var/clone_dam = attacker.getCloneLoss()
+
+							for(var/i = 1, i <= 4, i++)
+								if(a_maxHeal > 0)
+									switch(i)
+										if(1)
+											if(brute_dam)
+												attacker.adjustBruteLoss(-a_maxHeal)
+												a_maxHeal -= brute_dam
+										if(2)
+											if(fire_dam)
+												attacker.adjustFireLoss(-a_maxHeal)
+												a_maxHeal -= fire_dam
+										if(3)
+											if(oxy_dam)
+												attacker.adjustOxyLoss(-a_maxHeal)
+												a_maxHeal -= oxy_dam
+										if(4)
+											if(clone_dam)
+												attacker.adjustCloneLoss(-a_maxHeal)
+												a_maxHeal -= clone_dam
+								else
+									break
+							var/obj/item/organ/internal/alien/carapace/C = attacker.getorgan(/obj/item/organ/internal/alien/carapace)
+							if(C)
+								C.health = min(C.maxHealth, C.health + a_maxArmorHeal)
+					else
+						user << "<span class='notice'>Can only finish those who are in critical state.</span>"
+				else
+					user << "<span class='notice'>You're not sure how to do that.</span>"
+				return
+		else if(ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting))
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))

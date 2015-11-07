@@ -2,70 +2,26 @@
 
 /mob/living/carbon/alien/humanoid/crusher
 	name = "alien crusher"
-	caste = "Accurate Crusher"
+	caste = "Crusher"
 	maxHealth = 450
 	health = 450
-	icon_state = "Accurate Crusher Walking"
+	icon_state = "Crusher Walking"
 	icon = 'icons/Xeno/2x2_Xenos.dmi'
 	damagemin = 25
 	damagemax = 35
 	tacklemin = 4
 	tacklemax = 7
 	tackle_chance = 90 //Should not be above 100%
-	psychiccost = 32
 	ventcrawler = 0
 	mob_size = MOB_SIZE_LARGE
 	custom_pixel_x_offset = -18
-	//class = 3
 	var/charging = 0
 
 /mob/living/carbon/alien/humanoid/crusher/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/crusher
 	internal_organs += new /obj/item/organ/internal/alien/carapace/crusher
 	internal_organs += new /obj/item/organ/internal/alien/crusher
-	//var/datum/reagents/R = new/datum/reagents(100)
-	//reagents = R
-	//R.my_atom = src
-	//if(name == "alien ravager")
-	//	name = text("alien ravager ([rand(1, 1000)])")
-	//real_name = name
-	//var/matrix/M = matrix()
-	//M.Scale(1.15,1.15)
-	//src.transform = M
-	//verbs -= /mob/living/carbon/alien/verb/ventcrawl
-	//verbs -= /mob/living/carbon/alien/humanoid/verb/plant
-	//pixel_x = -18
 	..()
-
-/mob/living/carbon/alien/humanoid/crusher/handle_hud_icons_health()
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(450 to INFINITY)
-					healths.icon_state = "health0"
-				if(360 to 450)
-					healths.icon_state = "health1"
-				if(270 to 360)
-					healths.icon_state = "health2"
-				if(180 to 270)
-					healths.icon_state = "health3"
-				if(90 to 180)
-					healths.icon_state = "health4"
-				if(0 to 90)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
-/*
-/mob/living/carbon/alien/humanoid/ravager
-
-	handle_environment()
-		if(m_intent == "run" || resting)
-			..()
-		else
-			adjustToxLoss(-heal_rate)*/
 
 /obj/effect/proc_holder/alien/crusher_def
 	name = "Defense Pose"
@@ -102,8 +58,10 @@
 	plasma_cost = 100
 	action_icon_state = "crusher_charge"
 
-/obj/effect/proc_holder/alien/crush/fire(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/crush/fire(mob/living/carbon/alien/humanoid/crusher/user)
 	if(!isalien(user))
+		return 0
+	if(user.charging)
 		return 0
 	var/turf/T = get_turf(get_step(user,user.dir))
 	for(var/mob/living/M in T.contents)
@@ -132,6 +90,9 @@
 		//	tile.break_tile()
 		var/speed = 3
 		var/hit = 0
+		user.charging = 1
+		spawn(50)
+			user.charging = 0
 		for(var/i=0, i<30, i++)
 			user.canmove = 0
 			T = get_turf(get_step(user,user.dir))

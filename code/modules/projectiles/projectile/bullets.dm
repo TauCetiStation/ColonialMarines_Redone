@@ -183,7 +183,7 @@
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
-	weaken = 5
+	weaken = 8
 
 	muzzle_type = null
 
@@ -196,7 +196,7 @@
 /obj/item/projectile/bullet/neurotoxin_weak
 	name = "neurotoxin spit"
 	icon_state = "neurotoxin"
-	damage = 2
+	damage = 3
 	damage_type = TOX
 	weaken = 2
 
@@ -206,4 +206,25 @@
 	if(isalien(target))
 		weaken = 0
 		nodamage = 1
+	else
+		weaken *= x_stats.s_neuro_power
+		damage *= x_stats.s_neuro_power
+	. = ..() // Execute the rest of the code.
+
+/obj/item/projectile/bullet/parasite
+	name = "parasite"
+	icon_state = "parasite"
+	damage = 10
+
+	muzzle_type = null
+
+/obj/item/projectile/bullet/parasite/on_hit(atom/target, blocked = 0)
+	nodamage = 1
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat != DEAD)
+			if(!(H in x_stats.parasite_targets))
+				x_stats.parasite_targets += H
+				for(var/mob/living/carbon/alien/humanoid/AH in living_mob_list)
+					AH << "<span class='noticealien'>Our parasite has reached new host.</span>"
 	. = ..() // Execute the rest of the code.

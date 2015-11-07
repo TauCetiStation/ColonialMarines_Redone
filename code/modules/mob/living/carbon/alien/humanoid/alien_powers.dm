@@ -80,7 +80,7 @@ Doesn't work on other aliens/AI.*/
 	return 1
 
 /obj/effect/proc_holder/alien/proc/build_lay_fail(mob/living/carbon/user)
-	if((locate(/obj/item/clothing/mask/facehugger) in get_turf(user)) || (locate(/obj/structure/alien/egg) in get_turf(user)) || (locate(/obj/royaljelly) in get_turf(user)) || (locate(/obj/structure/mineral_door/resin) in get_turf(user)) || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)))
+	if((locate(/obj/item/clothing/mask/facehugger) in get_turf(user)) || (locate(/obj/structure/alien/egg) in get_turf(user)) || (locate(/obj/structure/mineral_door/resin) in get_turf(user)) || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)))
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 1
 	else
@@ -89,14 +89,22 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
 	desc = "Plants some alien weeds"
-	plasma_cost = 50
+	plasma_cost = 0
 	check_turf = 1
 	action_icon_state = "alien_plant"
+	var/cooldown = 0
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
-	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
-		src << "There's already a weed node here."
+	if(cooldown > world.time)
+		user << "Can't plant weeds so often."
 		return 0
+
+	if(locate(/obj/structure/alien/weeds/node) in range(4,user))
+		user << "There's already a weed node nearby."
+		return 0
+
+	cooldown = world.time + 150
+
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("<span class='alertalien'>[user] has planted some alien weeds!</span>"), 1)
 	new/obj/structure/alien/weeds/node(user.loc)
@@ -122,30 +130,42 @@ Doesn't work on other aliens/AI.*/
 	return 1
 
 /obj/effect/proc_holder/alien/transfer
-	name = "Transfer Plasma"
-	desc = "Transfer Plasma to another alien"
+	name = "Adjust Amount of Transfered Plasma"
+	desc = "Transfer Plasma to another xenomorph."
 	plasma_cost = 0
 	action_icon_state = "alien_transfer"
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
-	var/list/mob/living/carbon/aliens_around = list()
-	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/internal/alien/plasmavessel))
-			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
-	if(!M)
-		return 0
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
-	if (amount)
-		amount = min(abs(round(amount)), user.getPlasma())
-		if (get_dist(user,M) <= 1)
-			M.adjustPlasma(amount)
-			user.adjustPlasma(-amount)
-			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
-		else
-			user << "<span class='noticealien'>You need to be closer!</span>"
+	var/obj/item/organ/internal/alien/plasmavessel/PV = user.getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	if(PV)
+		var/amount = input("Amount:", "Adjust amount of transfered plasma", "[PV.transfer_plasma_amount]") as num
+		PV.transfer_plasma_amount = min(abs(round(amount)), 999)
+		if(action && action.button)
+			var/obj/screen/movable/action_button/AB = action.button
+			AB.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[PV.transfer_plasma_amount]</font></div>"
+		return
+
+/obj/effect/proc_holder/alien/evo_menu
+	name = "Evolution Menu"
+	desc = "Open Evolution Menu."
+	plasma_cost = 0
+	action_icon_state = "evo_menu"
+
+/obj/effect/proc_holder/alien/evo_menu/fire(mob/living/carbon/user)
+	evolution_tree.show_tree(user)
 	return
+
+/obj/screen/movable/action_button/New()
+	..()
+	spawn(10)
+		if(name == "Evolution Menu")
+			update_evo_progress()
+
+/obj/screen/movable/action_button/proc/update_evo_progress()
+	spawn()
+		while(src)
+			maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[evolution_tree.progress]</font></div>"
+			sleep(20)
 
 /obj/effect/proc_holder/alien/acid
 	name = "Corrossive Acid"
@@ -207,7 +227,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/acid_strong
 	name = "Strong Corrossive Acid"
 	desc = "Drench an object in acid, destroying it over time."
-	plasma_cost = 300
+	plasma_cost = 100
 	action_icon_state = "alien_acid"
 
 /obj/effect/proc_holder/alien/acid_strong/on_gain(mob/living/carbon/user)
@@ -259,7 +279,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/acid_weak
 	name = "Weak Corrossive Acid"
 	desc = "Drench an object in acid, destroying it over time."
-	plasma_cost = 100
+	plasma_cost = 500
 	action_icon_state = "alien_acid"
 
 /obj/effect/proc_holder/alien/acid_weak/on_gain(mob/living/carbon/user)
@@ -274,18 +294,18 @@ Doesn't work on other aliens/AI.*/
 		if(isobj(target))
 			var/obj/I = target
 			if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
+				user << "<span class='noticealien'>We cannot dissolve this object.</span>"
 				return 0
 		// TURF CHECK
 		else if(istype(target, /turf/simulated))
 			var/turf/T = target
 			// R WALL
 			if(istype(T, /turf/simulated/wall/r_wall))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
+				user << "<span class='noticealien'>We cannot dissolve this object.</span>"
 				return 0
 			// R FLOOR
 			if(istype(T, /turf/simulated/floor/engine))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
+				user << "<span class='noticealien'>We cannot dissolve this object.</span>"
 				return 0
 		else// Not a type we can acid.
 			return 0
@@ -311,36 +331,6 @@ Doesn't work on other aliens/AI.*/
 	if(!A) return
 	if(user.getPlasma() > A.plasma_cost && A.corrode(O))
 		user.adjustPlasma(-A.plasma_cost)
-
-/obj/effect/proc_holder/alien/neurotoxin
-	name = "Neurotoxin"
-	desc = "Use shift + LMB"
-	plasma_cost = 75
-	action_icon_state = "alien_neurotoxin"
-
-/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)
-	user << "<span class='notice'>Используйте ШИФТ+ЛКМ по земле. Летит туда, где был курсор в момент нажатия.</span>"
-	return 0
-
-/obj/effect/proc_holder/alien/neurotoxin_weak
-	name = "Weak Neurotoxin"
-	desc = "Use shift + LMB"
-	plasma_cost = 75
-	action_icon_state = "alien_neurotoxin"
-
-/obj/effect/proc_holder/alien/neurotoxin_weak/fire(mob/living/carbon/alien/user)
-	user << "<span class='notice'>Используйте ШИФТ+ЛКМ по земле. Летит туда, где был курсор в момент нажатия.</span>"
-	return 0
-
-/obj/effect/proc_holder/alien/acid_launcher
-	name = "Acid Launcher"
-	desc = "Use shift + LMB"
-	plasma_cost = 75
-	action_icon_state = "alien_neurotoxin"
-
-/obj/effect/proc_holder/alien/acid_launcher/fire(mob/living/carbon/alien/user)
-	user << "<span class='notice'>Используйте ШИФТ+ЛКМ по земле. Летит туда, где был курсор в момент нажатия.</span>"
-	return 0
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"
@@ -418,6 +408,63 @@ Doesn't work on other aliens/AI.*/
 	spawn(300)
 		usedscreech = 0
 	return 1
+
+/obj/effect/proc_holder/alien/order_to_harm
+	name = "Allow to harm"
+	desc = "Allow or dissalow your xenos to harm hosts."
+	plasma_cost = 0
+	action_icon_state = "gib"
+	var/usedorder = 0
+
+/obj/effect/proc_holder/alien/order_to_harm/fire(mob/living/carbon/user)
+	if(isqueen(user) && x_stats.q_xeno_canharm_ability)
+		if(usedorder)
+			user << "\red You may not use this ability so often.."
+			return 0
+		usedorder = 1
+		spawn(100)
+			usedorder = 0
+		x_stats.q_xeno_canharm = !x_stats.q_xeno_canharm
+		user << "\red Xenomorphs [x_stats.q_xeno_canharm ? "" : "no longer"] can harm any host."
+	return 0
+
+/obj/effect/proc_holder/alien/declare_hive
+	name = "Declare Hive"
+	desc = "Mark location around you as a hive location."
+	plasma_cost = 0
+	action_icon_state = "alien_hive"
+	var/usedability = 0
+
+/obj/effect/proc_holder/alien/declare_hive/fire(mob/living/carbon/user)
+	if(isqueen(user))
+		if(!x_stats.q_declare_hive_charge)
+			user << "\red No charges left.."
+			return 0
+
+		if(usedability)
+			user << "\red You may not use this ability so often.."
+			return 0
+		usedability = 1
+		spawn(200)
+			usedability = 0
+
+		if(x_stats.hive_1 == null)
+			if(do_mob(user, user, 100))
+				x_stats.hive_1 = get_turf(user)
+
+				x_stats.q_declare_hive_charge--
+				return 1
+		else if(x_stats.hive_2 == null)
+			if(do_mob(user, user, 100))
+				x_stats.hive_2 = get_turf(user)
+
+				x_stats.q_declare_hive_charge--
+				return 1
+		else
+			user << "\red You may not declare more hives. Limit has been reached."
+			return 0
+
+	return 0
 
 /obj/effect/proc_holder/alien/unweld_vent
 	name = "Corrode vent"
@@ -802,3 +849,75 @@ Doesn't work on other aliens/AI.*/
 			update_tunnel_vision()
 	else
 		src << "<span class='warning'>This tunnel system is not connected to anything!</span>"
+
+/obj/effect/proc_holder/alien/evolve_next
+	name = "Evolve (Next Tier)"
+	desc = "Evolve into next tier."
+	plasma_cost = 0
+
+	action_icon_state = "evolve_tier"
+
+	var/cooldown = 0
+
+/obj/effect/proc_holder/alien/evolve_next/fire(mob/living/carbon/alien/humanoid/user)
+	if(!istype(user)) return 0
+	if(cooldown > world.time)
+		user << "<span class='warning'>Cannot use this menu so often!</span>"
+		return 0
+	cooldown = world.time + 100
+
+	var/choice = input("Choose next evolution lifeform", "Choose a lifeform",null) in user.get_evolve_choices()
+	if(!choice) return 0
+
+	if(!user.is_lifeform_avail(user,choice)) return 0
+
+	if(!user.check_current_caste(user.caste,choice)) return 0
+	if(user.evolving) return 0
+	if(user.stat == DEAD) return 0
+	if(user.stat)
+		user << "<span class='noticealien'>We must be conscious.</span>"
+		return 0
+
+	if(!(locate(/obj/structure/alien/weeds) in get_turf(user)))
+		user << "<span class='noticealien'>We can evolve only on the weed.</span>"
+		return 0
+
+	var/answer = alert(user, "Our next lifeform is [choice]",,"Proceed","Cancel")
+	if(answer == "Cancel") return 0
+
+	if(!we_inside_hive(user))
+		answer = alert(user, "There is no hive nearby. Evolve process will take 2 minutes",,"Proceed","Cancel")
+		if(answer == "Cancel") return 0
+
+	if(!isturf(user.loc))
+		user << "<span class='noticealien'>We need more room.</span>"
+		return 0
+
+	var/evolve_cost = user.get_evolve_cost(choice)
+
+	if(x_points_controller.use_points(user.client, evolve_cost))
+		user.do_evolve(choice)
+		return 1
+	else
+		user << "<span class='noticealien'>[evolve_cost] evolution points required.</span>"
+
+	return 0
+
+/obj/effect/proc_holder/alien/rav_roar
+	name = "Rooaaar"
+	desc = "Increase your movement speed in a short period of time."
+	plasma_cost = 0
+	action_icon_state = "rav_roar"
+	var/cooldown = 0
+
+/obj/effect/proc_holder/alien/rav_roar/fire(mob/living/carbon/alien/humanoid/ravager/user)
+	if(!istype(user)) return
+	if(cooldown > world.time)
+		user << "<span class='noticealien'>Ability is in cooldown state..</span>"
+		return
+
+	playsound(user, 'sound/voice/hiss5.ogg', 100, 1, -3)
+	cooldown = world.time + 600
+	user.speed_bonus = -1.5
+	spawn(50)
+		user.speed_bonus = 0

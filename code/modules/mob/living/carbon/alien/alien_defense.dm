@@ -33,8 +33,13 @@ In all, this is a lot like the monkey code. /N
 				M.do_attack_animation(src)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = 1
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>")
+				var/harm_message = "bites"
+				if(istype(M, /mob/living/carbon/alien/humanoid/queen) && x_stats.q_queen_canharm)
+					var/mob/living/carbon/alien/humanoid/queen/Q = M
+					damage = rand(Q.damagemin, Q.damagemax)
+					harm_message = "punishes"
+				visible_message("<span class='danger'>[M.name] [harm_message] [src]!</span>", \
+						"<span class='userdanger'>[M.name] [harm_message] [src]!</span>")
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()

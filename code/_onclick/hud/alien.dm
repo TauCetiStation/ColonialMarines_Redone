@@ -20,6 +20,38 @@
 	if(T)
 		T.fire(A)
 
+/obj/screen/alien/locate_parasite
+	name = "parasite locator"
+	icon = 'icons/mob/screen_alien.dmi'
+	icon_state = "trackoff"
+
+	var/mob/living/carbon/human/target
+
+/obj/screen/alien/locate_parasite/Click()
+	if(isalienadult(usr))
+		var/mob/living/carbon/alien/humanoid/H = usr
+		switch_target(H)
+
+/obj/screen/alien/locate_parasite/proc/switch_target(mob/living/carbon/alien/humanoid/AH)
+	target = null
+	if(x_stats.parasite_targets.len)
+		var/mob/living/carbon/human/H = pick(x_stats.parasite_targets)
+		if(H.stat == DEAD)
+			x_stats.parasite_targets.Remove(H)
+			switch_target(H)
+		else
+			target = H
+			var/turf/U = get_turf(AH)
+			var/turf/T = get_turf(target)
+			var/is_target_far = 0
+			if(target.z != U.z)
+				if(T.z != U.z)
+					is_target_far = 1
+					AH << "<span class='noticealien'>You feel a very weak connection with this parasite. It looks like he is too far away.</span>"
+			if(!is_target_far)
+				AH << "<span class='noticealien'>[get_dist(U,T)] meters between you and parasite.</span>"
+	else
+		AH << "<span class='danger'>No targets found.</span>"
 
 /datum/hud/proc/alien_hud()
 	adding = list()
@@ -80,7 +112,7 @@
 	adding += using
 	action_intent = using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
+	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter) || istype(mymob, /mob/living/carbon/alien/humanoid/runner))
 		mymob.leap_icon = new /obj/screen/alien/leap()
 		mymob.leap_icon.screen_loc = ui_alien_storage_r
 		adding += mymob.leap_icon
@@ -142,6 +174,30 @@
 		locate_queen.screen_loc = ui_queen_locator
 		adding += locate_queen
 
+	locate_hive_1 = new /obj/screen()
+	locate_hive_1.icon = 'icons/mob/screen_alien.dmi'
+	locate_hive_1.icon_state = "trackoff"
+	locate_hive_1.name = "hive 1 locator"
+	locate_hive_1.screen_loc = ui_hive_1_locator
+	adding += locate_hive_1
+
+	locate_hive_2 = new /obj/screen()
+	locate_hive_2.icon = 'icons/mob/screen_alien.dmi'
+	locate_hive_2.icon_state = "trackoff"
+	locate_hive_2.name = "hive 2 locator"
+	locate_hive_2.screen_loc = ui_hive_2_locator
+	adding += locate_hive_2
+
+	alien_treats_display = new /obj/screen()
+	alien_treats_display.icon = 'icons/mob/screen_gen.dmi'
+	alien_treats_display.icon_state = "power_display2"
+	alien_treats_display.name = "treats"
+	alien_treats_display.screen_loc = ui_alientreatsdisplay
+
+	parasiteicon = new /obj/screen/alien/locate_parasite()
+	parasiteicon.screen_loc = ui_parasite_locator
+	adding += parasiteicon
+
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
@@ -163,6 +219,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.armors, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.armors, nightvisionicon, alien_plasma_display, alien_treats_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 	mymob.client.screen += mymob.client.void
