@@ -151,7 +151,10 @@
 	return
 
 /mob/living/carbon/alien/getTrail()
-	return "xltrails"
+	if(getBruteLoss() < 200)
+		return pick (list("xltrails_1", "xltrails2"))
+	else
+		return pick (list("xttrails_1", "xttrails2"))
 
 /mob/living/carbon/alien/start_pulling(var/atom/movable/AM)
 	if(isalienadult(AM))
