@@ -569,7 +569,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 /datum/evolution/warrior/parasite
 	name = "Parasite"
-	desc = "<xeno>Parasite</xeno><br>Use shift + click to spit a parasite."
+	desc = "<xeno>Parasite</xeno><br>Parasite <stat>ability</stat> for scout.<br>Can be used against <stat>humans</stat>. Click parasite <stat>locator</stat> to switch active target.<br>Use shift + click to spit a parasite."
 	id = "w_par"
 
 	tier = 1
