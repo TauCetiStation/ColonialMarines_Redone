@@ -380,7 +380,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 					2 = "Increase carry limit to <statp>15</statp> facehuggers.",
 					3 = "Increase carry limit to <statp>20</statp> facehuggers.",
 					4 = "Increase carry limit to <statc>20</statc> facehuggers.")
-	id = "d_rrs"
+	id = "d_mule"
 
 	tier = 3
 	research_time = RESEARCH_T3
