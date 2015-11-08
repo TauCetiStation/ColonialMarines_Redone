@@ -12,7 +12,7 @@
 	spawn while(1)
 		add_users()
 		add_points()
-		sleep(100)
+		sleep(120)
 
 /datum/xeno_points_controller/proc/add_points()
 	for(var/client/C in clients)

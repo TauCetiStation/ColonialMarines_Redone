@@ -361,8 +361,11 @@ Doesn't work on other aliens/AI.*/
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
 	choice = structures[choice]
-	new choice(user.loc)
-	return 1
+	if(x_points_controller.use_points(user.client, 1))
+		new choice(user.loc)
+		return 1
+	else
+		return 0
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"
@@ -861,6 +864,11 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/evolve_next/fire(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user)) return 0
+
+	if(user.recently_evolved > world.time)
+		user << "<span class='warning'>we recently evolved and cannot evolve again so soon. We must wait.</span>"
+		return 0
+
 	if(cooldown > world.time)
 		user << "<span class='warning'>Cannot use this menu so often!</span>"
 		return 0

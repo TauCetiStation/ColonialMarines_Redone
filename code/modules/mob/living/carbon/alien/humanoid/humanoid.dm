@@ -22,6 +22,8 @@
 	var/SPITCOOLDOWN = 10
 	var/usedspit = 0
 
+	var/recently_evolved = 0
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	update_stats()
@@ -200,12 +202,14 @@
 
 /mob/living/carbon/alien/humanoid/proc/get_evolve_cost(caste)
 	switch(caste)
-		if("Digger","Spitter","Hunter")
+		if("Digger","Carrier","Hivelord")
 			return 20
-		if("Carrier","Corroder","Crusher")
+		if("Spitter","Hunter")
 			return 40
-		if("Hivelord","Praetorian","Ravager")
-			return 50
+		if("Corroder","Crusher")
+			return 70
+		if("Praetorian","Ravager")
+			return 90
 
 /mob/living/carbon/alien/humanoid/proc/check_current_caste(caste, chosen_caste)
 	switch(chosen_caste)
@@ -269,14 +273,14 @@
 	src << "\green You begin to evolve!"
 	visible_message("<span class='noticealien'>[src] begins to twist and contort!</span>")
 
-	var/timer = 1200
+	var/timer = 3000
 
 	if(we_inside_hive(src))
 		switch(x_stats.q_declare_hive_level)
-			if(1)
-				timer -= 600
-			if(2)
-				timer -= 900
+			if(3)
+				timer -= 1200
+			if(4)
+				timer -= 2400
 		src << "<span class='noticealien'><b>This is our home</b> evolution in effect. (Process shortened to [timer/10] seconds!)</span>"
 	timer += world.time
 	spawn()
@@ -308,6 +312,7 @@
 			if("Ravager")
 				new_xeno = new /mob/living/carbon/alien/humanoid/ravager(loc)
 		if(new_xeno)
+			new_xeno.recently_evolved = world.time + 4200 //7 minutes CD
 			if(mind)
 				mind.transfer_to(new_xeno)
 			new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)

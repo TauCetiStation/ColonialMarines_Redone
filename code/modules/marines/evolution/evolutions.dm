@@ -1,5 +1,4 @@
 #define RESEARCH_T1	1200
-
 #define RESEARCH_T2	3600
 #define RESEARCH_T3	1800
 
@@ -18,8 +17,8 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	desc_level = list(
 					1 = "Tier <statp>1</statp> evolutions available.",
 					2 = "Increase your movement speed.<br>Tier <statp>2</statp> evolutions available.",
-					3 = "<stat>Screech</stat> ability.<br>Tier <statp>3</statp> evolutions available.",
-					4 = "<statc>Screech</statc> ability.<br>Tier <statc>3</statc> evolutions available.")
+					3 = "Increase your movement speed.<br><stat>Screech</stat> ability.<br>Tier <statp>3</statp> evolutions available.",
+					4 = "Increase your movement speed.<br><statc>Screech</statc> ability.<br>Tier <statc>3</statc> evolutions available.")
 	id = "q_qhr"
 
 	research_time = 600
@@ -68,14 +67,16 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	name = "This is our home"
 	desc = "<xeno>This is our home</xeno><br>Mark current location in 10x10 as a hive location.<br>Can lay <stat>eggs</stat> only inside hive location.<br>Decrease <stat>time</stat> taken to evolve from one lifeform into another for your <xeno>xenomorphs</xeno> while they are inside <stat>hive</stat>."
 	desc_level = list(
-					1 = "Can mark <statp>1</statp> location as a hive.<br><statp>1</statp> minute to evolve into another lifeform.",
-					2 = "Can mark <statp>2</statp> locations as a hive.<br><statp>30</statp> seconds to evolve into another lifeform.",
-					3 = "Can mark <statc>2</statc> locations as a hive.<br><statc>30</statc> seconds to evolve into another lifeform.")
+					1 = "Can mark <statp>1</statp> location as a hive.",
+					2 = "Can mark <statp>2</statp> locations as a hive.",
+					3 = "Can mark <statc>2</statc> locations as a hive.<br><statc>3</statc> minutes to evolve into another lifeform.",
+					4 = "Can mark <statc>2</statc> locations as a hive.<br><statc>1</statc> minutes to evolve into another lifeform.",
+					5 = "Can mark <statc>2</statc> locations as a hive.<br><statc>1</statc> minutes to evolve into another lifeform.")
 	id = "q_dh"
 
 	research_time = 600
-	cost = COST_T1 + 5
-	maxlevel = 2
+	cost = COST_T1
+	maxlevel = 4
 
 /datum/evolution/queen/declare_hive/on_level()
 	switch(level)
@@ -87,6 +88,10 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 		if(2)
 			x_stats.q_declare_hive_charge++
 			x_stats.q_declare_hive_level = 2
+		if(3)
+			x_stats.q_declare_hive_level = 3
+		if(4)
+			x_stats.q_declare_hive_level = 4
 	..()
 
 /datum/evolution/queen/egg_booster
