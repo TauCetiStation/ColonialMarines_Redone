@@ -249,17 +249,18 @@ var/datum/evo_tree/evolution_tree = new /datum/evo_tree()
 		end_research(E)
 
 /datum/evo_tree/proc/end_research(datum/evolution/E)
-	for(var/mob/living/carbon/alien/A in living_mob_list)
-		A << "<span class='noticealien'>[E.name] evolution completed.</span>"
-
-	for(var/mob/dead/observer/O in player_list)//Why not.
-		if(O.started_as_observer)
-			O << "<span class='noticealien'>[E.name] evolution completed.</span>"
-
 	being_researched = null
 	progress = 0
 	hive_controller.psychicstrengthused += E.cost
 	E.increase_level()
+
+	for(var/mob/living/carbon/alien/A in living_mob_list)
+		A << "<span class='noticealien'><b>[E.name]</b> ([E.level] / [E.maxlevel]) evolution complete.</span>"
+
+	for(var/mob/dead/observer/O in player_list)//Why not.
+		if(O.started_as_observer)
+			O << "<span class='noticealien'><b>[E.name]</b> ([E.level] / [E.maxlevel]) evolution complete.</span>"
+
 	busy = 0
 
 /datum/evolution
