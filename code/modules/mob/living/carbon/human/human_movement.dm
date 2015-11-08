@@ -6,6 +6,10 @@
 		. += 2
 	if(istype(loc, /turf/simulated/floor/plating/beach/sea))
 		. += 3
+	if(l_hand && istype(l_hand, /obj/item/weapon/gun/projectile/Assault/m59b))
+		. += 1
+	if(r_hand && istype(r_hand, /obj/item/weapon/gun/projectile/Assault/m59b))
+		. += 1
 	. += ..()
 	. += config.human_delay
 

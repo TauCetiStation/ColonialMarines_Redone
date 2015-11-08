@@ -362,6 +362,7 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	w_class = 5
 	armor = list(melee = 60, bullet = 60, laser = 55,energy = 55, bomb = 60, bio = 45, rad = 45)
 	action_button_name = "Toggle Power"
+	unacidable = 1
 	var/obj/item/weapon/stock_parts/cell/nuclear_cell
 
 	var/obj/item/clothing/glasses/power_armor/visor
@@ -569,3 +570,4 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	slowdown = 5
 	armor = list(melee = 60, bullet = 60, laser = 55,energy = 55, bomb = 60, bio = 45, rad = 45)
+	unacidable = 1

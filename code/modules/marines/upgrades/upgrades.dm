@@ -41,15 +41,15 @@
 	id = "shotcom"
 	category = list("Shotgun")
 
-	vendor = "ColMarWeap"
+	vendor = "ColMarSpecial"
 
 	research_time = 240
 	cost = 2
 	maxlevel = 1
 
 /datum/upgrade/shotcom/on_level()
-	for(var/obj/machinery/vending/marine/weapons/V in world)
-		var/list/upgrade = list(/obj/item/weapon/gun/projectile/shotgun/combat = 5)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(/obj/item/weapon/gun/projectile/shotgun/combat = 6)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m37_flec
@@ -147,19 +147,17 @@
 	id = "m59b"
 	category = list("M59B Smartgun")
 
-	vendor = "ColMarWeap and ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 600
-	cost = 3
+	cost = 5
 	maxlevel = 1
 
 /datum/upgrade/m59b/on_level()
-	for(var/obj/machinery/vending/marine/weapons/V in world)
-		var/list/upgrade = list(/obj/item/weapon/gun/projectile/Assault/m59b = 2)
-		V.build_inventory(upgrade)
-
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/a10x28 = 4)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(
+								/obj/item/weapon/gun/projectile/Assault/m59b = 2,
+								/obj/item/ammo_box/magazine/a10x28 = 4)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m59b_harn
@@ -169,20 +167,20 @@
 	id = "m59b_harn"
 	category = list("M59B Smartgun")
 
-	vendor = "ColMarEquip"
+	vendor = "ColMarSpecial"
 
 	research_time = 300
+	cost = 2
 	maxlevel = 1
 	req_upgrade = "m59b"
 	req_upgrade_level = 1
 
 /datum/upgrade/m59b_harn/on_level()
-	for(var/obj/machinery/vending/marine/equipment/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(
-								/obj/item/clothing/suit/storage/marine2/harness = 2,
-								/obj/item/clothing/glasses/hms = 2,
-								/obj/item/weapon/stock_parts/cell/harness_cell = 20
-								)
+								/obj/item/clothing/suit/storage/marine2/harness = 4,
+								/obj/item/clothing/glasses/hms = 4,
+								/obj/item/weapon/stock_parts/cell/harness_cell = 20)
 		V.build_inventory(upgrade)
 
 //"M42C Rifle"
@@ -192,19 +190,17 @@
 	id = "m42c"
 	category = list("M42C Rifle")
 
-	vendor = "ColMarWeap and ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 600
 	cost = 2
 	maxlevel = 1
 
 /datum/upgrade/m42c/on_level()
-	for(var/obj/machinery/vending/marine/weapons/V in world)
-		var/list/upgrade = list(/obj/item/weapon/gun/projectile/Assault/m42c = 2)
-		V.build_inventory(upgrade)
-
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c = 4)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(
+								/obj/item/weapon/gun/projectile/Assault/m42c = 2,
+								/obj/item/ammo_box/magazine/m42c = 10)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m42c_scope
@@ -214,7 +210,7 @@
 	id = "m42c_scope"
 	category = list("M42C Rifle")
 
-	vendor = "ColMarEquip"
+	vendor = "ColMarSpecial"
 
 	research_time = 120
 	maxlevel = 1
@@ -222,7 +218,7 @@
 	req_upgrade_level = 1
 
 /datum/upgrade/m42c_scope/on_level()
-	for(var/obj/machinery/vending/marine/equipment/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(/obj/item/device/mod/scope1224 = 2)
 		V.build_inventory(upgrade)
 
@@ -233,7 +229,7 @@
 	id = "m42c_inc"
 	category = list("M42C Rifle")
 
-	vendor = "ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 300
 	maxlevel = 1
@@ -241,7 +237,7 @@
 	req_upgrade_level = 1
 
 /datum/upgrade/m42c_inc/on_level()
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c/incendiary = 10)
 		V.build_inventory(upgrade)
 
@@ -252,7 +248,7 @@
 	id = "m42c_spc"
 	category = list("M42C Rifle")
 
-	vendor = "ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 540
 	maxlevel = 1
@@ -260,7 +256,7 @@
 	req_upgrade_level = 1
 
 /datum/upgrade/m42c_spc/on_level()
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c/special = 10)
 		V.build_inventory(upgrade)
 
@@ -271,14 +267,14 @@
 	id = "m6b"
 	category = list("M-6B Rocket Launcher")
 
-	vendor = "ColMarWeap"
+	vendor = "ColMarSpecial"
 
 	research_time = 300
 	cost = 4
 	maxlevel = 1
 
 /datum/upgrade/m6b/on_level()
-	for(var/obj/machinery/vending/marine/weapons/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(/obj/item/weapon/gun/projectile/rocket/m6b = 2)
 		V.build_inventory(upgrade)
 
@@ -288,13 +284,13 @@
 	id = "m6b_r_he"
 	category = list("M-6B Rocket Launcher")
 
-	vendor = "ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 420
 	maxlevel = 1
 
 /datum/upgrade/m6b/on_level()
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(/obj/item/ammo_casing/rocket/he = 5)
 		V.build_inventory(upgrade)
 
@@ -304,13 +300,13 @@
 	id = "m6b_r_ap"
 	category = list("M-6B Rocket Launcher")
 
-	vendor = "ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 420
 	maxlevel = 1
 
 /datum/upgrade/m6b/on_level()
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
+	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(/obj/item/ammo_casing/rocket/ap = 5)
 		V.build_inventory(upgrade)
 
@@ -354,14 +350,14 @@
 	id = "sentry"
 	category = list("Mods and Special")
 
-	vendor = "ColMarEquip"
+	vendor = "ColMarSpecial"
 
 	research_time = 500
 	maxlevel = 1
 
 /datum/upgrade/sentry/on_level()
-	for(var/obj/machinery/vending/marine/equipment/V in world)
-		var/list/upgrade = list(/obj/item/marines/turret_deployer = 2)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(/obj/item/marines/turret_deployer = 10)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/p_scn_speed
@@ -402,16 +398,15 @@
 	id = "adv_pa"
 	category = list("Power Armor")
 
-	vendor = "skip"
+	vendor = "ColMarSpecial"
 
 	research_time = 500
 	cost = 5
 	maxlevel = 1
 
 /datum/upgrade/adv_pa/on_level()
-	var/obj/machinery/upgrade_station/US = locate(/obj/machinery/upgrade_station) in world
-	if(US)
-		new /obj/item/clothing/head/helmet/space/pa(US.loc)
-		new /obj/item/clothing/suit/space/pa(US.loc)
-		new /obj/item/clothing/head/helmet/space/pa(US.loc)
-		new /obj/item/clothing/suit/space/pa(US.loc)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(
+								/obj/item/clothing/head/helmet/space/pa = 2,
+								/obj/item/clothing/suit/space/pa = 2)
+		V.build_inventory(upgrade)

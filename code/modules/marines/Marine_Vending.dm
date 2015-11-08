@@ -1,8 +1,4 @@
-//MARINE VENDING - APOPHIS775 - LAST UPDATE - 25JAN2015
-
-
 ///******MARINE VENDOR******///
-
 /obj/machinery/vending/marine/weapons
 	name = "ColMarWeap"
 	desc = "A marine weapon vendor"
@@ -11,8 +7,7 @@
 					/obj/item/weapon/gun/projectile/pistol/m4a3 = 25,
 					/obj/item/weapon/gun/projectile/shotgun/m37 = 25,
 					/obj/item/weapon/gun/projectile/Assault/m39 = 25,
-					/obj/item/weapon/gun/projectile/Assault/m41 = 25,
-					/obj/item/weapon/combat_knife = 25
+					/obj/item/weapon/gun/projectile/Assault/m41 = 25
 					)
 
 /obj/machinery/vending/marine/ammunition
@@ -20,10 +15,10 @@
 	desc = "A marine ammunition vendor"
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
-					/obj/item/ammo_box/magazine/m4a3 = 25,
-					/obj/item/ammo_box/m37/buckshot = 25,
-					/obj/item/ammo_box/magazine/m39 = 25,
-					/obj/item/ammo_box/magazine/m41 = 25
+					/obj/item/ammo_box/magazine/m4a3 = 75,
+					/obj/item/ammo_box/m37/buckshot = 75,
+					/obj/item/ammo_box/magazine/m39 = 75,
+					/obj/item/ammo_box/magazine/m41 = 75
 					)
 
 /obj/machinery/vending/marine/equipment
@@ -31,13 +26,24 @@
 	desc = "A marine equipment vendor"
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
+					/obj/item/clothing/head/helmet/marine2 = 10,
+					/obj/item/clothing/suit/storage/marine2 = 10,
 					/obj/item/weapon/camera_assembly = 10,
 					/obj/item/weapon/storage/backpack/marine = 10,
 					/obj/item/device/flashlight/flare = 25,
 					/obj/item/device/flashlight/seclite = 10,
 					/obj/item/device/radio/marine = 10,
-					/obj/item/weapon/grenade/explosive = 5
+					/obj/item/weapon/grenade/explosive = 5,
+					/obj/item/weapon/combat_knife = 25,
+					/obj/item/weapon/storage/box/marine = 10
 					)
+
+/obj/machinery/vending/marine/special
+	name = "ColMarSpecial"
+	desc = "A marine special vendor."
+	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
+	products = list()
+	unacidable = 1
 
 //MARINE FOOD VENDOR APOPHIS775 10JAN2014
 /obj/machinery/vending/marineFood
