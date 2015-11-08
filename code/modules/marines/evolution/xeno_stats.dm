@@ -227,7 +227,7 @@
 	tackle_chance	= list("base" = 60,		"bonus" = list("2" = 5,		"3" = 10))	//75
 
 /datum/xeno_stats/corroder
-	max_health		= list("base" = 200,	"bonus" = list("2" = 50,	"3" = 50))	//300
+	max_health		= list("base" = 200,	"bonus" = list("2" = 25,	"3" = 25))	//250
 	heal_rate		= list("base" = 2,		"bonus" = list("2" = 2,		"3" = 2))	//6
 	armor			= list("base" = 25,		"bonus" = list("2" = 0,		"3" = 5))	//30
 	max_plasma		= list("base" = 150,	"bonus" = list("2" = 25,	"3" = 25))	//200
@@ -263,9 +263,9 @@
 	tackle_chance	= list("base" = 60,		"bonus" = list("2" = 5,		"3" = 10))	//75
 
 /datum/xeno_stats/hunter
-	max_health		= list("base" = 200,	"bonus" = list("2" = 15,	"3" = 20))	//235
-	heal_rate		= list("base" = 3,		"bonus" = list("2" = 1,		"3" = 2))	//3
-	armor			= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
+	max_health		= list("base" = 200,	"bonus" = list("2" = 50,	"3" = 30))	//280
+	heal_rate		= list("base" = 3,		"bonus" = list("2" = 3,		"3" = 4))	//10
+	armor			= list("base" = 15,		"bonus" = list("2" = 5,		"3" = 10))	//30
 	max_plasma		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	plasma_rate		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	damage_min		= list("base" = 23,		"bonus" = list("2" = 8,		"3" = 13))	//44
@@ -276,7 +276,7 @@
 
 /datum/xeno_stats/crusher
 	max_health		= list("base" = 300,	"bonus" = list("2" = 50,	"3" = 50))	//400
-	heal_rate		= list("base" = 6,		"bonus" = list("2" = 1,		"3" = 3))	//10
+	heal_rate		= list("base" = 6,		"bonus" = list("2" = 4,		"3" = 5))	//15
 	armor			= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	max_plasma		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	plasma_rate		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
@@ -292,8 +292,8 @@
 	armor			= list("base" = 50,		"bonus" = list("2" = 5,		"3" = 5))	//60
 	max_plasma		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	plasma_rate		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
-	damage_min		= list("base" = 50,		"bonus" = list("2" = 0,		"3" = 33))	//83
-	damage_max		= list("base" = 75,		"bonus" = list("2" = 0,		"3" = 47))	//122
+	damage_min		= list("base" = 50,		"bonus" = list("2" = 14,	"3" = 33))	//97
+	damage_max		= list("base" = 75,		"bonus" = list("2" = 22,	"3" = 47))	//144
 	tackle_min		= list("base" = 4,		"bonus" = list("2" = 0,		"3" = 0))
 	tackle_max		= list("base" = 7,		"bonus" = list("2" = 0,		"3" = 0))
 	tackle_chance	= list("base" = 70,		"bonus" = list("2" = 10,	"3" = 19))	//99

@@ -1,5 +1,6 @@
-#define RESEARCH_T1	600
-#define RESEARCH_T2	1200
+#define RESEARCH_T1	1200
+
+#define RESEARCH_T2	3600
 #define RESEARCH_T3	1800
 
 #define COST_T1	5
@@ -22,7 +23,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	id = "q_qhr"
 
 	research_time = 600
-	cost = COST_T1
+	cost = COST_T1 + 5
 	maxlevel = 3
 	req_total_points = list(1 = 0, 2 = 12, 3 = 18)
 
@@ -73,7 +74,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	id = "q_dh"
 
 	research_time = 600
-	cost = COST_T1
+	cost = COST_T1 + 5
 	maxlevel = 2
 
 /datum/evolution/queen/declare_hive/on_level()
@@ -129,7 +130,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 	tier = 1
 	research_time = RESEARCH_T1
-	cost = COST_T1
+	cost = COST_T1 + 2
 	maxlevel = 3
 
 /datum/evolution/hive/regeneration/on_level()
@@ -180,7 +181,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 	tier = 2
 	research_time = RESEARCH_T2
-	cost = COST_T2
+	cost = COST_T2 + 5
 	maxlevel = 3
 	req_evolution = list("h_adv_reg" = 3)
 
@@ -198,22 +199,22 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	name = "6th Sense"
 	desc = "<xeno>6th Sense</xeno><br>Allow you to know exact number of treats nearby."
 	desc_level = list(
-					1 = "Can sense treats in <statp>7</statp> meters around you",
-					2 = "Can sense treats in <statp>14</statp> meters around you",
-					3 = "Can sense treats in <statc>14</statc> meters around you")
+					1 = "Can sense treats in <statp>10</statp> meters around you",
+					2 = "Can sense treats in <statp>16</statp> meters around you",
+					3 = "Can sense treats in <statc>16</statc> meters around you")
 	id = "h_six"
 
-	tier = 2
-	research_time = RESEARCH_T2
-	cost = COST_T2
+	tier = 1
+	research_time = RESEARCH_T1
+	cost = COST_T1
 	maxlevel = 2
 
 /datum/evolution/hive/sixth_sense/on_level()
 	switch(level)
 		if(1)
-			x_stats.h_sixsense = 7
+			x_stats.h_sixsense = 10
 		if(2)
-			x_stats.h_sixsense = 14
+			x_stats.h_sixsense = 16
 	..()
 
 /datum/evolution/hive/uncanny_sense
@@ -226,7 +227,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 	tier = 3
 	research_time = RESEARCH_T3
-	cost = COST_T3
+	cost = COST_T3 + 15
 	maxlevel = 1
 	req_evolution = list("h_six" = 2)
 
@@ -238,10 +239,10 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	name = "Reactive Carapace"
 	desc = "<xeno>Reactive Carapace</xeno><br>More durable carapace."
 	desc_level = list(
-					1 = "Increase armor cap by <statp>10</statp>% (<xeno>220</xeno> hp).",
-					2 = "Increase armor cap by <statp>20</statp>% (<xeno>240</xeno> hp).",
-					3 = "Increase armor cap by <statp>30</statp>% (<xeno>260</xeno> hp).",
-					4 = "Increase armor cap by <statc>30</statc>% (<xeno>260</xeno> hp).")
+					1 = "Increase armor cap by <statp>20</statp>.",
+					2 = "Increase armor cap by <statp>40</statp>.",
+					3 = "Increase armor cap by <statp>60</statp>.",
+					4 = "Increase armor cap by <statc>60</statc>.")
 	id = "h_car"
 
 	tier = 3
@@ -251,13 +252,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	req_evolution = list("h_acc_reg" = 3)
 
 /datum/evolution/hive/carapace/on_level()
-	switch(level)
-		if(1)
-			x_stats.h_carapace = 220
-		if(2)
-			x_stats.h_carapace = 240
-		if(3)
-			x_stats.h_carapace = 260
+	x_stats.h_carapace += 20
 	for(var/obj/item/organ/internal/alien/carapace/C in world)
 		if(C.maxHealth)
 			C.maxHealth = x_stats.h_carapace
@@ -361,7 +356,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 	tier = 3
 	research_time = RESEARCH_T3
-	cost = COST_T3
+	cost = COST_T3 + 20
 	maxlevel = 3
 
 /datum/evolution/drone/carrier/New()
@@ -485,10 +480,10 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	name = "Strengthened Neurotoxin"
 	desc = "<xeno>Strengthened Neurotoxin</xeno><br>Use shift + click to spit, if your lifeform has this ability."
 	desc_level = list(
-					1 = "Increase power of weak <xeno>neurotoxin</xeno> by <statp>50</statp>%.",
-					2 = "Increase power of weak <xeno>neurotoxin</xeno> by <statp>100</statp>%.",
-					3 = "Increase power of weak <xeno>neurotoxin</xeno> by <statp>150</statp>%.",
-					4 = "Increase power of weak <xeno>neurotoxin</xeno> by <statc>150</statc>%.")
+					1 = "Increase power of weak <stat>neurotoxin</stat> by <statp>50</statp>%.",
+					2 = "Increase power of weak <stat>neurotoxin</stat> by <statp>100</statp>%.",
+					3 = "Increase power of weak <stat>neurotoxin</stat> by <statp>150</statp>%.",
+					4 = "Increase power of weak <stat>neurotoxin</stat> by <statc>150</statc>%.")
 	id = "s_pnt"
 
 	tier = 2
@@ -516,7 +511,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 	tier = 3
 	research_time = RESEARCH_T3
-	cost = COST_T3
+	cost = COST_T3 + 20
 	maxlevel = 3
 
 /datum/evolution/sentinel/corroder/New()
@@ -651,7 +646,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 	tier = 3
 	research_time = RESEARCH_T3
-	cost = COST_T3
+	cost = COST_T3 + 20
 	maxlevel = 3
 
 /datum/evolution/warrior/crusher/New()

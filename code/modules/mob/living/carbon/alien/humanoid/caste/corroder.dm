@@ -16,7 +16,6 @@
 
 /mob/living/carbon/alien/humanoid/corroder/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/corroder
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
 	AddAbility(new/obj/effect/proc_holder/alien/unweld_vent(null))
 
 	var/matrix/M = matrix()
@@ -30,6 +29,7 @@
 	damage = 0
 	damage_type = TOX
 	weaken = 0
+	kill_count = 2
 
 	muzzle_type = null
 
@@ -38,8 +38,15 @@
 		weaken = 0
 		nodamage = 1
 	else
-		var/atom/L = target
-		new /obj/effect/alien/superacid2(get_turf(L), L)
+		var/fail = 1
+		if(ishuman(target) && x_stats.q_xeno_canharm)
+			fail = 0
+
+		if(fail)
+			weaken = 5
+		else
+			var/atom/L = target
+			new /obj/effect/alien/superacid2(get_turf(L), L)
 	. = ..() // Execute the rest of the code.
 
 /obj/effect/alien/superacid2
@@ -173,13 +180,15 @@
 		attached = H
 		target = H.wear_suit
 		target.overlays += src
-		H.visible_message("\red <B>[target] begins to melt from the acid.</B>")
+		H.visible_message("\red <B>[target]</B> is melting from the acid.")
+		H << "<span class='userdanger'>Your [target] is melting from the acid!!</span>"
 		spawn(0) tick()
 		return
 	if(H.w_uniform)
 		target = H.w_uniform
 		target.overlays += src
-		H.visible_message("\red <B>[target] begins to melt from the acid.</B>")
+		H.visible_message("\red <B>[target]</B> is melting from the acid.")
+		H << "<span class='userdanger'>Your [target] is melting from the acid!!</span>"
 		spawn(0) tick()
 		return
 	else if(!H.wear_suit && !H.w_uniform)
