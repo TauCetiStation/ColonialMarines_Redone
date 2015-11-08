@@ -376,10 +376,12 @@
 	for(var/t in organs)
 		qdel(t)
 
-	var/mob/living/carbon/alien/humanoid/new_xeno
-	new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+	var/mob/living/carbon/alien/larva/new_xeno
+	new_xeno = new /mob/living/carbon/alien/larva(loc)
 
-	new_xeno.a_intent = "harm"
+	new_xeno.amount_grown = 140
+
+	new_xeno.a_intent = "help"
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
