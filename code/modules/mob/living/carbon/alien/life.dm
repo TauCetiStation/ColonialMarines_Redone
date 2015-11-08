@@ -130,6 +130,8 @@ var/aura_xenhum = "XEDA Danger Aura"
 		for(var/image/I in client.images)
 			if(dd_hassuffix_case(I.icon_state, "Aura"))
 				client.images.Remove(I)
+			if(I.icon_state == "hud_parasite")
+				client.images.Remove(I)
 		for(var/mob/living/L in living_mob_list)
 			if((L.z == src.z) || (L.z == 0))
 				var/image/I
@@ -149,20 +151,17 @@ var/aura_xenhum = "XEDA Danger Aura"
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 				else if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if(H in x_stats.parasite_targets)
+					if(H.getorgan(/obj/item/organ/internal/alien/hivenode))
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xenhum, layer = 16)
+					else if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 					else
-						if(H.getorgan(/obj/item/organ/internal/alien/hivenode))
-							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xenhum, layer = 16)
-						else if(H.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
-							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
+						if((H.r_hand && istype(H.r_hand, /obj/item/weapon/gun)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon/gun)))
+							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_danger, layer = 16)
+						else if((H.r_hand && istype(H.r_hand, /obj/item/weapon)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon)))
+							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_caution, layer = 16)
 						else
-							if((H.r_hand && istype(H.r_hand, /obj/item/weapon/gun)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon/gun)))
-								I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_danger, layer = 16)
-							else if((H.r_hand && istype(H.r_hand, /obj/item/weapon)) || (H.l_hand && istype(H.l_hand, /obj/item/weapon)))
-								I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_caution, layer = 16)
-							else
-								I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
+							I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
 				else if(ismonkey(L))
 					var/mob/living/carbon/monkey/M = L
 					if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
@@ -172,6 +171,10 @@ var/aura_xenhum = "XEDA Danger Aura"
 				else
 					I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
 				client.images += I
+
+				if(L in x_stats.parasite_targets)
+					I = image('icons/mob/hud.dmi', loc = location, icon_state = "hud_parasite", layer = 16)
+					client.images += I
 
 
 /mob/living/carbon/alien/CheckStamina()
