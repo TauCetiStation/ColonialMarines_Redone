@@ -156,14 +156,6 @@
 	else
 		return pick (list("xttrails_1", "xttrails2"))
 
-/mob/living/carbon/alien/start_pulling(var/atom/movable/AM)
-	if(isalienadult(AM))
-		var/mob/living/carbon/alien/humanoid/H = AM
-		if(H.health > 0)
-			src << "<span class='warning'>You can only pull xenomorphs who are in crit.</span>"
-			return
-	..()
-
 //Aimable Transfer Plasma *********************************************************
 /mob/living/carbon/alien/ClickOn(var/atom/A, params)
 	face_atom(A)
