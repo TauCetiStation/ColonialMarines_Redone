@@ -215,7 +215,7 @@
 					var/mob/living/carbon/victim = affecting
 					if(victim.head_bitten)
 						user << "<span class='notice'>Someone else already did that.</span>"
-					else if(victim.health <= 0)
+					else if(victim.stat == DEAD || victim.health <= 0)
 						user.visible_message("<span class='danger'>[user] is attempting to bite [affecting] in the head!</span>")
 						if(do_after(user, 30-x_stats.h_finisher_cd, target = affecting))
 							victim.head_bitten = 1
