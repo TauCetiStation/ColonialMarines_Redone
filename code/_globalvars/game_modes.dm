@@ -6,9 +6,3 @@ var/datum/station_state/start_state = null // Used in round-end report
 
 var/m_wins = 0
 var/a_wins = 0
-
-var/m10_wins = 0
-var/a10_wins = 0
-
-var/m_loss = 0
-var/a_loss = 0

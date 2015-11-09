@@ -185,24 +185,12 @@
 			m_wins = text2num(Lines[1])
 		if(Lines[2])
 			a_wins = text2num(Lines[2])
-		if(Lines[3])
-			m10_wins = text2num(Lines[3])
-		if(Lines[4])
-			a10_wins = text2num(Lines[4])
-		if(Lines[5])
-			m_loss = text2num(Lines[5])
-		if(Lines[6])
-			a_loss = text2num(Lines[6])
 
 /world/proc/save_winrate()
 	var/F = file("data/win_rate.txt")
 	fdel(F)
 	F << m_wins
 	F << a_wins
-	F << m10_wins
-	F << a10_wins
-	F << m_loss
-	F << a_loss
 
 /world/proc/load_mode()
 	//master_mode = "infestation"

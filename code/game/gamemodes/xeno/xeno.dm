@@ -143,7 +143,6 @@
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/nestedhost = (H.status_flags & XENO_HOST) && H.buckled
 		if(H) //Prevent any runtime errors
-
 			if(H.client && H.getorgan(/obj/item/organ/internal/brain) && H.stat != DEAD && !nestedhost && !H.getorgan(/obj/item/organ/internal/alien/hivenode)) // If they're connected/unghosted, alive, not debrained, and not a nested host
 				humansurvivors += 1 //Add them to the amount of people who're alive.
 	for(var/mob/living/carbon/alien/A in living_mob_list)
@@ -225,11 +224,8 @@ datum/game_mode/infestation/proc/check_alien_victory()
 		else
 			world << 'sound/misc/asses_kicked.ogg'
 		round_end_situation += 1
-		if(joined_player_list.len >= 4)
-			a_wins += 1
-			m_loss += 1
 		if(joined_player_list.len >= 10)
-			a10_wins++
+			a_wins++
 
 	else if(finished == 2)
 		feedback_set_details("round_end_result","marine major victory - xenomorph infestation erradicated")
@@ -240,30 +236,19 @@ datum/game_mode/infestation/proc/check_alien_victory()
 		else
 			world << 'sound/misc/hell_march.ogg'
 		round_end_situation += 2
-		if(joined_player_list.len >= 4)
-			m_wins += 1
-			a_loss += 1
 		if(joined_player_list.len >= 10)
-			m10_wins += 1
+			m_wins += 1
 
 	else if(finished == 3)
 		feedback_set_details("round_end_result","marine minor victory - infestation stopped at a great cost")
 		world << "\red <FONT size = 3><B>Marine minor victory.</B></FONT>"
 		world << "\red <FONT size = 3><B>Both the marines and the aliens have been terminated. At least the infestation has been erradicated!</B></FONT>"
-		if(joined_player_list.len >= 4)
-			m_wins += 1
-		if(joined_player_list.len >= 10)
-			m10_wins += 1
 
 	else if(finished == 4)
 		feedback_set_details("round_end_result","alien minor victory - infestation survives")
 		world << "\red <FONT size = 3><B>Alien minor victory.</B></FONT>"
 		world << "\red <FONT size = 3><B>The station has been evacuated... but the infestation remains!</B></FONT>"
 		round_end_situation += 4
-		if(joined_player_list.len >= 4)
-			a_wins += 1
-		if(joined_player_list.len >= 10)
-			a10_wins += 1
 
 	else if(finished == 5)
 		feedback_set_details("round_end_result","draw - the station has been nuked")
