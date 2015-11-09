@@ -168,6 +168,8 @@ var/aura_xenhum = "XEDA Danger Aura"
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xeno, layer = 16)
 					else
 						I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
+				else if(istype(L, /mob/living/simple_animal/hostile/alien))
+					I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_xenhum, layer = 16)
 				else
 					I = image('icons/Xeno/Auras.dmi', loc = location, icon_state = aura_safe, layer = 16)
 				client.images += I
