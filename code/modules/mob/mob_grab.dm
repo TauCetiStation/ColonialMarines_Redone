@@ -266,6 +266,8 @@
 				else
 					user << "<span class='notice'>You're not sure how to do that.</span>"
 				return
+			else
+				user << "<span class='notice'>Aim head for head bite.</span>"
 		else if(ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting))
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
