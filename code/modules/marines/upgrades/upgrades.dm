@@ -27,11 +27,11 @@
 
 /datum/upgrade/vp78/on_level()
 	for(var/obj/machinery/vending/marine/weapons/V in world)
-		var/list/upgrade = list(/obj/item/weapon/gun/projectile/pistol/VP78 = 5)
+		var/list/upgrade = list(/obj/item/weapon/gun/projectile/pistol/VP78 = 10)
 		V.build_inventory(upgrade)
 
 	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/vp78 = 10)
+		var/list/upgrade = list(/obj/item/ammo_box/magazine/vp78 = 30)
 		V.build_inventory(upgrade)
 
 //Shotgun
@@ -49,7 +49,7 @@
 
 /datum/upgrade/shotcom/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/weapon/gun/projectile/shotgun/combat = 6)
+		var/list/upgrade = list(/obj/item/weapon/gun/projectile/shotgun/combat = 10)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m37_flec
@@ -101,7 +101,7 @@
 
 /datum/upgrade/m39_high_cap/on_level()
 	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/m39/highcap = 10)
+		var/list/upgrade = list(/obj/item/ammo_box/magazine/m39/highcap = 20)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m39_incendiary
@@ -120,7 +120,7 @@
 
 /datum/upgrade/m39_incendiary/on_level()
 	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/m39/highcap/incendiary = 10)
+		var/list/upgrade = list(/obj/item/ammo_box/magazine/m39/highcap/incendiary = 20)
 		V.build_inventory(upgrade)
 
 //"M41A Pulse Rifle MK2"
@@ -156,8 +156,8 @@
 /datum/upgrade/m59b/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(
-								/obj/item/weapon/gun/projectile/Assault/m59b = 2,
-								/obj/item/ammo_box/magazine/a10x28 = 4)
+								/obj/item/weapon/gun/projectile/Assault/m59b = 4,
+								/obj/item/ammo_box/magazine/a10x28 = 8)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m59b_harn
@@ -178,9 +178,9 @@
 /datum/upgrade/m59b_harn/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(
-								/obj/item/clothing/suit/storage/marine2/harness = 4,
-								/obj/item/clothing/glasses/hms = 4,
-								/obj/item/weapon/stock_parts/cell/harness_cell = 20)
+								/obj/item/clothing/suit/storage/marine2/harness = 8,
+								/obj/item/clothing/glasses/hms = 8,
+								/obj/item/weapon/stock_parts/cell/harness_cell = 32)
 		V.build_inventory(upgrade)
 
 //"M42C Rifle"
@@ -199,8 +199,8 @@
 /datum/upgrade/m42c/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
 		var/list/upgrade = list(
-								/obj/item/weapon/gun/projectile/Assault/m42c = 2,
-								/obj/item/ammo_box/magazine/m42c = 10)
+								/obj/item/weapon/gun/projectile/Assault/m42c = 4,
+								/obj/item/ammo_box/magazine/m42c = 16)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m42c_scope
@@ -219,7 +219,7 @@
 
 /datum/upgrade/m42c_scope/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/device/mod/scope1224 = 2)
+		var/list/upgrade = list(/obj/item/device/mod/scope1224 = 4)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m42c_inc
@@ -238,7 +238,7 @@
 
 /datum/upgrade/m42c_inc/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c/incendiary = 10)
+		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c/incendiary = 20)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m42c_spc
@@ -257,7 +257,7 @@
 
 /datum/upgrade/m42c_spc/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c/special = 10)
+		var/list/upgrade = list(/obj/item/ammo_box/magazine/m42c/special = 20)
 		V.build_inventory(upgrade)
 
 //"M-6B Rocket Launcher"
@@ -275,7 +275,7 @@
 
 /datum/upgrade/m6b/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/weapon/gun/projectile/rocket/m6b = 2)
+		var/list/upgrade = list(/obj/item/weapon/gun/projectile/rocket/m6b = 3)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m6b_r_he
