@@ -11,6 +11,7 @@
 
 	var/allow_upgrade = 1
 	var/last_upgrade = 0
+	var/allow_bite = 1
 
 	layer = 21
 	item_state = "nothing"
@@ -214,8 +215,9 @@
 				if(x_stats.h_finisher)
 					var/mob/living/carbon/victim = affecting
 					if(victim.head_bitten)
-						user << "<span class='notice'>Someone else already did that.</span>"
-					else if(victim.stat == DEAD || victim.health <= 0)
+						user << "<span class='notice'>There is no brain to bite.</span>"
+					else if(allow_bite && (victim.stat == DEAD || victim.health <= 0))
+						allow_bite = 0
 						user.visible_message("<span class='danger'>[user] is attempting to bite [affecting] in the head!</span>")
 						if(do_after(user, 30-x_stats.h_finisher_cd, target = affecting))
 							victim.head_bitten = 1
@@ -256,6 +258,9 @@
 							var/obj/item/organ/internal/alien/carapace/C = attacker.getorgan(/obj/item/organ/internal/alien/carapace)
 							if(C)
 								C.health = min(C.maxHealth, C.health + a_maxArmorHeal)
+						allow_bite = 1
+					else if(!allow_bite)
+						user << "<span class='notice'>We are in mid process of biting someone's head and we have only one mouth!</span>"
 					else
 						user << "<span class='notice'>Can only finish those who are in critical state.</span>"
 				else
