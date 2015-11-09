@@ -131,6 +131,7 @@ mob/living/carbon/alien/humanoid/queen/death(gibbed)
 
 /datum/hive_controller
 	var/mob/living/carbon/alien/humanoid/queen/active_queen
+	var/queen_no_client = 0
 	var/psychicstrength = 5
 	var/psychicstrengthmax = 500
 	var/psychicstrengthused = 0
@@ -147,9 +148,20 @@ mob/living/carbon/alien/humanoid/queen/death(gibbed)
 				psychicstrength += 1
 				count = 0
 			if(istype(active_queen))
-				if(active_queen.stat == DEAD)
-					psychicstrength = round(psychicstrength / 2)
+				if(!active_queen.client)
+					queen_no_client++
+				else
+					queen_no_client = 0
+
+				if(queen_no_client == 60)
+					active_queen.gib()
+					queen_no_client = 0
 					active_queen = null
+				else
+					if(active_queen.stat == DEAD)
+						psychicstrength = round(psychicstrength / 2)
+						queen_no_client = 0
+						active_queen = null
 			sleep(40)
 
 /var/global/datum/hive_controller/hive_controller = new()

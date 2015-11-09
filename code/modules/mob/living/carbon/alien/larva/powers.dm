@@ -45,25 +45,28 @@
 		L << "<span class='name'>Drones</span> <span class='info'>are the working class, offering the largest plasma storage and generation. They evolve into either the Queen, a Hivelord which specializes in building, or a Carrier, which specializes in support.</span>"
 		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Runner","Sentinel","Drone")
 
+		var/list/potential_queen = list(
+										/mob/living/carbon/alien/humanoid/drone,
+										/mob/living/carbon/alien/humanoid/queen)
 		var/fail = 1
 		var/mob/living/carbon/alien/humanoid/new_xeno
 		switch(alien_caste)
 			if("Runner")
-				for(var/mob/living/carbon/alien/humanoid/drone/D in living_mob_list)
-					if(D && D.client)
+				for(var/mob/living/carbon/alien/humanoid/Q in living_mob_list)
+					if(Q && Q.client && is_type_in_list(Q, potential_queen))
 						fail = 0
 						break
 				if(fail)
-					user << "<span class='danger'>We need a potential queeen first. Become a drone or ask someone else to take that role.</span>"
+					user << "<span class='danger'>We need a potential queen first. Become a drone or ask someone else to take that role.</span>"
 					return 0
 				new_xeno = new /mob/living/carbon/alien/humanoid/runner(L.loc)
 			if("Sentinel")
-				for(var/mob/living/carbon/alien/humanoid/drone/D in living_mob_list)
-					if(D && D.client)
+				for(var/mob/living/carbon/alien/humanoid/Q in living_mob_list)
+					if(Q && Q.client && is_type_in_list(Q, potential_queen))
 						fail = 0
 						break
 				if(fail)
-					user << "<span class='danger'>We need a potential queeen first. Become a drone or ask someone else to take that role.</span>"
+					user << "<span class='danger'>We need a potential queen first. Become a drone or ask someone else to take that role.</span>"
 					return 0
 				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
 			if("Drone")
