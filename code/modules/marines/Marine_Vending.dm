@@ -33,7 +33,7 @@
 					/obj/item/device/flashlight/flare = 25,
 					/obj/item/device/flashlight/seclite = 10,
 					/obj/item/device/radio/marine = 10,
-					/obj/item/weapon/grenade/explosive = 5,
+					/obj/item/weapon/grenade/explosive = 2,
 					/obj/item/weapon/combat_knife = 25,
 					/obj/item/weapon/storage/box/marine = 10
 					)
