@@ -5,9 +5,6 @@
 
 	if(..())
 		if(M.a_intent == "harm")
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-
 			if(!istype(M, /mob/living/carbon/alien/humanoid/queen) && x_stats.q_xeno_canharm == 0)
 				var/found_queen = 0
 				for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
@@ -16,8 +13,11 @@
 						break
 
 				if(found_queen)
-					M << "<span class='warning'>You may not harm any host. That's an order from the Queen.</span>"
-					return 0
+					M << "<span class='warning'>You may not harm any host. That's an order from the Queen. <B>Disarm intent now in effect.</B></span>"
+					M.a_intent_change("disarm")
+		if(M.a_intent == "harm")
+			if (w_uniform)
+				w_uniform.add_fingerprint(M)
 
 			var/damage = rand(M.damagemin, M.damagemax)
 			if(!damage)

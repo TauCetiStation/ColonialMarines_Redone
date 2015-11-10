@@ -57,6 +57,7 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	switch(level)
 		if(1)
 			x_stats.q_xeno_canharm_ability = 1
+			x_stats.q_xeno_canharm = 0
 			for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
 				Q.AddAbility(new/obj/effect/proc_holder/alien/order_to_harm(null))
 		if(2)
