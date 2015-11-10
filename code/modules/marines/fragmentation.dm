@@ -1,5 +1,6 @@
 //Fragmentation grenade projectile
 /obj/item/projectile/bullet/pellet/fragment
+	name = "frag"
 	damage = 15
 	no_message = 1
 	dispersion = 5.0
@@ -26,7 +27,7 @@
 	icon_state = "frag"
 
 	var/num_fragments = 200  //total number of fragments produced by the grenade
-	var/fragment_damage = 15
+	var/fragment_damage = 30
 	var/damage_step = 2      //projectiles lose a fragment each time they travel this distance. Can be a non-integer.
 	var/explosion_size = 2   //size of the center explosion
 
