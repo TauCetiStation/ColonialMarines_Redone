@@ -333,15 +333,15 @@
 	id = "gr_frag"
 	category = list("Mods and Special")
 
-	vendor = "ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 300
 	cost = 1
 	maxlevel = 1
 
 /datum/upgrade/gr_frag/on_level()
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/weapon/grenade/frag = 5)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(/obj/item/weapon/grenade/frag = 10)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/sentry
