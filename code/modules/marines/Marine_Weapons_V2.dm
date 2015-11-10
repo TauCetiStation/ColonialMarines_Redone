@@ -1200,6 +1200,12 @@
 	prime()
 		spawn(0)
 			explosion(src.loc,-1,-1,3)
+			if(isliving(loc))
+				var/mob/living/L = loc
+				if(prob(50))
+					L.gib()
+				else
+					L.adjustBruteLoss(150)
 			qdel(src)
 		return
 
