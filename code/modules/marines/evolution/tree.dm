@@ -90,7 +90,7 @@ var/datum/evo_tree/evolution_tree = new /datum/evo_tree()
 	return 1
 
 /datum/evo_tree/proc/main_win(mob/user)
-	var/dat = "<div class='statusDisplay'><b>Researching:</b> [being_researched ? "[being_researched.name] ([progress]% done)" : "nothing"]</div>"
+	var/dat = "<div class='statusDisplay'><b>Researching:</b> [being_researched ? "[being_researched.name]" : "nothing"]</div>"
 	dat += {"<div class='statusDisplayfixed'><b>Progress:</b> 
 				Queen: <statp>[evolution_tree.tree_progress["Queen"]]</statp> | 
 				Hive: <statp>[evolution_tree.tree_progress["Hive"]]</statp> | 
@@ -163,7 +163,8 @@ var/datum/evo_tree/evolution_tree = new /datum/evo_tree()
 	return dat
 
 /datum/evo_tree/proc/viewer_win(mob/user)
-	var/dat = {"<div class='statusDisplayfixed'><b>Progress:</b> 
+	var/dat = "<div class='statusDisplay'><b>Researching:</b> [being_researched ? "[being_researched.name]" : "nothing"]</div>"
+	dat += {"<div class='statusDisplayfixed'><b>Progress:</b> 
 				Queen: <statp>[evolution_tree.tree_progress["Queen"]]</statp> | 
 				Hive: <statp>[evolution_tree.tree_progress["Hive"]]</statp> | 
 				Drone: <statp>[evolution_tree.tree_progress["Drone"]]</statp> | 
@@ -187,22 +188,21 @@ var/datum/evo_tree/evolution_tree = new /datum/evo_tree()
 
 		var/next_level = E.level + 1
 		dat += "<div>"
-		switch(can_level(E))
-			if(0 to 1)
-				dat += "<span class='linkOff'>[E.name] ([E.level] / [E.maxlevel])"
-				dat += "<span class='description'>"
-				dat += "<span class='average'>[E.desc]</span>"
-				if(E.desc_level.len && E.desc_level.len >= next_level)
-					dat += "<br>[E.desc_level[next_level]]"
-				dat += "</span>"
-				dat += "</a>"
-			if(2)
-				dat += "<span class='linkMax'>[E.name] (Maxed)"
-				dat += "<span class='description'><span class='average'>[E.desc]</span>"
-				if(E.desc_level.len && E.desc_level.len >= next_level)
-					dat += "<br>[E.desc_level[next_level]]"
-				dat += "</span>"
-				dat += "</span>"
+		if(E.level < E.maxlevel)
+			dat += "<span class='linkOff'>[E.name] ([E.level] / [E.maxlevel])"
+			dat += "<span class='description'>"
+			dat += "<span class='average'>[E.desc]</span>"
+			if(E.desc_level.len && E.desc_level.len >= next_level)
+				dat += "<br>[E.desc_level[next_level]]"
+			dat += "</span>"
+			dat += "</a>"
+		else
+			dat += "<span class='linkMax'>[E.name] (Maxed)"
+			dat += "<span class='description'><span class='average'>[E.desc]</span>"
+			if(E.desc_level.len && E.desc_level.len >= next_level)
+				dat += "<br>[E.desc_level[next_level]]"
+			dat += "</span>"
+			dat += "</span>"
 		dat += "</div>"
 	dat += "</div><br><br>"
 	return dat
