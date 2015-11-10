@@ -99,8 +99,8 @@ Doesn't work on other aliens/AI.*/
 		user << "Can't plant weeds so often."
 		return 0
 
-	if(locate(/obj/structure/alien/weeds/node) in range(4,user))
-		user << "There's already a weed node nearby."
+	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
+		src << "There's already a weed node here."
 		return 0
 
 	cooldown = world.time + 150

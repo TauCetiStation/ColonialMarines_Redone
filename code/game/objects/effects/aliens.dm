@@ -385,15 +385,6 @@
 /obj/structure/alien/weeds/node/New()
 	..(loc, src)
 
-/obj/structure/alien/weeds/node/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(islarva(user))
-		return
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	user.visible_message("<span class='danger'>[user] slices the [name] apart!</span>")
-	qdel(src)
-
 #undef NODERANGE
 
 
