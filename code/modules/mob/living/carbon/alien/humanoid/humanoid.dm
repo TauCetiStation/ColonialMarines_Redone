@@ -273,14 +273,14 @@
 	src << "\green You begin to evolve!"
 	visible_message("<span class='noticealien'>[src] begins to twist and contort!</span>")
 
-	var/timer = 3000
+	var/timer = 1800
 
-	if(we_inside_hive(src))
+	if(we_inside_hive(src) && x_stats.q_declare_hive_level >= 3)
 		switch(x_stats.q_declare_hive_level)
+			if(2)
+				timer -= 600
 			if(3)
 				timer -= 1200
-			if(4)
-				timer -= 2400
 		src << "<span class='noticealien'><b>This is our home</b> evolution in effect. (Process shortened to [timer/10] seconds!)</span>"
 	timer += world.time
 	spawn()

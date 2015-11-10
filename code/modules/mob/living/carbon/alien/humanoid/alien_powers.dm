@@ -454,13 +454,14 @@ Doesn't work on other aliens/AI.*/
 		if(x_stats.hive_1 == null)
 			if(do_mob(user, user, 100))
 				x_stats.hive_1 = get_turf(user)
-
 				x_stats.q_declare_hive_charge--
 				return 1
 		else if(x_stats.hive_2 == null)
-			if(do_mob(user, user, 100))
+			var/turf/T = x_stats.hive_1
+			if(get_dist(T,get_turf(user)) <= 20)
+				user << "\red We are too close to another hive."
+			else if(do_mob(user, user, 100))
 				x_stats.hive_2 = get_turf(user)
-
 				x_stats.q_declare_hive_charge--
 				return 1
 		else
@@ -894,7 +895,7 @@ Doesn't work on other aliens/AI.*/
 	if(answer == "Cancel") return 0
 
 	if(!we_inside_hive(user))
-		answer = alert(user, "There is no hive nearby. Evolve process will take 2 minutes",,"Proceed","Cancel")
+		answer = alert(user, "There is no hive nearby. Evolve process will take 3 minutes",,"Proceed","Cancel")
 		if(answer == "Cancel") return 0
 
 	if(!isturf(user.loc))

@@ -68,15 +68,14 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 	desc = "<xeno>This is our home</xeno><br>Mark current location in 10x10 as a hive location.<br>Can lay <stat>eggs</stat> only inside hive location.<br>Decrease <stat>time</stat> taken to evolve from one lifeform into another for your <xeno>xenomorphs</xeno> while they are inside <stat>hive</stat>."
 	desc_level = list(
 					1 = "Can mark <statp>1</statp> location as a hive.",
-					2 = "Can mark <statp>2</statp> locations as a hive.",
-					3 = "Can mark <statc>2</statc> locations as a hive.<br><statc>3</statc> minutes to evolve into another lifeform.",
-					4 = "Can mark <statc>2</statc> locations as a hive.<br><statc>1</statc> minutes to evolve into another lifeform.",
-					5 = "Can mark <statc>2</statc> locations as a hive.<br><statc>1</statc> minutes to evolve into another lifeform.")
+					2 = "Can mark <statp>2</statp> locations as a hive.<br><statp>2</statp> minutes to evolve into another lifeform.",
+					3 = "Can mark <statc>2</statc> locations as a hive.<br><statp>1</statp> minutes to evolve into another lifeform.",
+					4 = "Can mark <statc>2</statc> locations as a hive.<br><statc>1</statc> minutes to evolve into another lifeform.")
 	id = "q_dh"
 
 	research_time = 600
 	cost = COST_T1
-	maxlevel = 4
+	maxlevel = 3
 
 /datum/evolution/queen/declare_hive/on_level()
 	switch(level)
