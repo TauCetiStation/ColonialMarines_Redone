@@ -14,6 +14,8 @@
 	mob_size = MOB_SIZE_LARGE
 	custom_pixel_x_offset = -16
 
+	var/in_use_reinforce = 0
+
 /mob/living/carbon/alien/humanoid/hivelord/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/hivelord
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
@@ -33,6 +35,20 @@
 
 	openSound = null //Moar stealth ~Zve
 	closeSound = null
+
+/obj/structure/mineral_door/resin/proc/can_reinforce()
+	return 1
+
+/obj/structure/mineral_door/resin/reinforced
+	icon = 'icons/obj/doors/reinforced_resin.dmi'
+
+/obj/structure/mineral_door/resin/reinforced/New()
+	..()
+	name = "reinforced resin door"
+	hardness *= x_stats.d_hivelord_reinf
+
+/obj/structure/mineral_door/resin/reinforced/can_reinforce()
+	return 0
 
 /obj/structure/mineral_door/resin/Dismantle(devastated = 0)
 	qdel(src)
@@ -88,10 +104,10 @@
 			if(prob(20))
 				Dismantle()
 			else
-				hardness -= rand(100,200)
+				hardness -= rand(100,300)
 				CheckHardness()
 		if(3)
-			hardness -= rand(50,125)
+			hardness -= rand(50,250)
 			CheckHardness()
 	return
 
@@ -100,21 +116,44 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers["alt"])
 		if(isobj(A) && !src.stat && A.Adjacent(src))
-			if(istype(A, /obj/structure/alien/resin/wall) || istype(A, /obj/structure/alien/resin/membrane))
-				if(x_stats.d_hivelord_reinf)
+			if(x_stats.d_hivelord_reinf)
+				if(istype(A, /obj/structure/alien/resin/wall) || istype(A, /obj/structure/alien/resin/membrane))
 					var/obj/structure/alien/resin/W = A
 					if(W.can_reinforce())
-						if(getPlasma() >= 750)
-							if(do_after(src, 150, target = W))
-								if(getPlasma() >= 750)
-									src.adjustPlasma(-750)
-									new /obj/structure/alien/weeds(W.loc)
-									if(istype(W, /obj/structure/alien/resin/wall))
-										new /obj/structure/alien/resin/wall/reinforced(W.loc)
-									else if(istype(W, /obj/structure/alien/resin/membrane))
-										new /obj/structure/alien/resin/membrane/reinforced(W.loc)
-									qdel(W)
+						if(getPlasma() >= 500)
+							if(in_use_reinforce)
+								return
+							in_use_reinforce = 1
+							if(do_after(src, 50, target = W))
+								if(getPlasma() >= 500)
+									if(x_points_controller.use_points(client, 4))
+										src.adjustPlasma(-500)
+										new /obj/structure/alien/weeds(W.loc)
+										if(istype(W, /obj/structure/alien/resin/wall))
+											new /obj/structure/alien/resin/wall/reinforced(W.loc)
+										else if(istype(W, /obj/structure/alien/resin/membrane))
+											new /obj/structure/alien/resin/membrane/reinforced(W.loc)
+										qdel(W)
+							in_use_reinforce = 0
 						else
-							src << {"<span class='noticealien'>We need 750 plasma to reinforce [W.name].</span>"}
+							src << {"<span class='noticealien'>We need 500 plasma to reinforce [W.name].</span>"}
+						return
+				else if(istype(A, /obj/structure/mineral_door/resin))
+					var/obj/structure/mineral_door/resin/R = A
+					if(R.can_reinforce())
+						if(getPlasma() >= 500)
+							if(in_use_reinforce)
+								return
+							in_use_reinforce = 1
+							if(do_after(src, 50, target = R))
+								if(getPlasma() >= 500)
+									if(x_points_controller.use_points(client, 4))
+										src.adjustPlasma(-500)
+										new /obj/structure/alien/weeds(R.loc)
+										new /obj/structure/mineral_door/resin/reinforced(R.loc)
+										qdel(R)
+							in_use_reinforce = 0
+						else
+							src << {"<span class='noticealien'>We need 500 plasma to reinforce [R.name].</span>"}
 						return
 	..()

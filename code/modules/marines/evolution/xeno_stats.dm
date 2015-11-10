@@ -32,7 +32,7 @@
 			keys["[C.ckey]"] -= how_many
 			return 1
 		else
-			C << "<span class='noticealien'>Not enough evolution points.</span>"
+			C << "<span class='noticealien'>Not enough evolution points. [how_many] points required.</span>"
 			return 0
 
 /datum/xeno_points_controller/proc/add_users()

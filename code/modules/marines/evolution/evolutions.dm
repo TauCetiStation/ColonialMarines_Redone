@@ -419,25 +419,20 @@ var/datum/xeno_stats/x_stats = new /datum/xeno_stats
 
 /datum/evolution/drone/reinf_resin
 	name = "Reinforced Resin Structures"
-	desc = "<xeno>Reinforced Resin Structures</xeno><br>Hivelord will be able to reinforce resin <stat>wall</stat> and <stat>membrane</stat> at huge cost of a plasma (Alt+click)."
+	desc = "<xeno>Reinforced Resin Structures</xeno><br>Hivelord will be able to reinforce resin <stat>wall</stat>, <stat>membrane</stat> and <stat>door</stat> at huge cost of a plasma (Alt+click)."
 	desc_level = list(
-					1 = "Reinforce structure by <statp>50</statp>%.",
-					2 = "Reinforce structure by <statp>100</statp>%.",
-					3 = "Reinforce structure by <statc>100</statc>%.")
+					1 = "Reinforce structure by <statp>100</statp>%.",
+					2 = "Reinforce structure by <statc>100</statc>%.")
 	id = "d_rrs"
 
 	tier = 3
-	research_time = RESEARCH_T3
+	research_time = RESEARCH_T3 + 5
 	cost = COST_T3
-	maxlevel = 2
+	maxlevel = 1
 	req_evolution = list("d_hiv" = 1)
 
 /datum/evolution/drone/reinf_resin/on_level()
-	switch(level)
-		if(1)
-			x_stats.d_hivelord_reinf = 1.50
-		if(2)
-			x_stats.d_hivelord_reinf = 2
+	x_stats.d_hivelord_reinf = 2
 	..()
 
 //--------------------------------SENTINEL--------------------------------

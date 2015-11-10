@@ -907,8 +907,6 @@ Doesn't work on other aliens/AI.*/
 	if(x_points_controller.use_points(user.client, evolve_cost))
 		user.do_evolve(choice)
 		return 1
-	else
-		user << "<span class='noticealien'>[evolve_cost] evolution points required.</span>"
 
 	return 0
 
