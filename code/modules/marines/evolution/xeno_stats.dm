@@ -227,7 +227,7 @@
 	tackle_chance	= list("base" = 60,		"bonus" = list("2" = 5,		"3" = 10))	//75
 
 /datum/xeno_stats/corroder
-	max_health		= list("base" = 200,	"bonus" = list("2" = 25,	"3" = 25))	//250
+	max_health		= list("base" = 175,	"bonus" = list("2" = 25,	"3" = 25))	//225
 	heal_rate		= list("base" = 2,		"bonus" = list("2" = 2,		"3" = 2))	//6
 	armor			= list("base" = 25,		"bonus" = list("2" = 0,		"3" = 5))	//30
 	max_plasma		= list("base" = 150,	"bonus" = list("2" = 25,	"3" = 25))	//200
