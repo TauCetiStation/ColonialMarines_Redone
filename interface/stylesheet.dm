@@ -85,7 +85,8 @@ h1.alert, h2.alert		{color: #000000;}
 
 .alien					{color: #543354;}
 .noticealien			{color: #007FBF;	font-weight: bold;}
-.alertalien				{color: #00c000;	font-weight: bold;}
+.alertalien				{color: #00AA00;	font-weight: bold;}
+.alienskill				{color: #96AD00;}
 
 .interface				{color: #330033;}
 
