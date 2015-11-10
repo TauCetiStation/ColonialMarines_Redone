@@ -124,12 +124,13 @@
 				return
 
 		if (2.0)
-			b_loss += 60
+			b_loss += rand(180,300)
 
-			f_loss += 60
-			if (prob(getarmor(null, "bomb")))
-				b_loss = b_loss/1.5
-				f_loss = f_loss/1.5
+			f_loss += rand(15,30)
+			var/bomb_resist = getarmor(null, "bomb")
+			if(bomb_resist)
+				b_loss = b_loss*(100-bomb_resist)/100
+				f_loss = f_loss*(100-bomb_resist)/100
 				shred_clothing(1,25)
 			else
 				shred_clothing(1,50)
@@ -143,9 +144,10 @@
 			if(casual_mode)
 				b_loss = 0
 			else
-				b_loss += 30
-				if (prob(getarmor(null, "bomb")))
-					b_loss = b_loss/2
+				b_loss += rand(120,180)
+				var/bomb_resist = getarmor(null, "bomb")
+				if(bomb_resist)
+					b_loss = b_loss*(100-bomb_resist)/100
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(50))
@@ -157,7 +159,7 @@
 			if("head")
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
 			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+				update |= temp.take_damage(b_loss * 0.6, f_loss * 0.6)
 			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 			if("r_arm")

@@ -109,15 +109,15 @@
 			return
 
 		if (2.0)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
-			adjustEarDamage(30,120)
+			adjustBruteLoss(rand(180,300))
+			adjustFireLoss(rand(15,30))
+			adjustEarDamage(10,30)
 
 		if(3.0)
-			adjustBruteLoss(30)
+			adjustBruteLoss(rand(120,180))
 			if (prob(50))
 				Paralyse(1)
-			adjustEarDamage(15,60)
+			adjustEarDamage(5,20)
 
 	updatehealth()
 
