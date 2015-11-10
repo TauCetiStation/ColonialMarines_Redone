@@ -214,9 +214,18 @@
 			if(user.zone_sel.selecting == "head")
 				if(x_stats.h_finisher)
 					var/mob/living/carbon/victim = affecting
+					if(!istype(M, /mob/living/carbon/alien/humanoid/queen) && x_stats.q_xeno_canharm == 0)
+						var/found_queen = 0
+						for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
+							if(!Q.stat)
+								found_queen = 1
+								break
+						if(found_queen)
+							M << "<span class='warning'>You may not harm any host. That's an order from the Queen.</span>"
+							return
 					if(victim.head_bitten)
 						user << "<span class='notice'>There is no brain to bite.</span>"
-					else if(allow_bite && (victim.stat == DEAD || victim.health <= 0))
+					else if(allow_bite)
 						allow_bite = 0
 						user.visible_message("<span class='danger'>[user] is attempting to bite [affecting] in the head!</span>")
 						if(do_after(user, 30-x_stats.h_finisher_cd, target = affecting))
@@ -261,8 +270,6 @@
 						allow_bite = 1
 					else if(!allow_bite)
 						user << "<span class='notice'>We are in mid process of biting someone's head and we have only one mouth!</span>"
-					else
-						user << "<span class='notice'>Can only finish those who are in critical state.</span>"
 				else
 					user << "<span class='notice'>You're not sure how to do that.</span>"
 				return
