@@ -130,14 +130,14 @@
 	id = "m41a_u_gren"
 	category = list("M41A Pulse Rifle MK2")
 
-	vendor = "ColMarAmmo"
+	vendor = "ColMarSpecial"
 
 	research_time = 300
 	maxlevel = 1
 
 /datum/upgrade/m41a_u_gren/on_level()
-	for(var/obj/machinery/vending/marine/ammunition/V in world)
-		var/list/upgrade = list(/obj/item/ammo_box/a40mm = 2)
+	for(var/obj/machinery/vending/marine/special/V in world)
+		var/list/upgrade = list(/obj/item/ammo_box/a40mm = 4)
 		V.build_inventory(upgrade)
 
 //"M59B Smartgun"
