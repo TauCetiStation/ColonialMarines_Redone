@@ -24,7 +24,7 @@
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
 	var/change_position_cooldown = -1
 	//Jobs you cannot open new positions for
-	var/list/blacklisted = list()
+	var/list/blacklisted = list("Marine")
 	//var/list/blacklisted = list(
 	//	"AI",
 	//	"Assistant",
