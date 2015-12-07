@@ -289,9 +289,9 @@
 	research_time = 420
 	maxlevel = 1
 
-/datum/upgrade/m6b/on_level()
+/datum/upgrade/m6b_r_he/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/ammo_casing/rocket/he = 5)
+		var/list/upgrade = list(/obj/item/ammo_casing/rocket/he = 6)
 		V.build_inventory(upgrade)
 
 /datum/upgrade/m6b_r_ap
@@ -305,9 +305,9 @@
 	research_time = 420
 	maxlevel = 1
 
-/datum/upgrade/m6b/on_level()
+/datum/upgrade/m6b_r_ap/on_level()
 	for(var/obj/machinery/vending/marine/special/V in world)
-		var/list/upgrade = list(/obj/item/ammo_casing/rocket/ap = 5)
+		var/list/upgrade = list(/obj/item/ammo_casing/rocket/ap = 6)
 		V.build_inventory(upgrade)
 
 //Weapon Mods and Special
