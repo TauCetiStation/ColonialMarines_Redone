@@ -4,6 +4,13 @@
 		. +=  move_delay_add + 3
 	else
 		. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
+	var/slow = (staminaloss/(maxHealth*2))*100
+	if(slow > 80)
+		. += 3	 
+	if((slow<=80)&&(slow > 60))
+		. += 2
+	if((slow<=60)&&(slow > 40))
+		. += 1	
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()
