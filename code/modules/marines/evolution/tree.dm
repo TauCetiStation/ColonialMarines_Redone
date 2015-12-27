@@ -1,22 +1,3 @@
-/* For Debug use only
-/mob/verb/debug_controller(xeno_evolution in list("Evolution Tree","X Stats","Xeno Controller"))
-	set category = "Test"
-	set name = "Debug Evolution"
-	set desc = "Debug the evolutions."
-
-	var/mob/user = usr
-	if(!user.client.holder)	return
-	switch(xeno_evolution)
-		if("Evolution Tree")
-			user.client.debug_variables(evolution_tree)
-
-		if("X Stats")
-			user.client.debug_variables(x_stats)
-
-		if("Xeno Controller")
-			user.client.debug_variables(x_points_controller)
-	return*/
-
 /datum/evo_tree
 	var/list/known_evolutions = list()
 

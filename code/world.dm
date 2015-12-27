@@ -179,18 +179,22 @@
 			stealth_keys += lowertext(X)
 
 /world/proc/load_winrate()
-	var/list/Lines = file2list("data/win_rate.txt")
-	if(Lines.len)
-		if(Lines[1])
-			m_wins = text2num(Lines[1])
-		if(Lines[2])
-			a_wins = text2num(Lines[2])
+	wr_savefile = "data/winrate.sav"
+	var/savefile/S = new /savefile(wr_savefile)
+	if(!S)					return 0
+	S.cd = "/"
+
+	S.["m_wins"]			>> m_wins
+	S.["a_wins"]			>> a_wins
 
 /world/proc/save_winrate()
-	var/F = file("data/win_rate.txt")
-	fdel(F)
-	F << m_wins
-	F << a_wins
+	wr_savefile = "data/winrate.sav"
+	var/savefile/S = new /savefile(wr_savefile)
+	if(!S)					return 0
+	S.cd = "/"
+
+	S.["m_wins"]			<< m_wins
+	S.["a_wins"]			<< a_wins
 
 /world/proc/load_mode()
 	//master_mode = "infestation"
