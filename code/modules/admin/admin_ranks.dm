@@ -278,10 +278,12 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			R = rank_names[new_rank]
 			if(!R)	//rank with that name doesn't exist yet - make it
-				//if(D)	R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
-				//else	R = new(new_rank)							//blank new admin_rank
-				R = new(new_rank)
-				addranktodb(new_rank)
+				if(D)
+					R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
+					addranktodb(new_rank, D.rank.rights)
+				else
+					R = new(new_rank)							//blank new admin_rank
+					addranktodb(new_rank)
 				admin_ranks += R
 
 			if(D)	//they were previously an admin
