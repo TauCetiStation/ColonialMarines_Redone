@@ -326,8 +326,8 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			D.associate(C)						//link up with the client and add verbs
 
 			updaterankflagstodb(D.rank.name,D.rank.rights)
-			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
-			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
+			message_admins("[key_name(usr)] added keyword [keyword] to permission of [D.rank.name]")
+			log_admin("[key_name(usr)] added keyword [keyword] to permission of [D.rank.name]")
 			log_admin_permission_modification(adm_ckey, D.rank.rights)
 
 	edit_admin_permissions()
