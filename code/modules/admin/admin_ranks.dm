@@ -278,8 +278,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			R = rank_names[new_rank]
 			if(!R)	//rank with that name doesn't exist yet - make it
-				if(D)	R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
-				else	R = new(new_rank)							//blank new admin_rank
+				//if(D)	R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
+				//else	R = new(new_rank)							//blank new admin_rank
+				R = new(new_rank)
+				addranktodb(new_rank)
 				admin_ranks += R
 
 			if(D)	//they were previously an admin
@@ -299,6 +301,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		if("permissions")
 			if(!D)	return	//they're not an admin!
 
+			if(D.rank.name in list("Host","GameMaster")) //No point in editing those ranks.
+				return
+
 			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
 			if(!keyword)	return
 
@@ -309,8 +314,8 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			D.disassociate()
 
-			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
-				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
+			//if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
+			//	D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
 
 			D.rank.process_keyword(keyword)
@@ -318,6 +323,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
+			updaterankflagstodb(D.rank.name,D.rank.rights)
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin_permission_modification(adm_ckey, D.rank.rights)
@@ -332,4 +338,23 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	query_update.Execute()
+
+/datum/admins/proc/addranktodb(newrank,flags=0)
+	establish_db_connection()
+	if (!dbcon.IsConnected())
+		return
+
+	var/sql_admin_rank = sanitizeSQL(newrank)
+
+	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `[format_table_name("admin_ranks")]` (`id`, `rank`, `flags`) VALUES (null, '[sql_admin_rank]', '[flags]')")
+	insert_query.Execute()
+
+/datum/admins/proc/updaterankflagstodb(rank,flags)
+	establish_db_connection()
+	if (!dbcon.IsConnected())
+		return
+	var/sql_admin_rank = sanitizeSQL(rank)
+
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("admin_ranks")] SET flags = '[flags]' WHERE rank = '[sql_admin_rank]'")
 	query_update.Execute()
