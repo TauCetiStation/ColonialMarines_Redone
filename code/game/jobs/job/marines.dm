@@ -174,8 +174,8 @@
 	flag = SCIRES
 	department_flag = MARINES
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 3
+	spawn_positions = 3
 	supervisors = "the commander"
 	selection_color = "#ffeeee"
 	access = list(access_xeno_containment, access_robotics)
