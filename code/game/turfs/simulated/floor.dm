@@ -47,12 +47,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/simulated/floor/ex_act(severity, target)
 	..()
-	if(target == src)
-		src.ChangeTurf(src.baseturf)
+//	if(target == src)
+//		src.ChangeTurf(src.baseturf)
 	if(target != null)
 		ex_act(3)
 		return
-	switch(severity)
+/*	switch(severity)
 		if(1.0)
 			src.ChangeTurf(src.baseturf)
 		if(2.0)
@@ -73,7 +73,13 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
-	return
+	return*/
+	
+	if(prob(80))
+		src.break_tile_to_plating()
+	else
+		src.break_tile()
+	src.hotspot_expose(1000,CELL_VOLUME)
 
 /turf/simulated/floor/blob_act()
 	return
