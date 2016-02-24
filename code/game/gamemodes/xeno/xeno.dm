@@ -9,6 +9,7 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 1
+	votable = 1
 
 //Adjustable Variables
 	var/min_aliens = 0
