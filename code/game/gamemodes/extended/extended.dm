@@ -2,6 +2,7 @@
 	name = "extended"
 	config_tag = "extended"
 	required_players = 0
+	votable = 1
 	//reroll_friendly = 1
 
 /datum/game_mode/announce()
