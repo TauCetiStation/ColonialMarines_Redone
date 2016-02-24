@@ -158,6 +158,9 @@
 	//	else
 	//		new /obj/effect/overlay/palmtree_r(src)
 
+/turf/simulated/floor/plating/desert/ex_act(severity, target)
+	contents_explosion(severity, target)
+
 /turf/simulated/floor/plating/grass
 	name = "Grass"
 	baseturf = /turf/simulated/floor/plating/desert
@@ -187,6 +190,9 @@
 				new choice(src)
 			else if(prob(1))
 				overlays += image('icons/turf/desert2.dmi', "misc1", pixel_x = rand(-8,8), pixel_y = rand(-8,8))
+
+/turf/simulated/floor/plating/grass/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /turf/simulated/floor/plating/grass/grasscorners
 	name = "Grass"
