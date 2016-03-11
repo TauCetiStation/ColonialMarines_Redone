@@ -31,6 +31,7 @@
 	var/allow_vote_mode = 0				// allow votes to change mode
 	var/allow_vote_crew = 0
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
+	var/vote_delay_c = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
@@ -261,6 +262,7 @@
 					config.vote_no_default = 1
 				if("vote_delay")
 					config.vote_delay = text2num(value)
+					config.vote_delay_c = config.vote_delay
 				if("vote_period")
 					config.vote_period = text2num(value)
 				if("norespawn")

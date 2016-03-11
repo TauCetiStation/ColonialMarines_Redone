@@ -10,6 +10,7 @@
 	world << "<B>Just have fun and role-play!</B>"
 
 /datum/game_mode/extended/pre_setup()
+	config.vote_delay = 6000
 	return 1
 
 /datum/game_mode/extended/post_setup()
