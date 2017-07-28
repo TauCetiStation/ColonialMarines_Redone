@@ -22,7 +22,6 @@
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
-	//new /obj/item/weapon/gun/energy/gun(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -43,7 +42,6 @@
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/mining_voucher(src)
-	//new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/clothing/tie/petcollar(src)
 
 /obj/structure/closet/secure_closet/hos
@@ -62,8 +60,6 @@
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
 	new /obj/item/clothing/head/HoS(src)
-	//new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
-	//new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/megaphone/sec(src)
@@ -72,7 +68,6 @@
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	//new /obj/item/weapon/gun/energy/gun/hos(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -95,7 +90,6 @@
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/weapon/gun/energy/gun/advtaser(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
