@@ -361,7 +361,7 @@
 "gW" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/obj/machinery/door/airlock/glass_command{name = "Sulaco Conference Room"; req_access_txt = "300"},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/wood,/area/sulaco/conference)
 "gX" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/atmospherics/pipe/manifold/supply/hidden{tag = "icon-manifold-b-f (WEST)"; dir = 8},/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/floor/plasteel{icon_state = "neutralcorner"; dir = 1},/area/sulaco/aft_hall)
 "gY" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor/plasteel{icon_state = "neutralcorner"; dir = 4},/area/sulaco/aft_hall)
-"gZ" = (/obj/structure/table/wood,/obj/item/weapon/storage/lockbox/medal,/turf/simulated/floor/wood,/area/sulaco/commander)
+"gZ" = (/obj/structure/table/wood,/obj/item/weapon/storage/lockbox/medal{req_access = list(300)},/turf/simulated/floor/wood,/area/sulaco/commander)
 "ha" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/engine,/area/sulaco/commander)
 "hb" = (/turf/simulated/floor/plasteel,/area/sulaco/research)
 "hc" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel,/area/sulaco/research)
