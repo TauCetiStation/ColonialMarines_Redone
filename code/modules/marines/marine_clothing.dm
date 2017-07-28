@@ -167,19 +167,18 @@
 /obj/item/clothing/suit/storage/marine/officer
 	name = "officer jacket"
 	desc = "The leather is fake, but the style is real."
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 20, bomb = 25, bio = 10, rad = 10)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 25, bio = 10, rad = 10)
 	icon_state = "leatherjack"
 	item_state = "leatherjack"
 	item_color = "leatherjack"
-v
+
 /obj/item/clothing/suit/storage/marine/officer/commander
 	name = "commander jacket"
 	desc = "This single item cost as much as a brand new space station. Remember to drywash."
-	armor = list(melee = 80, bullet = 60, laser = 60, energy = 60, bomb = 100, bio = 100, rad = 100)
+	armor = list(melee = 60, bullet = 40, laser = 40, energy = 40, bomb = 100, bio = 100, rad = 100)
 	icon_state = "capjacket"
 	item_state = "bio_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/storage/marine/officer/chief
 	name = "chief officer coat"
@@ -190,7 +189,7 @@ v
 /obj/item/clothing/suit/storage/marine/officer/technical
 	name = "tech officer coat"
 	desc = "Made to resist high radiation, bio-hazards, explosions, and coffee spills."
-	armor = list(melee = 10, bullet = 80, laser = 10, energy = 10, bomb = 100, bio = 100, rad = 100)
+	armor = list(melee = 10, bullet = 60, laser = 10, energy = 10, bomb = 100, bio = 100, rad = 100)
 	icon_state = "johnny"
 	item_state = "johnny"
 
@@ -199,7 +198,7 @@ v
 	desc = "A suit of armor with heavy plates and padding. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
-	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 80, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 40, laser = 30, energy = 30, bomb = 80, bio = 0, rad = 0)
 
 //GLOVES
 /obj/item/clothing/gloves/marine

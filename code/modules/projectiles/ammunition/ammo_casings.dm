@@ -43,7 +43,7 @@
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
 	desc = "A 12 gauge buckshot shell."
-	icon_state = "gshell"
+	icon_state = "buckshell-live"
 	projectile_type = /obj/item/projectile/bullet/pellet
 	pellets = 5
 	variance = 0.8

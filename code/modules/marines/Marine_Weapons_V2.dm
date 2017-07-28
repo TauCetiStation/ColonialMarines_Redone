@@ -255,7 +255,7 @@
 	name = "M4A3 Magazine (.45)"
 	desc = "A magazine with .45 ammo"
 	icon_state = ".45a"
-	ammo_type = "/obj/item/ammo_casing/m4a3"
+	ammo_type = /obj/item/ammo_casing/m4a3
 	max_ammo = 12
 
 /obj/item/ammo_box/magazine/m4a3/update_icon()
@@ -266,7 +266,7 @@
 	name = "VP78 Magazine"
 	desc = "A magazine with 9mm ammo"
 	icon_state = "vp78"
-	ammo_type = "/obj/item/ammo_casing/vp78"
+	ammo_type = /obj/item/ammo_casing/vp78
 	max_ammo = 18
 
 /obj/item/ammo_box/magazine/vp78/update_icon()
@@ -285,7 +285,7 @@
 	name = "M39 SMG Mag (9mm)"
 	desc = "A 9mm special magazine"
 	icon_state = "9x19p-8"
-	ammo_type = "/obj/item/ammo_casing/m39"
+	ammo_type = /obj/item/ammo_casing/m39
 	max_ammo = 48
 
 /obj/item/ammo_box/magazine/m39/highcap
@@ -296,7 +296,7 @@
 /obj/item/ammo_box/magazine/m39/highcap/incendiary
 	name = "M39 SMG Mag (Incendiary)"
 	desc = "A 9mm special magazine"
-	ammo_type = "/obj/item/ammo_casing/m39/incendiary"
+	ammo_type = /obj/item/ammo_casing/m39/incendiary
 
 /obj/item/ammo_box/magazine/m39/update_icon()
 	..()
@@ -306,7 +306,7 @@
 	name = "M41A Magazine (10mm)"
 	desc = "A 10mm special magazine"
 	icon_state = "10caseless"
-	ammo_type = "/obj/item/ammo_casing/m41"
+	ammo_type = /obj/item/ammo_casing/m41
 	max_ammo = 40
 
 /obj/item/ammo_box/magazine/m41/update_icon()
