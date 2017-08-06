@@ -127,6 +127,7 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	squad = 0
 	if(!card)
 		return
+
 	if(findtext(card.assignment, "Leader") != 0)
 		rank = 1
 	if(findtext(card.assignment, "Alpha") != 0)
@@ -137,6 +138,19 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 		squad = 3
 	if(findtext(card.assignment, "Delta") != 0)
 		squad = 4
+
+	if(helmetCam)
+		switch(squad)
+			if(0)
+				helmetCam.network = list("Sulaco")
+			if(1)
+				helmetCam.network = list("Alpha")
+			if(2)
+				helmetCam.network = list("Bravo")
+			if(3)
+				helmetCam.network = list("Charlie")
+			if(4)
+				helmetCam.network = list("Delta")
 	return
 
 /obj/item/clothing/head/helmet/marine2/equipped(mob/living/carbon/human/user, slot)
@@ -150,7 +164,7 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 /obj/item/clothing/head/helmet/marine2/unequipped(mob/living/carbon/human/user)
 	if(user.head != src)
 		if(helmetCam)
-			helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])" 
+			helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
 
 		if(istype(markingoverlay) && markingoverlay in user.overlays_standing)
 			user.overlays_standing.Remove(markingoverlay)
