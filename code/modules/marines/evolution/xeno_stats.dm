@@ -227,7 +227,7 @@
 	tackle_chance	= list("base" = 60,		"bonus" = list("2" = 5,		"3" = 10))	//75
 
 /datum/xeno_stats/corroder
-	max_health		= list("base" = 175,	"bonus" = list("2" = 25,	"3" = 25))	//225
+	max_health		= list("base" = 350,	"bonus" = list("2" = 25,	"3" = 25))	//400
 	heal_rate		= list("base" = 2,		"bonus" = list("2" = 2,		"3" = 2))	//6
 	armor			= list("base" = 25,		"bonus" = list("2" = 0,		"3" = 5))	//30
 	max_plasma		= list("base" = 150,	"bonus" = list("2" = 25,	"3" = 25))	//200
@@ -277,7 +277,7 @@
 /datum/xeno_stats/crusher
 	max_health		= list("base" = 300,	"bonus" = list("2" = 50,	"3" = 50))	//400
 	heal_rate		= list("base" = 6,		"bonus" = list("2" = 4,		"3" = 5))	//15
-	armor			= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
+	armor			= list("base" = 50,		"bonus" = list("2" = 0,		"3" = 0))
 	max_plasma		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	plasma_rate		= list("base" = 0,		"bonus" = list("2" = 0,		"3" = 0))
 	damage_min		= list("base" = 25,		"bonus" = list("2" = 12,	"3" = 16))	//53
