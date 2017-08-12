@@ -457,12 +457,24 @@
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
 						  verb_say, verb_ask, verb_exclaim, verb_yell)
 
+/obj/item/device/radio/var/static/list/queued_messages = list() // holds frequency numbers as asoc list that contains recent temp messages.
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(radio_freq)
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
+
+			if(!queued_messages["[frequency]"])
+				queued_messages["[frequency]"] = list()
+			if(raw_message in queued_messages["[frequency]"]) // will stop recursive message spam on the same freq using different devices.
+				return
+
+			queued_messages["[frequency]"] += raw_message
 			talk_into(speaker, raw_message, , spans)
+
+			spawn(10)
+				queued_messages["[frequency]"] -= raw_message
+
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 
