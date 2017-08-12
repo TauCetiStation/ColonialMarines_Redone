@@ -147,7 +147,6 @@
 	icon_state = "seclite"
 	item_state = "seclite"
 	force = 9 // Not as good as a stun baton.
-	brightness_on = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
@@ -156,7 +155,6 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
-	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
 	materials = list()
@@ -192,7 +190,6 @@ obj/item/device/flashlight/lamp/bananalamp
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
-	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
 	action_button_name = null	//just pull it manually, neckbeard.
@@ -253,7 +250,6 @@ obj/item/device/flashlight/lamp/bananalamp
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = 4
-	brightness_on = 7
 	icon_state = "torch"
 	item_state = "torch"
 	on_damage = 10
@@ -262,7 +258,6 @@ obj/item/device/flashlight/lamp/bananalamp
 	name = "lantern"
 	icon_state = "lantern"
 	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
 
 
 /obj/item/device/flashlight/slime
@@ -275,7 +270,6 @@ obj/item/device/flashlight/lamp/bananalamp
 	w_class = 2
 	slot_flags = SLOT_BELT
 	materials = list()
-	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=4;syndicate=5"
