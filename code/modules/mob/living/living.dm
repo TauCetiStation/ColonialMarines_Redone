@@ -534,9 +534,14 @@ Sorry Giacom. Please don't be mad :(
 					diary <<"REPORT THIS"
 
 		/////
-		if(pulling && pulling.anchored)
-			stop_pulling()
-			return
+		if(pulling)
+			if(pulling.anchored)
+				stop_pulling()
+				return
+			if(istype(pulling, /obj/structure/closet) && (locate(/mob/living) in pulling.contents))
+				visible_message("<span class='warning'>[src] tried to pull [pulling], but it was too heavy!</span>")
+				stop_pulling()
+				return
 
 		if (!restrained())
 			var/diag = get_dir(src, pulling)
