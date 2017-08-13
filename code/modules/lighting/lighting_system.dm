@@ -193,7 +193,7 @@
 
 /atom/proc/AddLuminosity(delta_luminosity)
 	if(light)
-		SetLuminosity(max(light.radius, delta_luminosity)) // old method -> (light.radius + delta_luminosity)
+		SetLuminosity(light.radius + delta_luminosity)
 	else
 		SetLuminosity(delta_luminosity)
 
