@@ -1148,7 +1148,7 @@
 	item_state = "knife"
 	desc = "When shits gets serious! You can slide this knife into your boots."
 	flags = CONDUCT
-	force = 35.0
+	force = 20
 	w_class = 1.0
 	throwforce = 20
 	throw_speed = 3
