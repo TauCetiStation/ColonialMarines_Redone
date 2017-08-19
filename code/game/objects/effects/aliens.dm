@@ -224,7 +224,7 @@
 
 /obj/structure/alien/weeds/burn()
 	for(var/dirn in alldirs)
-		if(prob(45))
+		if(prob(7))
 			var/turf/T = get_step(src, dirn)
 			var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in T
 			if(W)
