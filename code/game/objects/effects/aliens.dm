@@ -343,6 +343,9 @@
 
 	overlays.Cut()
 
+	if(burn_state)
+		overlays += fire_overlay
+
 	if(!weedImageCache || !weedImageCache.len)
 		weedImageCache = list()
 		weedImageCache.len = 4
