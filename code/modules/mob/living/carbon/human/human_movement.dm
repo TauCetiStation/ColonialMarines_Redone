@@ -65,3 +65,28 @@
 				var/obj/item/clothing/shoes/S = shoes
 				S.step_action()
 
+	if(flip && isturf(loc) && .)
+		SpinAnimation(5, 1)
+		visible_message("<span class='warning'>[src] has made a flip!</span>", "<span class='warning'>You made a flip!</span>")
+		flip = FALSE
+		flip_delay = world.time + 300
+		sleep(2)
+		step(src, direct)
+		sleep(2)
+		step(src, direct)
+
+/mob/living/carbon/human/verb/flip()
+	set name = "Flip"
+	set category = "IC"
+	set desc = "Prepare to make a Flip"
+	if(flip_delay > world.time)
+		src << "<span class='warning'>you need to rest first!</span>"
+		return
+	if(flip)
+		flip = FALSE
+		src << "<span class='warning'>You relax and ready to normal running!</span>"
+	else
+		flip = TRUE
+		src << "<span class='warning'>You prepared to make a flip!</span>"
+
+

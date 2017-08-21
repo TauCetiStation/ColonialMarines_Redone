@@ -4,6 +4,8 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
+	var/flip = FALSE
+	var/flip_delay = 0
 
 
 
