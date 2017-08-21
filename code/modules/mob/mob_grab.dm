@@ -274,18 +274,6 @@
 					user << "<span class='notice'>You're not sure how to do that.</span>"
 				return
 
-		else if(ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting))
-			var/mob/living/carbon/attacker = user
-			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
-			else
-				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			affecting.loc = user
-			attacker.stomach_contents.Add(affecting)
-			qdel(src)
-
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
 		if( (ishuman(assailant) && ismonkey(affecting) ) || ( isalien(assailant) && iscarbon(affecting) && !isalien(affecting) && !istype(assailant, /mob/living/carbon/alien/humanoid/drone) && !istype(assailant, /mob/living/carbon/alien/humanoid/runner ) ))
 			if(user.zone_sel.selecting != "head")
@@ -296,10 +284,11 @@
 				assailant.visible_message("<span class='danger'>[assailant] devours [affecting]!</span>")
 				if(holder.stat == DEAD)
 					holder.gib()
-				holder.sleeping = 8
-				holder.status_flags = GODMODE
-				affecting.loc = assailant
-				attacker.stomach_contents.Add(affecting)
+				else
+					holder.sleeping = 8
+					holder.status_flags += GODMODE
+					affecting.loc = assailant
+					attacker.stomach_contents.Add(holder)
 				qdel(src)
 
 /obj/item/weapon/grab/dropped()
