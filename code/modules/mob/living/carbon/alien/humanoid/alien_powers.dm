@@ -939,6 +939,6 @@ Doesn't work on other aliens/AI.*/
 			if(M in stomach_contents)
 				stomach_contents.Remove(M)
 				M.loc = loc
-				M.status_flags = 15
+				M.status_flags -= GODMODE
 		src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
 	return

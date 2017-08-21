@@ -6,7 +6,7 @@
 	if(stomach_contents.len)
 		for(var/mob/M in src)
 			if(M in stomach_contents)
-				M.status_flags = 15
+				M.status_flags -= GODMODE
 				src.gib()
 
 	if(isalien_t1(src) && prob(25))
