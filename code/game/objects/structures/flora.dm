@@ -8,7 +8,8 @@
 	anchored = 1
 	density = 1
 	opacity = 1
-	pixel_x = -16
+	pixel_x = -50
+	pixel_y = -16
 	layer = 9
 
 /obj/structure/flora/tree/pine
@@ -31,52 +32,52 @@
 	icon_state = "tree"
 
 /obj/structure/flora/tree/jungletree/tree1
-	name = "jungle tree 1"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree1"
 
 /obj/structure/flora/tree/jungletree/tree2
-	name = "jungle tree 2"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree2"
 
 /obj/structure/flora/tree/jungletree/tree3
-	name = "jungle tree 3"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree3"
 
 /obj/structure/flora/tree/jungletree/tree4
-	name = "jungle tree 4"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree4"
 
 /obj/structure/flora/tree/jungletree/tree5
-	name = "jungle tree 5"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree5"
 
 /obj/structure/flora/tree/jungletree/tree6
-	name = "jungle tree 6"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree6"
 
 /obj/structure/flora/tree/jungletree/tree7
-	name = "jungle tree 7"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree7"
 
 /obj/structure/flora/tree/jungletree/tree8
-	name = "jungle tree 8"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree8"
 
 /obj/structure/flora/tree/jungletree/tree9
-	name = "jungle tree 9"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree9"
 
 /obj/structure/flora/tree/jungletree/tree10
-	name = "jungle tree 10"
+	name = "jungle tree"
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	icon_state = "tree10"
 
@@ -139,6 +140,31 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
+	anchored = 1
+
+/obj/structure/flora/vines
+	name = "Big vines"
+	icon = 'icons/obj/flora/spacevines.dmi'
+	icon_state = "Hvy1"
+	anchored = 1
+
+
+/obj/structure/flora/vines/wall_vines_1
+	name = "Big vines"
+	icon = 'icons/obj/flora/spacevines.dmi'
+	icon_state = "Hvy1"
+	anchored = 1
+
+/obj/structure/flora/vines/wall_vines_2
+	name = "Big vines"
+	icon = 'icons/obj/flora/spacevines.dmi'
+	icon_state = "Hvy2"
+	anchored = 1
+
+/obj/structure/flora/vines/wall_vines_3
+	name = "Big vines"
+	icon = 'icons/obj/flora/spacevines.dmi'
+	icon_state = "Hvy3"
 	anchored = 1
 
 /obj/structure/flora/bush/New()
@@ -343,7 +369,7 @@
 	burn_state = -1 //Not Burnable
 
 /obj/structure/flora/rock2
-	name = "rock2"
+	name = "rock"
 	desc = "a rock"
 	icon_state = "basalt1"
 	icon = 'icons/obj/flora/rocks2.dmi'
@@ -351,19 +377,19 @@
 	burn_state = -1 //Not Burnable
 
 /obj/structure/flora/rock2/basalt1
-	name = "basalt1"
+	name = "basalt"
 	desc = "some rocks"
 	icon_state = "basalt1"
 	icon = 'icons/obj/flora/rocks2.dmi'
 
 /obj/structure/flora/rock2/basalt2
-	name = "basalt2"
+	name = "basalt"
 	desc = "some rocks"
 	icon_state = "basalt2"
 	icon = 'icons/obj/flora/rocks2.dmi'
 
 /obj/structure/flora/rock2/basalt3
-	name = "basalt3"
+	name = "basalt"
 	desc = "some rocks"
 	icon_state = "basalt3"
 	icon = 'icons/obj/flora/rocks2.dmi'

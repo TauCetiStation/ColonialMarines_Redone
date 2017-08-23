@@ -26,6 +26,19 @@
 	var/author
 	var/SQLquery
 
+/obj/machinery/computer/computer_office
+	name = "Office computer"
+	icon_state = "oldcomp"
+	icon_screen = "library"
+	icon_keyboard = null
+	circuit = /obj/item/weapon/circuitboard/libraryconsole
+	var/screenstate = 0
+	var/title
+	var/category = "Any"
+	var/author
+	var/SQLquery
+
+
 /obj/machinery/computer/libraryconsole/attack_hand(mob/user)
 	if(..())
 		return

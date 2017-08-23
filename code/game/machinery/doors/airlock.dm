@@ -83,6 +83,20 @@
 	doortype = /obj/structure/door_assembly/door_assembly_glass
 	glass = 1
 
+/obj/machinery/door/airlock/glass2
+	name = "Director's office"
+	icon = 'icons/obj/doors/Doorglass.dmi'
+	opacity = 0
+	doortype = /obj/structure/door_assembly/door_assembly_glass
+	glass = 1
+
+/obj/machinery/door/airlock/glass3
+	name = "Accounting office"
+	icon = 'icons/obj/doors/Doorglass.dmi'
+	opacity = 0
+	doortype = /obj/structure/door_assembly/door_assembly_glass
+	glass = 1
+
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorele.dmi'
 	opacity = 1

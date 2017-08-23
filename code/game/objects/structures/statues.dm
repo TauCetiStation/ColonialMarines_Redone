@@ -318,6 +318,10 @@
 	name = "Statue of a clown"
 	icon_state = "clown"
 
+/obj/structure/statue/bananium/clownsir
+	name = "Statue of a Sir Lancevrot"
+	icon_state = "clown"
+
 /obj/structure/statue/bananium/Bumped(atom/user)
 	honk()
 	..()

@@ -195,6 +195,23 @@
 	corpseidjob = "Station Engineer"
 	corpseidaccess = "Station Engineer"
 
+
+/obj/effect/landmark/corpse/engineer_dead
+	name = "Kameron Dean"
+	mobname = "Kameron Dean"
+	mobgender = MALE
+	corpseradio = /obj/item/device/radio/headset/headset_eng
+	corpseuniform = /obj/item/clothing/under/rank/engineer
+	corpseback = /obj/item/weapon/storage/backpack/industrial
+	corpseshoes = /obj/item/clothing/shoes/sneakers/orange
+	corpsebelt = /obj/item/weapon/storage/belt/utility/full
+	corpsegloves = /obj/item/clothing/gloves/color/yellow
+	corpsehelmet = /obj/item/clothing/head/hardhat
+	corpseid = 1
+	corpseidjob = "Station Engineer"
+	corpseidaccess = "Station Engineer"
+	corpsebrute = 200
+
 /obj/effect/landmark/corpse/engineer/rig
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit/engine
 	corpsemask = /obj/item/clothing/mask/breath
