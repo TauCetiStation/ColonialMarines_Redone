@@ -31,6 +31,7 @@
 	var/allow_vote_mode = 0				// allow votes to change mode
 	var/allow_vote_crew = 0
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
+	var/vote_delay_c = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
@@ -182,7 +183,7 @@
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
-	votable_modes += "secret"
+	//votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -261,6 +262,7 @@
 					config.vote_no_default = 1
 				if("vote_delay")
 					config.vote_delay = text2num(value)
+					config.vote_delay_c = config.vote_delay
 				if("vote_period")
 					config.vote_period = text2num(value)
 				if("norespawn")

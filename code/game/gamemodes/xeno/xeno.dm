@@ -9,6 +9,7 @@
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 1
+	votable = 1
 
 //Adjustable Variables
 	var/min_aliens = 0
@@ -86,6 +87,7 @@
 
 //Game-Start
 /datum/game_mode/infestation/pre_setup()
+	config.vote_delay = config.vote_delay_c
 
 	//Spawn aliens
 	for(var/datum/mind/alien in aliens)

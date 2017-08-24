@@ -15,7 +15,7 @@
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null
-	var/votable = 1
+	var/votable = 0
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
@@ -67,6 +67,7 @@
 ///pre_setup()
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
+	config.vote_delay = config.vote_delay_c
 	return 1
 
 

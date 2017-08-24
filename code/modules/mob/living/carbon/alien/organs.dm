@@ -160,8 +160,8 @@
 	..()
 
 /obj/item/organ/internal/alien/hivenode/on_life()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		toxin_power++
 		var/tox_dmg = 2 + (toxin_power/100)
 		H.adjustToxLoss(tox_dmg)

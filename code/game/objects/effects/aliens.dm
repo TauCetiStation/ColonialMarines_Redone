@@ -221,6 +221,18 @@
 	burn_state = 0
 	burntime = 3
 
+/obj/structure/alien/weeds/burn()
+	for(var/dirn in alldirs)
+		if(prob(7))
+			var/turf/T = get_step(src, dirn)
+			var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in T
+			if(W)
+				W.fire_act()
+	SSobj.burning -= src
+	var/turf/T = get_turf(src)
+	qdel(src)
+	fullUpdateWeedOverlays(T)
+
 /obj/structure/alien/weeds/New(pos, node)
 	if(istype(loc, /turf/space))
 		qdel(src)
@@ -240,17 +252,6 @@
 		linked_node = null
 	..()
 
-/obj/structure/alien/weeds/burn()
-	for(var/dirn in alldirs)
-		if(prob(45))
-			var/turf/T = get_step(src, dirn)
-			var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in T
-			if(W)
-				W.fire_act()
-	SSobj.burning -= src
-	qdel(src)
-	var/turf/T = get_turf(src)
-	fullUpdateWeedOverlays(T)
 
 /obj/structure/alien/weeds/proc/deprivation_of_node()
 	linked_node = null
@@ -345,6 +346,9 @@
 /obj/structure/alien/weeds/proc/updateWeedOverlays()
 
 	overlays.Cut()
+
+	if(burn_state)
+		overlays += fire_overlay
 
 	if(!weedImageCache || !weedImageCache.len)
 		weedImageCache = list()

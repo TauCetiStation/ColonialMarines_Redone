@@ -534,9 +534,17 @@ Sorry Giacom. Please don't be mad :(
 					diary <<"REPORT THIS"
 
 		/////
-		if(pulling && pulling.anchored)
-			stop_pulling()
-			return
+		if(pulling)
+			if(pulling.anchored)
+				stop_pulling()
+				return
+			if(istype(pulling, /obj/structure/closet) && (locate(/mob/living) in pulling.contents))
+				if(isalien(src))
+					src << "<span class='warning'>You cannot pull this with mobs inside.</span>"
+					stop_pulling()
+					return
+				else if(ishuman(src))
+					adjustStaminaLoss(2)
 
 		if (!restrained())
 			var/diag = get_dir(src, pulling)
