@@ -122,6 +122,12 @@ update_label("John Doe", "Clowny")
 	icon_state = "silver"
 	item_state = "silver_id"
 
+/obj/item/weapon/card/id/CE_card
+	name = "Bartusa's Narek id"
+	desc = "A silver card which shows honour and dedication."
+	icon_state = "silver"
+	item_state = "silver_id"
+
 /obj/item/weapon/card/id/gold
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"

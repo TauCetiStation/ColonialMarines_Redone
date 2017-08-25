@@ -21,6 +21,28 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 
+/mob/living/simple_animal/pet/cat_egg
+	name = "Jonesy"
+	desc = "Джонси, кис, кис! Иди сюда, Джонси!"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "cat2"
+	icon_living = "cat2"
+	icon_dead = "cat2_dead"
+	gender = MALE
+	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
+	speak_emote = list("purrs", "meows")
+	emote_hear = list("meows", "mews")
+	emote_see = list("shakes its head", "shivers")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	species = /mob/living/simple_animal/pet/cat
+	childtype = /mob/living/simple_animal/pet/cat/kitten
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
+
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
 	name = "Runtime"

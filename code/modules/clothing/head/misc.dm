@@ -130,6 +130,12 @@
 	icon_state = "bowler"
 	item_state = "bowler"
 
+/obj/item/clothing/head/bowler_egg
+	name = "Heisenberg's hat"
+	desc = "Say my name!"
+	icon_state = "bowler"
+	item_state = "bowler"
+
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
 	desc = "Eeeee~heheheheheheh!"

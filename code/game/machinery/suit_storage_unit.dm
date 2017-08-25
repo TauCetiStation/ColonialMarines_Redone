@@ -2,6 +2,12 @@
 // SUIT STORAGE UNIT /////////////////
 //////////////////////////////////////
 
+/obj/machinery/capsule
+	name = "Broken capsule"
+	desc = "There was something inside her..."
+	icon = 'icons/obj/machines/Slomano.dmi'
+	icon_state = "pod_0"
+	density = 1
 
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
@@ -14,15 +20,15 @@
 	var/mob/living/OCCUPANT = null
 	var/obj/item/clothing/suit/space/SUIT = null
 	var/obj/item/clothing/head/helmet/space/HELMET = null
-	var/obj/item/clothing/mask/MASK = null 
+	var/obj/item/clothing/mask/MASK = null
 	var/obj/item/STORAGE = null
-	
+
 	//Base types on creation
 	var/SUIT_TYPE = null
 	var/HELMET_TYPE = null
 	var/MASK_TYPE = null
 	var/STORAGE_TYPE = null
-	
+
 	//Machine related vars
 	var/isopen = 0
 	var/islocked = 0
@@ -258,7 +264,7 @@
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
 	if(!src.panelopen)
 		return
-		
+
 	else
 		if(src.issuperUV)
 			user << "<span class='notice'>You slide the dial back towards \"185nm\".</span>"

@@ -347,7 +347,7 @@ var/global/list/rockEdgeCache
 
 /turf/indestructible/rock/destructible // Don't ask me why.
 	icon_state = "rock_d" //for mapping
-
+	baseturf = /turf/simulated/floor/plating/desert
 	var/hardness = 200
 
 /turf/indestructible/rock/destructible/New()
@@ -355,7 +355,7 @@ var/global/list/rockEdgeCache
 	..()
 
 /turf/indestructible/rock/destructible/proc/dismantle_wall()
-	qdel(src)
+	src.ChangeTurf(src.baseturf)
 
 /turf/indestructible/rock/destructible/ex_act(severity, target)
 	if(prob(85))

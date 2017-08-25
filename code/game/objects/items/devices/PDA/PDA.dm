@@ -94,6 +94,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
+/obj/item/device/pda/clown2
+	name = "Sir Lancevrot's PDA"
+	default_cartridge = /obj/item/weapon/cartridge/clown
+	icon_state = "pda-clown"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
+	ttone = "honk"
+
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
