@@ -233,7 +233,7 @@
 	qdel(src)
 	fullUpdateWeedOverlays(T)
 
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/New(pos, node, grow = TRUE)
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
@@ -242,9 +242,10 @@
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
 	fullUpdateWeedOverlays()
-	spawn(rand(150, 200))
-		if(src)
-			grow()
+	if(grow)
+		spawn(rand(150, 200))
+			if(src)
+				grow()
 
 /obj/structure/alien/weeds/Destroy()
 	if(linked_node)
@@ -277,11 +278,23 @@
 		if(!istype(T) || istype(T, /turf/space))
 			continue
 
+		var/allowed = TRUE
+		for(var/O in T)
+			if(istype(O, /obj/structure/alien/weeds) || istype(O, /obj/structure/alien/resin) || istype(O, /obj/structure/mineral_door/resin))
+				allowed = FALSE
+				break
+		if(!allowed)
+			continue
+
+		if(T.density)
+			if(istype(T, /turf/simulated/wall))
+				var/obj/structure/alien/resin/wall/RW = new(T)
+				RW.health = 70
+			continue
+
+
 		var/finded = FALSE
 		for(var/obj/O in T)
-			if(istype(O, /obj/structure/alien) || istype(O, /obj/structure/mineral_door/resin))
-				finded = TRUE
-				break
 			if(istype(O, /obj/structure/window))
 				var/obj/structure/window/W = O
 				if(W.fulltile)
@@ -290,25 +303,21 @@
 					finded = TRUE
 					break
 			if(istype(O, /obj/machinery/door))
-				if(!istype(O, /obj/machinery/door/window))
+				if(!istype(O, /obj/machinery/door/window) && !istype(O, /obj/machinery/door/firedoor))
 					var/obj/structure/mineral_door/resin/new_door = new(T)
-					var/obj/machinery/door/D = O
-					if(!D.density)
+					if(!O.density)
 						new_door.state = 1
 						new_door.density = 0
 						new_door.opacity = 0
 						new_door.air_update_turf(1)
 						new_door.update_icon()
 						new_door.hardness = 100
-				finded = TRUE
+					else
+						linked_node.create_new_weed(T, FALSE)
+						finded = TRUE
 				break
-
 		if(!finded)
-			if(istype(T, /turf/simulated/wall))
-				var/obj/structure/alien/resin/wall/RW = new(T)
-				RW.health = 70
-			else
-				linked_node.create_new_weed(T)
+			linked_node.create_new_weed(T)
 
 /obj/structure/alien/weeds/ex_act(severity, target)
 	var/turf/T = get_turf(src)
@@ -393,8 +402,8 @@
 	..()
 	linked_node = null
 
-/obj/structure/alien/weeds/node/proc/create_new_weed(turf/T)
-	var/obj/structure/alien/weeds/W = new(T, src)
+/obj/structure/alien/weeds/node/proc/create_new_weed(turf/T, grow = TRUE)
+	var/obj/structure/alien/weeds/W = new(T, src, grow)
 	linked_weeds += W
 
 /obj/structure/alien/weeds/node/proc/recover_weed(obj/structure/alien/weeds/W)
