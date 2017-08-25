@@ -182,6 +182,24 @@
 	corpseidjob = "Medical Doctor"
 	corpseidaccess = "Medical Doctor"
 
+
+/obj/effect/landmark/corpse/doctor_dead
+	name = "Henry Clark"
+	mobname = "Henry Clark"
+	mobgender = MALE
+	corpseradio = /obj/item/device/radio/headset/headset_med
+	corpseuniform = /obj/item/clothing/under/rank/medical
+	corpsesuit = /obj/item/clothing/suit/toggle/labcoat
+	corpseback = /obj/item/weapon/storage/backpack/medic
+	corpsepocket1 = /obj/item/device/flashlight/pen
+	corpseshoes = /obj/item/clothing/shoes/sneakers/black
+	corpseid = 1
+	corpseidjob = "Medical Doctor"
+	corpseidaccess = "Medical Doctor"
+	corpsebrute = 200
+
+
+
 /obj/effect/landmark/corpse/engineer
 	name = "Engineer"
 	corpseradio = /obj/item/device/radio/headset/headset_eng
