@@ -3,6 +3,12 @@
 	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
 
+	if(stomach_contents.len)
+		for(var/mob/M in src)
+			if(M in stomach_contents)
+				M.status_flags -= GODMODE
+				src.gib()
+
 	if(isalien_t1(src) && prob(25))
 		new /obj/item/token(get_turf(src))
 	else

@@ -560,7 +560,7 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	var/dat = "<html><head><title>Hive Status</title></head><body><h1><B>Hive Status</B></h1>"
-	
+
 	if(ticker.mode.aliens.len > 0)
 		dat += "<table cellspacing=5><tr><td><b>Name</b></td><td><b>Location</b></td></tr>"
 		for(var/mob/living/L in mob_list)
@@ -715,7 +715,7 @@ Doesn't work on other aliens/AI.*/
 			if(W && W == user.get_active_hand())
 				playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
 				qdel(W)
-				
+
 				grenade_act()
 
 /obj/tunnel/hole/Crossed(AM as obj)
@@ -928,3 +928,17 @@ Doesn't work on other aliens/AI.*/
 	user.speed_bonus = -1.5
 	spawn(50)
 		user.speed_bonus = 0
+
+/mob/living/carbon/alien/humanoid/verb/regurgitate()
+	set name = "Regurgitate"
+	set desc = "Empties the contents of your stomach."
+	set category = "Alien"
+
+	if(stomach_contents.len)
+		for(var/mob/M in src)
+			if(M in stomach_contents)
+				stomach_contents.Remove(M)
+				M.loc = loc
+				M.status_flags -= GODMODE
+		src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
+	return
