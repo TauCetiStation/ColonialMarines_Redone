@@ -453,8 +453,10 @@
 	name = "M39 SMG"
 	desc = " Armat Battlefield Systems M39 SMG. Occasionally carried by light-infantry, scouts or non-combat personnel. Uses 9mm rounds."
 	icon_state = "m39"
-	item_state = "c20r"
+	item_state = "m39"
 	w_class = 4
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
 	can_suppress = 0
 	mag_type = /obj/item/ammo_box/magazine/m39
 	new_and_loaded = 0
@@ -504,6 +506,8 @@
 	icon_state = "m41a"
 	item_state = "m41a"
 	w_class = 4
+	flags = CONDUCT
+	slot_flags = SLOT_BACK | SLOT_BELT
 	mag_type = /obj/item/ammo_box/magazine/m41
 	new_and_loaded = 0
 	fire_sound = 'sound/weapons/Gunshot_m41.ogg'
@@ -559,10 +563,14 @@
 
 /obj/item/weapon/gun/projectile/Assault/m41/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	overlays.Cut()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	if(wielded)
+		item_state = "m41a1"
+	else
+		item_state = "m41a0"
 	if(scope)
-		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m41a-s")
+		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m41a")
 		overlays += mod
 	return
 
@@ -608,11 +616,11 @@
 	name = "M37A2 Pump Shotgun"
 	desc = "Colonial Marine M37 Pump Shotgun"
 	icon_state = "m37a2"
-	item_state = "shotgun"
+	item_state = "m37a2"
 	w_class = 4
 	force = 10
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_BACK | SLOT_BELT
 	mag_type = /obj/item/ammo_box/magazine/internal/m37
 	new_and_chambered = 0
 	two_handed = 1
@@ -629,18 +637,36 @@
 		recentpump = 0
 	return
 
+/obj/item/weapon/gun/projectile/shotgun/m37/update_icon()
+	if(wielded)
+		item_state = "m37a21"
+	else
+		item_state = "m37a20"
+	return
+
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a five-shell capacity underneath."
 	icon_state = "cshotgun"
+	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/combat
 	w_class = 5
+	flags = CONDUCT
+	slot_flags = SLOT_BACK | SLOT_BELT
 	two_handed = 1
 
 /obj/item/weapon/gun/projectile/shotgun/combat/shoot_live_shot(mob/living/user as mob|obj)
 	..()
 	src.do_pump(user)
+
+/obj/item/weapon/gun/projectile/shotgun/combat/update_icon()
+	if(wielded)
+		item_state = "cshotgun1"
+	else
+		item_state = "cshotgun0"
+	return
+
 
 ///***m59b***///
 /obj/item/weapon/gun/var/smart_weapon = 0
@@ -649,11 +675,11 @@
 	name = "M59/B Smartgun"
 	desc = "Colonial Marine M59/B Smartgun, uses 10x28 ammunition."
 	icon_state = "smartgun"
-	item_state = "l6closedmag" //temp
+	item_state = "smartgun" //temp
 	w_class = 4
 	force = 10
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_BACK | SLOT_BELT
 	mag_type = /obj/item/ammo_box/magazine/a10x28
 	new_and_loaded = 0
 	fire_sound = 'sound/weapons/Gunshot_m59.ogg'
@@ -843,6 +869,16 @@
 		if(chambered)
 			ammo += 1
 		ammo_counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e40000'>[ammo]</font></div>"
+
+/obj/item/weapon/gun/projectile/Assault/m59b/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	overlays.Cut()
+	if(wielded)
+		item_state = "smartgun1"
+	else
+		item_state = "smartgun0"
+	return
 
 /obj/item/clothing/glasses/hms
 	name = "HMS"
@@ -1089,8 +1125,10 @@
 	name = "M42C Rifle"
 	desc = "The M42C Rifle is a sniper rifle manufactured by Armat Battlefield Systems and used primarily by the United States Colonial Marine Corps and Weyland-Yutani."
 	icon_state = "m42c"
-	item_state = "c20r"
+	item_state = "m42c"
 	w_class = 4
+	flags = CONDUCT
+	slot_flags = SLOT_BACK | SLOT_BELT
 	mag_type = /obj/item/ammo_box/magazine/m42c
 	new_and_loaded = 0
 	fire_sound = 'sound/cmr/weapons/Gunshot_m42c.ogg'
@@ -1130,10 +1168,13 @@
 
 /obj/item/weapon/gun/projectile/Assault/m42c/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	overlays.Cut()
+	if(wielded)
+		item_state = "m42c1"
+	else
+		item_state = "m42c0"
 	if(scope)
-		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m42c-scope")
+		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m42c")
 		overlays += mod
 	return
 
@@ -1148,7 +1189,7 @@
 	item_state = "knife"
 	desc = "When shits gets serious! You can slide this knife into your boots."
 	flags = CONDUCT
-	force = 35.0
+	force = 20.0
 	w_class = 1.0
 	throwforce = 20
 	throw_speed = 3
