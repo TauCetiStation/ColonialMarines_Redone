@@ -16,3 +16,9 @@
 		temperature = max(loc_temp, temperature-change)
 	temp_change = (temperature - current)
 	return temp_change
+
+/mob/living/carbon/alien/humanoid/handle_chemicals_in_body()
+	if(reagents && reagents.reagent_list.len)
+		var/datum/reagents/D = reagents
+		for(var/datum/reagent/R in D.reagent_list)
+			D.del_reagent(R.id)
