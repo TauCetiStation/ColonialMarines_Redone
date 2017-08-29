@@ -244,7 +244,7 @@
 	fullUpdateWeedOverlays()
 	if(grow)
 		spawn(rand(150, 200))
-			if(src)
+			if(src && !qdeleted(src))
 				grow()
 
 /obj/structure/alien/weeds/Destroy()
@@ -257,14 +257,14 @@
 /obj/structure/alien/weeds/proc/deprivation_of_node()
 	linked_node = null
 	spawn(rand(600, 1200))
-		if(src)
+		if(src && !qdeleted(src))
 			var/turf/T = get_turf(src)
 			var/obj/structure/alien/weeds/node/N = locate() in range(NODE_RANGE, T)
 			if(N)
 				linked_node = N
 				N.linked_weeds += src
 				spawn(rand(300, 600)) // just give him a new try with a new master
-					if(src)
+					if(src && !qdeleted(src))
 						grow()
 			else
 				qdel(src)
@@ -273,16 +273,23 @@
 /obj/structure/alien/weeds/proc/grow()
 	if(!linked_node || get_dist(linked_node, src) > NODE_RANGE)
 		return
-	for(var/dirn in cardinal)
+	for(var/dirn in alldirs)
 		var/turf/T = get_step(src, dirn)
 		if(!istype(T) || istype(T, /turf/space))
 			continue
 
 		var/allowed = TRUE
+		var/obj/structure/window/W
+		var/obj/machinery/door/D
 		for(var/O in T)
 			if(istype(O, /obj/structure/alien/weeds) || istype(O, /obj/structure/alien/resin) || istype(O, /obj/structure/mineral_door/resin))
 				allowed = FALSE
 				break
+			if(istype(O, /obj/structure/window))
+				W = O
+			if(istype(O, /obj/machinery/door) && !istype(O, /obj/machinery/door/firedoor))
+				D = O
+
 		if(!allowed)
 			continue
 
@@ -292,32 +299,33 @@
 				RW.health = 70
 			continue
 
+		var/next_growing = TRUE
+		if(W)
+			if(W.fulltile)
+				var/obj/structure/alien/resin/membrane/RM = new(T)
+				RM.health = 40
+				next_growing = FALSE
+			else
+				continue
 
-		var/finded = FALSE
-		for(var/obj/O in T)
-			if(istype(O, /obj/structure/window))
-				var/obj/structure/window/W = O
-				if(W.fulltile)
-					var/obj/structure/alien/resin/membrane/RM = new(T)
-					RM.health = 40
-					finded = TRUE
-					break
-			if(istype(O, /obj/machinery/door))
-				if(!istype(O, /obj/machinery/door/window) && !istype(O, /obj/machinery/door/firedoor))
-					var/obj/structure/mineral_door/resin/new_door = new(T)
-					if(!O.density)
-						new_door.state = 1
-						new_door.density = 0
-						new_door.opacity = 0
-						new_door.air_update_turf(1)
-						new_door.update_icon()
-						new_door.hardness = 100
-					else
-						linked_node.create_new_weed(T, FALSE)
-						finded = TRUE
-				break
-		if(!finded)
-			linked_node.create_new_weed(T)
+		if(dirn in diagonals)
+			continue
+
+		if(D && !W)
+			if(!istype(D, /obj/machinery/door/window))
+				var/obj/structure/mineral_door/resin/new_door = new(T)
+				if(!D.density)
+					new_door.state = 1
+					new_door.density = 0
+					new_door.opacity = 0
+					new_door.air_update_turf(1)
+					new_door.update_icon()
+					new_door.hardness = 100
+				else
+					next_growing = FALSE
+			else
+				continue
+		linked_node.create_new_weed(T, next_growing)
 
 /obj/structure/alien/weeds/ex_act(severity, target)
 	var/turf/T = get_turf(src)
@@ -410,7 +418,7 @@
 	linked_weeds -= W
 	var/turf/T = get_turf(W)
 	spawn(rand(200, 350))
-		if(src && !locate(/obj/structure/alien/weeds) in T)
+		if(src && !qdeleted(src) && !locate(/obj/structure/alien/weeds) in T)
 			create_new_weed(T)
 
 /obj/structure/alien/weeds/node/Destroy()
