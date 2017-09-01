@@ -483,14 +483,6 @@
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list("hacked", "Security")
 
-/datum/design/shotgun_dart
-	name = "Shotgun dart"
-	id = "shotgun_dart"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_casing/shotgun/dart
-	category = list("hacked", "Security")
-
 /datum/design/incendiary_slug
 	name = "Incendiary slug"
 	id = "incendiary_slug"
