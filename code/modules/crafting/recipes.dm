@@ -121,56 +121,6 @@
 	time = 20
 	category = CAT_WEAPON
 
-/datum/table_recipe/meteorshot
-	name = "Meteorshot Shell"
-	result = /obj/item/ammo_casing/shotgun/meteorshot
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/rcd_ammo = 1,
-				/obj/item/weapon/stock_parts/manipulator = 2)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-	category = CAT_AMMO
-
-/datum/table_recipe/pulseslug
-	name = "Pulse Slug Shell"
-	result = /obj/item/ammo_casing/shotgun/pulseslug
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/stock_parts/capacitor/adv = 2,
-				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-	category = CAT_AMMO
-
-/datum/table_recipe/dragonsbreath
-	name = "Dragonsbreath Shell"
-	result = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/datum/reagent/phosphorus = 5,)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-	category = CAT_AMMO
-
-/datum/table_recipe/frag12
-	name = "FRAG-12 Shell"
-	result = /obj/item/ammo_casing/shotgun/frag12
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/datum/reagent/glycerol = 5,
-				/datum/reagent/toxin/acid = 5,
-				/datum/reagent/toxin/acid/fluacid = 5,)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-	category = CAT_AMMO
-
-/datum/table_recipe/ionslug
-	name = "Ion Scatter Shell"
-	result = /obj/item/ammo_casing/shotgun/ion
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/stock_parts/micro_laser/ultra = 1,
-				/obj/item/weapon/stock_parts/subspace/crystal = 1)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-	category = CAT_AMMO
-
 /datum/table_recipe/improvisedslug
 	name = "Improvised Shotgun Shell"
 	result = /obj/item/ammo_casing/shotgun/improvised
@@ -187,16 +137,6 @@
 	result = /obj/item/ammo_casing/shotgun/improvised/overload
 	reqs = list(/obj/item/ammo_casing/shotgun/improvised = 1,
 				/datum/reagent/blackpowder = 5)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 5
-	category = CAT_AMMO
-
-/datum/table_recipe/laserslug
-	name = "Laser Slug Shell"
-	result = /obj/item/ammo_casing/shotgun/laserslug
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/obj/item/weapon/stock_parts/capacitor/adv = 1,
-				/obj/item/weapon/stock_parts/micro_laser/high = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 	category = CAT_AMMO
