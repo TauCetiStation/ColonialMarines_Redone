@@ -412,6 +412,18 @@
 	fire_delay = 0
 	fire_sound = 'sound/weapons/servicepistol.ogg'
 
+/obj/item/weapon/gun/projectile/pistol/m4a3_hiks //45 Pistol
+	name = "Cpl. Hicks' pistol"
+	desc = "Personal weapons. Uses .45 special rounds."
+	icon_state = "pistol"
+	w_class = 2
+	mag_type = /obj/item/ammo_box/magazine/m4a3
+	new_and_loaded = 0
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	fire_sound = 'sound/weapons/servicepistol.ogg'
+
 /obj/item/weapon/gun/projectile/pistol/m4a3/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
