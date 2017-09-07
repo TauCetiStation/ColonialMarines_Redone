@@ -12,3 +12,4 @@ Molesto411 = Game Master
 Smalltasty = Game Master
 amb1ent = Game Admin
 Leshiy = Game Admin
+Cooperson = Host

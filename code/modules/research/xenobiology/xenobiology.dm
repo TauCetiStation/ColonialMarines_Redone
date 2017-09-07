@@ -523,6 +523,8 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor/sepia
 
+/turf/simulated/floor/plating/shuttle_sepia
+	luminosity = 3
 
 /turf/simulated/floor/sepia
 	slowdown = 2

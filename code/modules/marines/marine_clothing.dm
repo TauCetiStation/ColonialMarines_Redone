@@ -20,6 +20,15 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
+/obj/item/clothing/head/soft/marine/sergant
+	icon_state = "blacksoft"
+	item_color = "black"
+
+/obj/item/clothing/head/soft/marine/soldier
+	name = "marine soldier cap"
+	icon_state = "blacksoft"
+	item_color = "black"
+
 /obj/item/clothing/head/soft/marine/alpha
 	name = "alpha squad sergeant cap"
 	icon_state = "redsoft"

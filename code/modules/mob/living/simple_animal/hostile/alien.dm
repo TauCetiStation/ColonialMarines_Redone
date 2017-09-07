@@ -23,7 +23,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
-	faction = list("alien_lab","alien")
+	faction = list("alien_lab")
 	status_flags = CANPUSH
 	minbodytemp = 0
 	see_in_dark = 8
@@ -37,8 +37,6 @@
 	icon_dead = "aliend_dead"
 	maxHealth = 170
 	health = 170
-	retreat_distance = 15
-	minimum_distance = 15
 	melee_damage_lower = 12
 	melee_damage_upper = 16
 	var/plant_cooldown = 30

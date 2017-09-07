@@ -14,6 +14,9 @@
 //Sleves 2 = long
 //Sleves 1 = short
 //Sleves 0 = none
+
+
+
 /obj/item/clothing/under/marine2/verb/sleeves()
 	set category = "Object"
 	set name = "Adjust sleeves"
@@ -91,6 +94,18 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	var/rank = 0
 	var/image/markingoverlay
 	var/obj/machinery/camera/portable/helmetCam = null
+
+/obj/item/clothing/head/helmet/marine2/helm_med
+	icon_state = "helmet_med"
+
+/obj/item/clothing/head/helmet/marine2/helm_pilot
+	icon_state = "helmet_pilot"
+
+/obj/item/clothing/head/helmet/marine2/helm_vasquez
+	name = "Vasquez bandage"
+	desc = "Vasquez, you are super."
+	icon_state = "helmet_vasquez"
+
 
 /obj/item/clothing/head/helmet/marine2/New(loc)
 	..(loc)

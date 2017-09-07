@@ -204,7 +204,8 @@
 /*
  * Weeds
  */
-#define NODE_RANGE 3
+
+#define NODERANGE 3
 
 /obj/structure/alien/weeds
 	gender = PLURAL
@@ -229,91 +230,71 @@
 			if(W)
 				W.fire_act()
 	SSobj.burning -= src
-	var/turf/T = get_turf(src)
 	qdel(src)
-	fullUpdateWeedOverlays(T)
 
-/obj/structure/alien/weeds/New(pos, node, grow = TRUE)
+
+/obj/structure/alien/weeds/New(pos, node)
+	..()
+	linked_node = node
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
-	..()
-	linked_node = node
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
 	fullUpdateWeedOverlays()
-	if(grow)
-		spawn(rand(150, 200))
-			if(src && !qdeleted(src))
-				grow()
+	spawn(rand(150, 200))
+		if(src)
+			Life()
 
 /obj/structure/alien/weeds/Destroy()
-	if(linked_node)
-		linked_node.recover_weed(src)
-		linked_node = null
+	var/turf/T = loc
+	loc = null
+	for (var/obj/structure/alien/weeds/W in range(1,T))
+		W.updateWeedOverlays()
+	linked_node = null
 	..()
 
+/obj/structure/alien/weeds/proc/Life()
+	set background = BACKGROUND_ENABLED
+	var/turf/U = get_turf(src)
 
-/obj/structure/alien/weeds/proc/deprivation_of_node()
-	linked_node = null
-	spawn(rand(600, 1200))
-		if(src && !qdeleted(src))
-			var/turf/T = get_turf(src)
-			var/obj/structure/alien/weeds/node/N = locate() in range(NODE_RANGE, T)
-			if(N)
-				linked_node = N
-				N.linked_weeds += src
-				spawn(rand(300, 600)) // just give him a new try with a new master
-					if(src && !qdeleted(src))
-						grow()
-			else
-				qdel(src)
-				fullUpdateWeedOverlays(T)
-
-/obj/structure/alien/weeds/proc/grow()
-	if(!linked_node || get_dist(linked_node, src) > NODE_RANGE)
+	if(istype(U, /turf/space))
+		qdel(src)
 		return
+
 	for(var/dirn in alldirs)
 		var/turf/T = get_step(src, dirn)
-		if(!istype(T) || istype(T, /turf/space))
+
+		if (!istype(T) || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 			continue
 
-		var/allowed = TRUE
-		var/obj/structure/window/W
-		var/obj/machinery/door/D
-		for(var/O in T)
-			if(istype(O, /obj/structure/alien/weeds) || istype(O, /obj/structure/alien/resin) || istype(O, /obj/structure/mineral_door/resin))
-				allowed = FALSE
-				break
-			if(istype(O, /obj/structure/window))
-				W = O
-			if(istype(O, /obj/machinery/door) && !istype(O, /obj/machinery/door/firedoor))
-				D = O
+		if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+			return
 
-		if(!allowed)
+		if(locate(/obj/structure/alien/resin/wall) in T)
+			continue
+		else if(locate(/obj/structure/mineral_door/resin) in T)
 			continue
 
 		if(T.density)
 			if(istype(T, /turf/simulated/wall))
-				var/obj/structure/alien/resin/wall/RW = new(T)
+				new /obj/structure/alien/weeds(T)
+				var/obj/structure/alien/resin/wall/RW = new /obj/structure/alien/resin/wall(T)
 				RW.health = 70
 			continue
 
-		var/next_growing = TRUE
+		var/obj/structure/window/W = locate(/obj/structure/window) in T
+		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
 		if(W)
 			if(W.fulltile)
-				var/obj/structure/alien/resin/membrane/RM = new(T)
+				new /obj/structure/alien/weeds(T)
+				var/obj/structure/alien/resin/membrane/RM = new /obj/structure/alien/resin/membrane(T)
 				RM.health = 40
-				next_growing = FALSE
-			else
 				continue
-
-		if(dirn in diagonals)
-			continue
-
-		if(D && !W)
+		else if(D)
 			if(!istype(D, /obj/machinery/door/window))
-				var/obj/structure/mineral_door/resin/new_door = new(T)
+				new /obj/structure/alien/weeds(T)
+				var/obj/structure/mineral_door/resin/new_door = new /obj/structure/mineral_door/resin(T)
 				if(!D.density)
 					new_door.state = 1
 					new_door.density = 0
@@ -321,16 +302,12 @@
 					new_door.air_update_turf(1)
 					new_door.update_icon()
 					new_door.hardness = 100
-				else
-					next_growing = FALSE
-			else
 				continue
-		linked_node.create_new_weed(T, next_growing)
+		if(!(dirn in diagonals))
+			new /obj/structure/alien/weeds(T, linked_node)
 
 /obj/structure/alien/weeds/ex_act(severity, target)
-	var/turf/T = get_turf(src)
 	qdel(src)
-	fullUpdateWeedOverlays(T)
 
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user, params)
@@ -340,24 +317,26 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
+	var/damage = I.force / 4.0
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
+			damage = 15
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-			qdel(src)
 
-	apply_damage(I.force / 4.0)
-
-/obj/structure/alien/weeds/proc/apply_damage(damage)
 	health -= damage
+	healthcheck()
+
+
+/obj/structure/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		var/turf/T = get_turf(src)
 		qdel(src)
-		fullUpdateWeedOverlays(T)
+
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		apply_damage(5)
+		health -= 5
+		healthcheck()
 
 
 /obj/structure/alien/weeds/proc/updateWeedOverlays()
@@ -393,8 +372,8 @@
 			overlays += weedImageCache[WEED_EAST_EDGING]
 
 
-/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays(turf/TF = null)
-	for(var/obj/structure/alien/weeds/W in range(1, TF ? TF : src))
+/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
+	for (var/obj/structure/alien/weeds/W in range(1,src))
 		W.updateWeedOverlays()
 
 //Weed nodes
@@ -403,32 +382,14 @@
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
 	luminosity = 0
-	var/list/linked_weeds = list()
+	var/node_range = NODERANGE
 
-/obj/structure/alien/weeds/node/grow() // very shitty, but actually, i cannot imagine how it works In the past implementation with similar logic
-	linked_node = src
-	..()
-	linked_node = null
 
-/obj/structure/alien/weeds/node/proc/create_new_weed(turf/T, grow = TRUE)
-	var/obj/structure/alien/weeds/W = new(T, src, grow)
-	linked_weeds += W
+/obj/structure/alien/weeds/node/New()
+	..(loc, src)
 
-/obj/structure/alien/weeds/node/proc/recover_weed(obj/structure/alien/weeds/W)
-	linked_weeds -= W
-	var/turf/T = get_turf(W)
-	spawn(rand(200, 350))
-		if(src && !qdeleted(src) && !locate(/obj/structure/alien/weeds) in T)
-			create_new_weed(T)
+#undef NODERANGE
 
-/obj/structure/alien/weeds/node/Destroy()
-	for(var/O in linked_weeds)
-		var/obj/structure/alien/weeds/W = O
-		W.deprivation_of_node()
-	linked_weeds.Cut()
-	return ..()
-
-#undef NODE_RANGE
 
 /*
  * Egg
