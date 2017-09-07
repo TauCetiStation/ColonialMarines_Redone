@@ -62,13 +62,3 @@
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list("Ammo")
-
-/datum/design/techshell
-	name = "Unloaded Technological Shotshell"
-	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
-	id = "techshotshell"
-	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 4, "magnets" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 200, MAT_SILVER = 300)
-	build_path = /obj/item/ammo_casing/shotgun/techshell
-	category = list("Ammo")
