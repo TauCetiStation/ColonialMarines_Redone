@@ -197,12 +197,14 @@
 	desc = "A holster to conceal a carried handgun and ammo. WARNING: Badasses only."
 	icon_state = "holster"
 	item_state = "holster"
-	storage_slots = 3
+	storage_slots = 4
 	max_w_class = 3
 	can_hold = list(
 		/obj/item/weapon/gun/projectile/automatic/pistol,
 		/obj/item/weapon/gun/projectile/revolver,
 		/obj/item/ammo_box,
+		/obj/item/weapon/gun/projectile/m44panther,
+		/obj/item/weapon/gun/projectile/pistol/VP78,
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
 

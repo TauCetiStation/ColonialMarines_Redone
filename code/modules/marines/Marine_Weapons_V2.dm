@@ -459,6 +459,13 @@
 	icon_state = "mateba"
 	mag_type = /obj/item/ammo_box/magazine/m44m
 
+/obj/item/weapon/gun/projectile/m44panther //mm44 Magnum Peacemaker
+	name = "44 Magnum"
+	desc = "A bulky 44 Magnum revolver, occasionally carried by assault troops and officers in the Colonial Marines. Uses 44 Magnum rounds"
+	icon_state = "detective_panther"
+	mag_type = /obj/item/ammo_box/magazine/m44m
+	w_class = 3
+
 ///***SMGS***///
 
 /obj/item/weapon/gun/projectile/Assault/m39 // M39 SMG

@@ -163,13 +163,21 @@
 	on = 1
 
 
+
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
 
-
+// big projector
+/obj/item/device/flashlight/lamp/projector
+	name = "stationary searchlight"
+	desc = "A huge searchlight."
+	icon_state = "projector"
+	item_state = "lampgreen"
+	brightness_on = 10
+	w_class = INFINITY
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"

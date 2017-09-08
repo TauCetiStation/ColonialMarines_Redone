@@ -503,6 +503,11 @@
 	name = "ѕолетела трансмиссия"
 	info = {"<i> ак и ожидалось, при сегодняшней проверке, оказалось что полетела трансмиссия. –емонт зат€нется еще на неделю.</i>"}
 
+/obj/item/weapon/paper/funny_note
+	name = "ќрел"
+	info = {"<i>Ёта комната стала для меня саркофагом... ѕ.—. ќрел —вободы</i>"}
+
+
 //SOME SCRAPS I GUESS
 /* EMP grenade/spell effect
 		if(istype(A, /obj/machinery/clonepod))

@@ -28,14 +28,15 @@
 	products = list(
 					/obj/item/clothing/head/helmet/marine2 = 10,
 					/obj/item/clothing/suit/storage/marine2 = 10,
-					/obj/item/weapon/camera_assembly = 10,
+					/obj/item/weapon/camera_assembly = 15,
 					/obj/item/weapon/storage/backpack/marine = 10,
 					/obj/item/device/flashlight/flare = 25,
 					/obj/item/device/flashlight/seclite = 10,
 					/obj/item/device/radio/marine = 10,
 					/obj/item/weapon/grenade/explosive = 2,
 					/obj/item/weapon/combat_knife = 25,
-					/obj/item/weapon/storage/box/marine = 10
+					/obj/item/weapon/storage/box/marine = 10,
+					/obj/item/weapon/storage/pill_bottle/anti_starve = 10
 					)
 
 /obj/machinery/vending/marine/special
@@ -51,9 +52,9 @@
 	desc = "Standard Issue Food Vendor, containing standard military food"
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	icon_deny = "boozeomat-deny"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/burger/fish = 20, /obj/item/weapon/reagent_containers/food/snacks/burger/tofu = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/omelette = 10, /obj/item/weapon/reagent_containers/food/snacks/muffin = 20,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 30, /obj/item/weapon/reagent_containers/food/snacks/meat/steak = 10)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/burger/fish = 10, /obj/item/weapon/reagent_containers/food/snacks/burger/tofu = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/omelette = 10, /obj/item/weapon/reagent_containers/food/snacks/muffin = 10,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 10, /obj/item/weapon/reagent_containers/food/snacks/meat/steak = 10)
 	contraband = list(/obj/item/weapon/paper/cake = 1)
 	vend_delay = 15
 	product_slogans = "Standard Issue Marine food!;It's good for you, and not the worst thing in the world.;Just fucking eat it;"
