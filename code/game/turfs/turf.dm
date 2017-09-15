@@ -300,6 +300,268 @@
 		smooth_icon(src)
 		icon_state = ""
 
+/turf/indestructible/wall/shuttle2
+	name = "wall"
+	icon = 'icons/turf/walls/shuttle_wall2.dmi'
+	icon_state = "shuttle1"
+	smooth = 0
+	canSmoothWith = null
+
+
+/turf/indestructible/wall/shuttle2/shuttle1
+	icon_state = "shuttle1"
+
+/turf/indestructible/wall/shuttle2/shuttle2
+	icon_state = "shuttle2"
+
+/turf/indestructible/wall/shuttle2/shuttle3
+	icon_state = "shuttle3"
+
+/turf/indestructible/wall/shuttle2/shuttle4
+	icon_state = "shuttle4"
+
+/turf/indestructible/wall/shuttle2/shuttle5
+	icon_state = "shuttle5"
+
+/turf/indestructible/wall/shuttle2/shuttle6
+	icon_state = "shuttle6"
+
+/turf/indestructible/wall/shuttle2/shuttle7
+	icon_state = "shuttle7"
+
+/turf/indestructible/wall/shuttle2/shuttle8
+	icon_state = "shuttle8"
+
+/turf/indestructible/wall/shuttle2/shuttle9
+	icon_state = "shuttle9"
+
+/turf/indestructible/wall/shuttle2/shuttle10
+	icon_state = "shuttle10"
+
+/turf/indestructible/wall/shuttle2/shuttle11
+	icon_state = "shuttle11"
+
+/turf/indestructible/wall/shuttle2/shuttle12
+	icon_state = "shuttle12"
+
+/turf/indestructible/wall/shuttle2/shuttle13
+	icon_state = "shuttle13"
+
+/turf/indestructible/wall/shuttle2/shuttle14
+	icon_state = "shuttle14"
+
+/turf/indestructible/wall/shuttle2/shuttle15
+	icon_state = "shuttle15"
+
+/turf/indestructible/wall/shuttle2/shuttle16
+	icon_state = "shuttle16"
+
+/turf/indestructible/wall/shuttle2/shuttle17
+	icon_state = "shuttle17"
+
+/turf/indestructible/wall/shuttle2/shuttle18
+	icon_state = "shuttle18"
+
+/turf/indestructible/wall/shuttle2/shuttle19
+	icon_state = "shuttle19"
+
+/turf/indestructible/wall/shuttle2/shuttle20
+	icon_state = "shuttle20"
+
+/turf/indestructible/wall/shuttle2/shuttle21
+	icon_state = "shuttle21"
+
+/turf/indestructible/wall/shuttle2/shuttle22
+	icon_state = "shuttle22"
+
+/turf/indestructible/wall/shuttle2/shuttle23
+	icon_state = "shuttle23"
+
+/turf/indestructible/wall/shuttle2/shuttle24
+	icon_state = "shuttle24"
+
+/turf/indestructible/wall/shuttle2/shuttle25
+	icon_state = "shuttle25"
+
+/turf/indestructible/wall/shuttle2/shuttle26
+	icon_state = "shuttle26"
+
+/turf/indestructible/wall/shuttle2/shuttle27
+	icon_state = "shuttle27"
+
+/turf/indestructible/wall/shuttle2/shuttle28
+	icon_state = "shuttle28"
+
+/turf/indestructible/wall/shuttle2/shuttle29
+	icon_state = "shuttle29"
+
+/turf/indestructible/wall/shuttle2/shuttle30
+	icon_state = "shuttle30"
+
+/turf/indestructible/wall/shuttle2/shuttle31
+	icon_state = "shuttle31"
+
+/turf/indestructible/wall/shuttle2/shuttle32
+	icon_state = "shuttle32"
+
+/turf/indestructible/wall/shuttle2/shuttle33
+	icon_state = "shuttle33"
+
+/turf/indestructible/wall/shuttle2/shuttle34
+	icon_state = "shuttle34"
+
+/turf/indestructible/wall/shuttle2/shuttle35
+	icon_state = "shuttle35"
+
+/turf/indestructible/wall/shuttle2/shuttle36
+	icon_state = "shuttle36"
+
+/turf/indestructible/wall/shuttle2/shuttle37
+	icon_state = "shuttle37"
+
+/turf/indestructible/wall/shuttle2/shuttle38
+	icon_state = "shuttle38"
+
+/turf/indestructible/wall/shuttle2/shuttle39
+	icon_state = "shuttle39"
+
+/turf/indestructible/wall/shuttle2/shuttle40
+	icon_state = "shuttle40"
+
+/turf/indestructible/wall/shuttle2/shuttle41
+	icon_state = "shuttle41"
+
+
+/turf/indestructible/wall/shuttle1
+	name = "wall"
+	icon = 'icons/turf/walls/shuttle_wall2.dmi'
+	icon_state = "shuttle1"
+	smooth = 0
+	canSmoothWith = null
+
+/turf/indestructible/wall/shuttle1/shuttle1
+	icon_state = "shuttle1-1"
+
+/turf/indestructible/wall/shuttle1/shuttle2
+	icon_state = "shuttle2-2"
+
+/turf/indestructible/wall/shuttle1/shuttle3
+	icon_state = "shuttle3-3"
+
+/turf/indestructible/wall/shuttle1/shuttle4
+	icon_state = "shuttle4-4"
+
+/turf/indestructible/wall/shuttle1/shuttle5
+	icon_state = "shuttle5-5"
+
+/turf/indestructible/wall/shuttle1/shuttle6
+	icon_state = "shuttle6-6"
+
+/turf/indestructible/wall/shuttle1/shuttle7
+	icon_state = "shuttle7-7"
+
+/turf/indestructible/wall/shuttle1/shuttle8
+	icon_state = "shuttle8-8"
+
+/turf/indestructible/wall/shuttle1/shuttle9
+	icon_state = "shuttle9-9"
+
+/turf/indestructible/wall/shuttle1/shuttle10
+	icon_state = "shuttle10-10"
+
+/turf/indestructible/wall/shuttle1/shuttle11
+	icon_state = "shuttle11-11"
+
+/turf/indestructible/wall/shuttle1/shuttle12
+	icon_state = "shuttle12-12"
+
+/turf/indestructible/wall/shuttle1/shuttle13
+	icon_state = "shuttle13-13"
+
+/turf/indestructible/wall/shuttle1/shuttle14
+	icon_state = "shuttle14-14"
+
+/turf/indestructible/wall/shuttle1/shuttle15
+	icon_state = "shuttle15-15"
+
+/turf/indestructible/wall/shuttle1/shuttle16
+	icon_state = "shuttle16-16"
+
+/turf/indestructible/wall/shuttle1/shuttle17
+	icon_state = "shuttle17-17"
+
+/turf/indestructible/wall/shuttle1/shuttle18
+	icon_state = "shuttle18-18"
+
+/turf/indestructible/wall/shuttle1/shuttle19
+	icon_state = "shuttle19-19"
+
+/turf/indestructible/wall/shuttle1/shuttle20
+	icon_state = "shuttle20-20"
+
+/turf/indestructible/wall/shuttle1/shuttle21
+	icon_state = "shuttle21-21"
+
+/turf/indestructible/wall/shuttle1/shuttle22
+	icon_state = "shuttle22-22"
+
+/turf/indestructible/wall/shuttle1/shuttle23
+	icon_state = "shuttle23-23"
+
+/turf/indestructible/wall/shuttle1/shuttle24
+	icon_state = "shuttle24-24"
+
+/turf/indestructible/wall/shuttle1/shuttle25
+	icon_state = "shuttle25-25"
+
+/turf/indestructible/wall/shuttle1/shuttle26
+	icon_state = "shuttle26-26"
+
+/turf/indestructible/wall/shuttle1/shuttle27
+	icon_state = "shuttle27-27"
+
+/turf/indestructible/wall/shuttle1/shuttle28
+	icon_state = "shuttle28-28"
+
+/turf/indestructible/wall/shuttle1/shuttle29
+	icon_state = "shuttle29-29"
+
+/turf/indestructible/wall/shuttle1/shuttle30
+	icon_state = "shuttle30-30"
+
+/turf/indestructible/wall/shuttle1/shuttle31
+	icon_state = "shuttle31-31"
+
+/turf/indestructible/wall/shuttle1/shuttle32
+	icon_state = "shuttle32-32"
+
+/turf/indestructible/wall/shuttle1/shuttle33
+	icon_state = "shuttle33-33"
+
+/turf/indestructible/wall/shuttle1/shuttle34
+	icon_state = "shuttle34-34"
+
+/turf/indestructible/wall/shuttle1/shuttle35
+	icon_state = "shuttle35-35"
+
+/turf/indestructible/wall/shuttle1/shuttle36
+	icon_state = "shuttle36-36"
+
+/turf/indestructible/wall/shuttle1/shuttle37
+	icon_state = "shuttle37-37"
+
+/turf/indestructible/wall/shuttle1/shuttle38
+	icon_state = "shuttle38-38"
+
+/turf/indestructible/wall/shuttle1/shuttle39
+	icon_state = "shuttle39-39"
+
+/turf/indestructible/wall/shuttle1/shuttle40
+	icon_state = "shuttle40-40"
+
+/turf/indestructible/wall/shuttle1/shuttle41
+	icon_state = "shuttle41-41"
+
 /turf/indestructible/wall/rock
 	name = "Rock"
 	icon = 'icons/turf/walls/desert.dmi'

@@ -98,6 +98,12 @@
 	icon_state = "blacksoft"
 	item_color = "black"
 
+/obj/item/clothing/head/soft/marine
+	name = "marine soldier cap"
+	desc = "It's a marine hat in a tasteless black colour."
+	icon_state = "marinesoft"
+	item_color = "marine"
+
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."

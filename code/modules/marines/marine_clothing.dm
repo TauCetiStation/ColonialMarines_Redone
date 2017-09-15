@@ -21,13 +21,13 @@
 	item_color = "grey"
 
 /obj/item/clothing/head/soft/marine/sergant
-	icon_state = "blacksoft"
-	item_color = "black"
+	icon_state = "marinesoft"
+	item_color = "marine"
 
 /obj/item/clothing/head/soft/marine/soldier
 	name = "marine soldier cap"
-	icon_state = "blacksoft"
-	item_color = "black"
+	icon_state = "marinesoft"
+	item_color = "marine"
 
 /obj/item/clothing/head/soft/marine/alpha
 	name = "alpha squad sergeant cap"
@@ -337,8 +337,8 @@
 /obj/item/weapon/storage/belt/marine
 	name = "marine belt"
 	desc = "A standard issue toolbelt for Colonial Marines."
-	icon_state = "securitybelt"
-	item_state = "security"//Could likely use a better one.
+	icon_state = "marinebelt"
+	item_state = "marine"//Could likely use a better one.
 	storage_slots = 7 //5
 	max_w_class = 3
 	max_combined_w_class = 10
@@ -366,12 +366,14 @@
 		/obj/item/weapon/gun/energy/taser,
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/melee/baton,
+		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/stunprod
 		)
 
 /obj/item/weapon/storage/belt/marine/full/New()
 	..()
 	new /obj/item/weapon/gun/projectile/pistol/m4a3(src)
+	new /obj/item/ammo_box/magazine/m4a3(src)
 	new /obj/item/ammo_box/magazine/m4a3(src)
 	new /obj/item/ammo_box/magazine/m4a3(src)
 
@@ -387,6 +389,7 @@
 
 /obj/item/weapon/storage/belt/knifepouch/Carbon_Steel/New()
 	..()
+	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)
 	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)
 	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)
 	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)

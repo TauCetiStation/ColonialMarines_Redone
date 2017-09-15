@@ -15,6 +15,11 @@
 	sound_fx = 1
 	dispersion = 0.6
 
+/obj/item/projectile/bullet/m50m //50 Elephant Gun
+	damage = 60
+	sound_fx = 1
+	dispersion = 0.6
+
 /obj/item/projectile/bullet/m39 // M39 SMG
 	damage = 15
 	sound_fx = 1
@@ -173,6 +178,11 @@
 	caliber = "38s"
 	projectile_type = /obj/item/projectile/bullet/m44m
 
+/obj/item/ammo_casing/m50m
+	desc = "A 50 Magnum bullet casing."
+	caliber = "50s"
+	projectile_type = /obj/item/projectile/bullet/m50m
+
 /obj/item/ammo_casing/m39 // M39 SMG
 	desc = "A .9mm special bullet casing."
 	caliber = "9mms"
@@ -278,6 +288,14 @@
 	desc = "A 44 Magnum speed loader"
 	icon_state = "38"
 	ammo_type = "/obj/item/ammo_casing/m44m"
+	max_ammo = 6
+	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m50m // 50 Elephant Gun
+	name = "50 Magnum Speed Loader (.50)"
+	desc = "A 50 Magnum speed loader"
+	icon_state = "m50m"
+	ammo_type = "/obj/item/ammo_casing/m50m"
 	max_ammo = 6
 	multiple_sprites = 1
 
@@ -464,6 +482,13 @@
 	desc = "A bulky 44 Magnum revolver, occasionally carried by assault troops and officers in the Colonial Marines. Uses 44 Magnum rounds"
 	icon_state = "detective_panther"
 	mag_type = /obj/item/ammo_box/magazine/m44m
+	w_class = 3
+
+/obj/item/weapon/gun/projectile/m50m
+	name = "50 Magnum Elephant Gun"
+	desc = "A bulky 50 Magnum revolver, can kill an elephant. Uses .50 Magnum rounds"
+	icon_state = "magnum-50"
+	mag_type = /obj/item/ammo_box/magazine/m50m
 	w_class = 3
 
 ///***SMGS***///

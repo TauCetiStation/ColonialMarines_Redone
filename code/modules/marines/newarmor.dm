@@ -7,7 +7,7 @@
 
 	icon = 'icons/marines/marine_armor.dmi'
 	icon_state = "jumpsuit2_s"
-	item_state = "jumpsuit2"
+	item_state = "gy_suit"
 	item_color = "jumpsuit2"
 	var/sleeves = 2
 	alternate_worn_icon = 'icons/marines/marine_armor.dmi'
@@ -15,7 +15,33 @@
 //Sleves 1 = short
 //Sleves 0 = none
 
+/obj/item/clothing/under/marine3
+	name = "Marine sergeant jumpsuit"
+	desc = "A standard quilted Colonial Marine jumpsuit. Weaved with armored plates to protect against low-caliber rounds and light impacts."
+	armor = list(melee = 25, bullet = 20, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+	flags = FPRINT
+	siemens_coefficient = 0.9
 
+	icon = 'icons/marines/marine_armor.dmi'
+	icon_state = "jumpsuit3_s"
+	item_state = "gy_suit"
+	item_color = "jumpsuit3"
+	var/sleeves = 0
+	alternate_worn_icon = 'icons/marines/marine_armor.dmi'
+
+/obj/item/clothing/under/marine4
+	name = "Marine officer jumpsuit"
+	desc = "A standard quilted Colonial Marine jumpsuit. Weaved with armored plates to protect against low-caliber rounds and light impacts."
+	armor = list(melee = 25, bullet = 20, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+	flags = FPRINT
+	siemens_coefficient = 0.9
+
+	icon = 'icons/marines/marine_armor.dmi'
+	icon_state = "jumpsuit5_s"
+	item_state = "gy_suit"
+	item_color = "jumpsuit5"
+	var/sleeves = 0
+	alternate_worn_icon = 'icons/marines/marine_armor.dmi'
 
 /obj/item/clothing/under/marine2/verb/sleeves()
 	set category = "Object"

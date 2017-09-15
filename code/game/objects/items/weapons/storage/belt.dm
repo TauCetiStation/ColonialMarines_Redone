@@ -208,6 +208,13 @@
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
 
+/obj/item/weapon/storage/belt/holster/full/New()
+	..()
+	new /obj/item/weapon/gun/projectile/m44panther(src)
+	new /obj/item/ammo_box/magazine/m44m(src)
+	new /obj/item/ammo_box/magazine/m44m(src)
+	new /obj/item/ammo_box/magazine/m44m(src)
+
 /obj/item/weapon/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in."

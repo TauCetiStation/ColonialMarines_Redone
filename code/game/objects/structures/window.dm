@@ -436,7 +436,7 @@
 	icon = 'icons/obj/smooth_structures/bulletproof_window.dmi'
 	icon_state = "b_window"
 	dir = 5
-	maxhealth = INFINITY
+	maxhealth = 500
 	fulltile = 1
 	smooth = 1
 	canSmoothWith = list(/obj/structure/window/bulletproof)

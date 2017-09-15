@@ -95,6 +95,11 @@
 	desc = "A catwalk for easier EVA manuevering and cable placement."
 	icon_state = "catwalkfull"
 
+/obj/structure/lattice/walkfloor
+	name = "catwalk"
+	desc = "A catwalk for easier manuevering and cable placement."
+	icon_state = "walkfloor"
+
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)

@@ -12,7 +12,7 @@
 	new /obj/item/weapon/storage/belt/marine(src)
 	new /obj/item/clothing/head/helmet/marine2(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
+	//new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/shoes/marine(src)
 	new /obj/item/clothing/gloves/marine(src)
 	new /obj/item/clothing/under/marine2(src)
@@ -130,7 +130,7 @@
 	new /obj/item/weapon/storage/belt/marine(src)
 	new /obj/item/clothing/head/helmet/marine2(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
+	//new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/device/radio/headset/malpha(src)
 	return
 
@@ -149,7 +149,7 @@
 	new /obj/item/weapon/storage/belt/marine(src)
 	new /obj/item/clothing/head/helmet/marine2(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
+	//new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/device/radio/headset/mbravo(src)
 	return
 
@@ -168,7 +168,7 @@
 	new /obj/item/weapon/storage/belt/marine(src)
 	new /obj/item/clothing/head/helmet/marine2(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
+	//new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/device/radio/headset/mcharlie(src)
 	return
 
@@ -187,7 +187,7 @@
 	new /obj/item/weapon/storage/belt/marine(src)
 	new /obj/item/clothing/head/helmet/marine2(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
+	//new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/device/radio/headset/mdelta(src)
 	return
 
@@ -256,6 +256,18 @@
 			new /obj/item/weapon/storage/belt/marine(src)
 		return
 
+/obj/structure/closet/crate/large/marine/gear15
+	name = "Marine Gear"
+	desc = "A crate containing standard issue Marine gear for 15 marines"
+	New()
+		..()
+		for(var/c, c<15, c++)
+			new /obj/item/clothing/under/marine2(src)
+			new /obj/item/clothing/head/helmet/marine2(src)
+			new /obj/item/clothing/suit/storage/marine2(src)
+			new /obj/item/clothing/shoes/marine(src)
+			new /obj/item/weapon/storage/belt/marine(src)
+		return
 
 
 /obj/structure/closet/crate/plastic/marine/alpha

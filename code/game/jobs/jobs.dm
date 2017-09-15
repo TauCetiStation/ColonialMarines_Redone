@@ -25,6 +25,7 @@ var/const/BSL				=(1<<6)
 var/const/CSL				=(1<<7)
 var/const/DSL				=(1<<8)
 var/const/SCIRES			=(1<<9)
+var/const/SUPPLY			=(1<<10)
 
 
 var/const/MEDSCI			=(1<<1)
@@ -69,6 +70,7 @@ var/list/assistant_occupations = list(
 var/list/command_positions = list(
 	"Commander",
 	"Logistics Officer",
+	"Cargo Supply Officer",
 	"Alpha Squad Leader",
 	"Bravo Squad Leader",
 	"Charlie Squad Leader",

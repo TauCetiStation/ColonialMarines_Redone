@@ -114,6 +114,10 @@
 /var/const/access_delta_sprep = 319
 /var/const/access_delta_leader = 320
 
+/var/const/access_bridge = 330
+
+/var/const/access_cargo_sulaco = 350
+
 /var/const/access_xeno_containment = 400
 
 /var/const/access_medical_bay = 500
@@ -487,7 +491,8 @@
 		"Charlie Squad Standard",
 		"Researcher",
 		"Marine",
-		"Sulaco Medic"
+		"Sulaco Medic",
+		"Cargo Supply Officer"
 		)
 
 /proc/get_marine_access(job)
@@ -525,16 +530,17 @@
 		if("Delta Squad Standard")
 			return list(access_delta_prep, access_delta_sprep)
 		if("Logistics Officer")
-			return list(access_logistics)
+			return list(access_logistics, access_bridge)
 		if("Commander")
-			return list(access_alpha_prep, access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_logistics, access_xeno_containment, access_medical_bay, access_medical_surgery, access_medical_chem, access_medical_storage, access_medical_genetics, access_robotics, access_sulaco_brig, access_sulaco_cells)
+			return list(access_alpha_prep, access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_logistics, access_xeno_containment, access_medical_bay, access_medical_surgery, access_medical_chem, access_medical_storage, access_medical_genetics, access_robotics, access_sulaco_brig, access_sulaco_cells, access_cargo_sulaco, access_bridge)
 		if("Researcher")
 			return list(access_xeno_containment, access_robotics)
 		if("Sulaco Medic")
 			return list(access_medical_bay, access_medical_surgery, access_medical_chem, access_medical_genetics, access_medical_storage)
 		if("Military Police")
 			return list(access_sulaco_brig, access_sulaco_cells, access_logistics, access_xeno_containment, access_robotics, access_medical_bay, access_medical_surgery)
-
+		if("Cargo Supply Officer")
+			return list(access_cargo_sulaco, access_logistics, access_bridge)
 
 /proc/get_marine_access_desc(A)
 	switch(A)
@@ -580,6 +586,8 @@
 			return "Delta Leader Preparation"
 		if(access_logistics)
 			return "Logistics"
+		if(access_bridge)
+			return "Bridge"
 		if(access_xeno_containment)
 			return "Xenomorphic Containment"
 		if(access_medical_bay)
@@ -596,9 +604,11 @@
 			return "Sulaco Brig"
 		if(access_sulaco_cells)
 			return "Sulaco Brig Cells"
+		if(access_cargo_sulaco)
+			return "Sulaco Cargo"
 
 /proc/get_all_marine_accesses()
-	return list(access_alpha_prep, access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_logistics, access_xeno_containment, access_medical_bay, access_medical_surgery, access_medical_chem, access_medical_storage, access_medical_genetics, access_robotics, access_sulaco_brig, access_sulaco_cells)
+	return list(access_alpha_prep, access_alpha_mprep, access_alpha_eprep, access_alpha_sprep, access_alpha_leader, access_charlie_prep, access_charlie_mprep, access_charlie_eprep, access_charlie_sprep, access_charlie_leader, access_bravo_prep, access_bravo_mprep, access_bravo_eprep, access_bravo_sprep, access_bravo_leader, access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader, access_logistics, access_xeno_containment, access_medical_bay, access_medical_surgery, access_medical_chem, access_medical_storage, access_medical_genetics, access_robotics, access_sulaco_brig, access_sulaco_cells, access_cargo_sulaco, access_bridge)
 
 /proc/get_marine_region_accesses_name(var/code)
 	switch(code)
@@ -616,6 +626,8 @@
 			return "Research"
 		if(7)
 			return "Misc"
+		if(8)
+			return "Supply"
 
 /proc/get_marine_region_accesses(var/code)
 	switch(code)
@@ -628,12 +640,13 @@
 		if(4)
 			return list(access_delta_prep, access_delta_mprep, access_delta_eprep, access_delta_sprep, access_delta_leader)
 		if(5)
-			return list(access_logistics)
+			return list(access_logistics, access_bridge)
 		if(6)
 			return list(access_xeno_containment)
 		if(7)
 			return list(access_medical_bay, access_medical_surgery, access_medical_chem, access_medical_storage, access_medical_genetics, access_sulaco_brig, access_sulaco_cells)
-
+		if(8)
+			return list(access_cargo_sulaco, access_logistics, access_bridge)
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
