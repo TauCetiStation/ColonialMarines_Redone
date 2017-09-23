@@ -74,7 +74,10 @@
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "0"
 	products = list(/obj/item/weapon/reagent_containers/hypospray/medipen = 10,
-					/obj/item/weapon/reagent_containers/hypospray/medipen/morphine = 10)
+					/obj/item/weapon/reagent_containers/hypospray/medipen/morphine = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/atropine = 4,
+					/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,
+					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4)
 	contraband = list()
 
 

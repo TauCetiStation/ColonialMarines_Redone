@@ -30,6 +30,7 @@
 //Antag toggles
 #define BE_ALIEN	1
 #define BE_SURVIVOR	2
+#define BE_NINJA	4
 
 //Antag toggles
 #define BE_TRAITOR		4
@@ -41,7 +42,7 @@
 #define BE_PAI			256
 #define BE_CULTIST		512
 #define BE_BLOB			1024
-#define BE_NINJA		2048
+//#define BE_NINJA		2048
 #define BE_MONKEY		4096
 #define BE_GANG			8192
 #define BE_SHADOWLING	16384
