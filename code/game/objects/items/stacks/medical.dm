@@ -90,6 +90,27 @@
 	heal_brute = 40
 	origin_tech = "biotech=1"
 
+/obj/item/stack/medical/bruise_pack_predator
+	name = "bruise pack"
+	amount = 10
+	max_amount = 10
+	singular_name = "bruise pack"
+	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
+	icon_state = "exwelder2"
+	heal_brute = 50
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/ointment_predator
+	name = "ointment"
+	desc = "Used to treat those nasty burn wounds."
+	gender = PLURAL
+	singular_name = "ointment"
+	icon_state = "exwelder3"
+	amount = 10
+	max_amount = 10
+	heal_burn = 50
+	origin_tech = "biotech=1"
+
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
 	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, but does not heal wounds."

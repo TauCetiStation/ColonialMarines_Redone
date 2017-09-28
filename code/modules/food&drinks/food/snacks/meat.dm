@@ -172,11 +172,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak
 	name = "steak"
 	desc = "A piece of hot spicy meat."
-	icon_state = "meatsteak"
+	icon_state = "mre1"
 	list_reagents = list("nutriment" = 5)
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
-	trash = /obj/item/trash/plate
+	trash = /obj/item/trash/mre1
 	filling_color = "#B22222"
+
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain
 

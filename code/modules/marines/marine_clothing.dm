@@ -278,6 +278,13 @@
 	siemens_coefficient = 0.7
 	var/obj/item/weapon/combat_knife/knife //Thank you Apo and LLA~~
 
+
+/obj/item/clothing/shoes/marine/predator
+	name = "Predator's boots"
+	desc = "Standard issue combat boots for combat scenarios or combat situations."
+	icon_state = "predator"
+	item_state = "jackboots"
+
 	//Knife slot
 	attack_hand(var/mob/living/M)
 		if(knife)
@@ -376,6 +383,22 @@
 	new /obj/item/ammo_box/magazine/m4a3(src)
 	new /obj/item/ammo_box/magazine/m4a3(src)
 	new /obj/item/ammo_box/magazine/m4a3(src)
+
+/obj/item/weapon/storage/belt/predator_belt
+	name = "Predator's belt"
+	desc = "A belt for predator."
+	icon_state = "predatorbelt"
+	item_state = "predator"//Could likely use a better one.
+	storage_slots = 5 //7
+	max_w_class = 3
+	max_combined_w_class = 10
+	can_hold = list(
+		/obj/item/stack/medical/bruise_pack_predator,
+		/obj/item/stack/medical/ointment_predator,
+		/obj/item/weapon/predator_knife,
+		/obj/item/weapon/twohanded/spearpred,
+		/obj/item/weapon/gun/energy/lasercannon/predator
+		)
 
 /obj/item/weapon/storage/belt/knifepouch
 	name="Knife Rig"

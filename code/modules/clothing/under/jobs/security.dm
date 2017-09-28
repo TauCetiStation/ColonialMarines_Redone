@@ -90,6 +90,13 @@
 	item_state = "officlothes"
 	item_color = "officlothes"
 
+/obj/item/clothing/under/rank/head_of_security/predator
+	desc = "What is that?"
+	name = "predator's stuff"
+	icon_state = "predator"
+	item_state = "predator"
+	item_color = "predator"
+
 /obj/item/clothing/under/rank/warden/navyblue
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
 	name = "warden's formal uniform"

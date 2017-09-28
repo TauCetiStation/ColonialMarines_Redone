@@ -591,7 +591,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	name = "Guise"
 	desc = "Wraps your form in shadows, making you harder to see."
 	panel = "Thrall Abilities"
-	charge_max = 1200
+	charge_max = 200
 	clothes_req = 0
 	range = -1
 	include_user = 1
@@ -608,7 +608,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 			return
 		user.visible_message("<span class='warning'>[user] suddenly fades away!</span>", "<span class='shadowling'>You veil yourself in darkness, making you harder to see.</span>")
 		user.alpha = 20
-		sleep(40)
+		sleep(200)
 		user.visible_message("<span class='warning'>[user] appears from nowhere!</span>", "<span class='shadowling'>Your shadowy guise slips away.</span>")
 		user.alpha = initial(user.alpha)
 

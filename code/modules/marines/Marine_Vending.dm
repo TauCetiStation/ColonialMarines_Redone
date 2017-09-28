@@ -4,10 +4,10 @@
 	desc = "A marine weapon vendor"
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
-					/obj/item/weapon/gun/projectile/pistol/m4a3 = 25,
-					/obj/item/weapon/gun/projectile/shotgun/m37 = 25,
-					/obj/item/weapon/gun/projectile/Assault/m39 = 25,
-					/obj/item/weapon/gun/projectile/Assault/m41 = 25
+					/obj/item/weapon/gun/projectile/pistol/m4a3 = 15,
+					/obj/item/weapon/gun/projectile/shotgun/m37 = 15,
+					/obj/item/weapon/gun/projectile/Assault/m39 = 15,
+					/obj/item/weapon/gun/projectile/Assault/m41 = 15
 					)
 
 /obj/machinery/vending/marine/ammunition
@@ -15,10 +15,10 @@
 	desc = "A marine ammunition vendor"
 	product_ads = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!;Your ammo is right here.;Guns!;Die, scumbag!;Don't shoot me bro!;Shoot them, bro.;Why not have a donut?"
 	products = list(
-					/obj/item/ammo_box/magazine/m4a3 = 75,
-					/obj/item/ammo_box/m37/buckshot = 75,
-					/obj/item/ammo_box/magazine/m39 = 75,
-					/obj/item/ammo_box/magazine/m41 = 75
+					/obj/item/ammo_box/magazine/m4a3 = 55,
+					/obj/item/ammo_box/m37/buckshot = 55,
+					/obj/item/ammo_box/magazine/m39 = 55,
+					/obj/item/ammo_box/magazine/m41 = 55
 					)
 
 /obj/machinery/vending/marine/equipment
@@ -36,7 +36,7 @@
 					/obj/item/weapon/grenade/explosive = 2,
 					/obj/item/weapon/combat_knife = 25,
 					/obj/item/weapon/storage/box/marine = 10,
-					/obj/item/weapon/storage/pill_bottle/anti_starve = 10
+					/obj/item/weapon/storage/box/mre = 10
 					)
 
 /obj/machinery/vending/marine/special
@@ -77,6 +77,7 @@
 					/obj/item/weapon/reagent_containers/hypospray/medipen/morphine = 10,
 					/obj/item/weapon/reagent_containers/glass/bottle/atropine = 4,
 					/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,
+					/obj/item/weapon/storage/pill_bottle/anti_starve = 4,
 					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4)
 	contraband = list()
 

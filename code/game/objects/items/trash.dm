@@ -13,6 +13,18 @@
 	name = "candy"
 	icon_state= "candy"
 
+/obj/item/trash/mre1
+	name = "MRE beef trash"
+	icon_state= "mre1"
+
+/obj/item/trash/mre2
+	name = "MRE spaghetti trash"
+	icon_state= "mre2"
+
+/obj/item/trash/mre3
+	name = "MRE stew trash"
+	icon_state= "mre3"
+
 /obj/item/trash/cheesie
 	name = "cheesie honkers"
 	icon_state = "cheesie_honkers"

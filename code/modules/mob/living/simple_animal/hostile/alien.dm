@@ -37,6 +37,8 @@
 	icon_dead = "aliend_dead"
 	maxHealth = 170
 	health = 170
+	retreat_distance = 15
+	minimum_distance = 15
 	melee_damage_lower = 12
 	melee_damage_upper = 16
 	var/plant_cooldown = 30

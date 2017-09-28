@@ -403,6 +403,7 @@ var/list/teleportlocs = list()
 /area/maintenance/asmaint
 	name = "Medbay Maintenance"
 	icon_state = "asmaint"
+	ambientsounds = list('sound/ambience/deadspace.ogg')
 
 /area/maintenance/asmaint2
 	name = "Science Maintenance"
@@ -580,6 +581,7 @@ var/list/teleportlocs = list()
 /area/crew_quarters/bar
 	name = "\improper Bar"
 	icon_state = "bar"
+	ambientsounds = list('sound/ambience/bladerunner.ogg')
 
 /area/crew_quarters/theatre
 	name = "\improper Theatre"

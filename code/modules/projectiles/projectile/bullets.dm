@@ -28,7 +28,7 @@
 					M << get_sound_fx()
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
-	damage = 5
+	damage = 15
 	stamina = 80
 
 
