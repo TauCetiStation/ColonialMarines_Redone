@@ -79,8 +79,8 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre1(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre2(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre3(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre4(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/candy(src)
 	return
 
 

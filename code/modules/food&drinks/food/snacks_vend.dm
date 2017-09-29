@@ -38,6 +38,15 @@
 	trash = /obj/item/trash/mre3
 	filling_color = "#D2691E"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/mre4
+	name = "MRE baked beans"
+	desc = "Delicious beans in sauce."
+	icon_state = "mre4"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	trash = /obj/item/trash/mre4
+	filling_color = "#D2691E"
+
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"

@@ -279,12 +279,6 @@
 	var/obj/item/weapon/combat_knife/knife //Thank you Apo and LLA~~
 
 
-/obj/item/clothing/shoes/marine/predator
-	name = "Predator's boots"
-	desc = "Standard issue combat boots for combat scenarios or combat situations."
-	icon_state = "predator"
-	item_state = "jackboots"
-
 	//Knife slot
 	attack_hand(var/mob/living/M)
 		if(knife)
@@ -312,6 +306,13 @@
 			icon_state = "jackboots-1"
 		else
 			icon_state = initial(icon_state)
+
+/obj/item/clothing/shoes/marine/predator
+	name = "Predator's boots"
+	desc = "Standard issue combat boots for combat scenarios or combat situations."
+	icon_state = "predator"
+	item_state = "jackboots"
+
 
 /obj/item/clothing/shoes/marinechief
 	name = "chief officer shoes"

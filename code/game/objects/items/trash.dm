@@ -25,6 +25,10 @@
 	name = "MRE stew trash"
 	icon_state= "mre3"
 
+/obj/item/trash/mre4
+	name = "MRE beans trash"
+	icon_state= "mre4"
+
 /obj/item/trash/cheesie
 	name = "cheesie honkers"
 	icon_state = "cheesie_honkers"
