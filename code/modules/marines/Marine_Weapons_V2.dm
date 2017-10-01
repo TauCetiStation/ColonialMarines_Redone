@@ -1,17 +1,20 @@
 ///***Bullets***///
 /obj/item/projectile/bullet/m4a3 //Colt 45 Pistol
 	damage = 25
+	stamina = 15
 	sound_fx = 1
 	dispersion = 0.5
 	penetration = -20
 
 /obj/item/projectile/bullet/vp78
 	damage = 40
+	stamina = 20
 	sound_fx = 1
 	dispersion = 0.6
 
 /obj/item/projectile/bullet/m44m //44 Magnum Peacemaker
 	damage = 45
+	stamina = 20
 	sound_fx = 1
 	dispersion = 0.6
 
@@ -22,6 +25,7 @@
 
 /obj/item/projectile/bullet/m39 // M39 SMG
 	damage = 15
+	stamina = 15
 	sound_fx = 1
 	dispersion = 1
 	penetration = -40
@@ -38,6 +42,7 @@
 
 /obj/item/projectile/bullet/m41 //M41 Assault Rifle
 	damage = 20
+	stamina = 10
 	sound_fx = 1
 	dispersion = 0.5
 	penetration = 30
@@ -48,15 +53,18 @@
 
 /obj/item/projectile/bullet/m37/buckshot
 	damage = 13
+	stamina = 10
 	dispersion = 1.5
 
 /obj/item/projectile/bullet/m37/flechette
 	damage = 30
+	stamina = 20
 	dispersion = 1
 	penetration = -60
 
 /obj/item/projectile/bullet/m37/slug
 	damage = 150
+	stamina = 90
 	dispersion = 0.5
 	penetration = 60
 
@@ -73,6 +81,7 @@
 
 /obj/item/projectile/bullet/a10x28 //M59B Smartgun
 	damage = 30
+	stamina = 10
 	sound_fx = 1
 	dispersion = 0.5
 
@@ -80,6 +89,7 @@
 	icon_state = "tracer"
 	layer = 16
 	damage = 120
+	stamina = 50
 	sound_fx = 1
 	dispersion = 0.2
 	penetration = 80
@@ -113,12 +123,14 @@
 
 /obj/item/projectile/bullet/machinegun
 	damage = 60
+	stamina = 20
 	sound_fx = 1
 	dispersion = 0.5
 	penetration = 50
 
 /obj/item/projectile/bullet/turret
 	damage = 25
+	stamina = 20
 	sound_fx = 1
 	dispersion = 0.5
 	penetration = -30
