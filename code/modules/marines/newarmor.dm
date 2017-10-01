@@ -7,13 +7,42 @@
 
 	icon = 'icons/marines/marine_armor.dmi'
 	icon_state = "jumpsuit2_s"
-	item_state = "jumpsuit2"
+	item_state = "gy_suit"
 	item_color = "jumpsuit2"
 	var/sleeves = 2
 	alternate_worn_icon = 'icons/marines/marine_armor.dmi'
 //Sleves 2 = long
 //Sleves 1 = short
 //Sleves 0 = none
+
+/obj/item/clothing/under/marine3
+	name = "Marine sergeant jumpsuit"
+	desc = "A standard quilted Colonial Marine jumpsuit. Weaved with armored plates to protect against low-caliber rounds and light impacts."
+	armor = list(melee = 25, bullet = 20, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+	flags = FPRINT
+	siemens_coefficient = 0.9
+
+	icon = 'icons/marines/marine_armor.dmi'
+	icon_state = "jumpsuit3_s"
+	item_state = "gy_suit"
+	item_color = "jumpsuit3"
+	var/sleeves = 2
+	alternate_worn_icon = 'icons/marines/marine_armor.dmi'
+
+/obj/item/clothing/under/marine4
+	name = "Marine officer jumpsuit"
+	desc = "A standard quilted Colonial Marine jumpsuit. Weaved with armored plates to protect against low-caliber rounds and light impacts."
+	armor = list(melee = 25, bullet = 20, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+	flags = FPRINT
+	siemens_coefficient = 0.9
+
+	icon = 'icons/marines/marine_armor.dmi'
+	icon_state = "jumpsuit5_s"
+	item_state = "gy_suit"
+	item_color = "jumpsuit5"
+	var/sleeves = 0
+	alternate_worn_icon = 'icons/marines/marine_armor.dmi'
+
 /obj/item/clothing/under/marine2/verb/sleeves()
 	set category = "Object"
 	set name = "Adjust sleeves"
@@ -38,6 +67,35 @@
 				icon_state = "jumpsuit2_s"
 				item_state = "jumpsuit2"
 				item_color = "jumpsuit2"
+				usr << "You roll down the sleves."
+		usr.update_inv_w_uniform()	//so our mob-overlays updates
+
+
+
+/obj/item/clothing/under/marine3/verb/sleeves()
+	set category = "Object"
+	set name = "Adjust sleeves"
+	set src in usr
+
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		src.sleeves += 1
+		if(src.sleeves > 2)
+			src.sleeves = 0
+		switch(src.sleeves)
+			if(0)
+				icon_state = "jumpsuit0_s"
+				item_state = "jumpsuit0"
+				item_color = "jumpsuit0"
+				usr << "You roll up the sleves."
+			if(1)
+				icon_state = "jumpsuit4_s"
+				item_state = "jumpsuit4"
+				item_color = "jumpsuit4"
+				usr << "You roll down the sleves."
+			if(2)
+				icon_state = "jumpsuit3_s"
+				item_state = "jumpsuit3"
+				item_color = "jumpsuit3"
 				usr << "You roll down the sleves."
 		usr.update_inv_w_uniform()	//so our mob-overlays updates
 
@@ -83,7 +141,7 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	item_state = "comhelm"
 	name = "M10 Pattern Marine Helmet"
 	desc = "A standard M10 Pattern Helmet. It reads on the label, 'The difference between an open-casket and closed-casket funeral. Wear on head for best results.'."
-	armor = list(melee = 50, bullet = 80, laser = 50,energy = 10, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 80, laser = -300,energy = 10, bomb = 35, bio = 0, rad = 0)
 	health = 4
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	var/mob/living/carbon/human/wornby
@@ -91,6 +149,25 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	var/rank = 0
 	var/image/markingoverlay
 	var/obj/machinery/camera/portable/helmetCam = null
+
+/obj/item/clothing/head/helmet/marine2/helm_med
+	icon_state = "helmet_med"
+
+/obj/item/clothing/head/helmet/marine2/helm_pilot
+	icon_state = "helmet_pilot"
+
+/obj/item/clothing/head/helmet/marine2/helm_predator
+	name = "Predator's helmet"
+	desc = "A predator helmet."
+	icon_state = "predator"
+	health = 10
+	armor = list(melee = 50, bullet = 30, laser = 30,energy = 10, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/marine2/helm_vasquez
+	name = "Vasquez bandage"
+	desc = "Vasquez, you are super."
+	icon_state = "helmet_vasquez"
+
 
 /obj/item/clothing/head/helmet/marine2/New(loc)
 	..(loc)
@@ -215,7 +292,7 @@ var/list/squad_colors = list(rgb(255,0,0), rgb(255,255,0), rgb(160,32,240), rgb(
 	name = "M3 Pattern Marine Armor"
 	desc = "A standard Colonial Marines M3 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. It has a small leather pouch strapped to it for limited storage."
 	blood_overlay_type = "armor"
-	armor = list(melee = 50, bullet = 80, laser = 50, energy = 10, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 80, laser = -5000, energy = 10, bomb = 35, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 	allowed = list(/obj/item/weapon/gun/, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/device/flashlight,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton, /obj/item/weapon/melee/stunprod, /obj/item/weapon/restraints, /obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/grenade, /obj/item/weapon/combat_knife)
 	var/mob/living/carbon/human/wornby

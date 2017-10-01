@@ -12,6 +12,17 @@
 	build_path = /obj/item/weapon/gun/energy/stunrevolver
 	category = list("Weapons")
 
+/datum/design/nuclear_gun
+	name = "Advanced Energy Gun"
+	desc = "An energy gun with an experimental miniaturized reactor."
+	id = "nuclear_gun"
+	req_tech = list("combat" = 4, "materials" = 5, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_URANIUM = 2000)
+	reliability = 76
+	build_path = /obj/item/weapon/gun/energy/gun/nuclear
+	category = list("Weapons")
+
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
@@ -20,6 +31,26 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000, MAT_SILVER = 300)
 	build_path = /obj/item/weapon/shield/riot/tele
+	category = list("Weapons")
+
+/datum/design/lasercannon
+	name = "Laser Cannon"
+	desc = "A heavy duty laser cannon."
+	id = "lasercannon"
+	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/weapon/gun/energy/lasercannon
+	category = list("Weapons")
+
+/datum/design/decloner
+	name = "Decloner"
+	desc = "Your opponent will bubble into a messy pile of goop."
+	id = "decloner"
+	req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000, "mutagen" = 40)
+	build_path = /obj/item/weapon/gun/energy/decloner
 	category = list("Weapons")
 
 /datum/design/rapidsyringe
@@ -31,6 +62,17 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/gun/syringe/rapidsyringe
 	category = list("Weapons")
+
+/datum/design/largecrossbow
+	name = "Energy Crossbow"
+	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
+	id = "largecrossbow"
+	req_tech = list("combat" = 5, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+	category = list("Weapons")
+	reliability = 76
 
 /datum/design/temp_gun
 	name = "Temperature Gun"
@@ -73,6 +115,36 @@
 	build_path = /obj/item/weapon/gun/projectile/automatic/proto
 	category = list("Weapons")
 
+/datum/design/xray
+	name = "Xray Laser Gun"
+	desc = "Not quite as menacing as it sounds"
+	id = "xray"
+	req_tech = list("combat" = 6, "materials" = 5, "biotech" = 5, "powerstorage" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000, MAT_METAL = 4000)
+	build_path = /obj/item/weapon/gun/energy/xray
+	category = list("Weapons")
+
+/datum/design/ioncarbine
+	name = "Ion Carbine"
+	desc = "How to dismantle a cyborg : The gun."
+	id = "ioncarbine"
+	req_tech = list("combat" = 5, "materials" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 4000, MAT_METAL = 6000, MAT_URANIUM = 1000)
+	build_path = /obj/item/weapon/gun/energy/ionrifle/carbine
+	category = list("Weapons")
+
+/datum/design/wormhole_projector
+	name = "Bluespace Wormhole Projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	id = "wormholeprojector"
+	req_tech = list("combat" = 6, "materials" = 6, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 1000, MAT_METAL = 5000, MAT_DIAMOND = 3000)
+	build_path = /obj/item/weapon/gun/energy/wormhole_projector
+	category = list("Weapons")
+
 /datum/design/reciever
 	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
@@ -101,6 +173,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
+	category = list("Ammo")
+
+/datum/design/techshell
+	name = "Unloaded Technological Shotshell"
+	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
+	id = "techshotshell"
+	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 4, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 200, MAT_SILVER = 300)
+	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list("Ammo")
 
 /datum/design/suppressor

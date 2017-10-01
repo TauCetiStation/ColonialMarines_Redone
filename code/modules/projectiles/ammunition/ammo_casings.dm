@@ -60,8 +60,8 @@
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"
-	desc = "A weak beanbag slug for riot control."
-	icon_state = "bshell"
+	desc = "A weak beanbag slug."
+	icon_state = "flecshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
 	materials = list(MAT_METAL=250)
 

@@ -233,6 +233,20 @@
 	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 
+/obj/item/weapon/storage/pill_bottle/anti_starve
+	name = "bottle of anti-starve pills"
+	desc = "Contains pills used in case of severe starve."
+
+/obj/item/weapon/storage/pill_bottle/anti_starve/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+	new /obj/item/weapon/reagent_containers/pill/sugar(src)
+
 /obj/item/weapon/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"

@@ -9,6 +9,7 @@
 /area/sulaco/medbay
 	name = "\improper Sulaco Medbay"
 	icon_state = "medbay"
+	ambientsounds = list('sound/ambience/medsave.ogg')
 
 /area/sulaco/research
 	name = "\improper Sulaco Research"
@@ -41,6 +42,7 @@
 /area/sulaco/art_store_port
 	name = "\improper Sulaco Port Storage Aft"
 	icon_state = "storage"
+	ambientsounds = list('sound/ambience/deadspace.ogg')
 
 /area/sulaco/bridge
 	name = "\improper Sulaco Bridge"
@@ -126,6 +128,15 @@
 	icon_state = "shuttle2"
 
 /area/shuttle/marine_b/station
+	icon_state = "shuttle"
+
+/area/shuttle/marine_c
+	name = "\improper Transport Shuttle"
+
+/area/shuttle/marine_c/sulaco
+	icon_state = "shuttle2"
+
+/area/shuttle/marine_c/station
 	icon_state = "shuttle"
 
 //New areas - planet

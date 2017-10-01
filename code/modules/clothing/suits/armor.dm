@@ -103,6 +103,16 @@
 	armor = list(melee = 10, bullet = 10, laser = 60, energy = 50, bomb = 0, bio = 0, rad = 0)
 	var/hit_reflect_chance = 40
 
+/obj/item/clothing/suit/armor/proofpred
+	name = "predator armor vest"
+	desc = "A vest that excels in protecting the wearer against energy projectiles."
+	icon_state = "predator"
+	item_state = "predator"
+	blood_overlay_type = "armor"
+	armor = list(melee = 10, bullet = 20, laser = 60, energy = 50, bomb = 0, bio = 0, rad = 0)
+	var/hit_reflect_chance = 40
+
+
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		hit_reflect_chance = 0

@@ -66,6 +66,39 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
+
+/obj/item/weapon/storage/box/mre
+	name = "The Meal, Ready-to-Eat"
+	desc = "A box full of food."
+	icon_state = "mrebox2"
+	storage_slots = 5
+
+/obj/item/weapon/storage/box/mre/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre1(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre2(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre3(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/mre4(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
+	return
+
+
+/obj/item/weapon/storage/box/fraction_shot
+	name = "fraction shot"
+
+/obj/item/weapon/storage/box/fraction_shot/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	return
+
 /obj/item/weapon/storage/box/engineer
 
 /obj/item/weapon/storage/box/engineer/New()

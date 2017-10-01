@@ -2,12 +2,16 @@
 
 var/marine_a_shuttle_tickstomove = 15
 var/marine_b_shuttle_tickstomove = 15
+var/marine_c_shuttle_tickstomove = 15
 var/marine_a_shuttle_moving = 0
 var/marine_b_shuttle_moving = 0
+var/marine_c_shuttle_moving = 0
 var/marine_a_shuttle_location = 0
 var/marine_b_shuttle_location = 0
+var/marine_c_shuttle_location = 0
 var/a_cooldown = 0
 var/b_cooldown = 0
+var/c_cooldown = 0
 
 proc/move_marine_a_shuttle()
 	if(marine_a_shuttle_moving)	return
@@ -132,6 +136,67 @@ proc/move_marine_b_shuttle()
 
 	return
 
+proc/move_marine_c_shuttle()
+	if(marine_c_shuttle_moving)	return
+	marine_c_shuttle_moving = 1
+	spawn(marine_c_shuttle_tickstomove*10)
+		var/area/fromArea
+		var/area/toArea
+		if (marine_c_shuttle_location == 1)
+			fromArea = locate(/area/shuttle/marine_c/station)
+			toArea = locate(/area/shuttle/marine_c/sulaco)
+		else
+			fromArea = locate(/area/shuttle/marine_c/sulaco)
+			toArea = locate(/area/shuttle/marine_c/station)
+
+		var/list/dstturfs = list()
+		var/throwy = world.maxy
+
+		for(var/turf/T in toArea)
+			dstturfs += T
+			if(T.y < throwy)
+				throwy = T.y
+
+		for(var/turf/T in dstturfs)
+			var/turf/D = locate(T.x, throwy - 1, 1)
+			for(var/atom/movable/AM as mob|obj in T)
+				AM.Move(D)
+
+			if(istype(T, /turf/simulated))
+				del(T)
+
+		for(var/mob/living/carbon/bug in toArea)
+			bug.gib()
+
+		for(var/mob/living/simple_animal/pest in toArea)
+			pest.gib()
+
+		fromArea.move_contents_to(toArea)
+		if (marine_c_shuttle_location)
+			marine_c_shuttle_location = 0
+		else
+			marine_c_shuttle_location = 1
+
+		for(var/mob/M in toArea)
+			if(M.client)
+				spawn(0)
+					if(M.buckled)
+						shake_camera(M, 3, 1)
+					else
+						shake_camera(M, 10, 1)
+			if(istype(M, /mob/living/carbon))
+				if(!M.buckled)
+					if (prob(70))
+						M.Weaken(3)
+						M.weakened = 3
+
+		marine_b_shuttle_moving = 0
+		b_cooldown = 1
+		spawn(600)//60 seconds
+			b_cooldown = 0
+
+	return
+
 /obj/machinery/computer/marine_a_shuttle
 	name = "marine transport shuttle one console"
 	icon = 'icons/obj/computer.dmi'
@@ -203,7 +268,7 @@ proc/move_marine_b_shuttle()
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["move"])
-		
+
 		if(a_cooldown)
 			usr << "\red Shuttle is recharging. Please wait."
 			return
@@ -258,6 +323,18 @@ proc/move_marine_b_shuttle()
 	use_power = 0
 	unacidable = 1
 
+/obj/machinery/computer/marine_c_shuttle
+	name = "transport shuttle"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "shuttle"
+	req_access = list(access_security)
+	circuit = "/obj/item/weapon/circuitboard/marine_c_shuttle"
+	var/hacked = 0
+	var/location = 0
+	var/disabled = 0
+	use_power = 0
+	unacidable = 1
+
 /obj/machinery/computer/marine_b_shuttle/attack_paw(user as mob)
 	if(..(user))
 		return
@@ -289,6 +366,36 @@ proc/move_marine_b_shuttle()
 	user << browse("[dat]", "window=miningshuttle;size=200x150")
 
 
+/obj/machinery/computer/marine_c_shuttle/attack_paw(user as mob)
+	if(..(user))
+		return
+
+	if(world.time < 32000)
+		user << "\red You can not use this yet. Please wait another [round((32000-world.time)/600)] minutes before trying again."
+		return
+	if(istype(user,/mob/living/carbon/alien) && !istype(user,/mob/living/carbon/alien/humanoid/queen))
+		user << "\red You can't understand the markings. Only the queen can access this."
+		return
+	// if(disabled)
+		// user << "This shuttle has been disabled."
+		// return
+
+	src.add_fingerprint(usr)
+
+	var/dat
+
+	dat = "<center>Marine Transport Shuttle Two Control<hr>"
+
+	if(marine_c_shuttle_moving)
+		dat += "Location: <font color='red'>Moving</font> <br>"
+	else
+		dat += "Location: [mining_shuttle_location ? "Station" : "Sulaco"] <br>"
+
+	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+
+
+	user << browse("[dat]", "window=miningshuttle;size=200x150")
+
 /obj/machinery/computer/marine_b_shuttle/attack_hand(user as mob)
 	if(..(user))
 		return
@@ -312,14 +419,38 @@ proc/move_marine_b_shuttle()
 
 	user << browse("[dat]", "window=miningshuttle;size=200x150")
 
-/obj/machinery/computer/marine_b_shuttle/Topic(href, href_list)
+
+/obj/machinery/computer/marine_c_shuttle/attack_hand(user as mob)
+	if(..(user))
+		return
+
+	if(disabled)
+		user << "This shuttle has been disabled."
+		return
+
+	src.add_fingerprint(usr)
+	var/dat
+
+	dat = "<center>Marine Transport Shuttle Two Control<hr>"
+
+	if(marine_c_shuttle_moving)
+		dat += "Location: <font color='red'>Moving</font> <br>"
+	else
+		dat += "Location: [mining_shuttle_location ? "Station" : "Sulaco"] <br>"
+
+	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+
+
+	user << browse("[dat]", "window=miningshuttle;size=200x150")
+
+/obj/machinery/computer/marine_c_shuttle/Topic(href, href_list)
 	if(..())
 		return
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["move"])
-		
+
 		if(b_cooldown)
 			usr << "\red Shuttle is recharging. Please wait."
 			return
@@ -339,6 +470,13 @@ proc/move_marine_b_shuttle()
 		hacked = 1
 		usr << "You fried the consoles ID checking system. It's now available to everyone!"
 
+
+/obj/machinery/computer/marine_c_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if (istype(W, /obj/item/weapon/card/emag))
+		src.req_access = list()
+		hacked = 1
+		usr << "You fried the consoles ID checking system. It's now available to everyone!"
 	// else if(istype(W, /obj/item/weapon/screwdriver))
 		// playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		// if(do_after(user, 20))

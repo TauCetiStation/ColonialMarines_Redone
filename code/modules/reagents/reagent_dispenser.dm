@@ -125,6 +125,12 @@
 	blob_act() //saving a few lines of copypasta
 
 
+/obj/structure/reagent_dispensers/fueltank/rockets
+	name = "missile"
+	desc = "A huge missile"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "rockets"
+
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
 	desc = "Refill pepper spray canisters."

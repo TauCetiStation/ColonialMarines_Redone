@@ -5,6 +5,18 @@
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = -1 //Not Burnable
 
+/obj/structure/stool/bed/chair/chair_shuttle
+	name = "shuttle chair"
+	icon_state = "shuttle_echair"
+
+/obj/structure/stool/bed/chair/chair_large1
+	name = "long chair"
+	icon_state = "stool_large1"
+
+/obj/structure/stool/bed/chair/chair_large2
+	name = "long chair"
+	icon_state = "stool_large2"
+
 /obj/structure/stool/bed/chair/New()
 	..()
 	spawn(3)	//sorry. i don't think there's a better way to do this.

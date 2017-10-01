@@ -294,6 +294,22 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+/obj/item/weapon/twohanded/spearpred
+	icon_state = "spearpred_0"
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 45
+	w_class = 3
+	slot_flags = SLOT_BACK
+	force_unwielded = 55
+	force_wielded = 65
+	throwforce = 60
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 3
+	flags = NOSHIELD
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 	return

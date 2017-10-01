@@ -7,8 +7,44 @@
 	desc = "Nougat love it or hate it."
 	icon_state = "candy"
 	trash = /obj/item/trash/candy
-	list_reagents = list("nutriment" = 1, "sugar" = 3)
-	junkiness = 25
+	list_reagents = list("nutriment" = 3, "sugar" = 3)
+	//junkiness = 25
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mre1
+	name = "MRE beef"
+	desc = "A piece of spicy meat."
+	icon_state = "mre1"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	trash = /obj/item/trash/mre1
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mre2
+	name = "MRE spaghetti"
+	desc = "Delicious spaghetti in sauce."
+	icon_state = "mre2"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	trash = /obj/item/trash/mre2
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mre3
+	name = "MRE vegetable stew"
+	desc = "Delicious vegetable stew in sauce."
+	icon_state = "mre3"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	trash = /obj/item/trash/mre3
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mre4
+	name = "MRE baked beans"
+	desc = "Delicious beans in sauce."
+	icon_state = "mre4"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	trash = /obj/item/trash/mre4
 	filling_color = "#D2691E"
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky

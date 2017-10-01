@@ -34,6 +34,11 @@
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
+/obj/item/ammo_casing/energy/laser/heavyp
+	projectile_type = /obj/item/projectile/beam/heavylaser
+	select_name = "anti-vehicle"
+	fire_sound = 'sound/weapons/laser3.ogg'
+
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/item/projectile/beam/pulse
 	e_cost = 200

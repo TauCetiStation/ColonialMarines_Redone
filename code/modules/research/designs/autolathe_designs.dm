@@ -290,6 +290,30 @@
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
+/datum/design/m44m
+	name = "Speed loader (.44)"
+	id = "m44m"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/magazine/m44m
+	category = list("initial", "Security")
+
+/datum/design/m45
+	name = "Magazine (.45)"
+	id = "m45"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/magazine/m45
+	category = list("initial", "Security")
+
+/datum/design/machete
+	name = "Jungle machete"
+	id = "machete"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10000)
+	build_path = /obj/item/weapon/machete
+	category = list("initial", "Security")
+
 /datum/design/recorder
 	name = "Universal recorder"
 	id = "recorder"
@@ -481,6 +505,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
+	category = list("hacked", "Security")
+
+/datum/design/shotgun_dart
+	name = "Shotgun dart"
+	id = "shotgun_dart"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list("hacked", "Security")
 
 /datum/design/incendiary_slug

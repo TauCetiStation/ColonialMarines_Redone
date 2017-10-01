@@ -7,13 +7,23 @@
 	var/flip = FALSE
 	var/flip_delay = 0
 
-
+/mob/living/carbon/human/predator
+	name = "Predator"
+	real_name = "Predator"
+	icon = 'icons/mob/human.dmi'
+	icon_state = "predator_s"
+	facial_hair_style = "Shaved"
+	hair_style = "Bald"
+	gender = "male"
+	socks = "Nude"
+	undershirt = "Nude"
+	underwear = "Nude"
+	health = 250
+	maxHealth = 250
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
-
-
 
 /mob/living/carbon/human/New()
 	create_reagents(1000)
@@ -916,3 +926,4 @@
 	sleeping = max(sleeping + getResistedLoss(amount),0)
 	update_canmove()
 	return
+

@@ -26,10 +26,23 @@
 	shuttleId = "marine2"
 	possible_destinations = "sulaco2;planet2"
 
+/obj/machinery/computer/shuttle/marine3
+	name = "Shuttle Console"
+	desc = "Used to pilot the shuttle."
+	circuit = /obj/item/weapon/circuitboard/shuttle
+	shuttleId = "marine3"
+	possible_destinations = "planet3"
+
 /obj/machinery/computer/shuttle/marine2/one_way/sulaco
 	name = "shuttle console"
 	desc = "A one-way shuttle console, used to summon the shuttle to the sulaco."
 	possible_destinations = "sulaco2"
+	circuit = /obj/item/weapon/circuitboard/shuttle
+
+/obj/machinery/computer/shuttle/marine3/one_way/sulaco
+	name = "shuttle console"
+	desc = "A one-way shuttle console, used to summon the shuttle to the sulaco."
+	possible_destinations = "sulaco3"
 	circuit = /obj/item/weapon/circuitboard/shuttle
 
 /obj/machinery/computer/shuttle/marine2/one_way/planet
@@ -38,6 +51,11 @@
 	possible_destinations = "planet2"
 	circuit = /obj/item/weapon/circuitboard/shuttle
 
+/obj/machinery/computer/shuttle/marine3/one_way/planet
+	name = "shuttle console"
+	desc = "A one-way shuttle console, used to summon the shuttle to the destination."
+	possible_destinations = "planet3"
+	circuit = /obj/item/weapon/circuitboard/shuttle
 
 /obj/machinery/computer/shuttle/marine1/one_way/sulaco/Topic(href, href_list)
 	if(href_list["move"])

@@ -120,6 +120,16 @@
 	vision_flags = SEE_MOBS
 	invis_view = 2
 
+/obj/item/clothing/glasses/hud/toggle/predatorvis
+	name = "Thermal HUD"
+	desc = "Thermal imaging HUD."
+	icon_state = "visor"
+	hud_type = DATA_HUD_SECURITY_ADVANCED
+	vision_flags = SEE_MOBS
+	invis_view = 2
+	darkness_view = 8
+	flash_protect = 2
+
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
 	..()
 	switch (hud_type)

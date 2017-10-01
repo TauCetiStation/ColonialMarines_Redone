@@ -49,8 +49,8 @@
 	spawn_positions = 3
 	supervisors = "the commander"
 	selection_color = "#ffeeee"
-	access = list(access_logistics, access_sulaco_brig, access_sulaco_cells)
-	minimal_access = list(access_logistics, access_sulaco_brig, access_sulaco_cells)
+	access = list(access_logistics, access_sulaco_brig, access_sulaco_cells, access_bridge)
+	minimal_access = list(access_logistics, access_sulaco_brig, access_sulaco_cells, access_bridge)
 	minimal_player_age = 7
 
 	default_id = /obj/item/weapon/card/id/silver
@@ -62,6 +62,27 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/marine(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/marine/full(H), slot_belt)
+
+//Cargo Supply Officer
+/datum/job/supply
+	title = "Cargo Supply Officer"
+	flag = SUPPLY
+	department_flag = MARINES
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the commander"
+	selection_color = "#ffeeee"
+	access = list(access_cargo_sulaco, access_logistics, access_bridge)
+	minimal_access = list(access_cargo_sulaco, access_logistics, access_bridge)
+	minimal_player_age = 3
+
+	default_id = /obj/item/weapon/card/id/silver
+	default_headset = /obj/item/device/radio/headset/mcom
+
+/datum/job/supply/equip_items(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security/supplyofficer(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/marine(H), slot_shoes)
 
 //Alpha Squad Leader
 /datum/job/alpha_squad_leader
@@ -229,3 +250,6 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/marine/casual(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/marine(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/marine(H), slot_in_backpack)
+
+
+

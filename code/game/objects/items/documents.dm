@@ -27,3 +27,18 @@
 	name = "'Blue' secret documents"
 	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive Syndicate operational intelligence. These documents are marked \"Blue\"."
 	icon_state = "docs_blue"
+
+/obj/item/documents/syndicate/Weyland_Yutani
+	name = "'Weyland-Yutani Corp.' secret documents"
+	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive Weyland-Yutani operational intelligence. These documents are marked \"Blue\"."
+	icon_state = "docs_blue"
+
+/obj/item/documents/syndicate/Yutani
+	name = "'Yutani Industrie' secret documents"
+	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive Yutani Industrie operational intelligence. These documents are marked \"Red\"."
+	icon_state = "docs_red"
+
+/obj/item/documents/syndicate/Colony
+	name = "'UNK-379' secret documents"
+	desc = "\"Top Secret\" documents printed on special copy-protected paper. It details sensitive UNK-379 operational intelligence. These documents are marked \"Red\"."
+	icon_state = "docs_red"

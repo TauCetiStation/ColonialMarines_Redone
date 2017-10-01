@@ -305,6 +305,12 @@
 	freq_listening = list(1461)
 	autolinkers = list("msulaco")
 
+/obj/machinery/telecomms/server/marine/sulaco/cryo_comp
+	name = "cryo capsule controle"
+	icon_state = "computer_el1"
+	desc = "A mighty piece of hardware used to send massive amounts of data far away."
+
+
 /obj/machinery/telecomms/server/marine/hazteam
 	id = "Hazteam Echo Server"
 	freq_listening = list(1363)

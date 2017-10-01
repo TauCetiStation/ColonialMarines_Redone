@@ -2,8 +2,8 @@ var/respawn_count[0]
 
 /obj/machinery/respawn_pod
 	name = "Respawn Pod"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper-open"
 	density = 1
 	anchored = 1
 	var/timer = 0
@@ -20,9 +20,9 @@ var/respawn_count[0]
 
 /obj/machinery/respawn_pod/update_icon()
 	if(who_spawn)
-		icon_state = "pod_1"
+		icon_state = "sleeper"
 	else
-		icon_state = "pod_0"
+		icon_state = "sleeper-open"
 
 /obj/machinery/respawn_pod/process()
 	update_icon()

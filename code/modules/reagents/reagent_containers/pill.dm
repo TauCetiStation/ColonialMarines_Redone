@@ -140,3 +140,10 @@
 	icon_state = "pill5"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
+
+/obj/item/weapon/reagent_containers/pill/sugar
+	name = "sugar pill"
+	desc = "Used in case of severe starve."
+	icon_state = "pill18"
+	list_reagents = list("sugar" = 30)
+	roundstart = 1

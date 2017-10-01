@@ -85,6 +85,32 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/machete
+	name = "jungle machete"
+	desc = "That without which to not survive in the jungle."
+	icon_state = "machete"
+	item_state = "machete"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
+	force = 40
+	throwforce = 10
+	w_class = 3
+	hitsound = 'sound/weapons/slash.ogg'
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/weapon/predator_knife
+	name = "predator knife"
+	desc = "Looks very sharp."
+	icon_state = "predknife"
+	item_state = "predknife"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
+	force = 50
+	throwforce = 30
+	w_class = 3
+	hitsound = 'sound/weapons/slash.ogg'
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
 /obj/item/weapon/katana/cursed
 	slot_flags = null
 

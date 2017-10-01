@@ -367,6 +367,22 @@
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	var/health = 5
 
+
+/obj/structure/stairs
+	name = "stairs"
+	desc = "Huge stairs."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "stairs"
+	density = 1
+	anchored = 1.0
+	var/health = 50
+
+/obj/structure/stairs/stairs2
+	icon_state = "stairs2"
+
+/obj/structure/stairs/stairs3
+	icon_state = "stairs3"
+
 /obj/structure/rack/ex_act(severity, target)
 	switch(severity)
 		if(1.0)

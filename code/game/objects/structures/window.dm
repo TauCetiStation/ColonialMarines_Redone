@@ -436,7 +436,7 @@
 	icon = 'icons/obj/smooth_structures/bulletproof_window.dmi'
 	icon_state = "b_window"
 	dir = 5
-	maxhealth = INFINITY
+	maxhealth = 500
 	fulltile = 1
 	smooth = 1
 	canSmoothWith = list(/obj/structure/window/bulletproof)
@@ -480,6 +480,20 @@
 	icon_state = "shuttle_window"
 	dir = 5
 	maxhealth = 250
+	wtype = "shuttle"
+	fulltile = 1
+	reinf = 1
+	smooth = 1
+	canSmoothWith = null
+	explosion_block = 1
+
+/obj/structure/window/shuttle2
+	name = "shuttle window"
+	desc = "A reinforced, air-locked pod window."
+	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
+	icon_state = "shuttle_window"
+	dir = 5
+	maxhealth = 25000
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1

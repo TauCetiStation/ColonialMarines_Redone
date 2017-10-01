@@ -20,6 +20,15 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
+/obj/item/clothing/head/soft/marine/sergant
+	icon_state = "marinesoft"
+	item_color = "marine"
+
+/obj/item/clothing/head/soft/marine/soldier
+	name = "marine soldier cap"
+	icon_state = "marinesoft"
+	item_color = "marine"
+
 /obj/item/clothing/head/soft/marine/alpha
 	name = "alpha squad sergeant cap"
 	icon_state = "redsoft"
@@ -269,6 +278,7 @@
 	siemens_coefficient = 0.7
 	var/obj/item/weapon/combat_knife/knife //Thank you Apo and LLA~~
 
+
 	//Knife slot
 	attack_hand(var/mob/living/M)
 		if(knife)
@@ -296,6 +306,13 @@
 			icon_state = "jackboots-1"
 		else
 			icon_state = initial(icon_state)
+
+/obj/item/clothing/shoes/marine/predator
+	name = "Predator's boots"
+	desc = "Standard issue combat boots for combat scenarios or combat situations."
+	icon_state = "predator"
+	item_state = "jackboots"
+
 
 /obj/item/clothing/shoes/marinechief
 	name = "chief officer shoes"
@@ -328,8 +345,8 @@
 /obj/item/weapon/storage/belt/marine
 	name = "marine belt"
 	desc = "A standard issue toolbelt for Colonial Marines."
-	icon_state = "securitybelt"
-	item_state = "security"//Could likely use a better one.
+	icon_state = "marinebelt"
+	item_state = "marine"//Could likely use a better one.
 	storage_slots = 7 //5
 	max_w_class = 3
 	max_combined_w_class = 10
@@ -357,6 +374,7 @@
 		/obj/item/weapon/gun/energy/taser,
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/melee/baton,
+		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/stunprod
 		)
 
@@ -365,6 +383,23 @@
 	new /obj/item/weapon/gun/projectile/pistol/m4a3(src)
 	new /obj/item/ammo_box/magazine/m4a3(src)
 	new /obj/item/ammo_box/magazine/m4a3(src)
+	new /obj/item/ammo_box/magazine/m4a3(src)
+
+/obj/item/weapon/storage/belt/predator_belt
+	name = "Predator's belt"
+	desc = "A belt for predator."
+	icon_state = "predatorbelt"
+	item_state = "predator"//Could likely use a better one.
+	storage_slots = 5 //7
+	max_w_class = 3
+	max_combined_w_class = 10
+	can_hold = list(
+		/obj/item/stack/medical/bruise_pack_predator,
+		/obj/item/stack/medical/ointment_predator,
+		/obj/item/weapon/predator_knife,
+		/obj/item/weapon/twohanded/spearpred,
+		/obj/item/weapon/gun/energy/lasercannon/predator
+		)
 
 /obj/item/weapon/storage/belt/knifepouch
 	name="Knife Rig"
@@ -378,6 +413,7 @@
 
 /obj/item/weapon/storage/belt/knifepouch/Carbon_Steel/New()
 	..()
+	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)
 	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)
 	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)
 	new /obj/item/weapon/throwing_knife/Carbon_Steel(src)

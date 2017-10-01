@@ -15,6 +15,11 @@
 	sound_fx = 1
 	dispersion = 0.6
 
+/obj/item/projectile/bullet/m50m //50 Elephant Gun
+	damage = 60
+	sound_fx = 1
+	dispersion = 0.6
+
 /obj/item/projectile/bullet/m39 // M39 SMG
 	damage = 15
 	sound_fx = 1
@@ -173,6 +178,11 @@
 	caliber = "38s"
 	projectile_type = /obj/item/projectile/bullet/m44m
 
+/obj/item/ammo_casing/m50m
+	desc = "A 50 Magnum bullet casing."
+	caliber = "50s"
+	projectile_type = /obj/item/projectile/bullet/m50m
+
 /obj/item/ammo_casing/m39 // M39 SMG
 	desc = "A .9mm special bullet casing."
 	caliber = "9mms"
@@ -278,6 +288,14 @@
 	desc = "A 44 Magnum speed loader"
 	icon_state = "38"
 	ammo_type = "/obj/item/ammo_casing/m44m"
+	max_ammo = 6
+	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m50m // 50 Elephant Gun
+	name = "50 Magnum Speed Loader (.50)"
+	desc = "A 50 Magnum speed loader"
+	icon_state = "m50m"
+	ammo_type = "/obj/item/ammo_casing/m50m"
 	max_ammo = 6
 	multiple_sprites = 1
 
@@ -412,6 +430,18 @@
 	fire_delay = 0
 	fire_sound = 'sound/weapons/servicepistol.ogg'
 
+/obj/item/weapon/gun/projectile/pistol/m4a3_hiks //45 Pistol
+	name = "Cpl. Hicks' pistol"
+	desc = "Personal weapons. Uses .45 special rounds."
+	icon_state = "pistol"
+	w_class = 2
+	mag_type = /obj/item/ammo_box/magazine/m4a3
+	new_and_loaded = 0
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	fire_sound = 'sound/weapons/servicepistol.ogg'
+
 /obj/item/weapon/gun/projectile/pistol/m4a3/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
@@ -446,6 +476,20 @@
 	desc = "A bulky 44 Magnum revolver, occasionally carried by assault troops and officers in the Colonial Marines. Uses 44 Magnum rounds"
 	icon_state = "mateba"
 	mag_type = /obj/item/ammo_box/magazine/m44m
+
+/obj/item/weapon/gun/projectile/m44panther //mm44 Magnum Peacemaker
+	name = "44 Magnum"
+	desc = "A bulky 44 Magnum revolver, occasionally carried by assault troops and officers in the Colonial Marines. Uses 44 Magnum rounds"
+	icon_state = "detective_panther"
+	mag_type = /obj/item/ammo_box/magazine/m44m
+	w_class = 3
+
+/obj/item/weapon/gun/projectile/m50m
+	name = "50 Magnum Elephant Gun"
+	desc = "A bulky 50 Magnum revolver, can kill an elephant. Uses .50 Magnum rounds"
+	icon_state = "magnum-50"
+	mag_type = /obj/item/ammo_box/magazine/m50m
+	w_class = 3
 
 ///***SMGS***///
 
@@ -565,10 +609,8 @@
 	..()
 	overlays.Cut()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-	if(wielded)
-		item_state = "m41a1"
-	else
-		item_state = "m41a0"
+	if(wielded) item_state = "m41a1"
+	else item_state = "m41a"
 	if(scope)
 		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m41a")
 		overlays += mod
@@ -638,10 +680,8 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/m37/update_icon()
-	if(wielded)
-		item_state = "m37a21"
-	else
-		item_state = "m37a20"
+	if(wielded) item_state = "m37a21"
+	else item_state = "m37a20"
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/combat
@@ -661,10 +701,8 @@
 	src.do_pump(user)
 
 /obj/item/weapon/gun/projectile/shotgun/combat/update_icon()
-	if(wielded)
-		item_state = "cshotgun1"
-	else
-		item_state = "cshotgun0"
+	if(wielded) item_state = "cshotgun1"
+	else item_state = "cshotgun0"
 	return
 
 
@@ -874,10 +912,8 @@
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	overlays.Cut()
-	if(wielded)
-		item_state = "smartgun1"
-	else
-		item_state = "smartgun0"
+	if(wielded) item_state = "smartgun1"
+	else item_state = "smartgun0"
 	return
 
 /obj/item/clothing/glasses/hms
@@ -1169,10 +1205,8 @@
 /obj/item/weapon/gun/projectile/Assault/m42c/update_icon()
 	..()
 	overlays.Cut()
-	if(wielded)
-		item_state = "m42c1"
-	else
-		item_state = "m42c0"
+	if(wielded) item_state = "m42c1"
+	else item_state = "m42c0"
 	if(scope)
 		var/image/mod = image("icon" = 'icons/obj/guns/projectile.dmi', "icon_state" = "m42c")
 		overlays += mod

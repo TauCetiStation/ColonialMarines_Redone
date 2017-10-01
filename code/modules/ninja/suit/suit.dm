@@ -36,6 +36,7 @@ Contents:
 	var/obj/item/clothing/shoes/space_ninja/n_shoes
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
 
+
 		//Main function variables.
 	var/s_initialized = 0//Suit starts off.
 	var/s_coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().

@@ -91,6 +91,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 	ammo_x_offset = 3
 
+/obj/item/weapon/gun/energy/lasercannon/predator
+	name = "Predator's gun"
+	desc = "Predator's plasma pistol"
+	icon_state = "predgun"
+	item_state = "predgun"
+	w_class = 3
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavyp)
+
+
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"

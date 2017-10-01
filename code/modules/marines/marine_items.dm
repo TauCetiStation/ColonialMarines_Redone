@@ -162,6 +162,14 @@ obj/item/device/radio/headset/mdelta
 /obj/item/device/radio/marine
 	frequency = 1461
 
+/obj/item/device/radio/marineradio
+	icon_state = "radiobase"
+	frequency = 1461
+	w_class = 4
+	slot_flags = SLOT_BACK
+
+
+
 //MARINE CONTAINERS
 
 /obj/item/weapon/storage/box/rubbershot
